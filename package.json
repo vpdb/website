@@ -12,6 +12,9 @@
 	"bugs": {
 		"url": "https://github.com/vpdb/website/issues"
 	},
+	"scripts": {
+		"pug": "./node_modules/.bin/pug --pretty -o build/html src/pug/*.pug"
+	},
 	"devDependencies": {
 		"highlight.js": "8.6.0",
 		"html2jade": "0.8.6",
