@@ -1,6 +1,6 @@
 include ../template/_mixins
 
-.row.ng-cloak.row--fullheight.fade-animation(ng-controller="GameController", ng-show="!pageLoading")
+.row.ng-cloak.row--fullheight.fade-animation(ng-show="!vm.pageLoading")
 
 	// right column
 	.col-sm-3.col-sm-push-9.col--menu.text-center
@@ -9,15 +9,15 @@ include ../template/_mixins
 
 		//-- UPLOAD BUTTONS
 		//---------------------------------------------------------------------
-		.panel--rect-block(ng-show="(!game.restrictions.release.mpu && auth.hasPermission('releases/add')) || (!game.restrictions.backglass.mpu && auth.hasPermission('backglasses/add'))")
+		.panel--rect-block(ng-show="(!vm.game.restrictions.release.mpu && vm.AuthService.hasPermission('releases/add')) || (!vm.game.restrictions.backglass.mpu && vm.AuthService.hasPermission('backglasses/add'))")
 			h1.text-center UPLOAD
 
 			.center
 				ul.ul--no-list
-					li(ng-show="!game.restrictions.release.mpu && auth.hasPermission('releases/add')"): a.text-center(ui-sref="addRelease({ id: game.id })")
+					li(ng-show="!vm.game.restrictions.release.mpu && vm.AuthService.hasPermission('releases/add')"): a.text-center(ui-sref="addRelease({ id: vm.game.id })")
 						+icon('plus-circle').space-right.shift-up
 						| Release
-					li(ng-show="!game.restrictions.backglass.mpu && auth.hasPermission('backglasses/add')"): a.text-center(ui-sref="addBackglass({ id: game.id })")
+					li(ng-show="!vm.game.restrictions.backglass.mpu && vm.AuthService.hasPermission('backglasses/add')"): a.text-center(ui-sref="addBackglass({ id: vm.game.id })")
 						+icon('plus-circle').space-right.shift-up
 						| Direct B2S
 
@@ -27,10 +27,10 @@ include ../template/_mixins
 	.col-sm-9.col-sm-pull-3.col--main
 		.title
 			h1.title-main.h--primary
-				span(property="v:itemreviewed") {{ game.title }}
-				a(ng-show="auth.hasPermission('games/update')", ui-sref="editGame({ id: game.id })")
+				span(property="v:itemreviewed") {{ vm.game.title }}
+				a(ng-show="vm.AuthService.hasPermission('games/update')", ui-sref="vm.editGame({ id: vm.game.id })")
 					+icon('edit').space-left
-			h1.title-sub.h--small {{ game.manufacturer }} &middot; {{ game.year }}
+			h1.title-sub.h--small {{ vm.game.manufacturer }} &middot; {{ vm.game.year }}
 		hr
 
 		include details-02-release
@@ -39,6 +39,6 @@ include ../template/_mixins
 		include details-05-media
 
 	.content-end &nbsp;
-	jsonld(json="ldGame")
+	jsonld(json="vm.ldGame")
 
 

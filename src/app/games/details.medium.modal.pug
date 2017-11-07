@@ -1,0 +1,45 @@
+include ../template/_mixins
+
+.theme-light
+	.modal-body
+
+		//-- IMAGE
+		//---------------------------------------------------------------------
+		a.a#lightbox(ng-href="{{ vm.medium.file.variations['full'].url }}", ng-class="{ nopointer: !vm.medium.file.variations['full'] }")
+			img.img.img--rounded.loaded.padder-bottom.fullwidth(ng-src="{{ vm.medium.file.variations['medium-2x'].url }}" )
+
+
+		//-- STATS
+		//---------------------------------------------------------------------
+		.text-center.padder-bottom.small.shift-up
+			span &copy; {{ vm.game.year }} {{ vm.game.owner }}. All rights reserved. <br>
+			+icon('photo-size').shift-up-2x.space-right
+			span.space-right-2x Native size: {{ vm.medium.file.metadata.size.width }} &times;  {{ vm.medium.file.metadata.size.height }}
+			+icon('download-circle').shift-up-2x.space-right
+			span.space-right {{ vm.medium.file.counter.downloads | number }} download{{ vm.medium.file.counter.downloads != 1 ? 's' : '' }}
+
+
+		//-- DESCRIPTION
+		//---------------------------------------------------------------------
+		div.markdown.padder-top-2x(markdown="vm.medium.description", ng-show="vm.medium.description")
+
+
+		//-- UPLOADER
+		//---------------------------------------------------------------------
+		h3.h--smaller.h--primary Uploader
+		.media
+			.media-left.media-middle
+				img.img-avatar.img-avatar--sm(gravatar-src="vm.medium.created_by.gravatar_id", gravatar-default="retro", fallback-icon="user")
+			.media-body.oneliner
+				user {{ vm.medium.created_by.name }}
+
+
+		//-- ACKNOWLEDGEMENTS
+		//---------------------------------------------------------------------
+		h3.h--smaller.h--primary(ng-show="vm.medium.acknowledgements") Acknowledgements
+		div.markdown(markdown="vm.medium.acknowledgements", ng-show="vm.medium.acknowledgements")
+
+
+	.modal-footer
+		button.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
+		button.btn.btn-primary(ng-click="vm.download(vm.medium.file)") Download

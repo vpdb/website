@@ -1,0 +1,77 @@
+include ../template/_mixins
+
+.theme-light
+	.modal-header
+		h1.h--small.h--no-margin
+			+icon('user').space-right
+			| Update User <strong>{{ vm.originalName }}</strong>
+	.modal-body
+		form.form-horizontal(role="form")
+
+			.form-group(ng-class="{ error: vm.errors.name }")
+				label.col-sm-3.control-label Display Name
+				.col-sm-7
+					input.form-control(ng-model="vm.user.name", ng-required)
+
+			.form-group(ng-class="{ error: vm.errors.is_active }")
+				label.col-sm-3.control-label(for="userActive") Active
+				.col-sm-8
+					input#userActive.checkbox--toggle(type="checkbox", ng-model="vm.user.is_active")
+					label(for="userActive")
+
+			.form-group(ng-class="{ error: vm.errors.username }")
+				label.col-sm-3.control-label Username
+				.col-sm-7
+					input.form-control(ng-model="vm.user.username", ng-required)
+
+			.form-group(ng-class="{ error: vm.errors.email }")
+				label.col-sm-3.control-label Email
+				.col-sm-7
+					input.form-control(ng-model="vm.user.email", ng-required)
+				.col-sm-2
+					button.btn.btn-hollow.btn-xs(ng-click="vm.sendConfirmation()", ng-show="vm.originalUser.provider === 'local' && !vm.originalUser.is_active", title="Sends the confirmation mail") Resend
+
+			.form-group(ng-class="{ error: vm.errors.roles }")
+				label.col-sm-3.control-label Roles
+				.col-sm-8
+					ul.list--checkboxes
+						li(ng-repeat="role in vm.roles", ng-hide="!vm.AuthService.hasRole('root') && (role.id == 'root' || role.id == 'admin')")
+							input.checkbox--check.nested(id="checked-{{ role.id }}", type="checkbox", name="selectedRoles[]", value="{{ role.id }}", ng-checked="vm.user.roles.indexOf(role.id) > -1", ng-click="vm.toggleSelection(role.id)")
+							label.checkbox(for="checked-{{ role.id }}")
+								h4.h--no-margin.h--lighter {{ role.name }}
+								div {{ role.description }}
+
+
+			.form-group
+				label.col-sm-3.control-label Plan
+				.col-sm-7
+					ul.list--checkboxes.list--condensed
+						li(ng-repeat="plan in vm.plans")
+							.radio--lg.radio--lg-twoliner.radio--lg-lighter
+								label
+									input(type="radio", name="plans", value="{{ plan.name }}", ng-model="vm.user._plan")
+									span: h4.h--no-margin.h--lighter {{ plan.name }}
+									span
+										span(ng-hide="plan.unlimited") {{ plan.credits }} credits per {{ plan.per }}
+										span(ng-show="plan.unlimited") Unlimited credits
+
+			div.alert.alert-danger(ng-show="vm.errors.username")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.username }}
+
+			div.alert.alert-danger(ng-show="vm.errors.email")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.email }}
+
+			div.alert.alert-danger(ng-show="vm.errors.roles")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.roles }}
+
+			div.alert.alert-danger(ng-show="vm.error")
+				+icon('warning').shift-up.space-right
+				| {{ vm.error }}
+
+	.modal-footer
+		button.btn.btn-hollow.pull-left(ng-click="$close()") Cancel
+		button.btn.btn-default.space-right(ng-click="vm.reset()") Reset
+		button.btn.btn-primary(ng-click="vm.save()") Update

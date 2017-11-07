@@ -1,0 +1,35 @@
+{
+	"authHeader": "Authorization",
+	"apiUri": {
+		"protocol": "https",
+		"hostname": "api.vpdb.io",
+		"port": 443,
+		"pathname": "/v1"
+	},
+	"storageUri": {
+		"protocol": "https",
+		"hostname": "storage.vpdb.io",
+		"port": 443,
+		"pathname": "/v1"
+	},
+	"webUri": {
+		"protocol": "https",
+		"hostname": "vpdb.io",
+		"port": 443
+	},
+	"ga": {
+		"enabled": true,
+		"id": "UA-85212794-1"
+	},
+	"authProviders": {
+		"local": true,
+		"google": false,
+		"github": false,
+		"ipboard": []
+	},
+	"documentRevisions": {
+		"rules": 2,
+		"privacy": 1,
+		"legal": 1
+	}
+}

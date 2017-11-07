@@ -1,12 +1,12 @@
 include ../template/_mixins
 
-.row.row--content.ng-cloak.row--fullheight.fade-animation(ng-controller="LegalController")
+.row.row--content.ng-cloak.row--fullheight.fade-animation
 
 	h1.h--primary.padder-bottom-2x Terms of Use
 
 	.row--two-colums
 		ol
-			li By accessing this website (including extensions thereof) you are entering into this Terms of Use Agreement ("ToU") with VPDB (the "Site Provider"), and you agree to be bound by the terms of this ToU. This ToU includes the terms and conditions set forth herein, Site Provider's Privacy Policy (which is available at <a ng-href="{{ privacyUrl }}">{{ privacyUrl }}</a> and incorporated herein by reference) and any other terms incorporated by reference herein. If you do not agree to the terms of this ToU, you must immediately stop use of this website. If you remain on this website, you agree to be bound by this ToU. You must be at least 13 years old to use the services. If you are under the age of 13, use of this site and the services is prohibited.
+			li By accessing this website (including extensions thereof) you are entering into this Terms of Use Agreement ("ToU") with VPDB (the "Site Provider"), and you agree to be bound by the terms of this ToU. This ToU includes the terms and conditions set forth herein, Site Provider's Privacy Policy (which is available at <a ng-href="{{ vm.privacyUrl }}">{{ vm.privacyUrl }}</a> and incorporated herein by reference) and any other terms incorporated by reference herein. If you do not agree to the terms of this ToU, you must immediately stop use of this website. If you remain on this website, you agree to be bound by this ToU. You must be at least 13 years old to use the services. If you are under the age of 13, use of this site and the services is prohibited.
 			li
 				p If we request registration information from you, you will provide us with true, accurate, current, and complete information. You will promptly update your registration to keep it accurate, current, and complete. If we issue you a password, you may not reveal it to anyone else. You may not use anyone else's password. You are responsible for maintaining the confidentiality of your accounts and passwords. You agree to immediately notify us of any unauthorized use of your passwords or accounts or any other breach of security. You also agree to log-out from your accounts at the end of each session. We will not be responsible for any loss or damage that may result if you fail to comply with these requirements.
 				p The technology and the software underlying our sites and the Services are the property of Site Provider, our affiliates, and our partners. You agree not to copy, modify, rent, lease, loan, sell, assign, distribute, reverse engineer, grant a security interest in, or otherwise transfer any right to the technology or software underlying our sites or the Services. You agree not to modify the software underlying our sites in any manner or form or to use modified versions of such software, including, without limitation, for the purpose of obtaining unauthorized access to our sites.
@@ -63,8 +63,8 @@ include ../template/_mixins
 		.col-sm-6.col-md-4.col-lg-3
 			pre
 				| VPDB
-				| Avenue de Tivoli 19B
-				| 1007 Lausanne
+				| Avenue de Sévelin 52
+				| 1004 Lausanne
 				| Switzerland
 
 	p Or by email to <i>hello [at] [this domain name]</i>.

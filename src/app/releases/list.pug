@@ -1,6 +1,6 @@
 include ../template/_mixins
 
-.row.row--fullheight(ng-controller="ReleaseListController")
+.row.row--fullheight
 
 	//- main column
 	.col-sm-9.col--main
@@ -8,41 +8,79 @@ include ../template/_mixins
 
 		//- view type toggles
 		ul.nav-icons
-			li.a(ng-class="{ active: viewtype == 'compact' }")
-				+icon('th-compact')(ng-click="switchview('compact')")
-			li.a(ng-class="{ active: viewtype == 'extended' }")
-				+icon('th-extended')(ng-click="switchview('extended')")
+			li.a(ng-class="{ active: vm.viewtype == 'compact' }")
+				+icon('th-compact')(ng-click="vm.switchview('compact')")
+			li.a(ng-class="{ active: vm.viewtype == 'extended' }")
+				+icon('th-extended')(ng-click="vm.switchview('extended')")
 		hr
 
 		//- number of games counter
-		.pull-left(ng-show="releases.length > 0")
-			span.small {{ pagination.count }} RELEASE{{ pagination.count == 1 ? '' : 'S' }}
+		.pull-left(ng-show="vm.releases.length > 0")
+			span.small {{ vm.pagination.count }} RELEASE{{ vm.pagination.count == 1 ? '' : 'S' }}
 
 		//- pagination
-		.pull-right(ng-show="releases.length > 0")
+		.pull-right(ng-show="vm.releases.length > 0")
 
-			span(ng-show="pagination.links.first", ng-click="paginate(pagination.links.first)"): +icon('angle-left-skip').smaller.a.a--lighter
-			span.space-left(ng-show="pagination.links.prev", ng-click="paginate(pagination.links.prev)"): +icon('angle-left').smaller.a.a--lighter
-			span.small.space-left PAGE &nbsp; {{ pagination.page }} / {{ Math.ceil(pagination.count / pagination.size) }}
-			span.space-left(ng-show="pagination.links.next", ng-click="paginate(pagination.links.next)"): +icon('angle-right').smaller.a.a--lighter
-			span.space-left(ng-show="pagination.links.last", ng-click="paginate(pagination.links.last)"): +icon('angle-right-skip').smaller.a.a--lighter
+			span(ng-show="vm.pagination.links.first", ng-click="vm.paginate(vm.pagination.links.first)"): +icon('angle-left-skip').smaller.a.a--lighter
+			span.space-left(ng-show="vm.pagination.links.prev", ng-click="vm.paginate(vm.pagination.links.prev)"): +icon('angle-left').smaller.a.a--lighter
+			span.small.space-left PAGE &nbsp; {{ vm.pagination.page }} / {{ vm.pagination.pageCount }}
+			span.space-left(ng-show="vm.pagination.links.next", ng-click="vm.paginate(vm.pagination.links.next)"): +icon('angle-right').smaller.a.a--lighter
+			span.space-left(ng-show="vm.pagination.links.last", ng-click="vm.paginate(vm.pagination.links.last)"): +icon('angle-right-skip').smaller.a.a--lighter
 
-		.clearfix.padder-bottom(ng-show="releases.length > 0")
+		.clearfix.padder-bottom(ng-show="vm.releases.length > 0")
 
 		//- no releases
-		p(ng-show="!releases.length && !loading") No releases found.
+		p(ng-show="!vm.releases.length && !vm.loading") No releases found.
 
 		//- loading
-		p(ng-show="loading && !error")
+		p(ng-show="vm.loading && !vm.error")
 			+icon('circle-o-notch').small.svg-spin.space-right.shift-up
 			| Loading...
 
 		//- error
-		p(ng-show="error") Error: {{ error }}
+		p(ng-show="error") Error: {{ vm.error }}
 
 		//- content
 		.row.ng-cloak
-			.fade2-animation(ng-include="template")
+			.fade2-animation(ng-switch="vm.viewtype")
+
+				div(ng-switch-when="compact")
+					.col-md-4.col-sm-6.col-xs-12.fade-animation(ng-repeat="release in vm.releases", ui-sref="releaseDetails({ id: release.game.id, releaseId: release.id })")
+						.panel.panel--animated.ng-cloak
+							.img.img--rounded-top(img-bg="release.thumb.image.url", ng-class="flavorFilter && flavorFilter.orientation === 'ws' ? 'img--ar-ws' : 'img--ar-fs'")
+							.text-center.padder-horizontal
+								h1.h--small {{ release.game.title }}
+								label.label--subtitle {{ release.name }}
+								.center-block.padder-bottom-2x
+									img.img-avatar.img-avatar--xsm.space-v(
+										ng-repeat="author in release.authors",
+										gravatar-src="author.user.gravatar_id",
+										gravatar-default="retro",
+										fallback-icon="user",
+										title="{{ author.user.name }}: {{ author.roles.join(', ') }}"
+									)
+
+				div(ng-switch-when="extended")
+					.col-lg-6.col-md-12(ng-repeat="release in vm.releases", ui-sref="releaseDetails({ id: release.game.id, releaseId: release.id })")
+						.panel.panel--animated.panel--animated--less.ng-cloak
+							.clearfix
+							.col--list-mini-left
+								.img.img--ar-square.img--rounded-left(img-bg="release.thumb.image.url")
+							.col--list-mini-right
+								.a.pull-right.space-right(
+								uib-tooltip="{{ release.starred ? 'Unstar' : 'Star' }} this release",
+									tooltip-placement="right",
+									tooltip-append-to-body="true",
+									ng-show="auth.hasPermission('releases/star')",
+									ng-class="{ 'a--primary': release.starred }"
+								)
+									+icon('star')(ng-click="vm.toggleReleaseStar(release, $event)").shift-up-2x
+								h1.h--small.h--no-margin {{ release.game.title }}
+								label.label--block {{ release.name }}
+								span.small.pull-right.space-right(am-time-ago="release.released_at")
+								div.small.oneliner by {{ release.authors[0].user.name }}
+							.clearfix
+
 
 	.col-sm-3.col--menu
 		h1 Filter
@@ -52,31 +90,31 @@ include ../template/_mixins
 		.input-group.padder-bottom
 			span.input-group-addon.input-group-addon--search
 				+icon('search').smaller
-			input.form-control.input--search(ng-model="q", type="text", placeholder="Search")
+			input.form-control.input--search(ng-model="vm.q", type="text", placeholder="Search")
 
 		// starred only
 		span(ng-show="auth.isAuthenticated")
-			input#starredOnly.checkbox--toggle(type='checkbox', ng-model="starredOnly")
-			label(for='starredOnly')
-			label.a.a--light.padder-bottom(for='starredOnly') Starred releases only
+			input#starredOnly.checkbox--toggle(type='checkbox', ng-model="vm.starredOnly")
+			label(for="starredOnly")
+			label.a.a--light.padder-bottom(for="starredOnly") Starred releases only
 			.clearfix
 
 		// filters
-		uib-accordion.panel-group--transparent(close-others="false")
+		.panel-group--transparent(uib-accordion, close-others="false")
 
 			// compat filter
-			uib-accordion-group.panel--inner(is-open="filterBuildOpen")
-				uib-accordion-heading by Compatibility
+			.panel--inner(uib-accordion-group, is-open="vm.filterBuildOpen")
+				div(uib-accordion-heading) by Compatibility
 				.row
 					p.space-left-2x Official:
-					.col-xs-6.text-center.a(ng-repeat="build in builds | filter:{is_range:false,type:'release'}" filter-build="{{ build.id }}") {{ build.label }}
+					.col-xs-6.text-center.a(ng-repeat="build in vm.builds | filter:{is_range:false,type:'release'}" filter-build="{{ build.id }}") {{ build.label }}
 				.row
 					p.space-left-2x.padder-top Experimental:
-					.col-xs-6.text-center.a(ng-repeat="build in builds | filter:{is_range:false,type:'experimental'}" filter-build="{{ build.id }}") {{ build.label }}
+					.col-xs-6.text-center.a(ng-repeat="build in vm.builds | filter:{is_range:false,type:'experimental'}" filter-build="{{ build.id }}") {{ build.label }}
 
 			// flavor filters
-			uib-accordion-group.panel--inner(ng-repeat="flavor in flavors", is-open="filterFlavorOpen[flavor.name]")
-				uib-accordion-heading by {{ flavor.header }}
+			.panel--inner(uib-accordion-group, ng-repeat="flavor in vm.flavors", is-open="vm.filterFlavorOpen[flavor.name]")
+				div(uib-accordion-heading) by {{ flavor.header }}
 				ul.list--checkboxes.list--condensed
 					li
 						.radio--lg
@@ -92,26 +130,26 @@ include ../template/_mixins
 								span: i {{ flavorVal.other }}
 
 			// tag filter
-			uib-accordion-group.panel--inner(is-open="filterTagOpen")
-				uib-accordion-heading by Tag
+			.panel--inner(uib-accordion-group, is-open="vm.filterTagOpen")
+				div(uib-accordion-heading) by Tag
 				.row
-					.col-xs-6.text-center.a(ng-repeat="tag in tags" filter-tag="{{ tag.id }}", title="{{ tag.description }}") {{ tag.name }}
+					.col-xs-6.text-center.a(ng-repeat="tag in vm.tags" filter-tag="{{ tag.id }}", title="{{ tag.description }}") {{ tag.name }}
 
 			// validation filter
-			uib-accordion-group.panel--inner(is-open="filterValidationOpen")
-				uib-accordion-heading by Validation
+			.panel--inner(uib-accordion-group, is-open="vm.filterValidationOpen")
+				div(uib-accordion-heading) by Validation
 				.row
-					.col-xs-6.col-lg-3.text-center.a(ng-class="{active: $parent.$parent.validation === 'verified'}", ng-click="toggleValidation('verified')")
+					.col-xs-6.col-lg-3.text-center.a(ng-class="{active: $parent.$parent.validation === 'verified'}", ng-click="vm.toggleValidation('verified')")
 						+icon('medal-verified').svg-3x.padder-bottom
 						| Verified
-					.col-xs-6.col-lg-3.text-center.a(ng-class="{active: $parent.$parent.validation === 'playable'}", ng-click="toggleValidation('playable')")
+					.col-xs-6.col-lg-3.text-center.a(ng-class="{active: $parent.$parent.validation === 'playable'}", ng-click="vm.toggleValidation('playable')")
 						+icon('medal-playable').svg-3x.padder-bottom
 						| Playable
 					.clearfix.show.hidden-lg.padder-bottom
-					.col-xs-6.col-lg-3.text-center.a(ng-class="{active: $parent.$parent.validation === 'broken'}", ng-click="toggleValidation('broken')")
+					.col-xs-6.col-lg-3.text-center.a(ng-class="{active: $parent.$parent.validation === 'broken'}", ng-click="vm.toggleValidation('broken')")
 						+icon('medal-broken').svg-3x.padder-bottom
 						| Broken
-					.col-xs-6.col-lg-3.text-center.a(ng-class="{active: $parent.$parent.validation === 'none'}", ng-click="toggleValidation('none')")
+					.col-xs-6.col-lg-3.text-center.a(ng-class="{active: $parent.$parent.validation === 'none'}", ng-click="vm.toggleValidation('none')")
 						+icon('medal-unknown').svg-3x.padder-bottom
 						| None
 

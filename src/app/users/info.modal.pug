@@ -1,0 +1,28 @@
+include ../template/_mixins
+
+.theme-light
+	.modal-body
+		.media
+			.media-left.media-middle
+				img.img-avatar.img-avatar--xlg(gravatar-src="vm.user.gravatar_id", gravatar-default="retro", fallback-icon="user")
+			.media-body
+				h3.h--large(ng-class="{ 'h--shift-up': !!vm.user.location }") {{ vm.user.name || username }}
+				.text--large.text--shift-up
+					+icon('location')(ng-show="vm.user.location").shift-up.space-right
+					| {{ vm.user.location }}
+					button.btn.btn-hollow.pull-right(ng-class="{ 'shift-up': !vm.user.location }", ng-show="vm.user.id", ng-click="vm.toggleStar()") {{ vm.starred ? 'Unfollow' : 'Follow' }}
+
+		hr
+		ul.ul--no-list.no-indent(ng-show="vm.user.id")
+			li
+				+icon('comment-circle').shift-up.space-right
+				| {{ vm.user.counter.comments }} comment{{ vm.user.counter.comments == 1 ? '' : 's' }}
+			li
+				+icon('star-circle').shift-up.space-right
+				| {{ vm.user.counter.stars }} follower{{ vm.user.counter.stars == 1 ? '' : 's' }}
+
+		p(ng-show="!vm.user.id"): i This user isn't on VPDB yet.
+
+
+	.modal-footer
+		button.btn.btn-default(ng-click="$close()") Close

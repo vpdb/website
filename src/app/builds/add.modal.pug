@@ -1,0 +1,102 @@
+include ../template/_mixins
+
+.theme-light
+	.modal-header
+		h1.h--no-margin.h--small
+			+icon('package').space-right.svg-2x
+			| &nbsp;Add A New Visual Pinball Build
+	.modal-body
+		p Create a new reference to a Visual Pinball build.
+		form.form-horizontal(role="form")
+
+			//- LABEL
+			//-----------------------------------------------------------------
+			.form-group(ng-class="{ error: vm.errors.label }")
+				label.col-sm-3.control-label Label
+				.col-sm-7
+					input.form-control(ng-model="vm.build.label", placeholder="Version or build name...", ng-required)
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.label")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.label }}
+
+
+			//- BUILD DATE
+			//-----------------------------------------------------------------
+			.form-group(ng-class="{ error: vm.errors.built_at }")
+				label.col-sm-3.control-label Release/Build Date
+				.col-sm-3
+					.input-group
+						input.form-control.datepicker(
+							type="text",
+							ng-model='vm.build.built_at',
+							ng-required='true',
+							uib-datepicker-popup="shortDate",
+							is-open="vm.calendarOpened",
+							close-text="Close",
+							show-weeks="false",
+							starting-day="1"
+						)
+						span.input-group-addon: +icon('calendar').a(ng-click='vm.openCalendar($event)')
+
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.built_at")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.built_at }}
+
+
+			//- DESCRIPTION
+			//-----------------------------------------------------------------
+			.form-group(ng-class="{ error: vm.errors.description }")
+				label.col-sm-3.control-label Description
+				.col-sm-7
+					editor.tabset--light(ng-model="vm.build.description", placeholder="Description of the build", markdown-text="Markdown enabled.")
+			div.alert.alert-danger(ng-show="vm.errors.description")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.description }}
+
+
+			//- BUILD TYPE
+			//-----------------------------------------------------------------
+			.form-group(ng-class="{ error: vm.errors.type }")
+				label.col-sm-3.control-label Type
+				.col-sm-7
+					select.form-control(ng-options="type for type in vm.types", ng-model="vm.build.type")
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.type")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.type }}
+
+
+			//- MAJOR VERSION
+			//-----------------------------------------------------------------
+			.form-group(ng-class="{ error: vm.errors.major_version }")
+				label.col-sm-3.control-label Major Version
+				.col-sm-7
+					select.form-control(ng-options="version.value as version.label for version in vm.majorVersions", ng-model="vm.build.major_version")
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.major_version")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.major_version }}
+
+
+			//- DOWNLOAD URL
+			//-----------------------------------------------------------------
+			.form-group(ng-class="{ error: vm.errors.download_url }")
+				label.col-sm-3.control-label Download URL
+				.col-sm-7
+					input.form-control(ng-model="vm.build.download_url", ng-required)
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.download_url")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.download_url }}
+
+
+			//- SUPPORT URL
+			//-----------------------------------------------------------------
+			.form-group(ng-class="{ error: vm.errors.support_url }")
+				label.col-sm-3.control-label Support URL
+				.col-sm-7
+					input.form-control(ng-model="vm.build.support_url", ng-required)
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.support_url")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.support_url }}
+
+	.modal-footer
+		button.btn.btn-default(ng-click="$dismiss()") Cancel
+		button.btn.btn--secondary(ng-click="vm.add()") Create

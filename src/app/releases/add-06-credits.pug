@@ -19,7 +19,7 @@
 				input(type="radio", name="ismod", ng-value="false", ng-model="meta.isMod")
 				span: b No
 
-button.btn.btn-default.pull-right(ng-show="meta.isMod")
+button.btn.btn-default.pull-right(ng-show="vm.meta.isMod")
 	+icon('search').space-right
 	| Find
 .clearfix
@@ -32,10 +32,10 @@ h4
 	| Acknowledgements
 hr.hr--light.hr--margin-small
 
-.alert.alert--rounded.alert--aligned(ng-show="showHelp").padder-bottom
+.alert.alert--rounded.alert--aligned(ng-show="vm.showHelp").padder-bottom
 	+icon('info')
 	p Show your love to those who helped you. In the field below, you can add your honorable mentions. It's recommended to write a <a href="http://daringfireball.net/projects/markdown/syntax#list" target="_blank">list</a>, but you're free to describe them however you want.
 	p Pro tip: Type <code>@</code> for user search and auto-completion.
 
 .form-group
-	editor.tabset--light(ng-model="release.acknowledgements", placeholder="List of people to thank", markdown-text="Markdown enabled. This will show up under your release's acknowledgements.")
+	editor.tabset--light(ng-model="vm.release.acknowledgements", placeholder="List of people to thank", markdown-text="Markdown enabled. This will show up under your release's acknowledgements.")

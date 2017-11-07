@@ -1,0 +1,34 @@
+.form-group(ng-class="{ error: vm.errors.versions[0].version }")
+	label.control-label(for="version") Version
+	.row
+		.col-sm-2: input#version.form-control(type="text", ng-model="vm.releaseVersion.version", placeholder="x.x")
+		.col.sm-10: i Don't prefix with <code>v</code>.
+	.alert.alert-danger(ng-show="vm.errors.versions[0].version")
+		+icon('warning').shift-up.space-right
+		| {{ vm.errors.versions[0].version }}
+.clearfix
+
+.form-group(ng-class="{ error: vm.errors.versions[0].released_at }")
+	label.control-label Release Date
+	.row
+		.col-sm-3: .input-group
+			input.form-control.datepicker(type='text', ng-model='vm.meta.releaseDate', ng-required='true',
+				uib-datepicker-popup="yyyy-MM-dd",
+				format-day-header="EE"
+				is-open="calendarOpened",
+				close-text="Close",
+				show-weeks="false",
+				starting-day="1")
+			span.input-group-addon: +icon('calendar').a(ng-click='vm.openCalendar($event)')
+		.col-sm-2
+			uib-timepicker(ng-model="vm.meta.releaseTime", hour-step="1", minute-step="5", show-meridian="ismeridian")
+		.col-sm-7
+			i Leave empty for submission time.
+
+div.alert.alert-danger.padder-bottom(ng-show="vm.errors.built_at")
+	+icon('warning').shift-up.space-right
+	| {{ vm.errors.built_at }}
+
+.form-group
+	label.control-label(for="version") Release Information
+	editor.tabset--light(ng-model="vm.releaseVersion.changes", placeholder="Release Information", markdown-text="Markdown enabled. This will show up in the release's change log.")

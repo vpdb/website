@@ -1,12 +1,12 @@
 include ../template/_mixins
 
-.row.row--fullheight(ng-controller="AdminBuildCtrl")
+.row.row--fullheight
 
 	.col-sm-9.col--main
 		h1.h--primary Builds
 		hr.hr--primary
 
-		div(ng-repeat="block in blocks")
+		div(ng-repeat="block in vm.blocks")
 			h3.h--no-margin {{ block.title }}
 			table.table.table-striped.table--selectable
 				thead
@@ -15,7 +15,7 @@ include ../template/_mixins
 						th Label
 						th Platform
 				tbody
-					tr(ng-repeat="build in block.builds", ng-click="edit(build)")
+					tr(ng-repeat="build in block.builds", ng-click="vm.edit(build)")
 						td {{ build.id }}
 						td {{ build.label }}
 						td {{ build.platform }}{{ build.major_version }}
@@ -25,6 +25,6 @@ include ../template/_mixins
 
 		p.padder-top-3x These are the builds that can be linked to the compatibility field of the table file of a release.
 
-		button.btn.btn-default.padder-top-2x(ng-click="add()")
+		button.btn.btn-default.padder-top-2x(ng-click="vm.add()")
 			+icon('plus-circle').space-right
 			| Create new

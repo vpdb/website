@@ -1,6 +1,6 @@
 include ../template/_mixins
 
-.row.row--fullheight(ng-controller="AdminUserCtrl")
+.row.row--fullheight
 	.col-sm-3.col--menu
 		h1 Filter
 		hr
@@ -8,24 +8,24 @@ include ../template/_mixins
 		.input-group.padder-bottom
 			span.input-group-addon.input-group-addon--search
 				+icon('search').smaller
-			input.form-control.input--search(ng-model="query", type="text", placeholder="Search")
+			input.form-control.input--search(ng-model="vm.query", type="text", placeholder="Search")
 
-		uib-accordion.panel-group--transparent(close-others="false")
+		.panel-group--transparent(uib-accordion, close-others="false")
 
 			// role filter
-			uib-accordion-group(is-open="filterYearOpen")
-				uib-accordion-heading by Role
+			div(uib-accordion-group, is-open="filterYearOpen")
+				div(uib-accordion-heading) by Role
 				ul.list-group.list-group--simple
-					li.a.a--lighter.list-group-item(ng-repeat="role in roles", filter-role="{{ role.id }}") {{ role.name }}
+					li.a.a--lighter.list-group-item(ng-repeat="role in vm.roles", filter-role="{{ role.id }}") {{ role.name }}
 
 	.col-sm-9.col--main
 		h1.h--primary Users
 		hr.hr--primary
 
 		table.table.table-striped.table--selectable
-			tr(ng-repeat="user in users", ng-click="edit(user)", ng-class="{ inactive: !user.is_active }")
+			tr(ng-repeat="user in vm.users", ng-click="vm.edit(user)", ng-class="{ inactive: !user.is_active }")
 				td {{ user.name }}
 				td {{ user.email }}
 				td {{ user.roles.join(' ') }}
 				td {{ user.plan.id }}
-		span(ng-hide="users.length > 0") No users found.
+		span(ng-hide="vm.users.length > 0") No users found.

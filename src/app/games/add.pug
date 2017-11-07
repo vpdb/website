@@ -1,6 +1,6 @@
 include ../template/_mixins
 
-.row.row--fullheight(ng-controller="AdminGameAddCtrl")
+.row.row--fullheight
 	.col-sm-9.col--main
 		h1.h--primary add new game
 		hr
@@ -12,11 +12,11 @@ include ../template/_mixins
 			//-----------------------------------------------------------------
 			h1 1. Enter Title
 			hr
-			.form-group(ng-class="{ error: errors.title }")
-				input.form-control.input-lg(type="text", placeholder="Title", ng-model="game.title", on-enter="searchOnIpdb()")
-				.alert.alert-danger(ng-show="errors.title")
+			.form-group(ng-class="{ error: vm.errors.title }")
+				input.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.game.title", on-enter="vm.searchOnIpdb()")
+				.alert.alert-danger(ng-show="vm.errors.title")
 					+icon('warning').shift-up.space-right
-					| {{ errors.title }}
+					| {{ vm.errors.title }}
 				span.help-block No year, manufacturer or anything else, just the title. Example: <i>The Addams Family</i>.
 
 			//-----------------------------------------------------------------
@@ -28,12 +28,12 @@ include ../template/_mixins
 			.text-center.padder-top
 				.radio-inline.radio--lg
 					label
-						input.input-lg(type="radio", name="origin", value="recreation", ng-model="game.origin")
+						input.input-lg(type="radio", name="origin", value="recreation", ng-model="vm.game.origin")
 						span: b Recreation
 
 				.radio-inline.radio--lg
 					label
-						input(type="radio", name="origin", value="originalGame", ng-model="game.origin")
+						input(type="radio", name="origin", value="originalGame", ng-model="vm.game.origin")
 						span: b Original Game
 
 			.clearfix
@@ -42,89 +42,89 @@ include ../template/_mixins
 
 			//- form for recreations
 			//-----------------------------------------------------------------
-			p(ng-show="game.origin == 'recreation'") Search IPDB.org and locate the IPDB number. Paste it into the
+			p(ng-show="vm.game.origin == 'recreation'") Search IPDB.org and locate the IPDB number. Paste it into the
 				| field below and hit "fetch". If the correct game info is displayed, you're done in here.
 
-			.form-horizontal(ng-show="game.origin == 'recreation'")
-				.form-group(ng-class="{ error: errors['ipdb.number'] }")
+			.form-horizontal(ng-show="vm.game.origin == 'recreation'")
+				.form-group(ng-class="{ error: vm.errors['ipdb.number'] }")
 					label.col-sm-3.control-label(for="ipdbUrl") IPDB
 					.col-sm-6
-						input#ipdbUrl.form-control(type="text", ng-model="game.ipdbUrl", placeholder="URL or Number", on-enter="refresh()")
-						a.a--lighter#ipdbLink(href="http://www.ipdb.org/search.pl?any={{ game.title | escape }}&search=Search+Database&searchtype=quick", target="_blank")
+						input#ipdbUrl.form-control(type="text", ng-model="vm.game.ipdbUrl", placeholder="URL or Number", on-enter="vm.refresh()")
+						a.a--lighter#ipdbLink(href="http://www.ipdb.org/search.pl?any={{ vm.game.title | escape }}&search=Search+Database&searchtype=quick", target="_blank")
 							+icon('external-link').small.shift-up.space-right
 							| Search title on IPDB.org
 					.col-sm-3
-						button.btn.btn-default.btn--width-med.pull-right(ng-click="refresh()")
+						button.btn.btn-default.btn--width-med.pull-right(ng-click="vm.refresh()")
 							+icon('refresh').space-right
 							| Fetch
 
-				.alert.alert-danger.alert--shifted-up(ng-show="errors['ipdb.number']")
+				.alert.alert-danger.alert--shifted-up(ng-show="vm.errors['ipdb.number']")
 					.row
 						.col-sm-9.col-sm-offset-3
 							+icon('warning').shift-up.space-right
-							| {{ errors['ipdb.number'] }}
+							| {{ vm.errors['ipdb.number'] }}
 
 				.form-group(ng-class="{ error: errors.id }")
 					label.col-sm-3.control-label(for="gameId1") Game ID
 					.col-sm-6
 						.input-group
-							input#gameId1.form-control(type="text", ng-model="game.id", placeholder="Common Abbreviation", ng-change="game.data.idValidated = false", on-enter="check()")
-							span.input-group-addon(ng-class="{ transparent: !game.data.idValidated }")
-								+icon('check').small(ng-show="game.data.idValid")
-								+icon('times').small(ng-hide="game.data.idValid")
+							input#gameId1.form-control(type="text", ng-model="vm.game.id", placeholder="Common Abbreviation", ng-change="vm.game.data.idValidated = false", on-enter="vm.check()")
+							span.input-group-addon(ng-class="{ transparent: !vm.game.data.idValidated }")
+								+icon('check').small(ng-show="vm.game.data.idValid")
+								+icon('times').small(ng-hide="vm.game.data.idValid")
 						span.help-block Must be unique and contain only letters and dashes.
 					.col-sm-3
-						button.btn.btn-default.btn--width-med.pull-right(ng-click="check()", ng-disabled="game.data.idValidated")
+						button.btn.btn-default.btn--width-med.pull-right(ng-click="vm.check()", ng-disabled="vm.game.data.idValidated")
 							+icon('check').space-right
 							| Check
 
-				.alert.alert-danger.alert--shifted-up-2x(ng-show="errors.id")
+				.alert.alert-danger.alert--shifted-up-2x(ng-show="vm.errors.id")
 					.row
 						.col-sm-9.col-sm-offset-3
 							+icon('warning').shift-up.space-right
-							| {{ errors.id }}
+							| {{ vm.errors.id }}
 
-				.form-group(ng-show="!game.data.year", ng-class="{ error: errors.year }")
+				.form-group(ng-show="!vm.game.data.year", ng-class="{ error: vm.errors.year }")
 					label.col-sm-3.control-label(for="year") Year
 					.col-sm-3.col-md-2
-						input#year.form-control(type="text", ng-model="game.year")
+						input#year.form-control(type="text", ng-model="vm.game.year")
 					.col-sm-6.col-md-7
 						span.help-block Release year of this game (no info on IPDB.org)
 
-				.alert.alert-danger.alert--shifted-up-2x(ng-show="errors.year && !game.data.year")
+				.alert.alert-danger.alert--shifted-up-2x(ng-show="vm.errors.year && !vm.game.data.year")
 					.row
 						.col-sm-9.col-sm-offset-3
 							+icon('warning').shift-up.space-right
-							| {{ errors.year }}
+							| {{ vm.errors.year }}
 
-			.col-md-offset-2.col-md-8.col-sm-offset-1.col-sm-10(ng-show="game.origin == 'recreation'")
-				.panel(ng-show="game.data.fetched")
+			.col-md-offset-2.col-md-8.col-sm-offset-1.col-sm-10(ng-show="vm.game.origin == 'recreation'")
+				.panel(ng-show="vm.game.data.fetched")
 					.panel-heading
-						h2.h--small.text-center {{ game.title }}
+						h2.h--small.text-center {{ vm.game.title }}
 					.panel-body
 						dl.dl-horizontal.dl--centered
 							dt Manufacturer
-							dd {{ game.manufacturer }}
+							dd {{ vm.game.manufacturer }}
 							dt Year
-							dd {{ game.year }}
+							dd {{ vm.game.year }}
 							dt
-						hr.hr--margin-small(ng-show="game.units || game.ipdb.rating || game.game_type || game.model_number")
-						dl(ng-show="game.produced_units || game.ipdb.rating || game.type || game.model_number").dl-horizontal.dl--centered
-							dt(ng-show="game.ipdb.rating") IPDB Rating
-							dd(ng-show="game.ipdb.rating") {{ game.ipdb.rating }}
-							dt(ng-show="game.produced_units") Production
-							dd(ng-show="game.produced_units") {{ game.produced_units | number }} units
-							dt(ng-show="game.game_type") Game Type
-							dd(ng-show="game.game_type") {{ game.game_type | gametype }}
-							dt(ng-show="game.model_number") Model Number
-							dd(ng-show="game.model_number") {{ game.model_number }}
-						hr.hr--margin-small(ng-show="game.designers || game.artists")
-						dl(ng-show="game.designers || game.artists").dl-horizontal.dl--centered
-							dt(ng-show="game.designers") Game Design
-							dd(ng-show="game.designers") {{ game.designers.join(', ') }}
-							dt(ng-show="game.artists") Art design
-							dd(ng-show="game.artists") {{ game.artists.join(', ') }}
-				.panel.panel--fixed-height-300.panel--blank(ng-hide="game.data.fetched")
+						hr.hr--margin-small(ng-show="vm.game.units || vm.game.ipdb.rating || vm.game.game_type || vm.game.model_number")
+						dl(ng-show="vm.game.produced_units || vm.game.ipdb.rating || vm.game.type || vm.game.model_number").dl-horizontal.dl--centered
+							dt(ng-show="vm.game.ipdb.rating") IPDB Rating
+							dd(ng-show="vm.game.ipdb.rating") {{ vm.game.ipdb.rating }}
+							dt(ng-show="vm.game.produced_units") Production
+							dd(ng-show="vm.game.produced_units") {{ vm.game.produced_units | number }} units
+							dt(ng-show="vm.game.game_type") Game Type
+							dd(ng-show="vm.game.game_type") {{ vm.game.game_type | gametype }}
+							dt(ng-show="vm.game.model_number") Model Number
+							dd(ng-show="vm.game.model_number") {{ vm.game.model_number }}
+						hr.hr--margin-small(ng-show="vm.game.designers || vm.game.artists")
+						dl(ng-show="vm.game.designers || vm.game.artists").dl-horizontal.dl--centered
+							dt(ng-show="vm.game.designers") Game Design
+							dd(ng-show="vm.game.designers") {{ vm.game.designers.join(', ') }}
+							dt(ng-show="vm.game.artists") Art design
+							dd(ng-show="vm.game.artists") {{ vm.game.artists.join(', ') }}
+				.panel.panel--fixed-height-300.panel--blank(ng-hide="vm.game.data.fetched")
 					.panel-content
 						+icon('ipdb').icon-ipdb--huge.space-right
 						span INFO
@@ -134,60 +134,60 @@ include ../template/_mixins
 
 			//- form for original games
 			//-----------------------------------------------------------------
-			p(ng-show="game.origin == 'originalGame'") Provide some more information about your table.
+			p(ng-show="vm.game.origin == 'originalGame'") Provide some more information about your table.
 
-			.form-horizontal(ng-show="game.origin == 'originalGame'")
+			.form-horizontal(ng-show="vm.game.origin == 'originalGame'")
 
-				.form-group(ng-class="{ error: errors.id }")
+				.form-group(ng-class="{ error: vm.errors.id }")
 					label.col-sm-3.control-label(for="gameId2") Game ID
 					.col-sm-6
 						.input-group
-							input#gameId2.form-control(type="text", ng-model="game.id", placeholder="Common Abbreviation", ng-change="game.data.idValidated = false")
-							span.input-group-addon(ng-class="{ transparent: !game.data.idValidated }")
-								+icon('check').small(ng-show="game.data.idValid")
-								+icon('times').small(ng-hide="game.data.idValid")
+							input#gameId2.form-control(type="text", ng-model="vm.game.id", placeholder="Common Abbreviation", ng-change="vm.game.data.idValidated = false")
+							span.input-group-addon(ng-class="{ transparent: !vm.game.data.idValidated }")
+								+icon('check').small(ng-show="vm.game.data.idValid")
+								+icon('times').small(ng-hide="vm.game.data.idValid")
 						span.help-block Must be unique and contain only letters and dashes.
 					.col-sm-3
-						button.btn.btn-default.btn--width-med.pull-right(ng-click="check()", ng-disabled="game.data.idValidated")
+						button.btn.btn-default.btn--width-med.pull-right(ng-click="vm.check()", ng-disabled="vm.game.data.idValidated")
 							+icon('check').space-right
 							| Check
 
-				.alert.alert-danger.alert--shifted-up-2x(ng-show="errors.id")
+				.alert.alert-danger.alert--shifted-up-2x(ng-show="vm.errors.id")
 					.row
 						.col-sm-9.col-sm-offset-3
 							+icon('warning').shift-up.space-right
-							| {{ errors.id }}
+							| {{ vm.errors.id }}
 
 				.form-group
-					label.col-sm-3.control-label(for='author', ng-class="{ error: errors.manufacturer }") Author
+					label.col-sm-3.control-label(for='author', ng-class="{ error: vm.errors.manufacturer }") Author
 					.col-sm-6
-						input#author.form-control(type="text", ng-model="game.manufacturer", placeholder="Your name, nick name or pen name", ng-class="{ error: errors.manufacturer }")
+						input#author.form-control(type="text", ng-model="vm.game.manufacturer", placeholder="Your name, nick name or pen name", ng-class="{ error: vm.errors.manufacturer }")
 						span.help-block This will show up as manufacturer.
-					label.col-sm-1.control-label.text-right(for='year2', ng-class="{ error: errors.year }") Year
+					label.col-sm-1.control-label.text-right(for='year2', ng-class="{ error: vm.errors.year }") Year
 					.col-sm-2.form-subgroup
-						input#year2.form-control(type="text", ng-model="game.year", ng-class="{ error: errors.year }")
+						input#year2.form-control(type="text", ng-model="vm.game.year", ng-class="{ error: vm.errors.year }")
 
-				.alert.alert-danger.alert--shifted-up(ng-show="errors.manufacturer")
+				.alert.alert-danger.alert--shifted-up(ng-show="vm.errors.manufacturer")
 					.row
 						.col-sm-9.col-sm-offset-3
 							+icon('warning').shift-up.space-right
-							| {{ errors.manufacturer }}
+							| {{ vm.errors.manufacturer }}
 
-				.alert.alert-danger.alert--shifted-up(ng-show="errors.year")
+				.alert.alert-danger.alert--shifted-up(ng-show="vm.errors.year")
 					.row
 						.col-sm-9.col-sm-offset-3
 							+icon('warning').shift-up.space-right
-							| {{ errors.year }}
+							| {{ vm.errors.year }}
 
 				.form-group
 					label.col-sm-3.control-label Description
 					.col-sm-9
-						editor.tabset--light(ng-model="game.description", placeholder="Description of the original table", markdown-text="Markdown enabled.")
+						editor.tabset--light(ng-model="vm.game.description", placeholder="Description of the original table", markdown-text="Markdown enabled.")
 
 				.form-group
 					label.col-sm-3.control-label Instructions
 					.col-sm-9
-						editor.tabset--light(ng-model="game.instructions", placeholder="Put game instructions here", markdown-text="Markdown enabled.")
+						editor.tabset--light(ng-model="vm.game.instructions", placeholder="Put game instructions here", markdown-text="Markdown enabled.")
 
 			//- URLs (let's do that another time)
 				.clearfix
@@ -231,17 +231,17 @@ include ../template/_mixins
 			.row.padder-top
 				.col-sm-6
 					.panel.panel--blank(
-						file-upload="{ type: 'backglass', key: 'backglass', status: game.mediaFile, onSuccess: onBackglassUpload, onClear: onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }"
+						file-upload="{ controller: vm, type: 'backglass', key: 'backglass', status: vm.game.mediaFile, onSuccess: vm.onBackglassUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }"
 						ngf-drag-over-class="'panel--dragging'"
 					)
 						.panel-body.a.a--darker
-							.img.img--ar-bg.loaded(img-bg="game.mediaFile.backglass.variations['medium-2x']")
+							.img.img--ar-bg.loaded(img-bg="vm.game.mediaFile.backglass.variations['medium-2x']")
 								.text-center.vertical-center--100
 									uib-progressbar.progress--fixed-absolute.progress-striped.active(
-										value="game.mediaFile.backglass.progress", ng-show="game.mediaFile.backglass.uploading")
+										value="vm.game.mediaFile.backglass.progress", ng-show="vm.game.mediaFile.backglass.uploading")
 									.span(ng-show="!img.url")
-										+icon('photo').svg-4x(ng-class="{ transparent: game.mediaFile.backglass.uploading }")
-										p {{ mediaFile.backglass.uploadText }}
+										+icon('photo').svg-4x(ng-class="{ transparent: vm.game.mediaFile.backglass.uploading }")
+										p {{ vm.mediaFile.backglass.uploadText }}
 									.span(ng-show="img.loading")
 										+icon('gear').svg-3x.svg-spin--slow
 										p Generating thumbnails...
@@ -256,35 +256,35 @@ include ../template/_mixins
 						li The image must not be stretched or upscaled.
 
 					// info boxes
-					.alert.alert-success.alert--inverted.alert--shifted-up.padder-top(ng-show="backglass.test == 'optimal'")
+					.alert.alert-success.alert--inverted.alert--shifted-up.padder-top(ng-show="vm.backglass.test == 'optimal'")
 						+icon('check-circle').shift-up.space-right
-						| Dimensions are {{ backglass.dimensions }}, which is optimal.
-					.alert.alert-warning.alert--inverted.alert--shifted-up.padder-top(ng-show="backglass.test == 'warning'")
+						| Dimensions are {{ vm.backglass.dimensions }}, which is optimal.
+					.alert.alert-warning.alert--inverted.alert--shifted-up.padder-top(ng-show="vm.backglass.test == 'warning'")
 						+icon('warning').shift-up.space-right
-						| Dimensions are {{ backglass.dimensions }}, where the aspect ratio is <code>1:{{ backglass.ar }}</code> and {{ backglass.arDiff }}% off the ideal <code>1:1.25</code>. Some content will be cropped off.
-					.alert.alert-danger.alert--inverted.alert--shifted-up.padder-top(ng-show="backglass.test == 'error'")
+						| Dimensions are {{ vm.backglass.dimensions }}, where the aspect ratio is <code>1:{{ vm.backglass.ar }}</code> and {{ vm.backglass.arDiff }}% off the ideal <code>1:1.25</code>. Some content will be cropped off.
+					.alert.alert-danger.alert--inverted.alert--shifted-up.padder-top(ng-show="vm.backglass.test == 'error'")
 						+icon('warning').shift-up.space-right
-						| Dimensions are {{ backglass.dimensions }}, where the aspect ratio is <code>1:{{ backglass.ar }}</code> and <strong>{{ backglass.arDiff }}%</strong> off the ideal <code>1:1.25</code>. Please crop the image and try again.
+						| Dimensions are {{ vm.backglass.dimensions }}, where the aspect ratio is <code>1:{{ vm.backglass.ar }}</code> and <strong>{{ vm.backglass.arDiff }}%</strong> off the ideal <code>1:1.25</code>. Please crop the image and try again.
 
-			.alert.alert-danger.alert--shifted-up(ng-show="errors['_backglass']")
+			.alert.alert-danger.alert--shifted-up(ng-show="vm.errors['_backglass']")
 				+icon('warning').shift-up.space-right
-				| {{ errors['_backglass'] }}
+				| {{ vm.errors['_backglass'] }}
 
 			//- logo
 			.row.padder-top
 				.col-sm-6
 					.panel.panel--blank(
-						file-upload="{ type: 'logo', key: 'logo', status: game.mediaFile, onSuccess: onLogoUpload, onClear: onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }"
+						file-upload="{ controller: vm, type: 'logo', key: 'logo', status: vm.game.mediaFile, onSuccess: vm.onLogoUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }"
 						ngf-drag-over-class="'panel--dragging'"
 					)
 						.panel-body.a.a--darker
-							.img.img--ar-logo.img--fit.loaded(img-bg="game.mediaFile.logo")
+							.img.img--ar-logo.img--fit.loaded(img-bg="vm.game.mediaFile.logo")
 								.text-center.vertical-center--100
 									uib-progressbar.progress--fixed-absolute.progress-striped.active(
-										value="game.mediaFile.logo.progress", ng-show="game.mediaFile.logo.uploading")
+										value="game.mediaFile.logo.progress", ng-show="vm.game.mediaFile.logo.uploading")
 									.span(ng-show="!img.url")
-										+icon('photo').svg-4x(ng-class="{ transparent: game.mediaFile.logo.uploading }")
-										p {{ mediaFile.logo.uploadText }}
+										+icon('photo').svg-4x(ng-class="{ transparent: vm.game.mediaFile.logo.uploading }")
+										p {{ vm.mediaFile.logo.uploadText }}
 									.span(ng-show="img.loading")
 										+icon('gear').svg-3x.svg-spin--slow
 										p Generating thumbnails...
@@ -297,8 +297,8 @@ include ../template/_mixins
 						li There should be enough contrast on white as well as on black background.
 
 			hr
-			button.btn.btn-default.btn-lg(ng-click="reset()") Reset
-			button.btn.btn-primary.btn-lg.pull-right(ng-click="submit()", ng-disabled="submitting") Add New Game
+			button.btn.btn-default.btn-lg(ng-click="vm.reset()") Reset
+			button.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="vm.submitting") Add New Game
 			.clearfix
 
 			p
@@ -307,16 +307,16 @@ include ../template/_mixins
 	.col-sm-3.col--menu
 		h1 Requests
 		hr
-		i(ng-show="gameRequests.length == 0") No open game requests.
-		span(ng-repeat="gameRequest in gameRequests")
-			.media.media--selectable(ng-click="selectGameRequest(gameRequest)", ng-class="{ active: gameRequest.id === game._game_request }")
+		i(ng-show="vm.gameRequests.length == 0") No open game requests.
+		span(ng-repeat="gameRequest in vm.gameRequests")
+			.media.media--selectable(ng-click="vm.selectGameRequest(gameRequest)", ng-class="{ active: gameRequest.id === vm.game._game_request }")
 				.media-left.media-middle
 					img.img-avatar.img-avatar--sm(gravatar-src="gameRequest.created_by.gravatar_id", gravatar-default="retro", fallback-icon="user")
 				.media-body
 					b {{ gameRequest.ipdb_title }}
 					br
 					| {{ gameRequest.created_by.username }}, <span am-time-ago="gameRequest.created_at"></span>
-			div(uib-collapse="gameRequest.id !== game._game_request")
+			div(uib-collapse="gameRequest.id !== vm.game._game_request")
 				p(ng-show="gameRequest.title")
 					h5.h--primary.h--no-margin(ng-show="gameRequest.title") Title given by user
 					| {{ gameRequest.title }}
@@ -325,6 +325,6 @@ include ../template/_mixins
 					| {{ gameRequest.notes }}
 				h5.h--primary.h--no-margin Message to user
 				textarea.form-control(ng-model="denyMessage")
-				button.btn.btn-hollow.padder-top.padder-bottom.pull-right(ng-disabled="!denyMessage", ng-click="closeGameRequest(gameRequest, denyMessage)") Deny and close
+				button.btn.btn-hollow.padder-top.padder-bottom.pull-right(ng-disabled="!denyMessage", ng-click="vm.closeGameRequest(gameRequest, denyMessage)") Deny and close
 				.clearfix
 

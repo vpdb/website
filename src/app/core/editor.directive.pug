@@ -1,0 +1,35 @@
+include ../template/_mixins
+div(ng-class="{ media: !!user }")
+	div.media-left.avatar(ng-show="user")
+		img.img-avatar.pull-left(gravatar-src="user.gravatar_id", gravatar-default="retro", fallback-icon="user")
+	div.media--full-width(ng-class="{ 'media-body': !!user }")
+		uib-tabset
+			.pull-right
+				+icon('txt-bold').a(ng-click="vm.textBold()", uib-tooltip="Add bold text", tooltip-placement="top", tooltip-append-to-body="true", tooltip-popup-delay="500")
+				+icon('txt-italic').a.space-right-2x(ng-click="vm.textItalic()", uib-tooltip="Add italic text", tooltip-placement="top", tooltip-append-to-body="true", tooltip-popup-delay="500")
+				+icon('txt-quote').a(ng-click="vm.textQuote()", uib-tooltip="Insert a quote", tooltip-placement="top", tooltip-append-to-body="true", tooltip-popup-delay="500")
+				+icon('txt-code').a.space-right-2x(ng-click="vm.textCode()", uib-tooltip="Insert code", tooltip-placement="top", tooltip-append-to-body="true", tooltip-popup-delay="500")
+				+icon('txt-bulleted-list').a(ng-click="vm.textUnorderedList()", uib-tooltip="Add a bulleted list", tooltip-placement="top", tooltip-append-to-body="true", tooltip-popup-delay="500")
+				+icon('txt-numbered-list').a.space-right-2x(ng-click="vm.textOrderedList()", uib-tooltip="Add a numbered list", tooltip-placement="top", tooltip-append-to-body="true", tooltip-popup-delay="500")
+				+icon('image').hidden-xs.hidden-sm.a(ng-click="vm.textImage()", uib-tooltip="Insert an image", tooltip-placement="top", tooltip-append-to-body="true", tooltip-popup-delay="500")
+				+icon('link').hidden-xs.hidden-sm.a(ng-click="vm.textLink()", uib-tooltip="Insert a link", tooltip-placement="top", tooltip-append-to-body="true", tooltip-popup-delay="500")
+			uib-tab
+				uib-tab-heading(title="Write")
+					+icon('edit')
+					.panel-triangle(ng-show="user")
+				textarea.textarea--full.animate(
+					placeholder="{{ $parent.$parent.placeholder }}",
+					ng-model="$parent.$parent.text",
+					ng-trim="false",
+					msd-elastic,
+					mentio,
+					mentio-items="vm.foundUsers",
+					mentio-search="vm.findUser(term)",
+					mentio-select="vm.getUserMention(item)",
+					mentio-template-url="user-item.html"
+				)
+			uib-tab
+				uib-tab-heading(title="Preview"): +icon('eye')
+				div.markdown(markdown="$parent.$parent.text")
+				label.tab__label(ng-show="!$parent.$parent.text || $parent.$parent.text.length == 0") Nothing to preview.
+		label.label--small.padder-bottom.padder-top-less(markdown-info="{{ vm.markdownText }}", ng-show="vm.markdownText")

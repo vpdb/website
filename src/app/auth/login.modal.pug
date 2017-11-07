@@ -1,0 +1,97 @@
+include ../template/_mixins
+
+.theme-light
+	.modal-header
+		h1.h--no-margin.h--small
+			+icon('lock').space-right
+			| &nbsp;Login
+	.modal-body
+		div.alert.padder-bottom(ng-show="vm.headMessage")
+			+icon('info').space-right.shift-up
+			| {{ vm.headMessage }}
+
+		.span(ng-hide="loginParams.localOnly")
+			h3.h--shift-up Login with
+			.text-center
+				a.btn.btn--secondary.btn-lg.padder-bottom(ng-repeat="ipb in vm.Config.authProviders.ipboard", ng-click="vm.oauth(ipb.id)")
+					+icon('{{ ipb.icon }}').space-right
+					| {{ ipb.name }}
+				a.btn.btn--secondary.btn-lg.padder-bottom(ng-show="vm.Config.authProviders.google", ng-click="vm.oauth('google')")
+					+icon('google-g').space-right
+					| Google
+				a.btn.btn--secondary.btn-lg.padder-bottom(ng-show="vm.Config.authProviders.github", ng-click="vm.oauth('github')")
+					+icon('github').space-right
+					| GitHub
+			hr.hr--light
+			.clearfix
+
+		div.alert.alert-success.padder-bottom(ng-show="vm.topMessage")
+			+icon('info').space-right.shift-up
+			| {{ vm.topMessage }}
+
+		//- LOGIN
+		div(ng-hide="vm.registering")
+			h3.h--shift-up(ng-hide="loginParams.localOnly") Or, with your account:
+			h3.h--shift-up(ng-show="loginParams.localOnly") Login with your account:
+			form.form-horizontal(role='form')
+				.form-group
+					label.col-sm-4.control-label Username
+					.col-sm-6
+						input.form-control(ng-model="vm.userPass.username", ng-required)
+				.form-group
+					label.col-sm-4.control-label Password
+					.col-sm-6
+						input.form-control(ng-model="vm.userPass.password", type="password", ng-keyup="$event.keyCode === 13 && vm.login()")
+
+		//- REGISTER
+		div(ng-show="vm.registering && !loginParams.localOnly")
+			h3.h--shift-up Or, register with your Email:
+			form.form-horizontal(role="form")
+				.form-group(ng-class="{ error: vm.errors.email }")
+					label.col-sm-4.control-label Email
+					.col-sm-6
+						input.form-control(ng-model="vm.email", ng-required)
+				.form-group(ng-class="{ error: errors.username }")
+					label.col-sm-4.control-label Username
+					.col-sm-6
+						input.form-control(ng-model="vm.userPass.username", ng-required)
+				.form-group(ng-class="{ error: vm.errors.password }")
+					label.col-sm-4.control-label Password
+					.col-sm-6
+						input.form-control(ng-model="vm.userPass.password", type="password")
+
+		//- ERRORS
+		div.alert.alert-danger(ng-show="vm.errors.email")
+			+icon('warning').space-right.shift-up
+			| {{ vm.errors.email }}
+		div.alert.alert-danger(ng-show="vm.errors.username")
+			+icon('warning').space-right.shift-up
+			| {{ vm.errors.username }}
+		div.alert.alert-danger(ng-show="vm.errors.password")
+			+icon('warning').space-right.shift-up
+			| {{ vm.errors.password }}
+		div.alert.alert-danger(ng-show="vm.error")
+			+icon('warning').space-right.shift-up
+			| {{ vm.error }}
+		div.alert.alert-success(ng-show="vm.message")
+			+icon('vm.info').space-right.shift-up
+			| {{ message }}
+
+		.text-center.padder-top.i(ng-show="vm.message2", ng-bind-html="vm.message2")
+
+	.modal-footer
+
+		.form-group(ng-hide="vm.registering")
+			.col-sm-4
+				input#rememberMe.checkbox--check(ng-model="vm.$localStorage.rememberMe", type="checkbox")
+				label.checkbox--standalone.nested(for="rememberMe")
+			label.col-sm-8.control-value(for="rememberMe") Remember Me
+
+			.clearfix
+		hr.hr--light.padder-top-4x(ng-hide="vm.registering")
+		.clearfix
+
+		h3.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()", ng-hide="loginParams.localOnly") {{ registering ? "Login" : "Register" }}
+		button.btn.btn-default(ng-click="$close()") Cancel
+		button.btn.btn--secondary(ng-hide="registering", ng-click="vm.login()") Login
+		button.btn.btn--secondary(ng-show="registering", ng-click="vm.register()") Register

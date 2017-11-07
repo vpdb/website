@@ -1,0 +1,67 @@
+include ../template/_mixins
+
+.theme-light
+	.modal-body
+
+		//-- IMAGE
+		//---------------------------------------------------------------------
+		img.img.img--rounded.loaded.padder-bottom.fullwidth(
+			ng-src="{{ vm.file.variations['full'].url }}",
+			title="This is the non-illuminated background of the backglass. In the game, most elements will be lighter."
+		)
+
+		//-- STATS
+		//---------------------------------------------------------------------
+		.text-center.padder-bottom.small.shift-up
+			span &copy; {{ vm.game.year }} {{ vm.game.owner }}. All rights reserved. <br>
+			+icon('photo-size').shift-up-2x.space-right
+			span.space-right-2x Native size: {{ vm.file.variations.full.width }} &times;  {{ vm.file.variations.full.height }}
+			+icon('download-circle').shift-up-2x.space-right
+			span.space-right {{ vm.numDownloads | number }} download{{ vm.numDownloads != 1 ? 's' : '' }}
+
+		pre.text-center {{ vm.backglass.versions[0].file.name }}
+
+
+		//-- DESCRIPTION
+		//---------------------------------------------------------------------
+		div.markdown.padder-top-2x(markdown="vm.backglass.description", ng-show="vm.backglass.description")
+
+
+		//-- AUTHORS
+		//---------------------------------------------------------------------
+		h3.h--smaller.h--primary Authors
+		.media(ng-repeat="author in vm.backglass.authors")
+			.media-left.media-middle
+				img.img-avatar.img-avatar--sm(gravatar-src="author.user.gravatar_id", gravatar-default="retro", fallback-icon="user")
+			.media-body
+				user {{ author.user.name }}
+				br
+				| {{ author.roles.join(', ') }}
+
+
+		//-- ACKNOWLEDGEMENTS
+		//---------------------------------------------------------------------
+		h3.h--smaller.h--primary(ng-show="vm.backglass.acknowledgements") Acknowledgements
+		div.markdown(markdown="vm.backglass.acknowledgements", ng-show="vm.backglass.acknowledgements")
+
+
+		//-- VERSION HISTORY
+		//---------------------------------------------------------------------
+		h3.h--smaller.h--primary Version History
+		.panel-group--transparent.subtle(uib-accordion, close-others="false")
+			div(uib-accordion-group, ng-repeat="version in vm.backglass.versions", is-open="false")
+				div(uib-accordion-heading)
+					strong.space-left-2x v{{ version.version }}
+					|  (
+					span(am-time-ago="version.released_at")
+					| )
+					+icon('angle-down').smaller.shift-down.pull-right
+
+				div.markdown.space-left-2x(markdown="version.changes")
+
+	.modal-footer
+		button.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
+		button.btn.btn-default.pull-left(ng-click="vm.edit(backglass)", ng-show="vm.AuthService.hasPermission('backglasses/update') || (vm.AuthService.isAuthor(vm.backglass) && vm.AuthService.hasPermission('backglasses/update-own'))")
+			+icon('edit').space-right
+			| Edit
+		button.btn.btn-primary(ng-click="vm.download(file)") Download

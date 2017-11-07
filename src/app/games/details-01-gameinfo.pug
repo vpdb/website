@@ -2,18 +2,18 @@ include ../template/_mixins
 
 //-- LOGO
 //---------------------------------------------------------------------
-img.img--logo(ng-src="{{ game.logo.variations['medium' + pixelDensitySuffix].url }}")
+img.img--logo(ng-src="{{ vm.game.logo.variations[vm.App.pixelSuffix('medium')].url }}")
 
 //-- RATING
 //---------------------------------------------------------------------
 .ratingbox(
-	rating-avg="game.rating.average",
-	rating-votes="game.rating.votes",
-	rating-user="gameRating"
-	rating-action="rateGame($rating)"
-	rating-readonly="!auth.hasPermission('games/rate')")
+	rating-avg="vm.game.rating.average",
+	rating-votes="vm.game.rating.votes",
+	rating-user="vm.gameRating"
+	rating-action="vm.rateGame($rating)"
+	rating-readonly="!vm.AuthService.hasPermission('games/rate')")
 
-top-badge(ng-model="game.pinside.ranks", site="Pinside", href="https://pinside.com/pinball/archive/{{ game.pinside.ids[0] }}")
+top-badge(ng-model="vm.game.pinside.ranks", site="Pinside", href="https://pinside.com/pinball/archive/{{ vm.game.pinside.ids[0] }}")
 
 //-- STATS
 //---------------------------------------------------------------------
@@ -21,44 +21,44 @@ hr
 .row: .col-sm-offset-1.col-sm-10.text-left
 	p
 		.a.pull-right(
-			uib-tooltip="{{ gameStarred ? 'Unstar' : 'Star' }} this game",
+			uib-tooltip="{{ vm.gameStarred ? 'Unstar' : 'Star' }} this game",
 			tooltip-placement="bottom",
 			tooltip-append-to-body="true",
-			ng-show="auth.hasPermission('games/star')",
-			ng-class="{ 'a--primary': gameStarred }"
+			ng-show="vm.AuthService.hasPermission('games/star')",
+			ng-class="{ 'a--primary': vm.gameStarred }"
 			)
-			+icon('star')(ng-click="toggleStar()").shift-up-2x
+			+icon('star')(ng-click="vm.toggleStar()").shift-up-2x
 		+icon('star-circle').svg-2x.shift-up-2x.space-right
-		| {{ game.counter.stars | number }} star{{ game.counter.stars != 1 ? 's' : '' }}
+		| {{ vm.game.counter.stars | number }} star{{ vm.game.counter.stars != 1 ? 's' : '' }}
 	p
 		+icon('eye-circle').svg-2x.shift-up-2x.space-right
-		| {{ game.counter.views | number }} view{{ game.counter.views != 1 ? 's' : '' }}
+		| {{ vm.game.counter.views | number }} view{{ vm.game.counter.views != 1 ? 's' : '' }}
 hr
 
 //-- IPDB INFO
 //---------------------------------------------------------------------
-label.label--block(ng-show="game.game_type") {{ game.game_type | gametype }}
-label.label--block(ng-show="game.mpu") {{ game.mpu.long }}
-label(ng-show="game.produced_units") {{ game.produced_units | number }} units produced
-hr(ng-show="game.game_type || game.units")
+label.label--block(ng-show="vm.game.game_type") {{ vm.game.game_type | gametype }}
+label.label--block(ng-show="vm.game.mpu") {{ vm.game.mpu.long }}
+label(ng-show="vm.game.produced_units") {{ vm.game.produced_units | number }} units produced
+hr(ng-show="vm.game.game_type || vm.game.units")
 
-label.label-name.label--block(ng-show="game.designers") Game Design:
-label.label-value(ng-show="game.designers") {{ game.designers.join(', ') }}
-hr(ng-show="game.designers")
+label.label-name.label--block(ng-show="vm.game.designers") Game Design:
+label.label-value(ng-show="vm.game.designers") {{ vm.game.designers.join(', ') }}
+hr(ng-show="vm.game.designers")
 
-label.label-name.label--block(ng-show="game.artists") Art Design:
-label.label-value(ng-show="game.artists")  {{ game.artists.join(', ') }}
-hr(ng-show="game.artists")
+label.label-name.label--block(ng-show="vm.game.artists") Art Design:
+label.label-value(ng-show="vm.game.artists")  {{ vm.game.artists.join(', ') }}
+hr(ng-show="vm.game.artists")
 
 .row: .col-sm-offset-1.col-sm-10
-	label.label-name(ng-show="game.ipdb")
-		a.a--lighter(href="http://www.ipdb.org/machine.cgi?id={{ game.ipdb.number  }}", target="_blank")
+	label.label-name(ng-show="vm.game.ipdb")
+		a.a--lighter(href="http://www.ipdb.org/machine.cgi?id={{ vm.game.ipdb.number  }}", target="_blank")
 			span.space-right
 				strong IPDB
 			+icon('external-link').shift-up
-	dl.dl--oneliner(ng-show="game.ipdb.rating")
+	dl.dl--oneliner(ng-show="vm.game.ipdb.rating")
 		dt Rating
-		dd(title="{{ game.ipdb.votes | number }} vote{{ game.ipdb.votes == 1 ? '' : 's' }}")
-			strong {{ game.ipdb.rating | ratingFormat }}
-		dt(ng-show="game.ipdb.top300") Top 300
-		dd(ng-show="game.ipdb.top300") rank <strong>{{ game.ipdb.top300 }}</strong>
+		dd(title="{{ vm.game.ipdb.votes | number }} vote{{ vm.game.ipdb.votes == 1 ? '' : 's' }}")
+			strong {{ vm.game.ipdb.rating | ratingFormat }}
+		dt(ng-show="vm.game.ipdb.top300") Top 300
+		dd(ng-show="vm.game.ipdb.top300") rank <strong>{{ vm.game.ipdb.top300 }}</strong>

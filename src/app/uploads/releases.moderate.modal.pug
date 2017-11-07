@@ -1,0 +1,24 @@
+include ../template/_mixins
+include ./helper.mixins.pug
+
+.theme-light
+	.modal-header
+		h1.h--no-margin.h--small <strong>{{ vm.release.game.title }}</strong> Moderation
+
+	.modal-body
+
+		h3.h--shift-up.h--no-margin
+			| {{ vm.release.name }}
+			.pull-right
+				a.btn.shift-up(ui-sref="vm.releaseDetails({ id: vm.release.game.id, releaseId: vm.release.id })")
+					+icon('eye').space-right
+					| Details
+		+info('vm.release')
+		+authors('vm.release')
+		+blockmatches()
+		+history()
+		+message(true)
+
+		.clearfix.padder-top
+	.modal-footer
+		+footer('vm.release')
