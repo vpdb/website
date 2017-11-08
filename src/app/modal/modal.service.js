@@ -1,8 +1,8 @@
 import { defaults } from 'lodash';
 
-const ModalQuestionTpl = require('./modal.question.pug')();
-const ModalMarkdownTpl = require('./modal.markdown.doc.pug')();
-const ModalErrorInfoTpl = require('./modal.error.info.pug')();
+import ModalQuestionTpl from './modal.question.pug';
+import ModalMarkdownDocTpl from './modal.markdown.doc.pug';
+import ModalErrorInfoTpl from './modal.error.info.pug';
 
 export default class ModalService {
 
@@ -43,7 +43,7 @@ export default class ModalService {
 
 	markdown() {
 		return this.$uibModal.open({
-			template: ModalMarkdownTpl,
+			templateUrl: ModalMarkdownDocTpl,
 			controller: 'ModalCtrl',
 			resolve: { data: () => null },
 			size: 'lg'
@@ -70,7 +70,7 @@ export default class ModalService {
 		data = defaults(data, deflt);
 
 		return this.$uibModal.open({
-			template: ModalQuestionTpl,
+			templateUrl: ModalQuestionTpl,
 			controller: 'ModalCtrl',
 			controllerAs: 'vm',
 			resolve: { data: () => data }
@@ -96,7 +96,7 @@ export default class ModalService {
 			// if connection broke and the html isn't cached, this will fail too
 			try {
 				return this.$uibModal.open({
-					template: ModalErrorInfoTpl,
+					templateUrl: ModalErrorInfoTpl,
 					controller: 'ModalCtrl',
 					resolve: { data: () => data }
 				});

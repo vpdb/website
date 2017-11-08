@@ -1,4 +1,4 @@
-const gameSelectModalTpl = require('./games/game.select.modal.pug')();
+import GameSelectModalTpl from './games/game.select.modal.pug';
 
 export default class AppCtrl {
 
@@ -20,7 +20,7 @@ export default class AppCtrl {
 
 	uploadRelease() {
 		this.$uibModal.open({
-			template: gameSelectModalTpl,
+			templateUrl: GameSelectModalTpl,
 			controller: 'GameSelectModalCtrl',
 			controllerAs: 'vm',
 			windowTopClass: 'modal--with-overflow',
@@ -39,7 +39,7 @@ export default class AppCtrl {
 
 	uploadBackglass() {
 		this.$uibModal.open({
-			template: gameSelectModalTpl,
+			templateUrl: GameSelectModalTpl,
 			controller: 'GameSelectModalCtrl',
 			controllerAs: 'vm',
 			windowTopClass: 'modal--with-overflow',

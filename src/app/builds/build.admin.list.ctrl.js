@@ -1,7 +1,7 @@
 import { assign, orderBy } from 'lodash';
 
-const addModalTpl = require('./build.admin.add.modal.pug')();
-const editModalTpl = require('./build.admin.edit.modal.pug')();
+import BuildAdminAddModalTpl from './build.admin.add.modal.pug';
+import BuildAdminEditModalTpl from './build.admin.edit.modal.pug';
 
 export default class BuildAdminListCtrl {
 
@@ -51,7 +51,7 @@ export default class BuildAdminListCtrl {
 
 	edit(build) {
 		this.$uibModal.open({
-			template: editModalTpl,
+			templateUrl: BuildAdminEditModalTpl,
 			controller: 'BuildAdminEditModalCtrl',
 			controllerAs: 'vm',
 			size: 'lg',
@@ -68,7 +68,7 @@ export default class BuildAdminListCtrl {
 
 	add() {
 		this.$uibModal.open({
-			template: addModalTpl,
+			templateUrl: BuildAdminAddModalTpl,
 			controller: 'BuildAdminAddModalCtrl',
 			controllerAs: 'vm',
 			size: 'lg'

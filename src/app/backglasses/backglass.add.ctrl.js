@@ -1,4 +1,4 @@
-const authorSelectModalTpl = require('../users/author.select.modal.pug')();
+import AuthorSelectModalTpl from '../users/author.select.modal.pug';
 
 export default class BackglassAddCtrl {
 
@@ -167,7 +167,7 @@ export default class BackglassAddCtrl {
 	 */
 	addAuthor(author) {
 		this.$uibModal.open({
-			template: authorSelectModalTpl,
+			templateUrl: AuthorSelectModalTpl,
 			controller: 'AuthorSelectModalCtrl',
 			resolve: {
 				subject: () => this.backglass,

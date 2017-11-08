@@ -1,4 +1,4 @@
-const userInfoModalTpl = require('./user.info.modal.pug')();
+import UserInfoModalTpl from './user.info.modal.pug';
 
 /**
  * Users linked in markdown will get highlighted with this.
@@ -26,7 +26,7 @@ export default function userDetails($compile, $uibModal, $rootScope, AuthService
 			element.click(function() {
 				if (AuthService.hasPermission('users/view')) {
 					$uibModal.open({
-						template: userInfoModalTpl,
+						templateUrl: UserInfoModalTpl,
 						controller: 'UserInfoModalCtrl',
 						controllerAs: 'vm',
 						resolve: {

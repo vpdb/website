@@ -1,4 +1,4 @@
-const ratingTpl = require('./rating.directive.pug');
+import RatingDirectiveTpl from './rating.directive.pug';
 
 /**
  * The rating box for releases and games.
@@ -14,7 +14,7 @@ export default function($parse, $animate) {
 	return {
 		restrict: 'C',
 		scope: true,
-		template: ratingTpl,
+		templateUrl: RatingDirectiveTpl,
 		link: function(scope, elem) {
 			elem.mouseenter(function(e) {
 				e.preventDefault();

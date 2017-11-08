@@ -14,9 +14,15 @@ module.exports  = function(options) {
 		module: {
 			rules: [
 				{ test: /src.*\.js$/, loader: 'ng-annotate-loader', options: { ngAnnotate: 'ng-annotate-patched', es6: true, explicitOnly: false } },
-				{ test: /\.pug$/, use: [ { loader: 'pug-loader', options: { pretty: true } } ] },
+				{ test: /\.pug$/, oneOf: [ {
+					test: /index\.pug$/,
+					use: [ { loader: 'pug-loader', options: { pretty: true } } ]
+				}, { use: [
+					{ loader: 'file-loader', options: { name: '[path][name].html?[hash]', context: resolve(__dirname, '../src/app') } },
+					{ loader: 'pug-html-loader', options: { pretty: true } } ]
+				} ] },
 				{ test: /\.html$/, loader: 'raw-loader' },
-				{ test: /\.(eot|woff|woff2|ttf|png|svg|jpg)$/, exclude: [ resolve(__dirname, '../src/icons')  ], loader: 'url-loader?limit=300' },
+				{ test: /\.(eot|woff|woff2|ttf|png|svg|jpg)$/, exclude: resolve(__dirname, '../src/icons'), loader: 'url-loader?limit=300' },
 				{ test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }) },
 				{ test: /\.styl$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader?sourceMap', 'stylus-loader'] }) },
 				{ test: /\.svg$/, include: resolve(__dirname, '../src/icons'), use: [

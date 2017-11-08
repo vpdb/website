@@ -1,6 +1,6 @@
 import { indexOf, find, isArray } from 'lodash';
 
-const buildAddModalTpl = require('../builds/build.add.modal.pug')();
+import BuildAddModalTpl from '../builds/build.add.modal.pug';
 
 export default class ReleaseAddBaseCtrl {
 
@@ -94,7 +94,7 @@ export default class ReleaseAddBaseCtrl {
 	 */
 	addBuild() {
 		this.$uibModal.open({
-			template: buildAddModalTpl,
+			templateUrl: BuildAddModalTpl,
 			controller: 'BuildAddModalCtrl',
 			controllerAs: 'vm',
 			size: 'lg'

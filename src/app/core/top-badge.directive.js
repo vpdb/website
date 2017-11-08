@@ -1,5 +1,5 @@
 import { min } from 'lodash';
-const topBadgeTpl = require('./top-badge.directive.pug');
+import TopBadgeDirectiveTpl from './top-badge.directive.pug';
 
 export default function() {
 	return {
@@ -10,7 +10,7 @@ export default function() {
 			href: '@'
 		},
 		replace: true,
-		template: topBadgeTpl,
+		templateUrl: TopBadgeDirectiveTpl,
 		controller: function($scope) {
 
 			$scope.$watch('ranks', function(ranks) {

@@ -46,9 +46,11 @@ import routes from './app.routes';
 import controller from './app.ctrl';
 import service from './app.service';
 
+import AppTpl from './app.pug';
+
 const app = () => {
 	return {
-		template: require('./app.pug'),
+		templateUrl: AppTpl,
 		controller: 'AppCtrl',
 		controllerAs: 'vm'
 	}

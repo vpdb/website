@@ -1,7 +1,7 @@
 import { isEmpty, isObject, indexOf, find, filter, mapValues, map } from 'lodash';
 
-const backglassModalTpl = require('../backglasses/backglass.details.modal.pug')();
-const mediumModalTpl = require('../media/medium.info.modal.pug')();
+import BackglassDetailsModalTpl from '../backglasses/backglass.details.modal.pug';
+import MediumInfoModalTpl from '../media/medium.info.modal.pug';
 
 /**
  * The game's details view.
@@ -322,7 +322,7 @@ export default class GameDetailsCtrl {
 
 	showBackglass(backglass) {
 		this.$uibModal.open({
-			template: backglassModalTpl,
+			templateUrl: BackglassDetailsModalTpl,
 			controller: 'BackglassDetailsModalCtrl',
 			controllerAs: 'vm',
 			size: 'md',
@@ -339,7 +339,7 @@ export default class GameDetailsCtrl {
 
 	showMedium(medium) {
 		this.$uibModal.open({
-			template: mediumModalTpl,
+			templateUrl: MediumInfoModalTpl,
 			controller: 'MediumInfoModalCtrl',
 			controllerAs: 'vm',
 			size: 'md',

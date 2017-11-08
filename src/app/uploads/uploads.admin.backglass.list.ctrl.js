@@ -1,4 +1,4 @@
-const moderateModalTpl = require('./uploads.admin.backglass.moderate.modal.pug')();
+import AdminModerateBackglassModalTpl from './uploads.admin.backglass.moderate.modal.pug';
 
 export default class UploadsAdminBackglassListCtrl {
 
@@ -36,7 +36,7 @@ export default class UploadsAdminBackglassListCtrl {
 
 	moderateBackglass(backglass) {
 		this.$uibModal.open({
-			template: moderateModalTpl,
+			templateUrl: AdminModerateBackglassModalTpl,
 			controller: 'AdminModerateBackglassModalCtrl',
 			controllerAs: 'vm',
 			size: 'md',

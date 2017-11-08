@@ -1,6 +1,6 @@
 import { clone } from 'lodash';
 
-const modalErrorInfoTpl = require('./modal.error.info.pug')();
+import ModalErrorInfoTpl from './modal.error.info.pug';
 
 /**
  * Provides easy access to spawning modal messages.
@@ -52,7 +52,7 @@ export default class ModalFlashService {
 			const data = clone(this.ModalService._flashMessage);
 			this.ModalService._flashMessage = null;
 			this.$uibModal.open({
-				template: modalErrorInfoTpl,
+				templateUrl: ModalErrorInfoTpl,
 				resolve: { data: () => data }
 			});
 		}

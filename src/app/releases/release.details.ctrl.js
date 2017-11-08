@@ -1,8 +1,8 @@
 import { orderBy, compact, map } from 'lodash';
 import $ from 'jquery';
 
-const downloadModalTpl = require('./release.download.modal.pug')();
-const fileValidationModalTpl = require('./release.file.validation.modal.pug')();
+import ReleaseDownloadModalTpl from './release.download.modal.pug';
+import ReleaseFileValidationTpl from './release.file.validation.modal.pug';
 
 /**
  * The release's detail view
@@ -220,7 +220,7 @@ export default class ReleaseDetailsCtrl {
 
 		if (this.AuthService.isAuthenticated) {
 			this.$uibModal.open({
-				template: downloadModalTpl,
+				templateUrl: ReleaseDownloadModalTpl,
 				controller: 'ReleaseDownloadModalCtrl',
 				controllerAs: 'vm',
 				size: 'lg',
@@ -261,7 +261,7 @@ export default class ReleaseDetailsCtrl {
 
 	validateFile(release, version, file) {
 		this.$uibModal.open({
-			template: fileValidationModalTpl,
+			templateUrl: ReleaseFileValidationTpl,
 			controller: 'ReleaseFileValidationCtrl',
 			controllerAs: 'vm',
 			resolve: {

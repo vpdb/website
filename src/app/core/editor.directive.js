@@ -1,4 +1,4 @@
-const editorTpl = require('./editor.directive.pug')();
+import EditorTpl from './editor.directive.pug';
 
 /**
  * The editor with markdown preview.
@@ -13,7 +13,7 @@ export default function() {
 			markdownText: '@'
 		},
 		replace: true,
-		template: editorTpl,
+		templateUrl: EditorTpl,
 		controller: 'EditorCtrl',
 		controllerAs: 'vm'
 	};

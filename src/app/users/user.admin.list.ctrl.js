@@ -1,6 +1,6 @@
 import { includes, debounce } from 'lodash';
 
-const userEditModalTpl = require('./user.admin.edit.modal.pug')();
+import UserAdminEditModalTpl from './user.admin.edit.modal.pug';
 
 export default class UserAdminListCtrl {
 
@@ -51,7 +51,7 @@ export default class UserAdminListCtrl {
 
 	edit(user) {
 		this.$uibModal.open({
-			template: userEditModalTpl,
+			templateUrl: UserAdminEditModalTpl,
 			controller: 'UserAdminEditModalCtrl',
 			controllerAs: 'vm',
 			size: 'lg',

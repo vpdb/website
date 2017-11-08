@@ -1,4 +1,4 @@
-const moderateModalTpl = require('./uploads.admin.release.moderate.modal.pug')();
+import UploadsAdminReleaseModerateModalTpl from './uploads.admin.release.moderate.modal.pug';
 
 export default class UploadsAdminReleaseListCtrl {
 
@@ -35,8 +35,8 @@ export default class UploadsAdminReleaseListCtrl {
 
 	moderateRelease(release) {
 		this.$uibModal.open({
-			template: moderateModalTpl,
-			controller: 'AdminModerateReleaseModalCtrl',
+			templateUrl: UploadsAdminReleaseModerateModalTpl,
+			controller: 'UploadsAdminReleaseModerateModalCtrl',
 			controllerAs: 'vm',
 			size: 'md',
 			resolve: {

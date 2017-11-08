@@ -1,8 +1,8 @@
 import ReleaseAddBaseCtrl from './release.add.base.ctrl';
 import { values, filter, includes, cloneDeep, map, flatten } from 'lodash';
 
-const authorSelectModalTpl = require('../users/author.select.modal.pug')();
-const tagAddModalTpl = require('../tag/tag.add.modal.pug')();
+import AuthorSelectModalTpl from '../users/author.select.modal.pug';
+import TagAddModalTpl from '../tag/tag.add.modal.pug';
 
 export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 
@@ -157,7 +157,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 	 */
 	addAuthor(author) {
 		this.$uibModal.open({
-			template: authorSelectModalTpl,
+			templateUrl: AuthorSelectModalTpl,
 			controller: 'AuthorSelectModalCtrl',
 			resolve: {
 				subject: () => this.release,
@@ -192,7 +192,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 	 */
 	createTag() {
 		this.$uibModal.open({
-			template: tagAddModalTpl,
+			templateUrl: TagAddModalTpl,
 			controller: 'TagAddModalCtrl'
 		}).result.then(newTag => {
 			this.tags.push(newTag);

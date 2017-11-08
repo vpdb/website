@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { max, map, keys, isEmpty } from 'lodash';
 
-const loginModelTpl = require('./auth/login.modal.pug')();
+import LoginModalTpl from './auth/login.modal.pug';
 
 export default class App {
 
@@ -113,7 +113,7 @@ export default class App {
 	 */
 	login(opts) {
 		this.$uibModal.open({
-			template: loginModelTpl,
+			templateUrl: LoginModalTpl,
 			controller: 'LoginModalCtrl',
 			controllerAs: 'vm',
 			windowClass: 'theme-light',

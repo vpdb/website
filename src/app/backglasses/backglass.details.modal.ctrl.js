@@ -1,6 +1,6 @@
 import { findIndex } from 'lodash';
 
-const backglassEditModalTpl = require('./backglass.edit.modal.pug')();
+import BackglassEditModalTpl from './backglass.edit.modal.pug';
 
 export default class BackglassDetailsModalCtrl {
 
@@ -30,7 +30,7 @@ export default class BackglassDetailsModalCtrl {
 	edit(backglass) {
 		this.$uibModalInstance.close();
 		this.$uibModal.open({
-			template: backglassEditModalTpl,
+			templateUrl: BackglassEditModalTpl,
 			controller: 'BackglassEditModalCtrl',
 			controllerAs: 'vm',
 			size: 'md',

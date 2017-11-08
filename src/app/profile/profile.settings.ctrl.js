@@ -1,6 +1,6 @@
 import { pick, omit } from 'lodash';
 
-const TokenCreateModalTpl = require('../auth/token.create.modal.pug')();
+import TokenCreateModalTpl from '../auth/token.create.modal.pug';
 
 export default class ProfileSettingsCtrl {
 
@@ -158,7 +158,7 @@ export default class ProfileSettingsCtrl {
 
 	createToken() {
 		this.$uibModal.open({
-			template: TokenCreateModalTpl,
+			templateUrl: TokenCreateModalTpl,
 			controller: 'TokenCreateModalCtrl',
 			controllerAs: 'vm'
 

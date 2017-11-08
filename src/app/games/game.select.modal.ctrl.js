@@ -1,4 +1,4 @@
-const gameRequestModalTpl = require('./game.request.modal.pug')();
+import GameRequestModalTpl from './game.request.modal.pug';
 
 export default class GameSelectModalCtrl {
 
@@ -30,7 +30,7 @@ export default class GameSelectModalCtrl {
 	requestGame() {
 		this.$uibModalInstance.dismiss();
 		this.$uibModal.open({
-			template: gameRequestModalTpl,
+			templateUrl: GameRequestModalTpl,
 			controller: 'GameRequestModalCtrl',
 			controllerAs: 'vm',
 		});
