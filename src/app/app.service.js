@@ -60,7 +60,7 @@ export default class App {
 	/**
 	 * Returns the pixel suffix for bitmap images.
 	 * @param name Name of the bitmap
-	 * @returns {string} Screen density-aware file name
+	 * @return {string} Screen density-aware file name
 	 */
 	pixelSuffix(name) {
 		return name + (this.$window.devicePixelRatio > 1 ? '-2x' : '');
@@ -69,7 +69,7 @@ export default class App {
 	/**
 	 * Returns the provided message or the current login message as fallback and clears the fallback.
 	 * @param message Message
-	 * @returns {*}
+	 * @return {*}
 	 */
 	popLoginMessage(message) {
 		let msg = message || this.$rootScope.loginParams.message;

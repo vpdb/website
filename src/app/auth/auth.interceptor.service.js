@@ -1,10 +1,9 @@
-
 /**
  * A service which adds the bearer token to backend API requests.
  *
  * The logic is the following:
  *
- * 	- If the request is hitting the VDPB backend
+ * 	- If the request is hitting the VPDB backend
  * 	   - If there is an auth token in local storage
  * 	     - Then add the token to the header
  * 	   - If there is a login token in local storage
@@ -21,7 +20,6 @@
 export default class AuthInterceptorService {
 
 	/**
-	 * Class constructor
 	 * @param $injector
 	 * @param $q
 	 * @param {ConfigService} ConfigService

@@ -1,12 +1,12 @@
 import angular from 'angular';
-import ReleaseAddCtrl from './add.ctrl';
-import ReleaseListCtrl from './list.ctrl';
-import ReleaseDetailsCtrl from './details.ctrl';
-import ReleaseDownloadModalCtrl from './download.modal.ctrl';
-import ReleaseFileValidationCtrl from './file.validation.ctrl';
+import ReleaseAddCtrl from './release.add.ctrl';
+import ReleaseListCtrl from './release.list.ctrl';
+import ReleaseDetailsCtrl from './release.details.ctrl';
+import ReleaseDownloadModalCtrl from './release.download.modal.ctrl';
+import ReleaseFileValidationCtrl from './release.file.validation.ctrl';
 import ReleaseService from './release.service';
 import { validationStatus, validationTooltip } from './release.filters';
-import ReleaseMeta from './add.meta';
+import ReleaseMeta from './release.add.meta';
 
 export default angular
 	.module('vpdb.releases', [])

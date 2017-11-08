@@ -1,4 +1,4 @@
-const gameSelectModalTpl = require('./games/select.modal.pug')();
+const gameSelectModalTpl = require('./games/game.select.modal.pug')();
 
 export default class AppCtrl {
 

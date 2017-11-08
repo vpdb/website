@@ -1,13 +1,13 @@
 import angular from 'angular';
-import BuildAddCtrl from './add.modal.ctrl';
-import AdminBuildListCtrl from './list.ctrl';
-import AdminBuildEditCtrl from './edit.modal.ctrl';
-import AdminBuildAddCtrl from './add.admin.modal.ctrl';
+import BuildAddModalCtrl from './build.add.modal.ctrl';
+import BuildAdminListCtrl from './build.admin.list.ctrl';
+import BuildAdminAddModalCtrl from './build.admin.add.modal.ctrl';
+import BuildAdminEditModalCtrl from './build.admin.edit.modal.ctrl';
 
 export default angular
 	.module('vpdb.builds', [])
-	.controller('BuildAddCtrl', BuildAddCtrl)
-	.controller('AdminBuildListCtrl', AdminBuildListCtrl)
-	.controller('AdminBuildEditCtrl', AdminBuildEditCtrl)
-	.controller('AdminBuildAddCtrl', AdminBuildAddCtrl)
+	.controller('BuildAddModalCtrl', BuildAddModalCtrl)
+	.controller('BuildAdminListCtrl', BuildAdminListCtrl)
+	.controller('BuildAdminAddModalCtrl', BuildAdminAddModalCtrl)
+	.controller('BuildAdminEditModalCtrl', BuildAdminEditModalCtrl)
 	.name;

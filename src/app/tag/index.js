@@ -1,5 +1,5 @@
 import angular from 'angular';
-import TagAddModalCtrl from './add.modal.ctrl';
+import TagAddModalCtrl from './tag.add.modal.ctrl';
 
 export default angular
 	.module('vpdb.tags', [])

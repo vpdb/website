@@ -12,6 +12,7 @@ import { fallbackIcon, focusOn, onEnter, jsonLd, markdown, sort } from './util.d
 import { bytesFilter, escapeFilter, fileExtFilter, hexFilter, hashPrefixFilter, authorsFilter } from './util.filters';
 import EditorCtrl from './editor.ctrl';
 import CommentCtrl from './comment.ctrl';
+import heightAnimation from './height.animation';
 
 export default angular.module('vpdb.core', [])
 	.constant('Config', WEBSITE_CONFIG)
@@ -40,4 +41,5 @@ export default angular.module('vpdb.core', [])
 	.filter('fileext', fileExtFilter)
 	.filter('hex', hexFilter)
 	.filter('sprite', hashPrefixFilter)
+	.animation('.height-animation', heightAnimation)
 	.name;

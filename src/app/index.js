@@ -37,6 +37,7 @@ import backglasses from './backglasses';
 import users from './users';
 import profile from './profile';
 import builds from './builds';
+import media from './media';
 import uploads from './uploads';
 import content from './content';
 import tag from './tag';
@@ -90,6 +91,7 @@ export default angular.module('vpdb', [
 	profile,
 	users,
 	builds,
+	media,
 	uploads,
 	content,
 	tag

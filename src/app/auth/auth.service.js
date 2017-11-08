@@ -10,7 +10,6 @@ import { forEach, isArray, includes, map, uniqBy, isString, isObject, isEmpty, k
 export default class AuthService {
 
 	/**
-	 * Class constructor
 	 * @param $window
 	 * @param $localStorage
 	 * @param $rootScope
@@ -19,14 +18,14 @@ export default class AuthService {
 	 * @param $state
 	 * @param $timeout
 	 * @param {App} App
-	 * @param {Config} Config
 	 * @param {ApiHelper} ApiHelper
+	 * @param {Config} Config
 	 * @param {ConfigService} ConfigService
 	 * @param {TokenResource} TokenResource
 	 * @param {ProfileResource} ProfileResource
 	 */
 	constructor($window, $localStorage, $rootScope, $location, $http, $state, $timeout,
-				App, Config, ApiHelper, ConfigService, TokenResource, ProfileResource) {
+				App, ApiHelper, Config, ConfigService, TokenResource, ProfileResource) {
 
 		this.$window = $window;
 		this.$localStorage = $localStorage;
@@ -80,7 +79,7 @@ export default class AuthService {
 	 * where we only retrieve the token from the view and need to make
 	 * further requests for user info.
 	 *
-	 * @param token JWT, as string
+	 * @param {string} token JSON web token
 	 */
 	tokenReceived(token) {
 
@@ -91,7 +90,7 @@ export default class AuthService {
 	/**
 	 * Executed after token refresh, where only the token but not the user
 	 * is updated.
-	 * @param token JWT, as string
+	 * @param {string} token JSON web token
 	 */
 	tokenUpdated(token) {
 		// only update if there already is a token. this is to avoid refreshing the token
@@ -138,7 +137,7 @@ export default class AuthService {
 	 * Returns false if not logged.
 	 *
 	 * @param {string} resourcePermission Permission to check, e.g. "users/view"
-	 * @returns {boolean} True if user has permission, false otherwise.
+	 * @return {boolean} True if user has permission, false otherwise.
 	 */
 	hasPermission(resourcePermission) {
 		if (!this.isAuthenticated) {
@@ -169,7 +168,7 @@ export default class AuthService {
 	 * Returns false if not logged.
 	 *
 	 * @param {string|string[]} role Role to match. If multiple given, at least one must match.
-	 * @returns {boolean} True if user has role, false otherwise.
+	 * @return {boolean} True if user has role, false otherwise.
 	 */
 	hasRole(role) {
 		if (isArray(role)) {
@@ -184,6 +183,11 @@ export default class AuthService {
 		}
 	}
 
+	/**
+	 * Checks whether the currently logged user is author of the given release.
+	 * @param release Release to check
+	 * @return {boolean} True if author, false otherwise.
+	 */
 	isAuthor(release) {
 		if (!release || !this.isAuthenticated) {
 			return false;
@@ -197,7 +201,7 @@ export default class AuthService {
 
 	/**
 	 * Returns the user from browser storage.
-	 * @returns {Object}
+	 * @return {Object}
 	 */
 	getUser() {
 		return this.$localStorage.user;
@@ -205,10 +209,10 @@ export default class AuthService {
 
 	/**
 	 * Reloads the user profile data from the server
-	 * @returns {promise}
+	 * @param {function(err:Error, user:Object=)} callback Error or refreshed user
 	 */
 	refreshUser(callback) {
-		return this.ProfileResource.get(user => {
+		this.ProfileResource.get(user => {
 			this.saveUser(user);
 			if (callback) {
 				callback(null, user);
@@ -224,7 +228,7 @@ export default class AuthService {
 	/**
 	 * Saves the user data to browser storage. Called after user profile update
 	 * or successful authentication.
-	 * @param user
+	 * @param user User to save
 	 */
 	saveUser(user) {
 		this.$localStorage.user = user;
@@ -237,9 +241,7 @@ export default class AuthService {
 
 	/**
 	 * Checks if the current JWT is expired.
-	 * Returns true if no token set.
-	 *
-	 * @returns {boolean}
+	 * @return {boolean} True if no token set, false otherwise.
 	 */
 	isTokenExpired() {
 		if (!this.$localStorage.tokenExpires) {
@@ -252,8 +254,7 @@ export default class AuthService {
 	/**
 	 * Checks if there is a valid token. If there is an expired token, it
 	 * is deleted first.
-	 *
-	 * @returns {boolean}
+	 * @return {boolean} True if token exists and not expired, false otherwise.
 	 */
 	hasToken() {
 		if (this.isTokenExpired()) {
@@ -265,7 +266,7 @@ export default class AuthService {
 
 	/**
 	 * Checks if there is a valid login token.
-	 * @returns {boolean}
+	 * @return {boolean} True if login token exists, "remember me" is disabled and the token is not expired.
 	 */
 	hasLoginToken() {
 		if (!this.$localStorage.loginToken || !this.$localStorage.rememberMe) {
@@ -279,7 +280,7 @@ export default class AuthService {
 
 	/**
 	 * Returns the token from browser storage.
-	 * @returns {*}
+	 * @return {string} The JWT
 	 */
 	getToken() {
 		return this.$localStorage.jwt;
@@ -287,7 +288,7 @@ export default class AuthService {
 
 	/**
 	 * Returns the login token from browser storage.
-	 * @returns {*}
+	 * @return {string} The login token
 	 */
 	getLoginToken() {
 		return this.$localStorage.loginToken.token;
@@ -302,8 +303,8 @@ export default class AuthService {
 
 	/**
 	 * Saves the token to browser storage.
-	 * @param {String} token JWT
-	 * @returns {String} User ID stored in the token (Issuer Claim)
+	 * @param {string} token JWT
+	 * @return {string} User ID stored in the token (Issuer Claim)
 	 */
 	saveToken(token) {
 
@@ -353,7 +354,6 @@ export default class AuthService {
 
 	/**
 	 * Traverses an object and collects all values of the `url` property.
-	 *
 	 * @param {object} obj Object to deep-traverse
 	 * @param {boolean} [fetch] If set, directly fetch the tokens
 	 * @return {AuthService}
@@ -377,7 +377,7 @@ export default class AuthService {
 	 * Requests storage tokens for previously collected URLs.
 	 * @see #collectUrlProps
 	 * @param {array} [paths]
-	 * @param {function} [callback]
+	 * @param {function(err:Error, {token:string, expires:string, user:object}=)} [callback]
 	 * @return {AuthService}
 	 */
 	fetchUrlTokens(paths, callback) {
@@ -421,7 +421,7 @@ export default class AuthService {
 	 * because of the browser doing the request (like image URLs).
 	 *
 	 * @param {string} url
-	 * @param {function} callback
+	 * @param {function(url:string)} callback
 	 * @return {AuthService}
 	 */
 	addUrlToken(url, callback) {
@@ -443,7 +443,7 @@ export default class AuthService {
 
 	/**
 	 * Returns the authorization header from the app configuration.
-	 * @returns {string}
+	 * @return {string}
 	 */
 	getAuthHeader() {
 		return this.Config.authHeader;
@@ -453,7 +453,7 @@ export default class AuthService {
 	 * Returns authentication providers. If a user is supplied, only
 	 * the providers of the user are returned.
 	 *
-	 * @param {User} [user]
+	 * @param {object} [user] If set, only return providers of the user
 	 */
 	getProviders(user) {
 		let providers = [];
@@ -510,8 +510,8 @@ export default class AuthService {
 
 	/**
 	 * Adds an action to be executed after successful login
-	 * @param action
-	 * @param params
+	 * @param {string} action
+	 * @param {object} params
 	 */
 	addPostLoginAction(action, params) {
 		if (!this.$localStorage.postLoginActions) {

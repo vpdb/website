@@ -1,20 +1,30 @@
 import { isObject, isFunction, map, forEach, set } from 'lodash';
 import parseUri from 'parse-uri';
 
+/**
+ * Helper class for API requests.
+ *
+ * @author freezy <freezy@vpdb.io>
+ */
 export default class ApiHelper {
 
-	constructor($location, ModalService/*, ModalFlashService*/) {
+	/**
+	 * @param $location
+	 * @param {ModalService} ModalService
+	 * @param {ModalFlashService} ModalFlashService
+	 */
+	constructor($location, ModalService, ModalFlashService) {
 		this.$location = $location;
 		this.ModalService = ModalService;
+		this.ModalFlashService = ModalFlashService;
 	}
 
 	/**
 	 * Reads pagination parameters from provided headers and updates the scope.
-	 *
-	 * @param scope
-	 * @param opts
-	 * @param callback
-	 * @returns {Function}
+	 * @param {object} scope Controller instance to which the pagination parameters are applied to.
+	 * @param {{ loader:boolean}|function(items:object[], headers:object)} opts Options or callback
+	 * @param {function(items:object[], headers:object)=undefined} callback Callback
+	 * @return {Function}
 	 */
 	handlePagination(scope, opts, callback) {
 		if (isFunction(opts)) {
@@ -64,10 +74,11 @@ export default class ApiHelper {
 	 * with the field names as property names, otherwise the `error`
 	 * variable is just set to the received error.
 	 *
-	 * @param {object} scope Scope where to create the error variables
-	 * @param {object} [opt] config options. Valid options: fieldPrefix
-	 * @param {function} [postFct] Executed if provided with given scope as argument, after the errors object has been set
-	 * @param {function} [preFct] Executed if provided with given scope as argument, before the errors object has been set.
+	 * @param {object} scope Controller instance to which the error values are applied to.
+	 * @param {{ fieldPrefix:string }} [opt] config Options
+	 * @param {function(scope:object, response:object)} [postFct] Executed if provided with given scope as argument, after the errors object has been set
+	 * @param {function(scope:object, response:object)} [preFct] Executed if provided with given scope as argument, before the errors object has been set.
+	 * @return {function(response:object)}
 	 */
 	handleErrors(scope, opt, postFct, preFct) {
 		if (!preFct && isFunction(opt)) {
@@ -75,7 +86,7 @@ export default class ApiHelper {
 			postFct = opt;
 		}
 		opt = isObject(opt) ? opt : {};
-		return function(response) {
+		return response => {
 			if (!response.data) {
 				this.ModalService.error({
 					subtitle: "Connection error",
@@ -117,13 +128,12 @@ export default class ApiHelper {
 
 	/**
 	 * Displays a modal with the received errors from the API.
-	 * @param {object} scope Scope where to create the error variables
+	 * @param {object} scope Controller instance to which the error values were applied to.
 	 * @param {string} title Title of the modal
-	 * @param {function} [callback] Executed if provided with given scope as argument.
-	 * @returns {Function}
+	 * @param {function(response:object)} [callback] Executed if provided with given scope as argument.
+	 * @return {function(response:object)}
 	 */
 	handleErrorsInDialog(scope, title, callback) {
-		const that = this;
 		return response => {
 			let skipError = false;
 			if (callback) {
@@ -133,7 +143,7 @@ export default class ApiHelper {
 			if (!skipError) {
 				this.ModalService.error({
 					subtitle: title,
-					message: that.parseError(response)
+					message: this.parseError(response)
 				});
 			}
 		};
@@ -143,7 +153,7 @@ export default class ApiHelper {
 	 * Displays a modal with the received errors from the API, but on a different page
 	 * @param {string} path Page where to navigate before displaying the modal
 	 * @param {string} title Title of the modal
-	 * @returns {Function}
+	 * @return {Function}
 	 */
 	handleErrorsInFlashDialog(path, title) {
 		return response => {
@@ -179,7 +189,7 @@ export default class ApiHelper {
 	/**
 	 * Parses error message from response.
 	 * @param response
-	 * @returns {string}
+	 * @return {string}
 	 */
 	parseError(response) {
 		if (response.data) {

@@ -1,10 +1,14 @@
+/**
+ * The page where the OAuth provider redirects to.
+ *
+ * @author freezy <freezy@vpdb.io>
+ */
 export default class AuthCallbackCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $stateParams
 	 * @param $location
-	 * @param $localStorage
+	 * @param {*} $localStorage
 	 * @param {AuthService} AuthService
 	 * @param {AuthResource} AuthResource
 	 * @param {ModalService} ModalService
@@ -12,22 +16,21 @@ export default class AuthCallbackCtrl {
 	constructor($stateParams, $location, $localStorage, AuthService, AuthResource, ModalService) {
 
 		if ($location.search().code) {
+			// noinspection JSUnresolvedFunction
 			AuthResource.authenticateCallback($stateParams, result => {
 				AuthService.authenticated(result);
 				AuthService.runPostLoginActions();
-
 				if ($localStorage.rememberMe) {
 					AuthService.rememberMe();
 				}
-
-			}, function(err) {
+			}, err => {
 				ModalService.error({
 					subtitle: 'Could not login.',
 					message: err.data.error
 				});
 			});
-
 		} else {
+			/** @type {{ error_uri:string, error_description:string}} */
 			this.error = $location.search();
 		}
 	}

@@ -1,0 +1,93 @@
+include ../template/_mixins
+
+.row.row--fullheight(ng-controller="UploadsAdminListCtrl as vm")
+	.col-sm-3.col--menu
+		h1 Filter
+		hr
+		.panel-group--transparent(uib-accordion, close-others="false")
+
+			//- flavor filters
+			.panel--inner(uib-accordion-group, is-open="true")
+				div(uib-accordion-heading) Show:
+				ul.list--checkboxes.list--condensed
+					li: .radio--lg: label
+						input(type="radio", ng-model="filters.status", value="pending", ng-change="vm.refresh()")
+						span Pending
+					li: .radio--lg: label
+						input(type="radio", ng-model="filters.status", value="refused", ng-change="vm.refresh()")
+						span Refused
+					li: .radio--lg: label
+						input(type="radio", ng-model="filters.status", value="manually_approved", ng-change="vm.refresh()")
+						span Manually Approved
+					li: .radio--lg: label
+						input(type="radio", ng-model="filters.status", value="auto_approved", ng-change="vm.refresh()")
+						span Auto-approved
+					li: .radio--lg: label
+						input(type="radio", ng-model="filters.status", value="all", ng-change="vm.refresh()")
+						span All
+
+	.col-sm-9.col--main
+
+		//-- RELEASES
+		//---------------------------------------------------------------------
+		div(ng-controller="UploadsAdminReleaseListCtrl as vm")
+			h1.h--primary
+				| Releases
+
+				//- pagination
+				.h--no-header.pull-right(ng-show="vm.releases.length > 0")
+
+					span(ng-show="vm.pagination.links.first", ng-click="vm.paginate(vm.pagination.links.first)"): +icon('angle-left-skip').smaller.a.a--lighter
+					span.space-left(ng-show="vm.pagination.links.prev", ng-click="vm.paginate(vm.pagination.links.prev)"): +icon('angle-left').smaller.a.a--lighter
+					span.small.space-left PAGE &nbsp; {{ vm.pagination.page }} / {{ vm.pagination.pageCount }}
+					span.space-left(ng-show="vm.pagination.links.next", ng-click="vm.paginate(vm.pagination.links.next)"): +icon('angle-right').smaller.a.a--lighter
+					span.space-left(ng-show="vm.pagination.links.last", ng-click="vm.paginate(vm.pagination.links.last)"): +icon('angle-right-skip').smaller.a.a--lighter
+			hr.hr--primary
+
+			//- release list
+			table.table.table-striped.table--selectable(ng-show="vm.releases.length > 0")
+				colgroup
+					col(width="60px")
+					col
+					col
+				tr(ng-repeat="release in vm.releases", ng-click="vm.moderateRelease(release)")
+					td.center
+						+icon('{{ release.icon }}').svg-2x
+					td {{ release.game.title }} <br/><b>{{ release.name }}</b>
+					td(ng-bind-html="release.authors | authors")
+					td.right(am-time-ago="release.created_at")
+			span(ng-hide="vm.releases.length > 0") No releases found.
+			.clearfix
+
+		//-- BACKGLASSES
+		//---------------------------------------------------------------------
+		div(ng-controller="UploadsAdminBackglassListCtrl as vm")
+			h1.h--primary
+				| Direct B2S Backglasses
+
+				//- pagination
+				.h--no-header.pull-right(ng-show="vm.backglasses.length > 0")
+
+					span(ng-show="vm.pagination.links.first", ng-click="vm.paginate(vm.pagination.links.first)"): +icon('angle-left-skip').smaller.a.a--lighter
+					span.space-left(ng-show="vm.pagination.links.prev", ng-click="vm.paginate(vm.pagination.links.prev)"): +icon('angle-left').smaller.a.a--lighter
+					span.small.space-left PAGE &nbsp; {{ vm.pagination.page }} / {{ vm.pagination.pageCount }}
+					span.space-left(ng-show="vm.pagination.links.next", ng-click="vm.paginate(vm.pagination.links.next)"): +icon('angle-right').smaller.a.a--lighter
+					span.space-left(ng-show="vm.pagination.links.last", ng-click="vm.paginate(vm.pagination.links.last)"): +icon('angle-right-skip').smaller.a.a--lighter
+			hr.hr--primary
+
+			//- backglass list
+			table.table.table-striped.table--selectable(ng-show="vm.backglasses.length > 0")
+				colgroup
+					col(width="60px")
+					col
+					col
+				tr(ng-repeat="backglass in vm.backglasses", ng-click="vm.moderateBackglass(backglass)")
+					td.center
+						+icon('{{ backglass.icon }}').svg-2x
+					td {{ backglass.game.title }} <br/>Version {{ backglass.versions[0].version }}</b>
+					td(ng-bind-html="backglass.authors | authors")
+					td.right(am-time-ago="backglass.created_at")
+			span(ng-hide="vm.backglasses.length > 0") No backglasses found.
+
+
+		p.padder-top &nbsp;

@@ -1,0 +1,44 @@
+include ../template/_mixins
+
+.row.ng-cloak.row--fullheight.fade-animation(ng-controller="GameDetailsCtrl as vm", ng-show="!vm.pageLoading")
+
+	// right column
+	.col-sm-3.col-sm-push-9.col--menu.text-center
+
+		include details-01-gameinfo
+
+		//-- UPLOAD BUTTONS
+		//---------------------------------------------------------------------
+		.panel--rect-block(ng-show="(!vm.game.restrictions.release.mpu && vm.AuthService.hasPermission('releases/add')) || (!vm.game.restrictions.backglass.mpu && vm.AuthService.hasPermission('backglasses/add'))")
+			h1.text-center UPLOAD
+
+			.center
+				ul.ul--no-list
+					li(ng-show="!vm.game.restrictions.release.mpu && vm.AuthService.hasPermission('releases/add')"): a.text-center(ui-sref="addRelease({ id: vm.game.id })")
+						+icon('plus-circle').space-right.shift-up
+						| Release
+					li(ng-show="!vm.game.restrictions.backglass.mpu && vm.AuthService.hasPermission('backglasses/add')"): a.text-center(ui-sref="addBackglass({ id: vm.game.id })")
+						+icon('plus-circle').space-right.shift-up
+						| Direct B2S
+
+			p.padder-top
+
+	// left column (main content)
+	.col-sm-9.col-sm-pull-3.col--main
+		.title
+			h1.title-main.h--primary
+				span(property="v:itemreviewed") {{ vm.game.title }}
+				a(ng-show="vm.AuthService.hasPermission('games/update')", ui-sref="vm.editGame({ id: vm.game.id })")
+					+icon('edit').space-left
+			h1.title-sub.h--small {{ vm.game.manufacturer }} &middot; {{ vm.game.year }}
+		hr
+
+		include details-02-release
+		include details-03-roms
+		include details-04-backglasses
+		include details-05-media
+
+	.content-end &nbsp;
+	jsonld(json="vm.ldGame")
+
+

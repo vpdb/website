@@ -1,6 +1,6 @@
 include ../template/_mixins
 
-.theme-light
+.theme-light(ng-controller="ModalCtrl as vm")
 	.modal-header
 		h1.h--no-margin.h--small
 			+icon('{{ vm.data.icon }}').space-right

@@ -1,7 +1,11 @@
+/**
+ * Provides easy access to downloading files or releases.
+ *
+ * @author freezy <freezy@vpdb.io>
+ */
 export default class DownloadService {
 
 	/**
-	 * Class constructor.
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ConfigService} ConfigService
@@ -14,7 +18,6 @@ export default class DownloadService {
 
 	/**
 	 * Downloads a file from VPDB.
-	 *
 	 * @param file
 	 * @param [callback]
 	 */
@@ -39,6 +42,12 @@ export default class DownloadService {
 		}
 	}
 
+	/**
+	 * Downloads a release from VPDBP.
+	 * @param {string} releaseId Release ID
+	 * @param {object} downloadRequest
+	 * @param {function} callback
+	 */
 	downloadRelease(releaseId, downloadRequest, callback) {
 
 		const path = '/releases/' + releaseId;

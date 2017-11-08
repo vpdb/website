@@ -1,6 +1,6 @@
 import { pick, omit } from 'lodash';
 
-const TokenCreateModalTpl = require('./token.create.modal.pug')();
+const TokenCreateModalTpl = require('../auth/token.create.modal.pug')();
 
 export default class ProfileSettingsCtrl {
 
@@ -197,7 +197,7 @@ export default class ProfileSettingsCtrl {
 	 * errors to scope.
 	 *
 	 * @param {object} credentials Objection containing `password1` and `password2`.
-	 * @returns {boolean} True on success, false otherwise.
+	 * @return {boolean} True on success, false otherwise.
 	 */
 	checkPasswordConfirmation(credentials) {
 		if (!credentials.password1) {

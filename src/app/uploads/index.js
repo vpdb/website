@@ -1,17 +1,17 @@
 import angular from 'angular';
-import AdminUploadsCtrl from './list.ctrl';
-import AdminReleaseUploadsCtrl from './releases.ctrl';
-import AdminBackglassUploadsCtrl from './backglasses.ctrl';
-import AdminModerateReleaseModalCtrl from './releases.moderate.modal.ctrl';
-import AdminModerateBackglassModalCtrl from './backglasses.moderate.modal.ctrl';
-import UploadHelper from './helper.service';
+import UploadsAdminListCtrl from './uploads.admin.list.ctrl';
+import UploadsAdminBackglassListCtrl from './uploads.admin.backglass.list.ctrl';
+import UploadsAdminReleaseListCtrl from './uploads.admin.release.list.ctrl';
+import UploadsAdminReleaseModerateModalCtrl from './uploads.admin.release.moderate.modal.ctrl';
+import UploadsAdminBackglassModerateModalCtrl from './uploads.admin.backglass.moderate.modal.ctrl';
+import UploadHelper from './uploads.helper.service';
 
 export default angular
 	.module('vpdb.uploads', [])
 	.service('UploadHelper', UploadHelper)
-	.controller('AdminUploadsCtrl', AdminUploadsCtrl)
-	.controller('AdminReleaseUploadsCtrl', AdminReleaseUploadsCtrl)
-	.controller('AdminBackglassUploadsCtrl', AdminBackglassUploadsCtrl)
-	.controller('AdminModerateReleaseModalCtrl', AdminModerateReleaseModalCtrl)
-	.controller('AdminModerateBackglassModalCtrl', AdminModerateBackglassModalCtrl)
+	.controller('UploadsAdminListCtrl', UploadsAdminListCtrl)
+	.controller('UploadsAdminBackglassListCtrl', UploadsAdminBackglassListCtrl)
+	.controller('UploadsAdminReleaseListCtrl', UploadsAdminReleaseListCtrl)
+	.controller('UploadsAdminReleaseModerateModalCtrl', UploadsAdminReleaseModerateModalCtrl)
+	.controller('UploadsAdminBackglassModerateModalCtrl', UploadsAdminBackglassModerateModalCtrl)
 	.name;

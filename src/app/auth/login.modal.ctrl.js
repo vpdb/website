@@ -1,23 +1,27 @@
 import { isUndefined, extend } from 'lodash';
 
+/**
+ * The login modal opening when the user clicks on "login".
+ *
+ * @author freezy <freezy@vpdb.io>
+ */
 export default class LoginModalCtrl {
 
 	/**
-	 * @param $scope
+	 * @param {Window} $window
 	 * @param $uibModalInstance
-	 * @param $window
-	 * @param $localStorage
+	 * @param {*} $localStorage
 	 * @param {Config} Config
 	 * @param {ConfigService} ConfigService
+	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
-	 * @param {App} App
 	 * @param {AuthResource} AuthResource
 	 * @param {UserResource} UserResource
 	 * @param {{ postLogin:{action:string, params:any}, headMessage:string, topMessage:string, message:string }} opts
 	 */
-	constructor($scope, $uibModalInstance, $window, $localStorage, Config, ConfigService,
-				ApiHelper, AuthService, App, AuthResource, UserResource, opts) {
+	constructor($window, $uibModalInstance, $localStorage, Config, ConfigService,
+				App, ApiHelper, AuthService, AuthResource, UserResource, opts) {
 
 		opts = opts || {};
 		$localStorage.rememberMe = isUndefined($localStorage.rememberMe) ? true : $localStorage.rememberMe;
@@ -29,14 +33,15 @@ export default class LoginModalCtrl {
 		this.AuthResource = AuthResource;
 		this.UserResource = UserResource;
 		this.$window = $window;
-		this.$modal = $uibModalInstance;
+		this.$uibModalInstance = $uibModalInstance;
 		this.$localStorage = $localStorage;
 
 		this.opts = opts || {};
-		this.registering = false;
+
+		/** @type {{ username:string, password:string}} */
 		this.userPass = {};
+		this.registering = false;
 		this.email = "";
-		this.registerUser = {};
 		this.message = opts.message || null;
 		this.error = null;
 		this.errors = {};
@@ -44,6 +49,10 @@ export default class LoginModalCtrl {
 		this.headMessage = opts.headMessage;
 	}
 
+	/**
+	 * Logs in using one of the supported OAuth providers.
+	 * @param {string} providerId One of `google`, `github` or an IPB ID.
+	 */
 	oauth(providerId) {
 
 		this.AuthService.setPostLoginRedirect();
@@ -53,6 +62,9 @@ export default class LoginModalCtrl {
 		this.$window.location.href = this.ConfigService.apiUri('/redirect/' + providerId);
 	}
 
+	/**
+	 * Locally authenticates a user through the backend.
+	 */
 	login() {
 
 		this.AuthService.setPostLoginRedirect();
@@ -65,7 +77,7 @@ export default class LoginModalCtrl {
 			this.error = null;
 			this.message2 = null;
 			this.AuthService.authenticated(result);
-			this.$modal.close();
+			this.$uibModalInstance.close();
 			this.AuthService.runPostLoginActions();
 
 			if (this.$localStorage.rememberMe) {
@@ -77,6 +89,9 @@ export default class LoginModalCtrl {
 		}));
 	}
 
+	/**
+	 * Locally registers a new user at the backend.
+	 */
 	register() {
 
 		this.AuthService.setPostLoginRedirect();
@@ -95,6 +110,9 @@ export default class LoginModalCtrl {
 		}, this.ApiHelper.handleErrors(this));
 	}
 
+	/**
+	 * Toggles between register and login view.
+	 */
 	swap() {
 		this.registering = !this.registering;
 		this.message = null;
