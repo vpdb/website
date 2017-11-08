@@ -30,7 +30,7 @@ include ../template/_mixins
 								label.label--subtitle {{ game.manufacturer }} &middot; {{ game.year }}
 
 				p#noresult.padder-bottom-2x(ng-show="!vm.games.length && !vm.searching"): i No games found containing "{{ vm.q }}".
-				p.padder-bottom-2x(ng-show="!vm.games.length && vm.searching"): i Searching...
+				p#searching.padder-bottom-2x(ng-show="!vm.games.length && vm.searching"): i Searching...
 
 		.searchbox.abs-center
 			form.form-inline

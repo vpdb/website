@@ -6,6 +6,7 @@
 	"scripts": {
 		"prod": "cross-env CONFIG=prod webpack-dev-server --history-api-fallback --inline --progress",
 		"local": "cross-env CONFIG=local webpack-dev-server --history-api-fallback --inline --progress",
+		"test": "cross-env CONFIG=test webpack-dev-server --history-api-fallback --inline --progress",
 		"test:clean": "node_modules/.bin/rimraf ./test",
 		"test:compile": "node_modules/.bin/tsc",
 		"test:protractor": "node_modules/.bin/protractor test/config/protractor.js",

@@ -1,0 +1,41 @@
+{
+	"authHeader": "Authorization",
+	"apiUri": {
+		"protocol": "http",
+		"hostname": "localhost",
+		"port": 7357,
+		"pathname": "/api/v1"
+	},
+	"storageUri": {
+		"protocol": "http",
+		"hostname": "localhost",
+		"port": 7357,
+		"pathname": "/storage/v1"
+	},
+	"webUri": {
+		"protocol": "http",
+		"hostname": "localhost",
+		"port": 3333
+	},
+	"ga": {
+		"enabled": false
+	},
+	"authProviders": {
+		"local": true,
+		"google": true,
+		"github": true,
+		"ipboard": [
+			{
+				"id": "gameex",
+				"name": "GameEx",
+				"icon": "gameex",
+				"url": "/auth/gameex"
+			}
+		]
+	},
+	"documentRevisions": {
+		"rules": 2,
+		"privacy": 1,
+		"legal": 1
+	}
+}
