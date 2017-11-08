@@ -8,6 +8,8 @@ lib-cov
 *.gz
 *.iml
 
+test
+
 pids
 logs
 /build
