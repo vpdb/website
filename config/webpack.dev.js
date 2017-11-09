@@ -1,7 +1,7 @@
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
-const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
+const ENV = process.env.ENV = process.env.NODE_ENV = 'dev';
 
 // see: https://github.com/AngularClass/angular-starter/blob/master/config/webpack.dev.js
 module.exports = function(options) {
@@ -14,7 +14,7 @@ module.exports = function(options) {
 		 * See: http://webpack.github.io/docs/configuration.html#devtool
 		 * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
 		 */
-		devtool: 'source-map',
+		devtool: 'cheap-module-source-map',
 
 		/**
 		 * Webpack Development Server configuration
