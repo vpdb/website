@@ -5,6 +5,7 @@ import AuthCallbackCtrl from './auth.callback.ctrl';
 import LoginService from './login.service';
 import LoginModalCtrl from './login.modal.ctrl';
 import TokenCreateModalCtrl from './token.create.modal.ctrl';
+import EmailConfirmationCtrl from './email.confirmation.ctrl';
 
 export default angular
 	.module('vpdb.auth', [])
@@ -14,6 +15,7 @@ export default angular
 	.controller('AuthCallbackCtrl', AuthCallbackCtrl)
 	.controller('LoginModalCtrl', LoginModalCtrl)
 	.controller('TokenCreateModalCtrl', TokenCreateModalCtrl)
+	.controller('EmailConfirmationCtrl', EmailConfirmationCtrl)
 	.config(function($httpProvider) {
 		$httpProvider.interceptors.push('AuthInterceptorService');
 	})

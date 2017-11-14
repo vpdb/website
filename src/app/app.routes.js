@@ -7,6 +7,7 @@ import ReleaseDetailsTpl from './releases/release.details.pug';
 import ReleaseAddTpl from './releases/release.add.pug';
 import BackglassAddTpl from './backglasses/backglass.add.pug';
 import AuthCallbackTpl from './auth/auth.callback.pug';
+import EmailConfirmationTpl from './auth/email.confirmation.pug';
 import ProfileCtrl from './profile/profile.pug';
 import ProfileSettingsTpl from './profile/profile.settings.pug';
 import ProfileDownloadsTpl from './profile/profile.downloads.pug';
@@ -43,6 +44,7 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 
 	// auth
 	$stateProvider.state('authCallback',   { url: '/auth/:strategy/callback?code', templateUrl: AuthCallbackTpl });
+	$stateProvider.state('confirmToken',   { url: '/confirm/:token', templateUrl: EmailConfirmationTpl });
 
 	// profile
 	$stateProvider.state('profile',        { url: '/profile', templateUrl: ProfileCtrl });

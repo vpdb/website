@@ -9,12 +9,12 @@ import parseUri from 'parse-uri';
 export default class ApiHelper {
 
 	/**
-	 * @param $location
+	 * @param $state
 	 * @param {ModalService} ModalService
 	 * @param {ModalFlashService} ModalFlashService
 	 */
-	constructor($location, ModalService, ModalFlashService) {
-		this.$location = $location;
+	constructor($state, ModalService, ModalFlashService) {
+		this.$state = $state;
 		this.ModalService = ModalService;
 		this.ModalFlashService = ModalFlashService;
 	}
@@ -151,17 +151,17 @@ export default class ApiHelper {
 
 	/**
 	 * Displays a modal with the received errors from the API, but on a different page
-	 * @param {string} path Page where to navigate before displaying the modal
+	 * @param {string} state Page where to navigate before displaying the modal
 	 * @param {string} title Title of the modal
 	 * @return {Function}
 	 */
-	handleErrorsInFlashDialog(path, title) {
+	handleErrorsInFlashDialog(state, title) {
 		return response => {
 			this.ModalFlashService.error({
 				subtitle: title,
 				message: this.parseError(response)
 			});
-			this.$location.path(path);
+			this.$state.go(state);
 		};
 	}
 
