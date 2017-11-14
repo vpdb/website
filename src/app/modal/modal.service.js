@@ -98,6 +98,7 @@ export default class ModalService {
 				return this.$uibModal.open({
 					templateUrl: ModalErrorInfoTpl,
 					controller: 'ModalCtrl',
+					controllerAs: 'vm',
 					resolve: { data: () => data }
 				});
 			} catch (err) {
