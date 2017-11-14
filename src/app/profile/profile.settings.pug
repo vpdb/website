@@ -169,7 +169,7 @@ include ../template/_mixins
 			tr(ng-repeat="token in vm.tokens")
 				td(ng-show="token.token", colspan="2")
 					tt {{ token.token }}
-					span(uib-tooltip="Copy to clipboard", tooltip-placement="right", clip-copy="token.token", clip-click="onTokenCopied()"): +icon('clipboard').a.a--lighter.shift-up.space-left
+					span(uib-tooltip="Copy to clipboard", tooltip-placement="right", ngclipboard, data-clipboard-text="{{ token.token }}", ngclipboard-success="vm.onTokenCopied()"): +icon('clipboard').a.a--lighter.shift-up.space-left
 				td(ng-hide="token.token"): b.space-left {{ token.label }}
 				td(ng-hide="token.token")
 					+icon("{{ token.is_active ? 'check' : 'times' }}")

@@ -1,9 +1,15 @@
 import GameSelectModalTpl from './games/game.select.modal.pug';
 
+/**
+ * The application controller manages parts of the page that is common to
+ * all pages, which is basically menu functionality.
+ *
+ * @author freezy <freezy@vpdb.io>
+ */
 export default class AppCtrl {
 
 	constructor($rootScope, $state, $uibModal, App, AuthService) {
-		console.log('App controller loaded.');
+		console.log('Application controller loaded.');
 
 		this.$state = $state;
 		this.$uibModal = $uibModal;

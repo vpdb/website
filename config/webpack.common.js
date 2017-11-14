@@ -27,7 +27,7 @@ module.exports  = function(options) {
 					] }
 				] },
 				{ test: /\.html$/, loader: 'raw-loader' },
-				{ test: /\.(eot|woff|woff2|ttf|png|svg|jpg)$/, loader: { loader: 'file-loader', options: { name: '[path][name]-[sha256:hash:base58:8].[ext]', context: staticContext } }, exclude: iconsContext },
+				{ test: /\.(eot|woff|woff2|ttf|png|svg|jpg|swf)$/, loader: { loader: 'file-loader', options: { name: '[path][name]-[sha256:hash:base58:8].[ext]', context: staticContext } }, exclude: iconsContext },
 				{ test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: cssLoader}) },
 				{ test: /\.styl$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ cssLoader, 'stylus-loader'] }) },
 				{ test: /\.svg$/, use: [

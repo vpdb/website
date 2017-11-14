@@ -1,5 +1,3 @@
-routing.$inject = ['$urlRouterProvider', '$locationProvider', '$stateProvider'];
-
 import HomeTpl from './home/home.pug';
 import GameListTpl from './games/game.list.pug';
 import GameDetailsTpl from './games/game.details.pug';
@@ -22,8 +20,10 @@ import RulesTpl from './content/rules.pug';
 import FaqTpl from './content/faq.pug';
 import LegalTpl from './content/legal.pug';
 import PrivacyTpl from './content/privacy.pug';
+import Error404Tpl from './errors/error.404.pug';
+import ConfigService from './core/config.service';
 
-export default function routing($urlRouterProvider, $locationProvider, $stateProvider) {
+export default function routes($urlRouterProvider, $locationProvider, $stateProvider, $sceDelegateProvider, Config) {
 
 	// home
 	$stateProvider.state('home',           { url: '/', templateUrl: HomeTpl, controller: 'HomeCtrl', controllerAs: 'vm' });
@@ -63,6 +63,22 @@ export default function routing($urlRouterProvider, $locationProvider, $statePro
 	$stateProvider.state('legal',          { url: '/legal', templateUrl: LegalTpl });
 	$stateProvider.state('privacy',        { url: '/privacy', templateUrl: PrivacyTpl });
 
-	$locationProvider.html5Mode(true);
-	$urlRouterProvider.otherwise('/');
+	// errors
+	$stateProvider.state('404',            { templateUrl: Error404Tpl, params: { url: null } });
+
+	$locationProvider.html5Mode({
+		enabled: true,
+		requireBase: false
+	});
+
+	$urlRouterProvider.otherwise(($injector, $location) => {
+		$injector.get('$state').go('404', { url: $location.path() });
+		return $location.path();
+	});
+
+	$sceDelegateProvider.resourceUrlWhitelist([
+		'self', // Allow same origin resource loads.
+		ConfigService.uri(Config.apiUri) + '/**',
+		ConfigService.uri(Config.storageUri) + '/**',
+	]);
 }

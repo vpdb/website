@@ -10,7 +10,7 @@ include ../template/_mixins
 			+icon('info').space-right.shift-up
 			| {{ vm.headMessage }}
 
-		.span(ng-hide="loginParams.localOnly")
+		.span(ng-hide="vm.LoginService.loginParams.localOnly")
 			h3.h--shift-up Login with
 			.text-center
 				a.btn.btn--secondary.btn-lg.padder-bottom(ng-repeat="ipb in vm.Config.authProviders.ipboard", ng-click="vm.oauth(ipb.id)")
@@ -31,8 +31,8 @@ include ../template/_mixins
 
 		//- LOGIN
 		div(ng-hide="vm.registering")
-			h3.h--shift-up(ng-hide="loginParams.localOnly") Or, with your account:
-			h3.h--shift-up(ng-show="loginParams.localOnly") Login with your account:
+			h3.h--shift-up(ng-hide="vm.LoginService.loginParams.localOnly") Or, with your account:
+			h3.h--shift-up(ng-show="vm.LoginService.loginParams.localOnly") Login with your account:
 			form.form-horizontal(role='form')
 				.form-group
 					label.col-sm-4.control-label Username
@@ -44,7 +44,7 @@ include ../template/_mixins
 						input.form-control(ng-model="vm.userPass.password", type="password", ng-keyup="$event.keyCode === 13 && vm.login()")
 
 		//- REGISTER
-		div(ng-show="vm.registering && !loginParams.localOnly")
+		div(ng-show="vm.registering && !vm.LoginService.loginParams.localOnly")
 			h3.h--shift-up Or, register with your Email:
 			form.form-horizontal(role="form")
 				.form-group(ng-class="{ error: vm.errors.email }")
@@ -91,7 +91,7 @@ include ../template/_mixins
 		hr.hr--light.padder-top-4x(ng-hide="vm.registering")
 		.clearfix
 
-		h3.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()", ng-hide="loginParams.localOnly") {{ registering ? "Login" : "Register" }}
+		h3.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()", ng-hide="vm.LoginService.loginParams.localOnly") {{ registering ? "Login" : "Register" }}
 		button.btn.btn-default(ng-click="$close()") Cancel
 		button.btn.btn--secondary(ng-hide="registering", ng-click="vm.login()") Login
 		button.btn.btn--secondary(ng-show="registering", ng-click="vm.register()") Register

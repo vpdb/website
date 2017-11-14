@@ -13,6 +13,7 @@ export default class LoginModalCtrl {
 	 * @param {*} $localStorage
 	 * @param {Config} Config
 	 * @param {ConfigService} ConfigService
+	 * @param {LoginService} LoginService
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
@@ -20,7 +21,7 @@ export default class LoginModalCtrl {
 	 * @param {UserResource} UserResource
 	 * @param {{ postLogin:{action:string, params:any}, headMessage:string, topMessage:string, message:string }} opts
 	 */
-	constructor($window, $uibModalInstance, $localStorage, Config, ConfigService,
+	constructor($window, $uibModalInstance, $localStorage, Config, ConfigService, LoginService,
 				App, ApiHelper, AuthService, AuthResource, UserResource, opts) {
 
 		opts = opts || {};
@@ -28,6 +29,7 @@ export default class LoginModalCtrl {
 
 		this.Config = Config;
 		this.ConfigService = ConfigService;
+		this.LoginService = LoginService;
 		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
 		this.AuthResource = AuthResource;

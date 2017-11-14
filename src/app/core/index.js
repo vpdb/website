@@ -13,6 +13,7 @@ import { bytesFilter, escapeFilter, fileExtFilter, hexFilter, hashPrefixFilter, 
 import EditorCtrl from './editor.ctrl';
 import CommentCtrl from './comment.ctrl';
 import heightAnimation from './height.animation';
+import collapseInAnimation from './collapse-in.animation';
 
 export default angular.module('vpdb.core', [])
 	.constant('Config', WEBSITE_CONFIG)
@@ -42,4 +43,5 @@ export default angular.module('vpdb.core', [])
 	.filter('hex', hexFilter)
 	.filter('sprite', hashPrefixFilter)
 	.animation('.height-animation', heightAnimation)
+	.animation('.collapse-in-animation', collapseInAnimation)
 	.name;

@@ -12,11 +12,12 @@ export default class HomeCtrl {
 	 * @param $scope
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
+	 * @param {LoginService} LoginService
 	 * @param {GameResource} GameResource
 	 * @param {ReleaseResource} ReleaseResource
 	 * @param {TrackerService} TrackerService
 	 */
-	constructor($scope, App, ApiHelper, GameResource, ReleaseResource, TrackerService) {
+	constructor($scope, App, ApiHelper, LoginService, GameResource, ReleaseResource, TrackerService) {
 
 		App.theme('dark');
 		App.setTitle('VPDB - The Virtual Pinball Database');
@@ -41,6 +42,12 @@ export default class HomeCtrl {
 
 		// watch query
 		$scope.$watch(() => this.q, (newVal, oldVal, scope) => this.refresh({ q: newVal }));
+
+		// login?
+		if (LoginService.loginParams.open) {
+			LoginService.loginParams.open = false;
+			App.login();
+		}
 
 		// fetch latest releases
 		this.releases = ReleaseResource.query({

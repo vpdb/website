@@ -14,12 +14,14 @@ import ngTouch from 'angular-touch';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
 import ngMoment from 'angular-moment';
+import ngElastic from 'angular-elastic';
 import ngFileUpload from 'ng-file-upload';
 
 import 'angular-gravatar';
 import 'ngstorage';
 import 'angular-dragdrop';
 import 'ment.io';
+import 'ngclipboard';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/vpdb.styl';
@@ -41,10 +43,12 @@ import media from './media';
 import uploads from './uploads';
 import content from './content';
 import tag from './tag';
+import errors from './errors';
 
 import routes from './app.routes';
 import controller from './app.ctrl';
 import service from './app.service';
+import { msdElasticConfig } from './app.config';
 
 import AppTpl from './app.pug';
 
@@ -60,7 +64,7 @@ const app = () => {
 const files = require.context('../icons', false, /\.svg$/);
 files.keys().forEach(files);
 
-export default angular.module('vpdb', [
+angular.module('vpdb', [
 
 	// angular components
 	ngAnimate,
@@ -72,9 +76,11 @@ export default angular.module('vpdb', [
 	uiRouter,
 	uiBootstrap,
 	ngMoment,
+	ngElastic,
 	ngFileUpload,
 	'ngDragDrop',
 	'ngStorage',
+	'ngclipboard',
 	'ui.gravatar',
 	'mentio',
 
@@ -96,10 +102,11 @@ export default angular.module('vpdb', [
 	media,
 	uploads,
 	content,
-	tag
+	tag,
+	errors
 ])
 	.config(routes)
+	.config(msdElasticConfig)
 	.service('App', service)
-	.directive('vpdb', app)
 	.controller('AppCtrl', controller)
-	.name;
+	.directive('vpdb', app);

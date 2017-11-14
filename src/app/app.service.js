@@ -5,16 +5,20 @@ import LoginModalTpl from './auth/login.modal.pug';
 
 export default class App {
 
-	constructor($rootScope, $window, $timeout, $uibModal, $localStorage, Config) {
+	/**
+	 * @param $rootScope
+	 * @param $window
+	 * @param $timeout
+	 * @param $uibModal
+	 * @param $localStorage
+	 * @param {LoginService} LoginService
+	 */
+	constructor($rootScope, $window, $timeout, $uibModal, $localStorage, LoginService) {
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.$timeout = $timeout;
 		this.$uibModal = $uibModal;
-
-		this.$rootScope.loginParams = {
-			open: false,
-			localOnly: !Config.authProviders.google && !Config.authProviders.github && isEmpty(Config.authProviders.ipboard)
-		};
+		this.LoginService = LoginService;
 
 		this.$rootScope.timeoutNoticeCollapsed = true;
 		this.$rootScope.notifications = {};
@@ -72,8 +76,8 @@ export default class App {
 	 * @return {*}
 	 */
 	popLoginMessage(message) {
-		let msg = message || this.$rootScope.loginParams.message;
-		delete this.$rootScope.loginParams.message;
+		let msg = message || this.LoginService.loginParams.message;
+		delete this.LoginService.loginParams.message;
 
 		return msg;
 	}
@@ -90,15 +94,13 @@ export default class App {
 		ttl = ttl || 3000;
 		const i = max(map(keys(this.$rootScope.notifications).concat([0]), parseInt)) + 1;
 		this.$rootScope.notifications[i] = { message: message, ttl: ttl };
-		this.$timeout(() => {
-			delete this.$rootScope.notifications[i];
-		}, ttl);
+		this.$timeout(() => delete this.$rootScope.notifications[i], ttl);
 	};
 
 	downloadLink(link, token, body, callback) {
-		$rootScope.downloadLink = link;
-		$rootScope.downloadToken = token || '';
-		$rootScope.downloadBody = body || '';
+		this.$rootScope.downloadLink = link;
+		this.$rootScope.downloadToken = token || '';
+		this.$rootScope.downloadBody = body || '';
 		this.$timeout(() => {
 			angular.element('#downloadForm').submit();
 			if (callback) {

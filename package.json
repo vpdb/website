@@ -6,6 +6,7 @@
 	"scripts": {
 		"prod": "cross-env CONFIG=prod ENV=prod webpack-dev-server --history-api-fallback --inline --progress",
 		"local": "cross-env CONFIG=local ENV=dev webpack-dev-server --history-api-fallback --inline --progress",
+		"localprod": "cross-env CONFIG=prod ENV=dev webpack-dev-server --history-api-fallback --inline --progress",
 		"test": "cross-env CONFIG=test ENV=test webpack-dev-server --history-api-fallback --inline --progress",
 		"test:clean": "rimraf ./test",
 		"test:compile": "tsc",
@@ -18,6 +19,7 @@
 		"angular": "^1.6.6",
 		"angular-animate": "^1.6.6",
 		"angular-dragdrop": "^1.0.13",
+		"angular-elastic": "^2.5.1",
 		"angular-gravatar": "^0.4.2",
 		"angular-moment": "^1.1.0",
 		"angular-resource": "^1.6.6",
@@ -34,6 +36,7 @@
 		"ment.io": "^0.9.23",
 		"moment": "^2.19.1",
 		"ng-file-upload": "^12.2.13",
+		"ngclipboard": "^1.1.2",
 		"ngstorage": "^0.3.11",
 		"nib": "^1.1.2",
 		"parse-uri": "^1.0.0",

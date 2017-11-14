@@ -28,7 +28,7 @@ export default class ConfigService {
 		if (this.apiSameHost) {
 			return this.Config.apiUri.pathname + (path || '');
 		} else {
-			return this.uri(this.Config.apiUri) + (path || '');
+			return ConfigService.uri(this.Config.apiUri) + (path || '');
 		}
 	}
 
@@ -36,15 +36,15 @@ export default class ConfigService {
 		if (this.storageSameHost && !fullPath) {
 			return this.Config.storageUri.pathname + (path || '');
 		} else {
-			return this.uri(this.Config.storageUri) + (path || '');
+			return ConfigService.uri(this.Config.storageUri) + (path || '');
 		}
 	}
 
 	webUri(path) {
-		return this.uri(this.Config.webUri) + (path || '');
+		return ConfigService.uri(this.Config.webUri) + (path || '');
 	}
 
-	uri(uri) {
+	static uri(uri) {
 		const port = (uri.protocol === 'http' && uri.port === 80) || (uri.protocol === 'https' && uri.port === 443) ? false : uri.port;
 		return uri.protocol + '://' + uri.hostname + (port ? ':' + port : '') + (uri.pathname || '');
 	}
@@ -57,7 +57,7 @@ export default class ConfigService {
 				return true;
 			}
 		} else {
-			uri = this.uri(this.Config.apiUri);
+			uri = ConfigService.uri(this.Config.apiUri);
 			if (urlOrPath.substr(0, uri.length) === uri) {
 				return true;
 			}
@@ -74,7 +74,7 @@ export default class ConfigService {
 			}
 
 		} else {
-			uri = this.uri(this.Config.storageUri);
+			uri = ConfigService.uri(this.Config.storageUri);
 			if (urlOrPath.substr(0, uri.length) === uri) {
 				return true;
 			}
@@ -95,7 +95,7 @@ export default class ConfigService {
 		if (urlOrPath[0] === '/') {
 			return urlOrPath === this.Config.apiUri.pathname + '/authenticate';
 		} else {
-			return urlOrPath === this.uri(this.Config.apiUri) + '/authenticate';
+			return urlOrPath === ConfigService.uri(this.Config.apiUri) + '/authenticate';
 		}
 	}
 }

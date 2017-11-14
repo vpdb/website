@@ -169,6 +169,14 @@
 			"resolved": "https://registry.npmjs.org/angular-dragdrop/-/angular-dragdrop-1.0.13.tgz",
 			"integrity": "sha1-4OJAxzzZPKF6182PbnAUgDGdAdw="
 		},
+		"angular-elastic": {
+			"version": "2.5.1",
+			"resolved": "https://registry.npmjs.org/angular-elastic/-/angular-elastic-2.5.1.tgz",
+			"integrity": "sha1-6TirG9jHZBW4ymUUsV/jWTpd9TU=",
+			"requires": {
+				"angular": "1.6.6"
+			}
+		},
 		"angular-gravatar": {
 			"version": "0.4.2",
 			"resolved": "https://registry.npmjs.org/angular-gravatar/-/angular-gravatar-0.4.2.tgz",
@@ -1053,6 +1061,16 @@
 				"source-map": "0.4.4"
 			}
 		},
+		"clipboard": {
+			"version": "1.5.16",
+			"resolved": "https://registry.npmjs.org/clipboard/-/clipboard-1.5.16.tgz",
+			"integrity": "sha1-kW1ec5sAZL5hsLSKU1cx7K7z02c=",
+			"requires": {
+				"good-listener": "1.2.2",
+				"select": "1.1.2",
+				"tiny-emitter": "1.2.0"
+			}
+		},
 		"cliui": {
 			"version": "2.1.0",
 			"resolved": "https://registry.npmjs.org/cliui/-/cliui-2.1.0.tgz",
@@ -1688,6 +1706,11 @@
 			"resolved": "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz",
 			"integrity": "sha1-3zrhmayt+31ECqrgsp4icrJOxhk=",
 			"dev": true
+		},
+		"delegate": {
+			"version": "3.1.3",
+			"resolved": "https://registry.npmjs.org/delegate/-/delegate-3.1.3.tgz",
+			"integrity": "sha1-moJRp3fXAl+qVXN7w7BxdCEnqf0="
 		},
 		"depd": {
 			"version": "1.1.1",
@@ -2681,6 +2704,14 @@
 				"object-assign": "4.1.1",
 				"pify": "2.3.0",
 				"pinkie-promise": "2.0.1"
+			}
+		},
+		"good-listener": {
+			"version": "1.2.2",
+			"resolved": "https://registry.npmjs.org/good-listener/-/good-listener-1.2.2.tgz",
+			"integrity": "sha1-1TswzfkxPf+33JoNR3CWqm0UXFA=",
+			"requires": {
+				"delegate": "3.1.3"
 			}
 		},
 		"graceful-fs": {
@@ -4573,6 +4604,14 @@
 			"version": "12.2.13",
 			"resolved": "https://registry.npmjs.org/ng-file-upload/-/ng-file-upload-12.2.13.tgz",
 			"integrity": "sha1-AYAPOHLlJvlTEPhHfpnk8S0NjRQ="
+		},
+		"ngclipboard": {
+			"version": "1.1.2",
+			"resolved": "https://registry.npmjs.org/ngclipboard/-/ngclipboard-1.1.2.tgz",
+			"integrity": "sha1-RZ8B8+4eisQBWZquo3uXdQh9WW0=",
+			"requires": {
+				"clipboard": "1.5.16"
+			}
 		},
 		"ngstorage": {
 			"version": "0.3.11",
@@ -6846,6 +6885,11 @@
 				"ajv": "5.2.2"
 			}
 		},
+		"select": {
+			"version": "1.1.2",
+			"resolved": "https://registry.npmjs.org/select/-/select-1.1.2.tgz",
+			"integrity": "sha1-DnNQrN7ICxEIUoeG7B1EGNEbOW0="
+		},
 		"select-hose": {
 			"version": "2.0.0",
 			"resolved": "https://registry.npmjs.org/select-hose/-/select-hose-2.0.0.tgz",
@@ -7874,6 +7918,11 @@
 			"requires": {
 				"setimmediate": "1.0.5"
 			}
+		},
+		"tiny-emitter": {
+			"version": "1.2.0",
+			"resolved": "https://registry.npmjs.org/tiny-emitter/-/tiny-emitter-1.2.0.tgz",
+			"integrity": "sha1-bchFBSywjr78GHRyO1jySmSMO28="
 		},
 		"tmp": {
 			"version": "0.0.30",
