@@ -23,7 +23,7 @@ export default class App {
 		this.$rootScope.timeoutNoticeCollapsed = true;
 		this.$rootScope.notifications = {};
 
-		$localStorage.show_instructions = $localStorage.show_instructions || {
+		$localStorage.showInstructions = $localStorage.showInstructions || {
 			release_add: true,
 			version_add: true
 		};

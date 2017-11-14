@@ -5,6 +5,7 @@ import GameAdminAddTpl from './games/game.admin.add.pug';
 import ReleaseListTpl from './releases/release.list.pug';
 import ReleaseDetailsTpl from './releases/release.details.pug';
 import ReleaseAddTpl from './releases/release.add.pug';
+import ReleaseAddVersionTpl from './releases/release.add.version.pug';
 import BackglassAddTpl from './backglasses/backglass.add.pug';
 import AuthCallbackTpl from './auth/auth.callback.pug';
 import EmailConfirmationTpl from './auth/email.confirmation.pug';
@@ -27,43 +28,44 @@ import ConfigService from './core/config.service';
 export default function routes($urlRouterProvider, $locationProvider, $stateProvider, $sceDelegateProvider, Config) {
 
 	// home
-	$stateProvider.state('home',           { url: '/', templateUrl: HomeTpl, controller: 'HomeCtrl', controllerAs: 'vm' });
+	$stateProvider.state('home',              { url: '/', templateUrl: HomeTpl, controller: 'HomeCtrl', controllerAs: 'vm' });
 
 	// games
-	$stateProvider.state('games',          { url: '/games', templateUrl: GameListTpl });
-	$stateProvider.state('gameDetails',    { url: '/games/:id', templateUrl: GameDetailsTpl });
-	$stateProvider.state('addGame',        { url: '/add-game', templateUrl: GameAdminAddTpl });
+	$stateProvider.state('games',             { url: '/games', templateUrl: GameListTpl });
+	$stateProvider.state('gameDetails',       { url: '/games/:id', templateUrl: GameDetailsTpl });
+	$stateProvider.state('addGame',           { url: '/add-game', templateUrl: GameAdminAddTpl });
 
 	// releases
-	$stateProvider.state('releases',       { url: '/releases?builds', templateUrl: ReleaseListTpl, reloadOnSearch: false });
-	$stateProvider.state('releaseDetails', { url: '/games/:id/releases/:releaseId', templateUrl: ReleaseDetailsTpl, controller: 'ReleaseDetailsCtrl', controllerAs: 'vm' });
-	$stateProvider.state('addRelease',     { url: '/games/:id/add-release', templateUrl: ReleaseAddTpl });
+	$stateProvider.state('releases',          { url: '/releases?builds', templateUrl: ReleaseListTpl, reloadOnSearch: false });
+	$stateProvider.state('releaseDetails',    { url: '/games/:id/releases/:releaseId', templateUrl: ReleaseDetailsTpl, controller: 'ReleaseDetailsCtrl', controllerAs: 'vm' });
+	$stateProvider.state('addRelease',        { url: '/games/:id/add-release', templateUrl: ReleaseAddTpl });
+	$stateProvider.state('addReleaseVersion', { url: '/games/:id/releases/:releaseId/add', templateUrl: ReleaseAddVersionTpl });
 
 	// backglasses
-	$stateProvider.state('addBackglass',   { url: '/games/:id/add-backglass', templateUrl: BackglassAddTpl });
+	$stateProvider.state('addBackglass',      { url: '/games/:id/add-backglass', templateUrl: BackglassAddTpl });
 
 	// auth
-	$stateProvider.state('authCallback',   { url: '/auth/:strategy/callback?code', templateUrl: AuthCallbackTpl });
-	$stateProvider.state('confirmToken',   { url: '/confirm/:token', templateUrl: EmailConfirmationTpl });
+	$stateProvider.state('authCallback',      { url: '/auth/:strategy/callback?code', templateUrl: AuthCallbackTpl });
+	$stateProvider.state('confirmToken',      { url: '/confirm/:token', templateUrl: EmailConfirmationTpl });
 
 	// profile
-	$stateProvider.state('profile',        { url: '/profile', templateUrl: ProfileCtrl });
+	$stateProvider.state('profile',           { url: '/profile', templateUrl: ProfileCtrl });
 	$stateProvider.state('profile.settings',       { url: '/settings', templateUrl: ProfileSettingsTpl, controller: 'ProfileSettingsCtrl', controllerAs: 'vm' });
 	$stateProvider.state('profile.downloads',      { url: '/downloads', templateUrl: ProfileDownloadsTpl, controller: 'ProfileDownloadsCtrl', controllerAs: 'vm' });
 	$stateProvider.state('profile.notifications',  { url: '/notifications', templateUrl: ProfileNotificationsTpl, controller: 'ProfileNotificationsCtrl', controllerAs: 'vm' });
 	$stateProvider.state('profile.stats',          { url: '/stats', templateUrl: ProfileStatsTpl, controller: 'ProfileStatsCtrl', controllerAs: 'vm' });
 
 	// admin
-	$stateProvider.state('adminUsers',     { url: '/admin/users', templateUrl: UserAdminListTpl });
-	$stateProvider.state('adminBuilds',    { url: '/admin/builds', templateUrl: BuildAdminListTpl });
-	$stateProvider.state('adminUploads',   { url: '/admin/uploads', templateUrl: UploadsAdminListTpl });
+	$stateProvider.state('adminUsers',        { url: '/admin/users', templateUrl: UserAdminListTpl });
+	$stateProvider.state('adminBuilds',       { url: '/admin/builds', templateUrl: BuildAdminListTpl });
+	$stateProvider.state('adminUploads',      { url: '/admin/uploads', templateUrl: UploadsAdminListTpl });
 
 	// content
-	$stateProvider.state('about',          { url: '/about', templateUrl: AboutTpl });
-	$stateProvider.state('rules',          { url: '/rules', templateUrl: RulesTpl });
-	$stateProvider.state('faq',            { url: '/faq', templateUrl: FaqTpl });
-	$stateProvider.state('legal',          { url: '/legal', templateUrl: LegalTpl });
-	$stateProvider.state('privacy',        { url: '/privacy', templateUrl: PrivacyTpl });
+	$stateProvider.state('about',             { url: '/about', templateUrl: AboutTpl });
+	$stateProvider.state('rules',             { url: '/rules', templateUrl: RulesTpl });
+	$stateProvider.state('faq',               { url: '/faq', templateUrl: FaqTpl });
+	$stateProvider.state('legal',             { url: '/legal', templateUrl: LegalTpl });
+	$stateProvider.state('privacy',           { url: '/privacy', templateUrl: PrivacyTpl });
 
 	// errors
 	$stateProvider.state('404',            { templateUrl: Error404Tpl, params: { url: null } });

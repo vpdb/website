@@ -50,9 +50,10 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 		this.flavors = values(Flavors);
 		this.fetchBuilds();
 
+		// statuses
 		this.submitting = false;
-		this.showHelp = $localStorage.show_instructions.release_add;
-		$scope.$watch('showHelp', () => $localStorage.show_instructions.release_add = this.showHelp);
+		this.showHelp = $localStorage.showInstructions.release_add;
+		$scope.$watch('showHelp', () => $localStorage.showInstructions.release_add = this.showHelp);
 
 		// fetch game info
 		this.gameId = $stateParams.id;
