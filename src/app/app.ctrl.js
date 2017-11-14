@@ -8,7 +8,16 @@ import GameSelectModalTpl from './games/game.select.modal.pug';
  */
 export default class AppCtrl {
 
-	constructor($rootScope, $state, $uibModal, App, AuthService) {
+	/**
+	 * @param $rootScope
+	 * @param $state
+	 * @param $localStorage
+	 * @param $uibModal
+	 * @param {App} App
+	 * @param {AuthService} AuthService
+	 * @param {Config} Config
+	 */
+	constructor($rootScope, $state, $localStorage, $uibModal, App, AuthService, Config) {
 		console.log('Application controller loaded.');
 
 		this.$state = $state;
@@ -16,8 +25,15 @@ export default class AppCtrl {
 		this.App = App;
 		this.AuthService = AuthService;
 
-		// scroll top top when navigating
+		// scroll top top when navigatings
 		$rootScope.$on('$stateChangeSuccess', () => document.body.scrollTop = document.documentElement.scrollTop = 0);
+
+		// legal documents update
+		const currentDocumentRevisions = $localStorage.documentRevisions || Config.documentRevisions;
+		this.showRulesUpdated = currentDocumentRevisions.rules < Config.documentRevisions.rules;
+		this.showPrivacyUpdated = currentDocumentRevisions.privacy < Config.documentRevisions.privacy;
+		this.showLegalUpdated = currentDocumentRevisions.legal < Config.documentRevisions.legal;
+		$localStorage.documentRevisions = Config.documentRevisions;
 	}
 
 	login() {

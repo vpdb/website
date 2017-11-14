@@ -4,15 +4,6 @@ export default class ConfigService {
 
 		this.Config = Config;
 
-		// bump these on changes
-		this.vpdbConfig = {
-			documentRevisions: {
-				rules: 2,
-				privacy: 1,
-				legal: 1
-			}
-		};
-
 		this.apiSameHost =
 			this.Config.webUri.protocol === this.Config.apiUri.protocol &&
 			this.Config.webUri.hostname === this.Config.apiUri.hostname &&
