@@ -112,7 +112,7 @@ export default class ReleaseAddBaseCtrl {
 			this.meta.files.splice(this.meta.files.indexOf(file), 1);
 			this.releaseVersion.files.splice(indexOf(this.releaseVersion.files, find(this.releaseVersion.files, { id : file.storage.id })), 1);
 
-		}, this.ApiHelper.handleErrorsInDialog(this, 'Error removing file.'));
+		}, this.ApiHelper.handleErrorsInDialog('Error removing file.'));
 	}
 
 	/**

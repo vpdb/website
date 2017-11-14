@@ -200,7 +200,7 @@ export default class ReleaseListCtrl {
 
 		// refresh if changes
 		if (!isEqual(this.$query, query)) {
-			this.loading = true;
+			this.pageLoading = true;
 			this.releases = this.ReleaseResource.query(query, this.ApiHelper.handlePagination(this, { loader: true }), this.ApiHelper.handleErrors(this));
 			this.$query = query;
 		}

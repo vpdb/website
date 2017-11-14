@@ -10,11 +10,13 @@ export default class ApiHelper {
 
 	/**
 	 * @param $state
+	 * @param {App} App
 	 * @param {ModalService} ModalService
 	 * @param {ModalFlashService} ModalFlashService
 	 */
-	constructor($state, ModalService, ModalFlashService) {
+	constructor($state, App, ModalService, ModalFlashService) {
 		this.$state = $state;
+		this.App = App;
 		this.ModalService = ModalService;
 		this.ModalFlashService = ModalFlashService;
 	}
@@ -61,7 +63,7 @@ export default class ApiHelper {
 			}
 
 			if (opts.loader) {
-				scope.loading = false;
+				scope.pageLoading = false;
 			}
 			delete scope.error;
 		};
@@ -128,18 +130,17 @@ export default class ApiHelper {
 
 	/**
 	 * Displays a modal with the received errors from the API.
-	 * @param {object} scope Controller instance to which the error values were applied to.
 	 * @param {string} title Title of the modal
 	 * @param {function(response:object)} [callback] Executed if provided with given scope as argument.
 	 * @return {function(response:object)}
 	 */
-	handleErrorsInDialog(scope, title, callback) {
+	handleErrorsInDialog(title, callback) {
 		return response => {
 			let skipError = false;
 			if (callback) {
 				skipError = callback(response);
 			}
-			scope.setLoading(false);
+			this.App.setLoading(false);
 			if (!skipError) {
 				this.ModalService.error({
 					subtitle: title,

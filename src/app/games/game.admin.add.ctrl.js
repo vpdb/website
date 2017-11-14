@@ -134,7 +134,7 @@ export default class GameAdminAddCtrl {
 			if (done) {
 				done(null, this.game);
 			}
-		}, this.ApiHelper.handleErrorsInDialog(this, 'Error fetching data.'));
+		}, this.ApiHelper.handleErrorsInDialog('Error fetching data.'));
 	}
 
 	readIpdbId() {

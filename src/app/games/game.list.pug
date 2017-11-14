@@ -23,10 +23,10 @@ include ../template/_mixins
 		.clearfix.padder-bottom(ng-show="vm.games.length > 0")
 
 		//- no games
-		p(ng-show="!vm.games.length && !vm.loading") No games found.
+		p(ng-show="!vm.games.length && !vm.pageLoading") No games found.
 
 		//- loading
-		p(ng-show="vm.loading")
+		p(ng-show="vm.pageLoading")
 			+icon('circle-o-notch').small.svg-spin.space-right.shift-up
 			| Loading...
 

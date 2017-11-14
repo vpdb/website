@@ -1,5 +1,5 @@
 import angular from 'angular';
-import { max, map, keys, isEmpty } from 'lodash';
+import { max, map, keys } from 'lodash';
 
 import LoginModalTpl from './auth/login.modal.pug';
 
@@ -82,6 +82,11 @@ export default class App {
 		return msg;
 	}
 
+	/**
+	 * Enables or disables the global loading overlay.
+	 *
+	 * @param loading
+	 */
 	setLoading(loading) {
 		this.$rootScope.loading = loading;
 	};

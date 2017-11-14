@@ -264,7 +264,7 @@ export default class GameDetailsCtrl {
 			this.meta.romFiles.splice(this.meta.romFiles.indexOf(file), 1);
 			delete this.data().roms[file.storage.id];
 
-		}, this.ApiHelper.handleErrorsInDialog(this, 'Error removing file.', response => {
+		}, this.ApiHelper.handleErrorsInDialog('Error removing file.', response => {
 			if (response.status === 404) {
 				this.meta.romFiles.splice(this.meta.romFiles.indexOf(file), 1);
 				delete this.data().roms[file.storage.id];

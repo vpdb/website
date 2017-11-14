@@ -56,7 +56,7 @@ export default class BuildAdminEditModalCtrl {
 			this.App.showNotification('Successfully deleted build.');
 			this.$uibModalInstance.close();
 
-		}, this.ApiHelper.handleErrorsInDialog(this, 'Error deleting build'));
+		}, this.ApiHelper.handleErrorsInDialog('Error deleting build'));
 	}
 
 	openCalendar($event) {

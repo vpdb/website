@@ -52,7 +52,7 @@ export default class BackglassEditModalCtrl {
 		}).result.then(() => {
 			this.BackglassResource.delete({ id: backglass.id }, () => {
 				this.$uibModalInstance.close(null);
-			}, this.ApiHelper.handleErrorsInDialog(this, 'Error removing backglass.'));
+			}, this.ApiHelper.handleErrorsInDialog('Error removing backglass.'));
 		});
 	}
 

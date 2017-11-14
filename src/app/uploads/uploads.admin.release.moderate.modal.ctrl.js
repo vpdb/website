@@ -100,9 +100,7 @@ export default class UploadsAdminReleaseModerateModalCtrl {
 	}
 
 	sendMessage() {
-		this.loading = true;
 		this.ReleaseModerationCommentResource.save({ releaseId: this.release.id }, { message: this.message }, comment => {
-			this.loading = false;
 			this.comments.unshift(comment);
 			this.message = '';
 		}, this.ApiHelper.handleErrors(this));

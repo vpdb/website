@@ -151,7 +151,7 @@ export default function($parse, $compile, Upload, ApiHelper, AuthService, ModalS
 
 						params.onSuccess.bind(params.controller)(status);
 
-					}, ApiHelper.handleErrorsInDialog(scope, 'Error uploading file.', () => {
+					}, ApiHelper.handleErrorsInDialog('Error uploading file.', () => {
 						if (params.onError) {
 							params.onError.bind(params.controller)(status);
 						}

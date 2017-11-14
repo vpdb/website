@@ -107,7 +107,7 @@ export default class AuthService {
 	rememberMe() {
 		this.TokenResource.save({ type: 'login' }, token => {
 			this.$localStorage.loginToken = token;
-		}, this.ApiHelper.handleErrorsInDialog(this.$rootScope, 'Error creating login token.'));
+		}, this.ApiHelper.handleErrorsInDialog('Error creating login token.'));
 	}
 
 	/**
@@ -125,7 +125,7 @@ export default class AuthService {
 				delete this.$localStorage.loginToken;
 				done();
 
-			}, this.ApiHelper.handleErrorsInDialog(this.$rootScope, 'Error deleting login token.', done));
+			}, this.ApiHelper.handleErrorsInDialog('Error deleting login token.', done));
 
 		} else {
 			done();

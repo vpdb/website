@@ -171,7 +171,7 @@ export default class ProfileSettingsCtrl {
 	toggleToken(token) {
 		this.TokenResource.update({ id: token.id }, { is_active: !token.is_active }, () => {
 			token.is_active = !token.is_active;
-		}, this.ApiHelper.handleErrorsInDialog(this, 'Error toggling token.'));
+		}, this.ApiHelper.handleErrorsInDialog('Error toggling token.'));
 	}
 
 	deleteToken(token) {
@@ -184,7 +184,7 @@ export default class ProfileSettingsCtrl {
 				this.tokens.splice(this.tokens.indexOf(token), 1);
 				this.App.showNotification('Token successfully deleted.');
 
-			}, this.ApiHelper.handleErrorsInDialog(this, 'Error deleting token.'));
+			}, this.ApiHelper.handleErrorsInDialog('Error deleting token.'));
 		}, () => {});
 	}
 

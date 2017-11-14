@@ -30,7 +30,7 @@ export default class GameListCtrl {
 		this.ApiHelper = ApiHelper;
 		this.GameResource = GameResource;
 
-		this.loading = false;
+		this.pageLoading = false;
 		this.$query = null;
 		this.$scope.filterDecades = [];
 		this.$scope.filterManufacturer = [];
@@ -136,7 +136,7 @@ export default class GameListCtrl {
 
 		// refresh if changes
 		if (!isEqual(this.$query, query)) {
-			this.loading = true;
+			this.pageLoading = true;
 			this.games = this.GameResource.query(query, this.ApiHelper.handlePagination(this, { loader: true }));
 			this.$query = query;
 		}
