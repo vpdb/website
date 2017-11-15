@@ -8,15 +8,17 @@ export default class ReleaseDownloadModalCtrl {
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {DownloadService} DownloadService
+	 * @param {Flavors} Flavors
 	 * @param RomResource
 	 * @param params
 	 */
-	constructor($scope, $timeout, $uibModalInstance, App, DownloadService, RomResource, params) {
+	constructor($scope, $timeout, $uibModalInstance, App, DownloadService, Flavors, RomResource, params) {
 
 		this.$timeout = $timeout;
 		this.$uibModalInstance = $uibModalInstance;
 		this.App = App;
 		this.DownloadService = DownloadService;
+		this.Flavors = Flavors;
 		this.RomResource = RomResource;
 
 		this.game = params.game;

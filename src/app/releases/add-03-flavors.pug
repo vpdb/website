@@ -1,4 +1,4 @@
-.alert.alert--rounded.alert--aligned(ng-show="showHelp")
+.alert.alert--rounded.alert--aligned(ng-show="vm.showHelp")
 	+icon('info')
 	p A flavor defines attributes that are relevant to the table file, so users can find more easily what they're interested in. You can upload multiple flavors by adding several <code>.vpt</code> or <code>.vpx</code> files in step {{ step.files }}.
 ul.list--files
@@ -27,10 +27,10 @@ ul.list--files
 		.clearfix
 		.alert.alert-danger(ng-show="vm.errors.versions[0].files[vm.meta.files.indexOf(file)].flavor.orientation")
 			+icon('warning').shift-up.space-right
-			| {{ errors.versions[0].files[meta.files.indexOf(file)].flavor.orientation }}
+			| {{ vm.errors.versions[0].files[vm.meta.files.indexOf(file)].flavor.orientation }}
 		.alert.alert-danger(ng-show="vm.errors.versions[0].files[vm.meta.files.indexOf(file)].flavor.lighting")
 			+icon('warning').shift-up.space-right
-			| {{ errors.versions[0].files[meta.files.indexOf(file)].flavor.lighting }}
+			| {{ vm.errors.versions[0].files[vm.meta.files.indexOf(file)].flavor.lighting }}
 .text-center(ng-show="(vm.meta.files | fileext:['vpt','vpx']).length == 0")
 	+icon('warning').shift-up.space-right
-	i Upload <code>.vpt</code>/<code>.vpx</code> files under {{ step.files }}. before defining flavors.
+	i Upload <code>.vpt</code>/<code>.vpx</code> files under {{ vm.step.files }}. before defining flavors.

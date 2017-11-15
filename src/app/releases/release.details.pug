@@ -11,7 +11,7 @@ p.padder-top(ng-show="vm.pageLoading")
 	.col-sm-4.col-md-3.col-sm-push-8.col-md-push-9.col--menu(ng-show="vm.found")
 
 		a.a--block.text-center(ui-sref="gameDetails({id: game.id})")
-			img.img--logo(ng-src="{{ vm.game.logo.variations[vm.App.pixelSuffix('medium')].url }}").padder-bottom
+			img.img--logo(ng-src="{{ vm.App.img(vm.game.logo, 'medium') }}").padder-bottom
 
 		//-- PLAYFIELD SHOTS
 		//---------------------------------------------------------------------
@@ -217,7 +217,7 @@ p.padder-top(ng-show="vm.pageLoading")
 						a(ng-click="vm.validateFile(release, flavor.version.version, flavor.file)", uib-tooltip="{{ flavor.file.validation | validationTooltip }}", tooltip-placement="right", tooltip-append-to-body="true", tooltip-popup-delay="500")
 							+icon('{{ "medal-" + (flavor.file.validation | validationStatus) }}')
 					td.td--img
-						img.img--rounded(ng-src="{{ flavor.file.playfield_image.variations[vm.App.pixelSuffix('square')].url }}")
+						img.img--rounded(ng-src="{{ vm.App.img(flavor.file.playfield_image, 'square') }}")
 					td(ng-show="!vm.$localStorage.showFilenames")
 						| {{ flavor.orientation.name }} <br>
 						i {{ flavor.orientation.other }}

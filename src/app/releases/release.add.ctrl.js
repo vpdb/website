@@ -39,6 +39,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 
 		this.$state = $state;
 		this.$localStorage = $localStorage;
+		this.App = App;
 		this.ModalService = ModalService;
 		this.ReleaseResource = ReleaseResource;
 		this.GameReleaseNameResource = GameReleaseNameResource;

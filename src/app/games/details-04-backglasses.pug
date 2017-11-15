@@ -7,7 +7,7 @@ p(ng-show="vm.game.backglasses.length === 0 && !vm.game.restrictions.release.mpu
 			.alert.alert-danger
 				+icon('warning').shift-up.space-right
 				| Backglass only visible to authors and mods.
-		.img.img--ar-bg.img--rounded-top(img-bg="backglass.versions[0].file.variations[vm.App.pixelSuffix('medium')].url", ng-class="{ restricted: vm.game.restrictions.release.mpu }")
+		.img.img--ar-bg.img--rounded-top(img-bg="vm.App.img(backglass.versions[0].file, 'medium')", ng-class="{ restricted: vm.game.restrictions.release.mpu }")
 		.img.img--ar-bg.img--rounded-top.img--placeholder.loaded
 		.text-center.padder(ng-class="{ restricted: vm.game.restrictions.release.mpu }")
 			.center-block

@@ -1,4 +1,4 @@
-.form-group(ng-class="{ error: errors.name }")
+.form-group(ng-class="{ error: vm.errors.name }")
 	.input-group
 		input.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.release.name")
 		span.input-group-addon(uib-tooltip="Click for an inspirational random title!", tooltip-placement="right", tooltip-append-to-body="true")

@@ -9,7 +9,7 @@ include ../template/_mixins
 		.row(ng-show="vm.images.length > 0")
 			div(ng-repeat="playfield in vm.images", ng-class="vm.images.length > 2 ? 'col-xs-4' : 'col-xs-6'")
 				.flavor-item(ng-click="$close(playfield.image)")
-					img.img.img-responsive(img-src="{{ playfield.image.variations[vm.App.pixelSuffix('medium')].url }}")
+					img.img.img-responsive(img-src="{{ vm.App.img(playfield.image, 'medium') }}")
 				.text-center.padder-top
 					label.label--block
 						strong {{ playfield.version.version }}

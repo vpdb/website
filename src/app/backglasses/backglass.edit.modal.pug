@@ -43,6 +43,6 @@ script#gameListItem(type="text/ng-template")
 
 	div.media.media--game-item
 		.media-left
-			.img.img--ar-bg(img-bg="match.model.backglass.variations[vm.App.pixelSuffix('small')].url")
+			.img.img--ar-bg(img-bg="vm.App.img(match.model.backglass, 'small')")
 		.media-body
 			h3.h--no-margin.h--lighter {{ match.model.title }}

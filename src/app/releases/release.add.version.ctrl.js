@@ -35,6 +35,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 		this.$uibModal = $uibModal;
 		this.$state = $state;
 		this.$localStorage = $localStorage;
+		this.App = App;
 		this.ApiHelper = ApiHelper;
 		this.ModalService = ModalService;
 		this.ReleaseVersionResource = ReleaseVersionResource;

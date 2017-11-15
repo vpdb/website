@@ -35,7 +35,7 @@ include ../template/_mixins
 			.fade2-animation
 				.col-md-4.col-sm-6.col-xs-12.fade-animation(ng-repeat="game in vm.games", ui-sref="gameDetails({ id: game.id})")
 					.panel.panel--animated.ng-cloak
-						.img.img--ar-bg.img--rounded-top(img-bg="game.backglass.variations[vm.App.pixelSuffix('small')].url")
+						.img.img--ar-bg.img--rounded-top(img-bg="vm.App.img(game.backglass, 'small')")
 						.img.img--ar-bg.img--rounded-top.img--placeholder.loaded
 						.text-center.padder-horizontal
 							h1.h--small {{ game.title }}

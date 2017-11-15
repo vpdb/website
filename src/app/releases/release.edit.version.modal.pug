@@ -126,7 +126,7 @@ include ../template/_mixins
 					.panel.panel--blank.playfield--image(
 					file-upload="{ controller: vm, type: vm.getPlayfieldType(file), key: vm.getMediaKey(file, 'playfield_video'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['flv', 'f4v', 'mp4', 'avi'], allowMultipleFiles: false }",
 						ngf-drag-over-class="'panel--dragging'",
-						ng-class="{ error: vm.errors.files[meta.files.indexOf(file)]._playfield_video }",
+						ng-class="{ error: vm.errors.files[vm.meta.files.indexOf(file)]._playfield_video }",
 						ng-hide="loadingFinished"
 					)
 						.panel-body.a.a--darker
@@ -154,7 +154,7 @@ include ../template/_mixins
 
 			.alert.alert-danger(ng-show="vm.errors.files[vm.meta.files.indexOf(file)]._playfield_image")
 				+icon('warning').shift-up.space-right
-				| {{ errors.files[meta.files.indexOf(file)]._playfield_image }}
+				| {{ vm.errors.files[vm.meta.files.indexOf(file)]._playfield_image }}
 
 
 	.modal-footer

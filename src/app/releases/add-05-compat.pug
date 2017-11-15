@@ -38,10 +38,10 @@ ul.list--files
 					+icon('plus-circle').space-right
 					| Add Another
 		.clearfix
-		.alert.alert-danger(ng-show="vm.errors.versions[0].files[meta.files.indexOf(file)]._compatibility")
+		.alert.alert-danger(ng-show="vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._compatibility")
 			+icon('warning').shift-up.space-right
-			| {{ errors.versions[0].files[meta.files.indexOf(file)]._compatibility }}
-		p.padder-top(ng-hide="vm.errors.versions[0].files[meta.files.indexOf(file)]._compatibility")
+			| {{ vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._compatibility }}
+		p.padder-top(ng-hide="vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._compatibility")
 
 .text-center(ng-show="(vm.meta.files | fileext:['vpt','vpx']).length == 0")
 	+icon('warning').shift-up.space-right

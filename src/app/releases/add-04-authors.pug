@@ -15,7 +15,7 @@ button.btn.btn-default.padder-top.pull-right(ng-click="vm.addAuthor()")
 .clearfix.padder-bottom
 .alert.alert-danger.padder-bottom(ng-show="vm.errors.authors")
 	+icon('warning').shift-up.space-right
-	| {{ errors.authors }}
+	| {{ vm.errors.authors }}
 .alert.alert--rounded.alert--aligned(ng-show="vm.showHelp")
 	+icon('info')
 	p Everybody you add here will have write permissions to the release you are about to create, i.e. they can edit the release and add new versions and flavors.

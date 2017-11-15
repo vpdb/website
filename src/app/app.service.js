@@ -98,6 +98,28 @@ export default class App {
 	}
 
 	/**
+	 * Returns the URL of an image's variation.
+	 *
+	 * @param {{ variations:object }} image Image object
+	 * @param {string} variation Variation
+	 */
+	img(image, variation) {
+		if (!image) {
+			return;
+		}
+		if (!image.variations) {
+			console.warn('No variations in ', image);
+			return;
+		}
+		const name = this.pixelSuffix(variation);
+		if (!image.variations[name]) {
+			console.warn('No variation "%s" in ', variation, image);
+			return;
+		}
+		return image.variations[this.pixelSuffix(variation)].url;
+	}
+
+	/**
 	 * Returns the provided message or the current login message as fallback and clears the fallback.
 	 * @param message Message
 	 * @return {*}

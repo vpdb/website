@@ -24,7 +24,7 @@ include ../template/_mixins
 
 					.col-md-3.col-sm-4.col-xs-6(ng-repeat="game in vm.games", ng-click="navGame(game.id)")
 						.panel.panel--animated.ng-cloak
-							.img.img--ar-bg.img--rounded-top(img-bg="game.backglass.variations[vm.App.pixelSuffix('small')].url")
+							.img.img--ar-bg.img--rounded-top(img-bg="vm.App.img(game.backglass, 'small')")
 							.text-center.padder-horizontal
 								h1.h--small {{ game.title }}
 								label.label--subtitle {{ game.manufacturer }} &middot; {{ game.year }}
@@ -120,7 +120,7 @@ include ../template/_mixins
 		.row.fade2-animation(ng-show="vm.popularGames.length > 0")
 			.col-md-3.col-sm-4.col-xs-6(ng-repeat="game in vm.popularGames", ui-sref="gameDetails({ id: game.id})")
 				.panel.panel--animated.ng-cloak
-					.img.img--ar-bg.img--rounded-top(img-bg="game.backglass.variations[vm.App.pixelSuffix('small')].url")
+					.img.img--ar-bg.img--rounded-top(img-bg="vm.App.img(game.backglass, 'small')")
 					.text-center.padder-horizontal
 						h1.h--small {{ game.title }}
 						label.label--subtitle {{ game.manufacturer }} &middot; {{ game.year }}
