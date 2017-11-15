@@ -52,7 +52,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 		// statuses
 		this.submitting = false;
 		this.showHelp = $localStorage.showInstructions.release_add;
-		$scope.$watch('showHelp', () => $localStorage.showInstructions.release_add = this.showHelp);
+		$scope.$watch(() => this.showHelp, () => $localStorage.showInstructions.release_add = this.showHelp);
 
 		// fetch game info
 		this.gameId = $stateParams.id;
