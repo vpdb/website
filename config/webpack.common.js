@@ -4,6 +4,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 const appContext = resolve(__dirname, '../src/app');
 const staticContext = resolve(__dirname, '../src/static');
@@ -62,7 +64,9 @@ module.exports  = function(options) {
 
 			new webpack.DefinePlugin({
 				WEBSITE_CONFIG: JSON.stringify(require('./vpdb.' + process.env.CONFIG + '.json'))
-			})
+			}),
+
+			new BundleAnalyzerPlugin()
 		],
 		output: {
 			path: resolve(__dirname, 'dist'),
