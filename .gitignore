@@ -12,7 +12,7 @@ test
 
 pids
 logs
-/build
+/dist
 /devsite
 /coverage
 /data/storage*

@@ -1,8 +1,8 @@
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeJsPlugin = require('optimize-js-plugin');
+const MinifyPlugin = require("babel-minify-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const ENV = process.env.ENV = process.env.NODE_ENV = 'prod';
 
@@ -11,21 +11,8 @@ module.exports = function(options) {
 	return webpackMerge(commonConfig({ env: ENV }), {
 
 		plugins: [
-			new OptimizeJsPlugin({ sourceMap: false }),
-			new UglifyJsPlugin({
-				parallel: true,
-				uglifyOptions: {
-					ie8: false,
-					ecma: 6,
-					warnings: true,
-					mangle: true, // debug false
-					output: {
-						comments: false,
-						beautify: false,  // debug true
-					}
-				},
-				sourceMap: false
-			}),
+			new MinifyPlugin(),
+			new BundleAnalyzerPlugin()
 		],
 
 		/**
