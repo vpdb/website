@@ -1,6 +1,6 @@
 import { cloneDeep, pick } from 'lodash';
 
-export default class BuildAdminEditModalCtrl {
+export default class BuildEditAdminModalCtrl {
 
 	/**
 	 * Class constructor
@@ -8,8 +8,8 @@ export default class BuildAdminEditModalCtrl {
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
 	 * @param {BootstrapPatcher} BootstrapPatcher
-	 * @param {BuildResource} BuildResource
-	 * @param {ReleaseResource} ReleaseResource
+	 * @param BuildResource
+	 * @param ReleaseResource
 	 * @param build
 	 */
 	constructor($uibModalInstance, App, ApiHelper, BootstrapPatcher, BuildResource, ReleaseResource, build) {

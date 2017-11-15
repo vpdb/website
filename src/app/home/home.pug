@@ -95,10 +95,10 @@ include ../template/_mixins
 						uib-tooltip="{{ release.starred ? 'Unstar' : 'Star' }} this release",
 							tooltip-placement="right",
 							tooltip-append-to-body="true",
-							ng-show="auth.hasPermission('releases/star')",
+							ng-show="vm.AuthService.hasPermission('releases/star')",
 							ng-class="{ 'a--primary': release.starred }"
 						)
-							+icon('star')(ng-click="toggleReleaseStar(release, $event)").shift-up-2x
+							+icon('star')(ng-click="vm.ReleaseService.toggleReleaseStar(release, $event)").shift-up-2x
 						h1.h--small.h--no-margin {{ release.game.title }}
 						label.label--block  {{ release.name }}
 						span.small.pull-right.space-right(am-time-ago="release.released_at")

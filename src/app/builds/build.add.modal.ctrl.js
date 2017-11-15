@@ -3,7 +3,7 @@ export default class BuildAddModalCtrl {
 	/**
 	 * @param $uibModalInstance
 	 * @param {ApiHelper} ApiHelper
-	 * @param {BuildResource} BuildResource
+	 * @param BuildResource
 	 * @param {BootstrapPatcher} BootstrapPatcher
 	 */
 	constructor($uibModalInstance, ApiHelper, BuildResource, BootstrapPatcher) {

@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { pick, cloneDeep } from 'lodash';
 
-export default class UserAdminEditModalCtrl {
+export default class UserEditAdminModalCtrl {
 
 	/**
 	 * Class constructor
@@ -9,9 +9,9 @@ export default class UserAdminEditModalCtrl {
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
-	 * @param {UserResource} UserResource
-	 * @param {UserConfirmationResource} UserConfirmationResource
-	 * @param {PlanResource} PlanResource
+	 * @param UserResource
+	 * @param UserConfirmationResource
+	 * @param PlanResource
 	 * @param user
 	 * @param roles
 	 */

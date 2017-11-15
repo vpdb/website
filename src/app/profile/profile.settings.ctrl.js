@@ -13,8 +13,8 @@ export default class ProfileSettingsCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {ModalService} ModalService
 	 * @param {TrackerService} TrackerService
-	 * @param {ProfileResource} ProfileResource
-	 * @param {TokenResource} TokenResource
+	 * @param ProfileResource
+	 * @param TokenResource
 	 */
 	constructor($scope, $uibModal, App, AuthService, ApiHelper, ModalService, TrackerService,
 				ProfileResource, TokenResource) {

@@ -21,8 +21,8 @@ export default class AuthService {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {Config} Config
 	 * @param {ConfigService} ConfigService
-	 * @param {TokenResource} TokenResource
-	 * @param {ProfileResource} ProfileResource
+	 * @param TokenResource
+	 * @param ProfileResource
 	 */
 	constructor($window, $localStorage, $rootScope, $location, $http, $state, $timeout,
 				App, ApiHelper, Config, ConfigService, TokenResource, ProfileResource) {
@@ -49,9 +49,9 @@ export default class AuthService {
 		this.isAuthenticated = !!this.user;
 		this.permissions = this.user ? this.user.permissions : null;
 		this.roles = this.user ? this.user.roles: null;
-		this.$rootScope.$on('userUpdated', (event, user) => {
-			this.saveUser(user);
-		});
+
+		// save user when updated
+		this.$rootScope.$on('userUpdated', (event, user) => this.saveUser(user));
 	}
 
 	/**

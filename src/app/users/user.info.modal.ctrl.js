@@ -2,12 +2,12 @@ export default class UserInfoModalCtrl {
 
 	/**
 	 * Class constructor
-	 * @param {UserResource} UserResource
-	 * @param {UserStarResource} UserStarResource
 	 * @param {ModalService} ModalService
+	 * @param UserResource
+	 * @param UserStarResource
 	 * @param username
 	 */
-	constructor(UserResource, UserStarResource, ModalService, username) {
+	constructor(ModalService, UserResource, UserStarResource, username) {
 
 		this.UserStarResource = UserStarResource;
 		this.ModalService = ModalService;

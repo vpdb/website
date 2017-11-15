@@ -1,18 +1,18 @@
 import { assign, orderBy } from 'lodash';
 
-import BuildAdminAddModalTpl from './build.admin.add.modal.pug';
-import BuildAdminEditModalTpl from './build.admin.edit.modal.pug';
+import BuildAddAdminModalTpl from './build.add.admin.modal.pug';
+import BuildEditAdminModalTpl from './build.edit.admin.modal.pug';
 
-export default class BuildAdminListCtrl {
+export default class BuildListAdminCtrl {
 
 	/**
 	 * Class constructor
 	 * @param $uibModal
 	 * @param {App} App
-	 * @param {BuildResource} BuildResource
 	 * @param {TrackerService} TrackerService
+	 * @param BuildResource
 	 */
-	constructor($uibModal, App, BuildResource, TrackerService) {
+	constructor($uibModal, App, TrackerService, BuildResource) {
 		App.theme('light');
 		App.setTitle('Builds');
 		App.setMenu('admin');
@@ -51,8 +51,8 @@ export default class BuildAdminListCtrl {
 
 	edit(build) {
 		this.$uibModal.open({
-			templateUrl: BuildAdminEditModalTpl,
-			controller: 'BuildAdminEditModalCtrl',
+			templateUrl: BuildEditAdminModalTpl,
+			controller: 'BuildEditAdminModalCtrl',
 			controllerAs: 'vm',
 			size: 'lg',
 			resolve: { build: () => build }
@@ -68,8 +68,8 @@ export default class BuildAdminListCtrl {
 
 	add() {
 		this.$uibModal.open({
-			templateUrl: BuildAdminAddModalTpl,
-			controller: 'BuildAdminAddModalCtrl',
+			templateUrl: BuildAddAdminModalTpl,
+			controller: 'BuildAddAdminModalCtrl',
 			controllerAs: 'vm',
 			size: 'lg'
 

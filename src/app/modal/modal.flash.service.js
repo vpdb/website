@@ -53,6 +53,8 @@ export default class ModalFlashService {
 			this.ModalService._flashMessage = null;
 			this.$uibModal.open({
 				templateUrl: ModalErrorInfoTpl,
+				controller: 'ModalCtrl',
+				controllerAs: 'vm',
 				resolve: { data: () => data }
 			});
 		}

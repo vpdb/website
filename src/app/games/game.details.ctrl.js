@@ -23,12 +23,12 @@ export default class GameDetailsCtrl {
 	 * @param {DownloadService} DownloadService
 	 * @param {ModalService} ModalService
 	 * @param {TrackerService} TrackerService
-	 * @param {GameResource} GameResource
-	 * @param {ReleaseCommentResource} ReleaseCommentResource
-	 * @param {FileResource} FileResource
-	 * @param {RomResource} RomResource
-	 * @param {GameRatingResource} GameRatingResource
-	 * @param {GameStarResource} GameStarResource
+	 * @param GameResource
+	 * @param ReleaseCommentResource
+	 * @param FileResource
+	 * @param RomResource
+	 * @param GameRatingResource
+	 * @param GameStarResource
 	 */
 	constructor($stateParams, $uibModal, $localStorage,
 				App, ApiHelper, AuthService, Flavors, ConfigService, DownloadService, ModalService, TrackerService,
@@ -61,7 +61,7 @@ export default class GameDetailsCtrl {
 		this.GameStarResource = GameStarResource;
 
 		this.pageLoading = true;
-		this.newRoms = $localStorage.game_data && $localStorage.game_data[$scope.gameId] ? $localStorage.game_data[$scope.gameId].roms : [];
+		this.newRoms = $localStorage.game_data && $localStorage.game_data[this.gameId] ? $localStorage.game_data[this.gameId].roms : [];
 		this.roms = RomResource.query({ id : this.gameId });
 		this.romLanguages = [
 			{ value: 'en', label: 'English' },

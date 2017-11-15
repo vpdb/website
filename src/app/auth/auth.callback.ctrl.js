@@ -10,10 +10,10 @@ export default class AuthCallbackCtrl {
 	 * @param $location
 	 * @param {*} $localStorage
 	 * @param {AuthService} AuthService
-	 * @param {AuthResource} AuthResource
 	 * @param {ModalService} ModalService
+	 * @param AuthResource
 	 */
-	constructor($stateParams, $location, $localStorage, AuthService, AuthResource, ModalService) {
+	constructor($stateParams, $location, $localStorage, AuthService, ModalService, AuthResource) {
 
 		if ($location.search().code) {
 			// noinspection JSUnresolvedFunction

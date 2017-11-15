@@ -1,6 +1,6 @@
 import { pick } from 'lodash';
 
-export default class BuildAdminAddModalCtrl {
+export default class BuildAddAdminModalCtrl {
 
 	/**
 	 * Class constructor
@@ -8,7 +8,7 @@ export default class BuildAdminAddModalCtrl {
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
-	 * @param {BuildResource} BuildResource
+	 * @param BuildResource
 	 * @param {BootstrapPatcher} BootstrapPatcher
 	 */
 	constructor($uibModal, $uibModalInstance, App, ApiHelper, BuildResource, BootstrapPatcher) {

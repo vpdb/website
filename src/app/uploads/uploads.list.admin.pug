@@ -1,6 +1,6 @@
 include ../template/_mixins
 
-.row.row--fullheight(ng-controller="UploadsAdminListCtrl as vm")
+.row.row--fullheight(ng-controller="UploadsListAdminCtrl as vm")
 	.col-sm-3.col--menu
 		h1 Filter
 		hr
@@ -30,7 +30,7 @@ include ../template/_mixins
 
 		//-- RELEASES
 		//---------------------------------------------------------------------
-		div(ng-controller="UploadsAdminReleaseListCtrl as vm")
+		div(ng-controller="UploadsReleaseListAdminCtrl as vm")
 			h1.h--primary
 				| Releases
 
@@ -61,7 +61,7 @@ include ../template/_mixins
 
 		//-- BACKGLASSES
 		//---------------------------------------------------------------------
-		div(ng-controller="UploadsAdminBackglassListCtrl as vm")
+		div(ng-controller="UploadsBackglassListAdminCtrl as vm")
 			h1.h--primary
 				| Direct B2S Backglasses
 

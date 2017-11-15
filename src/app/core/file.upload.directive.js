@@ -28,7 +28,7 @@ import { includes } from 'lodash';
  * @param {ModalService} ModalService
  * @param {FileUploadHelperService} FileUploadHelperService
  * @param {ConfigService} ConfigService
- * @param {FileResource} FileResource
+ * @param FileResource
  */
 export default function($parse, $compile, Upload, ApiHelper, AuthService, ModalService,
 						FileUploadHelperService, ConfigService, FileResource) {
@@ -86,7 +86,7 @@ export default function($parse, $compile, Upload, ApiHelper, AuthService, ModalS
 
 				// validate file types
 				for (let i = 0; i < $files.length; i++) {
-					var file = $files[i];
+					const file = $files[i];
 					const ext = file.name.substr(file.name.lastIndexOf('.') + 1, file.name.length).toLowerCase();
 					if (!includes(params.allowedExtensions, ext)) {
 						return ModalService.info({

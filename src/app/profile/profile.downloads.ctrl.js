@@ -6,7 +6,7 @@ export default class ProfileDownloadsCtrl {
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
-	 * @param {ProfileResource} ProfileResource
+	 * @param ProfileResource
 	 */
 	constructor($scope, App, AuthService, ApiHelper, ProfileResource) {
 

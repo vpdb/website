@@ -8,7 +8,7 @@ export default class ReleaseDownloadModalCtrl {
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {DownloadService} DownloadService
-	 * @param {RomResource} RomResource
+	 * @param RomResource
 	 * @param params
 	 */
 	constructor($scope, $timeout, $uibModalInstance, App, DownloadService, RomResource, params) {

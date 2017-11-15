@@ -29,7 +29,7 @@ p.padder-top(ng-show="vm.pageLoading")
 				rating-votes="vm.release.rating.votes",
 				rating-user="vm.releaseRating"
 				rating-action="vm.rateRelease($rating)",
-				rating-readonly="!vm.App.AuthService.hasPermission('releases/rate')")
+				rating-readonly="!vm.AuthService.hasPermission('releases/rate')")
 
 		//-- DOWNLOAD BUTTON
 		//---------------------------------------------------------------------
@@ -50,7 +50,7 @@ p.padder-top(ng-show="vm.pageLoading")
 					ng-show="vm.AuthService.hasPermission('releases/star')",
 					ng-class="{ 'a--primary': vm.release.starred }"
 				)
-					+icon('star')(ng-click="vm.toggleReleaseStar(vm.release)").shift-up-2x
+					+icon('star')(ng-click="vm.ReleaseService.toggleReleaseStar(vm.release)").shift-up-2x
 				+icon('star-circle').svg-2x.shift-up-2x.space-right
 				| {{ vm.release.counter.stars | number }} star{{ vm.release.counter.stars != 1 ? 's' : '' }}
 			p.oneliner
@@ -65,7 +65,7 @@ p.padder-top(ng-show="vm.pageLoading")
 
 		//-- AUTHOR ZONE
 		//---------------------------------------------------------------------
-		.panel--rect-block.padder-top(ng-show="(vm.App.AuthService.hasPermission('releases/update-own') && vm.App.AuthService.isAuthor(release)) || vm.App.AuthService.hasPermission('releases/update')")
+		.panel--rect-block.padder-top(ng-show="(vm.AuthService.hasPermission('releases/update-own') && vm.AuthService.isAuthor(release)) || vm.AuthService.hasPermission('releases/update')")
 			h1.text-center
 				+icon('gear').space-right
 				| {{vm.zoneName}} Zone
@@ -118,7 +118,7 @@ p.padder-top(ng-show="vm.pageLoading")
 								.panel-body
 									div.markdown(markdown="comment.message")
 
-				editor(ng-model="vm.newModerationComment", user="vm.App.AuthService.user", placeholder="Comment about release moderation", markdown-text="Comments are parsed with Markdown.")
+				editor(ng-model="vm.newModerationComment", user="vm.AuthService.user", placeholder="Comment about release moderation", markdown-text="Comments are parsed with Markdown.")
 
 				button.btn.btn-hollow.pull-right.shift-up-2x(ng-click="vm.addModerationComment(vm.release.id)") Reply
 				.clearfix
@@ -263,7 +263,7 @@ p.padder-top(ng-show="vm.pageLoading")
 
 	.padder-top.space-left-2x(ng-show="!vm.found && !vm.pageLoading")
 		p Sorry, no such release found.
-		p(ng-show="!vm.App.AuthService.isAuthenticated") If you're looking for a moderated release, try logging in.
+		p(ng-show="!vm.AuthService.isAuthenticated") If you're looking for a moderated release, try logging in.
 
 	jsonld(json="vm.ldRelease")
 

@@ -1,4 +1,4 @@
-export default class UploadsAdminListCtrl {
+export default class UploadsListAdminCtrl {
 
 	/**
 	 * Class constructor

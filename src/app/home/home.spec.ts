@@ -15,7 +15,7 @@ describe('Home Page', () => {
 
 	it('should search in games', () => {
 		this.homePage.search('qwert');
-		expect(this.homePage.getNoResult()).toEqual('No games found containing "qwert".')
+		expect(this.homePage.getNoResult()).toEqual('No games found containing "qwert".');
 		this.homePage.search('');
 	});
 

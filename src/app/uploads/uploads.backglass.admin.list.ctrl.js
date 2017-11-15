@@ -1,6 +1,6 @@
-import AdminModerateBackglassModalTpl from './uploads.admin.backglass.moderate.modal.pug';
+import UploadsBackglassModerateAdminModalTpl from './uploads.backglass.moderate.admin.modal.pug';
 
-export default class UploadsAdminBackglassListCtrl {
+export default class UploadsBackglassListAdminCtrl {
 
 	/**
 	 * Class constructor
@@ -8,7 +8,7 @@ export default class UploadsAdminBackglassListCtrl {
 	 * @param $uibModal
 	 * @param {ApiHelper} ApiHelper
 	 * @param {UploadHelper} UploadHelper
-	 * @param {BackglassResource} BackglassResource
+	 * @param BackglassResource
 	 */
 	constructor($scope, $uibModal, ApiHelper, UploadHelper, BackglassResource) {
 
@@ -36,8 +36,8 @@ export default class UploadsAdminBackglassListCtrl {
 
 	moderateBackglass(backglass) {
 		this.$uibModal.open({
-			templateUrl: AdminModerateBackglassModalTpl,
-			controller: 'AdminModerateBackglassModalCtrl',
+			templateUrl: UploadsBackglassModerateAdminModalTpl,
+			controller: 'UploadsBackglassModerateAdminModalCtrl',
 			controllerAs: 'vm',
 			size: 'md',
 			resolve: {

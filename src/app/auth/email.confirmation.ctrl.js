@@ -7,7 +7,7 @@ export default class EmailConfirmationCtrl {
 	 * @param {AuthService} AuthService
 	 * @param {LoginService} LoginService
 	 * @param {ModalFlashService} ModalFlashService
-	 * @param {ProfileResource} ProfileResource
+	 * @param ProfileResource
 	 */
 	constructor($state, $stateParams, ApiHelper, AuthService, LoginService, ModalFlashService, ProfileResource) {
 

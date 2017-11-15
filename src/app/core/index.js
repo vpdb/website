@@ -6,6 +6,7 @@ import FileUploadHelperService from './file.upload.helper.service';
 import ratingBox from './rating.directive';
 import topBadge from './top-badge.directive';
 import editor from './editor.directive';
+import editorMarkdownInfo from './editor.markdown-info.directive';
 import fileUpload from './file.upload.directive';
 import { makeLoaded, imgBg, imgSrc } from './image.directives';
 import { fallbackIcon, focusOn, onEnter, jsonLd, markdown, sort } from './util.directives';
@@ -14,6 +15,7 @@ import EditorCtrl from './editor.ctrl';
 import CommentCtrl from './comment.ctrl';
 import heightAnimation from './height.animation';
 import collapseInAnimation from './collapse-in.animation';
+import videoJs from './videojs.directive';
 
 export default angular.module('vpdb.core', [])
 	.constant('Config', WEBSITE_CONFIG)
@@ -24,6 +26,7 @@ export default angular.module('vpdb.core', [])
 	.controller('EditorCtrl', EditorCtrl)
 	.controller('CommentCtrl', CommentCtrl)
 	.directive('editor', editor)
+	.directive('markdownInfo', editorMarkdownInfo)
 	.directive('ratingbox', ratingBox)
 	.directive('topBadge', topBadge)
 	.directive('makeLoaded', makeLoaded)
@@ -36,6 +39,7 @@ export default angular.module('vpdb.core', [])
 	.directive('markdown', markdown)
 	.directive('sort', sort)
 	.directive('fileUpload', fileUpload)
+	.directive('videojs', videoJs)
 	.filter('authors', authorsFilter)
 	.filter('bytes', bytesFilter)
 	.filter('escape', escapeFilter)

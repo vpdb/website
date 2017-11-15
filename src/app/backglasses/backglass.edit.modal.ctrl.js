@@ -4,15 +4,15 @@ export default class BackglassEditModalCtrl {
 	/**
 	 * @param $uibModalInstance
 	 * @param {App} App
-	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
-	 * @param {GameResource} GameResource
-	 * @param {BackglassResource} BackglassResource
+	 * @param {AuthService} AuthService
 	 * @param {ModalService} ModalService
+	 * @param GameResource
+	 * @param BackglassResource
 	 * @param params
 	 */
-	constructor($uibModalInstance, App, ApiHelper, AuthService,
-				GameResource, BackglassResource, ModalService, params) {
+	constructor($uibModalInstance, App, ApiHelper, AuthService, ModalService,
+				GameResource, BackglassResource, params) {
 
 		this.$uibModalInstance = $uibModalInstance;
 

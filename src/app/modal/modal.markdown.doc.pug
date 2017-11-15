@@ -1,5 +1,5 @@
 include ../template/_mixins
-.theme-light
+.theme-light(ng-init="mdfiddle = vm.data")
 	.modal-header
 		h1.h--no-margin.h--small
 			+icon('markdown').space-right
@@ -10,7 +10,6 @@ include ../template/_mixins
 			| Check <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">this link</a>
 			| for all the features.
 
-
 		.row
 			.col-sm-6
 				h4 Markdown
@@ -19,5 +18,5 @@ include ../template/_mixins
 				h4 Rendered
 				div.markdown(markdown="mdfiddle")
 	.modal-footer
-		button.btn.btn-default.pull-left(ng-click="mdfiddle = mdfiddleText") Reset
+		button.btn.btn-default.pull-left(ng-click="mdfiddle = vm.data") Reset
 		button.btn.btn-default(ng-click="$close()") Got it!

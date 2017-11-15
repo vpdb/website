@@ -1,6 +1,6 @@
 import { map } from 'lodash';
 
-export default class UploadsAdminBackglassModerateModalCtrl {
+export default class UploadsBackglassModerateAdminModalCtrl {
 
 	/**
 	 * Class constructor
@@ -9,8 +9,8 @@ export default class UploadsAdminBackglassModerateModalCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {UploadHelper} UploadHelper
 	 * @param {DownloadService} DownloadService
-	 * @param {BackglassResource} BackglassResource
-	 * @param {BackglassModerationResource} BackglassModerationResource
+	 * @param BackglassResource
+	 * @param BackglassModerationResource
 	 * @param params
 	 */
 	constructor($uibModalInstance, App, ApiHelper, UploadHelper, DownloadService,

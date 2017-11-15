@@ -23,11 +23,11 @@ export default class ReleaseDetailsCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {ReleaseService} ReleaseService
 	 * @param {TrackerService} TrackerService
-	 * @param {GameResource} GameResource
-	 * @param {ReleaseResource} ReleaseResource
-	 * @param {ReleaseRatingResource} ReleaseRatingResource
-	 * @param {ReleaseCommentResource} ReleaseCommentResource
-	 * @param {ReleaseModerationCommentResource} ReleaseModerationCommentResource
+	 * @param GameResource
+	 * @param ReleaseResource
+	 * @param ReleaseRatingResource
+	 * @param ReleaseCommentResource
+	 * @param ReleaseModerationCommentResource
 	 */
 	constructor($timeout, $stateParams, $location, $localStorage, $uibModal,
 				App, AuthService, ApiHelper, ReleaseService, TrackerService, GameResource,

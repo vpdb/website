@@ -16,17 +16,10 @@ export default class TrackerService {
 
 		this.$rootScope = $rootScope;
 		this.Config = Config;
-		this.AuthService = AuthService;
-	}
 
-	/**
-	 * Initializes GA
-	 */
-	init() {
-		// enable ga
 		if (this.Config.ga && this.Config.ga.enabled) {
-			if (this.AuthService.user) {
-				ga('create', this.Config.ga.id, 'auto', { userId: this.AuthService.user.id });
+			if (AuthService.user) {
+				ga('create', this.Config.ga.id, 'auto', { userId: AuthService.user.id });
 			} else {
 				ga('create', this.Config.ga.id, 'auto');
 			}

@@ -6,9 +6,13 @@ import ModalErrorInfoTpl from './modal.error.info.pug';
 
 export default class ModalService {
 
-	constructor($uibModal) {
+	/**
+	 * @param $uibModal
+	 * @param ModalMarkdownFiddle
+	 */
+	constructor($uibModal, ModalMarkdownFiddle) {
 		this.$uibModal = $uibModal;
-
+		this.ModalMarkdownFiddle = ModalMarkdownFiddle;
 		this._flashMessage = null;
 	}
 
@@ -45,7 +49,8 @@ export default class ModalService {
 		return this.$uibModal.open({
 			templateUrl: ModalMarkdownDocTpl,
 			controller: 'ModalCtrl',
-			resolve: { data: () => null },
+			controllerAs: 'vm',
+			resolve: { data: () => this.ModalMarkdownFiddle },
 			size: 'lg'
 		});
 	}

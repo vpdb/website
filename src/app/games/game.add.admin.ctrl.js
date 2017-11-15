@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { assign, omit } from 'lodash';
 
-export default class GameAdminAddCtrl {
+export default class GameAddAdminCtrl {
 
 	/**
 	 * Class constructor
@@ -14,10 +14,10 @@ export default class GameAdminAddCtrl {
 	 * @param {AuthService} AuthService
 	 * @param {ModalService} ModalService
 	 * @param {TrackerService} TrackerService
-	 * @param {IpdbResource} IpdbResource
-	 * @param {GameResource} GameResource
-	 * @param {FileResource} FileResource
-	 * @param {GameRequestResource} GameRequestResource
+	 * @param IpdbResource
+	 * @param GameResource
+	 * @param FileResource
+	 * @param GameRequestResource
 	 */
 	constructor($scope, $window, $localStorage, $state,
 				App, ApiHelper, AuthService, ModalService, TrackerService,

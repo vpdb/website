@@ -4,7 +4,7 @@ export default class TagAddModalCtrl {
 	 * Class constructor
 	 * @param $uibModalInstance
 	 * @param {ApiHelper} ApiHelper
-	 * @param {TagResource} TagResource
+	 * @param TagResource
 	 */
 	constructor($uibModalInstance, ApiHelper, TagResource) {
 

@@ -9,11 +9,50 @@ export default class ReleaseService {
 
 	/**
 	 * Class constructor
+	 * @param {AuthService} AuthService
 	 * @param {Flavors} Flavors
+	 * @param {ModalService} ModalService
+	 * @param ReleaseStarResource
 	 */
-	constructor(Flavors) {
+	constructor(AuthService, Flavors, ModalService, ReleaseStarResource) {
+		this.AuthService = AuthService;
 		this.Flavors = Flavors;
+		this.ModalService = ModalService;
+		this.ReleaseStarResource = ReleaseStarResource;
 	}
+
+	/**
+	 * Stars or unstars a release depending if game is already starred.
+	 */
+	toggleReleaseStar(release, $event) {
+		const err = function(err) {
+			if (err.data && err.data.error) {
+				this.ModalService.error({
+					subtitle: 'Error starring release.',
+					message: err.data.error
+				});
+			} else {
+				console.error(err);
+			}
+		};
+		if (this.AuthService.hasPermission('releases/star')) {
+			if ($event) {
+				$event.stopPropagation();
+			}
+			if (release.starred) {
+				this.ReleaseStarResource.delete({ releaseId: release.id }, {}, () => {
+					release.starred = false;
+					release.counter.stars--;
+				}, err);
+			} else {
+				this.ReleaseStarResource.save({ releaseId: release.id }, {}, result => {
+					release.starred = true;
+					release.counter.stars = result.total_stars;
+				}, err);
+			}
+		}
+	};
+
 
 	flavorGrid(release) {
 

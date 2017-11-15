@@ -17,8 +17,8 @@ export default class LoginModalCtrl {
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
-	 * @param {AuthResource} AuthResource
-	 * @param {UserResource} UserResource
+	 * @param AuthResource
+	 * @param UserResource
 	 * @param {{ postLogin:{action:string, params:any}, headMessage:string, topMessage:string, message:string }} opts
 	 */
 	constructor($window, $uibModalInstance, $localStorage, Config, ConfigService, LoginService,

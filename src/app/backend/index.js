@@ -4,7 +4,7 @@ import DownloadService from './download.service';
 import { GameResource, GameRatingResource, GameStarResource, GameRequestResource, GameReleaseNameResource } from './game.resource';
 import { FileResource, FileBlockmatchResource } from './file.resource';
 import { ReleaseResource, ReleaseCommentResource, ReleaseVersionResource, ReleaseFileValidationResource,
-	ReleaseModerationCommentResource, ReleaseModerationResource, ReleaseRatingResource, ReleaseStarResource} from './release.resource';
+	ReleaseModerationCommentResource, ReleaseModerationResource, ReleaseRatingResource, ReleaseStarResource } from './release.resource';
 import { RomResource } from './rom.resource';
 import { AuthResource, AuthRedirectResource, ProfileResource, TokenResource } from './auth.resource';
 import { UserResource, UserConfirmationResource, UserStarResource } from './user.resource';

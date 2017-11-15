@@ -12,9 +12,9 @@ export default class BackglassAddCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {ModalService} ModalService
 	 * @param {TrackerService} TrackerService
-	 * @param {GameResource} GameResource
-	 * @param {FileResource} FileResource
-	 * @param {BackglassResource} BackglassResource
+	 * @param GameResource
+	 * @param FileResource
+	 * @param BackglassResource
 	 * @param {BootstrapPatcher} BootstrapPatcher
 	 */
 	constructor($state, $stateParams, $localStorage, $uibModal,

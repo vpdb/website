@@ -3,14 +3,14 @@ export default class TokenCreateModalCtrl {
 	/**
 	 * Class constructor
 	 * @param $uibModalInstance
-	 * @param {TokenResource} TokenResource
 	 * @param {ApiHelper} ApiHelper
+	 * @param TokenResource
 	 */
-	constructor($uibModalInstance, TokenResource, ApiHelper) {
+	constructor($uibModalInstance, ApiHelper, TokenResource) {
 
 		this.$uibModalInstance = $uibModalInstance;
-		this.TokenResource = TokenResource;
 		this.ApiHelper = ApiHelper;
+		this.TokenResource = TokenResource;
 
 		this.token = { type: 'access' };
 	}

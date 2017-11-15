@@ -1,6 +1,6 @@
 import { map } from 'lodash';
 
-export default class UploadsAdminReleaseModerateModalCtrl {
+export default class UploadsReleaseModerateAdminModalCtrl {
 
 	/**
 	 * Class constructor
@@ -8,16 +8,16 @@ export default class UploadsAdminReleaseModerateModalCtrl {
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
 	 * @param {UploadHelper} UploadHelper
-	 * @param {ReleaseResource} ReleaseResource
-	 * @param {ReleaseModerationResource} ReleaseModerationResource
-	 * @param {FileBlockmatchResource} FileBlockmatchResource
-	 * @param {ReleaseModerationCommentResource} ReleaseModerationCommentResource
 	 * @param {ModalService} ModalService
+	 * @param ReleaseResource
+	 * @param ReleaseModerationResource
+	 * @param FileBlockmatchResource
+	 * @param ReleaseModerationCommentResource
 	 * @param params
 	 */
-	constructor($uibModalInstance, App, ApiHelper, UploadHelper,
+	constructor($uibModalInstance, App, ApiHelper, UploadHelper, ModalService,
 				ReleaseResource, ReleaseModerationResource, FileBlockmatchResource,
-				ReleaseModerationCommentResource, ModalService, params) {
+				ReleaseModerationCommentResource, params) {
 
 		this.$uibModalInstance = $uibModalInstance;
 		this.App = App;

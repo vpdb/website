@@ -116,7 +116,7 @@ export function imgBg($parse, AuthService) {
 
 			// otherwise, watch scope for expression.
 			} else {
-				var value = $parse(attrs.imgBg);
+				let value = $parse(attrs.imgBg);
 				scope.$watch(value, function() {
 					const v = value(scope);
 					if (v || v === false) {
@@ -127,7 +127,6 @@ export function imgBg($parse, AuthService) {
 		}
 	};
 }
-
 
 export function imgSrc() {
 	return {

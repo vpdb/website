@@ -4,10 +4,10 @@ export default class GameRequestModalCtrl {
 	 * Class constructor
 	 * @param $uibModalInstance
 	 * @param {ApiHelper} ApiHelper
-	 * @param {GameRequestResource} GameRequestResource
 	 * @param {ModalService} ModalService
+	 * @param GameRequestResource
 	 */
-	constructor($uibModalInstance, ApiHelper, GameRequestResource, ModalService) {
+	constructor($uibModalInstance, ApiHelper, ModalService, GameRequestResource) {
 
 		this.$uibModalInstance = $uibModalInstance;
 		this.ApiHelper = ApiHelper;

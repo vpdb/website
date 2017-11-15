@@ -11,9 +11,12 @@ export default class App {
 	 * @param $timeout
 	 * @param $uibModal
 	 * @param $localStorage
+	 * @param $injector
 	 * @param {LoginService} LoginService
+	 * @param {ModalFlashService} ModalFlashService
+	 * @param ProfileResource
 	 */
-	constructor($rootScope, $window, $timeout, $uibModal, $localStorage, LoginService) {
+	constructor($rootScope, $window, $timeout, $uibModal, $localStorage, $injector, LoginService, ModalFlashService, ProfileResource) {
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.$timeout = $timeout;
@@ -27,6 +30,30 @@ export default class App {
 			release_add: true,
 			version_add: true
 		};
+
+		// refresh user when updated
+		$rootScope.$on('updateUser', () => {
+			ProfileResource.get(user => {
+				$rootScope.$broadcast('userUpdated', user);
+			}, err => {
+				console.log('Error retrieving user profile: %s', err);
+			});
+		});
+
+		// hide timeout notice when navigating
+		$rootScope.$on('$stateChangeStart', (event, toState) => $rootScope.timeoutNoticeCollapsed = true);
+
+		// check for flash messages
+		$rootScope.$on('$stateChangeSuccess', () => ModalFlashService.process());
+
+		// download file on event
+		$rootScope.$on('downloadFile', (event, file) => $injector.get('DownloadService').downloadFile(file));
+
+		// hard-refresh when app updates
+		$rootScope.$on('appUpdated', () => {
+			console.log('Application updated, reloading.');
+			window.location.reload(true);
+		});
 	}
 
 	/**

@@ -1,13 +1,13 @@
-import UploadsAdminReleaseModerateModalTpl from './uploads.admin.release.moderate.modal.pug';
+import UploadsReleaseModerateAdminModalTpl from './uploads.release.moderate.admin.modal.pug';
 
-export default class UploadsAdminReleaseListCtrl {
+export default class UploadsReleaseListAdminCtrl {
 
 	/**
 	 * @param $scope
 	 * @param $uibModal
 	 * @param {ApiHelper} ApiHelper
 	 * @param {UploadHelper} UploadHelper
-	 * @param {ReleaseResource} ReleaseResource
+	 * @param ReleaseResource
 	 */
 	constructor($scope, $uibModal, ApiHelper, UploadHelper, ReleaseResource) {
 
@@ -35,8 +35,8 @@ export default class UploadsAdminReleaseListCtrl {
 
 	moderateRelease(release) {
 		this.$uibModal.open({
-			templateUrl: UploadsAdminReleaseModerateModalTpl,
-			controller: 'UploadsAdminReleaseModerateModalCtrl',
+			templateUrl: UploadsReleaseModerateAdminModalTpl,
+			controller: 'UploadsReleaseModerateAdminModalCtrl',
 			controllerAs: 'vm',
 			size: 'md',
 			resolve: {

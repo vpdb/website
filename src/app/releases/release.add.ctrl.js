@@ -7,8 +7,6 @@ import TagAddModalTpl from '../tag/tag.add.modal.pug';
 export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 
 	/**
-	 * Class constructor
-	 *
 	 * @param $scope
 	 * @param $uibModal
 	 * @param $localStorage
@@ -20,18 +18,18 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {Flavors} Flavors
 	 * @param {ReleaseMeta} ReleaseMeta
-	 * @param {ReleaseResource} ReleaseResource
-	 * @param {FileResource} FileResource
-	 * @param {TagResource} TagResource
-	 * @param {BuildResource} BuildResource
-	 * @param {GameResource} GameResource
-	 * @param {GameReleaseNameResource} GameReleaseNameResource
 	 * @param {TrackerService} TrackerService
 	 * @param {BootstrapPatcher} BootstrapPatcher
+	 * @param ReleaseResource
+	 * @param FileResource
+	 * @param TagResource
+	 * @param BuildResource
+	 * @param GameResource
+	 * @param GameReleaseNameResource
 	 */
-	constructor($scope, $uibModal, $localStorage, $state, $stateParams, App, AuthService, ModalService,
-				ApiHelper, Flavors, ReleaseMeta, ReleaseResource, FileResource, TagResource, BuildResource,
-				GameResource, GameReleaseNameResource, TrackerService, BootstrapPatcher) {
+	constructor($scope, $uibModal, $localStorage, $state, $stateParams,
+				App, AuthService, ModalService, ApiHelper, Flavors, ReleaseMeta, TrackerService, BootstrapPatcher,
+				ReleaseResource, FileResource, TagResource, BuildResource, GameResource, GameReleaseNameResource) {
 
 		super($uibModal, ApiHelper, AuthService, BuildResource, FileResource, BootstrapPatcher);
 

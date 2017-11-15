@@ -12,12 +12,14 @@ export default class HomeCtrl {
 	 * @param $scope
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
+	 * @param {AuthService} AuthService
 	 * @param {LoginService} LoginService
-	 * @param {GameResource} GameResource
-	 * @param {ReleaseResource} ReleaseResource
+	 * @param {ReleaseService} ReleaseService
+	 * @param GameResource
+	 * @param ReleaseResource
 	 * @param {TrackerService} TrackerService
 	 */
-	constructor($scope, App, ApiHelper, LoginService, GameResource, ReleaseResource, TrackerService) {
+	constructor($scope, App, AuthService, ApiHelper, LoginService, ReleaseService, GameResource, ReleaseResource, TrackerService) {
 
 		App.theme('dark');
 		App.setTitle('VPDB - The Virtual Pinball Database');
@@ -31,6 +33,8 @@ export default class HomeCtrl {
 		// services
 		this.App = App;
 		this.ApiHelper = ApiHelper;
+		this.AuthService = AuthService;
+		this.ReleaseService = ReleaseService;
 		this.GameResource = GameResource;
 
 		// internal params

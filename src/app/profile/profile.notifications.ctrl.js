@@ -5,7 +5,7 @@ export default class ProfileNotificationsCtrl {
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
-	 * @param {ProfileResource} ProfileResource
+	 * @param ProfileResource
 	 */
 	constructor(App, AuthService, ApiHelper, ProfileResource) {
 

@@ -7,7 +7,7 @@ export default class GameSelectModalCtrl {
 	 * @param $uibModal
 	 * @param $uibModalInstance
 	 * @param {App} App
-	 * @param {GameResource} GameResource
+	 * @param GameResource
 	 * @param {{ title:string, text:string }} params
 	 */
 	constructor($uibModal, $uibModalInstance, App, GameResource, params) {

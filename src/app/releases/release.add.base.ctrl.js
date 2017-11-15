@@ -10,11 +10,11 @@ export default class ReleaseAddBaseCtrl {
 	 * @param $uibModal
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
-	 * @param {BuildResource} BuildResource
-	 * @param {FileResource} FileResource
 	 * @param {BootstrapPatcher} BootstrapPatcher
+	 * @param BuildResource
+	 * @param FileResource
 	 */
-	constructor($uibModal, ApiHelper, AuthService, BuildResource, FileResource, BootstrapPatcher) {
+	constructor($uibModal, ApiHelper, AuthService, BootstrapPatcher, BuildResource, FileResource) {
 
 		BootstrapPatcher.patchCalendar();
 

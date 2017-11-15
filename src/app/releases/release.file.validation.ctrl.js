@@ -3,12 +3,11 @@ import { cloneDeep } from 'lodash';
 export default class ReleaseFileValidationCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
-	 * @param {ReleaseFileValidationResource} ReleaseFileValidationResource
+	 * @param ReleaseFileValidationResource
 	 * @param params
 	 */
 	constructor($uibModalInstance, App, ApiHelper, AuthService, ReleaseFileValidationResource, params) {

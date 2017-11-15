@@ -11,13 +11,14 @@ export default class ReleaseListCtrl {
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
 	 * @param {Flavors} Flavors
+	 * @param {ReleaseService} ReleaseService
 	 * @param {TrackerService} TrackerService
-	 * @param {ReleaseResource} ReleaseResource
-	 * @param {TagResource} TagResource
-	 * @param {BuildResource} BuildResource
+	 * @param ReleaseResource
+	 * @param TagResource
+	 * @param BuildResource
 	 */
 	constructor($scope, $localStorage, $location,
-				App, AuthService, ApiHelper, Flavors, TrackerService,
+				App, AuthService, ApiHelper, Flavors, ReleaseService, TrackerService,
 				ReleaseResource, TagResource, BuildResource) {
 
 		App.theme('dark');
@@ -36,6 +37,7 @@ export default class ReleaseListCtrl {
 		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
 		this.Flavors = Flavors;
+		this.ReleaseService = ReleaseService;
 		this.TrackerService = TrackerService;
 		this.ReleaseResource = ReleaseResource;
 		this.TagResource = TagResource;
@@ -89,8 +91,9 @@ export default class ReleaseListCtrl {
 			this.filterBuilds = urlQuery.builds.split(',');
 		}
 		if (urlQuery.flavor) {
-			var f, queryFlavors = urlQuery.flavor.split(',');
-			for (var i = 0; i < queryFlavors.length; i++) {
+			let f;
+			const queryFlavors = urlQuery.flavor.split(',');
+			for (let i = 0; i < queryFlavors.length; i++) {
 				f = queryFlavors[i].split(':');
 				this.filterFlavorOpen[f[0]] = true;
 				this.flavorFilter[f[0]] = f[1]

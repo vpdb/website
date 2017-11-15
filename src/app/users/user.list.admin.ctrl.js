@@ -1,19 +1,19 @@
 import { includes, debounce } from 'lodash';
 
-import UserAdminEditModalTpl from './user.admin.edit.modal.pug';
+import UserEditAdminModalTpl from './user.edit.admin.modal.pug';
 
-export default class UserAdminListCtrl {
+export default class UserListAdminCtrl {
 
 	/**
 	 * Class constructor
 	 * @param $scope
 	 * @param $uibModal
 	 * @param {App} App
-	 * @param {UserResource} UserResource
-	 * @param {RolesResource} RolesResource
 	 * @param {TrackerService} TrackerService
+	 * @param UserResource
+	 * @param RolesResource
 	 */
-	constructor($scope, $uibModal, App, UserResource, RolesResource, TrackerService) {
+	constructor($scope, $uibModal, TrackerService, App, UserResource, RolesResource) {
 
 		App.theme('light');
 		App.setTitle('Users');
@@ -51,8 +51,8 @@ export default class UserAdminListCtrl {
 
 	edit(user) {
 		this.$uibModal.open({
-			templateUrl: UserAdminEditModalTpl,
-			controller: 'UserAdminEditModalCtrl',
+			templateUrl: UserEditAdminModalTpl,
+			controller: 'UserEditAdminModalCtrl',
 			controllerAs: 'vm',
 			size: 'lg',
 			resolve: {
@@ -63,7 +63,7 @@ export default class UserAdminListCtrl {
 	}
 
 	refresh() {
-		var query = {};
+		const query = {};
 		if (!this.firstLoad || this.query) {
 			query.q = this.query;
 			this.firstLoad = false;

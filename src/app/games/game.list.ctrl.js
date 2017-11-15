@@ -9,10 +9,10 @@ export default class GameListCtrl {
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
-	 * @param {GameResource} GameResource
 	 * @param {TrackerService} TrackerService
+	 * @param GameResource
 	 */
-	constructor($scope, $location, App, AuthService, ApiHelper, GameResource, TrackerService) {
+	constructor($scope, $location, App, AuthService, ApiHelper, TrackerService, GameResource) {
 
 		App.theme('dark');
 		App.setTitle('Games');
