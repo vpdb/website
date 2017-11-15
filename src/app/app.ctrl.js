@@ -25,7 +25,7 @@ export default class AppCtrl {
 		this.App = App;
 		this.AuthService = AuthService;
 
-		// scroll top top when navigatings
+		// scroll top top when navigating
 		$rootScope.$on('$stateChangeSuccess', () => document.body.scrollTop = document.documentElement.scrollTop = 0);
 
 		// legal documents update

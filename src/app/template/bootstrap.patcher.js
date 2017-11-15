@@ -1,7 +1,6 @@
 export default class BootstrapPatcher {
 
 	constructor($templateCache) {
-
 		this.$templateCache = $templateCache;
 	}
 

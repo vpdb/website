@@ -31,7 +31,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 				App, AuthService, ModalService, ApiHelper, Flavors, ReleaseMeta, TrackerService, BootstrapPatcher,
 				ReleaseResource, FileResource, TagResource, BuildResource, GameResource, GameReleaseNameResource) {
 
-		super($uibModal, ApiHelper, AuthService, BuildResource, FileResource, BootstrapPatcher);
+		super($uibModal, ApiHelper, AuthService, BootstrapPatcher, BuildResource, FileResource);
 
 		App.theme('light');
 		App.setTitle('Add Release');

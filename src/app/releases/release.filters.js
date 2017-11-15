@@ -1,3 +1,5 @@
+import { omit } from 'lodash';
+
 export function validationStatus() {
 	return function(validation, displayName) {
 		const name = validation ? validation.status : 'unknown';
@@ -18,5 +20,17 @@ export function validationTooltip() {
 			case 'playable': return 'There are minor problems but the file is still playable.';
 			case 'broken': return 'This file has been reported to be broken.';
 		}
+	};
+}
+
+export function allowedFlavors() {
+	return function(flavors, file) {
+		if (file) {
+			const ext = file.name.substr(file.name.lastIndexOf('.')).toLowerCase();
+			if (ext !== '.vpx') {
+				return omit(flavors, 'any');
+			}
+		}
+		return flavors;
 	};
 }

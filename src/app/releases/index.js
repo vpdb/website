@@ -9,7 +9,7 @@ import ReleaseDownloadModalCtrl from './release.download.modal.ctrl';
 import ReleaseFileValidationCtrl from './release.file.validation.ctrl';
 import ReleaseSelectPlayfieldModalCtrl from './release.select.playfield.modal.ctrl';
 import ReleaseService from './release.service';
-import { validationStatus, validationTooltip } from './release.filters';
+import { validationStatus, validationTooltip, allowedFlavors } from './release.filters';
 import ReleaseMeta from './release.add.meta';
 
 export default angular
@@ -27,4 +27,5 @@ export default angular
 	.constant('ReleaseMeta', ReleaseMeta)
 	.filter('validationStatus', validationStatus)
 	.filter('validationTooltip', validationTooltip)
+	.filter('allowedFlavors', allowedFlavors)
 	.name;

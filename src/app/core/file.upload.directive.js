@@ -134,7 +134,7 @@ export default function($parse, $compile, Upload, ApiHelper, AuthService, ModalS
 
 					// run pre-function if defined
 					if (params.beforeUpload) {
-						params.beforeUpload(status);
+						params.beforeUpload.bind(params.controller)(status);
 					}
 
 					// post data
