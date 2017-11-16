@@ -55,7 +55,7 @@ include ../template/_mixins
 						+icon('{{ release.icon }}').svg-2x
 					td {{ release.game.title }} <br/><b>{{ release.name }}</b>
 					td(ng-bind-html="release.authors | authors")
-					td.right(am-time-ago="release.created_at")
+					td.right {{ release.created_at | timeAgo }}
 			span(ng-hide="vm.releases.length > 0") No releases found.
 			.clearfix
 
@@ -86,7 +86,7 @@ include ../template/_mixins
 						+icon('{{ backglass.icon }}').svg-2x
 					td {{ backglass.game.title }} <br/>Version {{ backglass.versions[0].version }}</b>
 					td(ng-bind-html="backglass.authors | authors")
-					td.right(am-time-ago="backglass.created_at")
+					td.right {{ backglass.created_at | timeAgo }}
 			span(ng-hide="vm.backglasses.length > 0") No backglasses found.
 
 

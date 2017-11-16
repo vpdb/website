@@ -315,7 +315,7 @@ include ../template/_mixins
 				.media-body
 					b {{ gameRequest.ipdb_title }}
 					br
-					| {{ gameRequest.created_by.username }}, <span am-time-ago="gameRequest.created_at"></span>
+					| {{ gameRequest.created_by.username }}, {{ gameRequest.created_at | timeAgo }}
 			div(uib-collapse="gameRequest.id !== vm.game._game_request")
 				p(ng-show="gameRequest.title")
 					h5.h--primary.h--no-margin(ng-show="gameRequest.title") Title given by user

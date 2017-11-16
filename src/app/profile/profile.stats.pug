@@ -19,7 +19,7 @@ table.table.table-striped(ng-show="vm.logins.length")
 					br
 					+icon('warning').shift-up.space-right
 					| {{ log.message }}
-			td(am-time-ago="log.logged_at")
+			td {{ log.logged_at | timeAgo }}
 			td: tt {{ log.logged_at | date : "H:mm:ss" }}
 			td {{ log.ip }}
 

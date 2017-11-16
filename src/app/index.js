@@ -13,12 +13,12 @@ import ngSanitize from 'angular-sanitize';
 import ngTouch from 'angular-touch';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
-import ngMoment from 'angular-moment';
 import ngElastic from 'angular-elastic';
 import ngFileUpload from 'ng-file-upload';
 
-import 'angular-gravatar';
 import 'ngstorage';
+import 'angular-gravatar';
+import 'angular-timeago';
 import 'angular-dragdrop';
 import 'ment.io';
 import 'ngclipboard';
@@ -75,7 +75,6 @@ angular.module('vpdb', [
 	// third party components
 	uiRouter,
 	uiBootstrap,
-	ngMoment,
 	ngElastic,
 	ngFileUpload,
 	'ngDragDrop',
@@ -83,6 +82,7 @@ angular.module('vpdb', [
 	'ngclipboard',
 	'ui.gravatar',
 	'mentio',
+	'yaru22.angular-timeago',
 
 	// common modules
 	core,

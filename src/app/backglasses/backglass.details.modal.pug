@@ -52,9 +52,7 @@ include ../template/_mixins
 			div(uib-accordion-group, ng-repeat="version in vm.backglass.versions", is-open="false")
 				div(uib-accordion-heading)
 					strong.space-left-2x v{{ version.version }}
-					|  (
-					span(am-time-ago="version.released_at")
-					| )
+					|  ({{ version.released_at | timeAgo }})
 					+icon('angle-down').smaller.shift-down.pull-right
 
 				div.markdown.space-left-2x(markdown="version.changes")

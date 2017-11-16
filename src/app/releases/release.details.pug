@@ -113,8 +113,7 @@ p.padder-top(ng-show="vm.pageLoading")
 								.panel-heading
 									label
 									strong {{ comment.from.name }}
-									| &nbsp;commented&nbsp;
-									span(am-time-ago="comment.created_at")
+									| commented {{ comment.created_at | timeAgo }}
 								.panel-body
 									div.markdown(markdown="comment.message")
 
@@ -179,9 +178,7 @@ p.padder-top(ng-show="vm.pageLoading")
 			div(uib-accordion-group, ng-repeat="version in vm.releaseVersions", is-open="$first")
 				div(uib-accordion-heading)
 					strong.space-left-2x v{{ version.version }}
-					|  (
-					span(am-time-ago="version.released_at")
-					| )
+					|  ({{ version.released_at | timeAgo }})
 					+icon('angle-down').smaller.shift-down.pull-right
 
 				div.markdown.space-left-2x(markdown="version.changes")
@@ -246,8 +243,7 @@ p.padder-top(ng-show="vm.pageLoading")
 						.panel-heading
 							label
 							strong {{ comment.from.name }}
-							| &nbsp;commented&nbsp;
-							span(am-time-ago="comment.created_at")
+							| &nbsp;commented {{ comment.created_at | timeAgo }}
 						.panel-body
 							div.markdown(markdown="comment.message")
 

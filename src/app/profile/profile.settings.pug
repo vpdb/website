@@ -173,9 +173,9 @@ include ../template/_mixins
 				td(ng-hide="token.token"): b.space-left {{ token.label }}
 				td(ng-hide="token.token")
 					+icon("{{ token.is_active ? 'check' : 'times' }}")
-				td: span(am-time-ago="token.expires_at")
+				td {{ token.expires_at | timeAgo }}
 				td
-					span(am-time-ago="token.last_used_at", ng-show="token.last_used_at")
+					span(ng-show="token.last_used_at") {{ token.last_used_at | timeAgo }}
 					span(ng-hide="token.last_used_at") never
 				td.td--icon: +icon("{{ token.is_active ? 'times' : 'check' }}")(ng-click="vm.toggleToken(token)").a.shift-up
 				td.td--icon: +icon('trash')(ng-click="vm.deleteToken(token)").a.shift-up

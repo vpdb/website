@@ -6,7 +6,7 @@ mixin info(entity)
 			h3.h--smaller.h--primary Info
 			ul
 				li Version: {{ #{entity}.versions[0].version }}
-				li Uploaded <span am-time-ago="#{entity}.created_at"/>
+				li Uploaded {{ #{entity}.created_at | timeAgo }}
 
 		.col-sm-6
 
@@ -97,8 +97,7 @@ mixin message(sendMessageOnly)
 					.panel-heading
 						label
 						strong {{ comment.from.name }}
-						span &nbsp;commented&nbsp;
-						span(am-time-ago="comment.created_at")
+						span &nbsp;commented {{ comment.created_at | timeAgo }}
 					.panel-body
 						div.markdown(markdown="comment.message")
 
