@@ -5,6 +5,7 @@ export default class BuildAddModalCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param BuildResource
 	 * @param {BootstrapPatcher} BootstrapPatcher
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, ApiHelper, BuildResource, BootstrapPatcher) {
 

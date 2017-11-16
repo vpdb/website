@@ -4,7 +4,6 @@ import { pick, cloneDeep } from 'lodash';
 export default class UserEditAdminModalCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {AuthService} AuthService
@@ -14,6 +13,7 @@ export default class UserEditAdminModalCtrl {
 	 * @param PlanResource
 	 * @param user
 	 * @param roles
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, App, AuthService, ApiHelper,
 				UserResource, UserConfirmationResource, PlanResource, user, roles) {

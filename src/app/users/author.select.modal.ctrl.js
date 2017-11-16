@@ -2,6 +2,14 @@ import { filter } from 'lodash';
 
 export default class AuthorSelectModalCtrl {
 
+	/**
+	 * @param $uibModalInstance
+	 * @param UserResource
+	 * @param subject
+	 * @param meta
+	 * @param author
+	 * @ngInject
+	 */
 	constructor($uibModalInstance, UserResource, subject, meta, author) {
 
 		this.$uibModalInstance = $uibModalInstance;

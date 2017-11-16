@@ -1,5 +1,8 @@
 import { includes } from 'lodash';
 
+/**
+ * @ngInject
+ */
 export function filterDecade() {
 	return {
 		restrict: 'A',
@@ -15,6 +18,9 @@ export function filterDecade() {
 	};
 }
 
+/**
+ * @ngInject
+ */
 export function filterManufacturer() {
 	return {
 		restrict: 'A',

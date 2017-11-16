@@ -3,7 +3,6 @@ import { values, includes, omit, isEqual, isObject, assign } from 'lodash';
 export default class ReleaseListCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $scope
 	 * @param $localStorage
 	 * @param $location
@@ -16,6 +15,7 @@ export default class ReleaseListCtrl {
 	 * @param ReleaseResource
 	 * @param TagResource
 	 * @param BuildResource
+	 * @ngInject
 	 */
 	constructor($scope, $localStorage, $location,
 				App, AuthService, ApiHelper, Flavors, ReleaseService, TrackerService,

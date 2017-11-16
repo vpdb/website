@@ -1,5 +1,8 @@
 import { filter, includes } from 'lodash';
 
+/**
+ * @ngInject
+ */
 export function bytesFilter() {
 	return function(bytes, precision) {
 		if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) {
@@ -14,6 +17,9 @@ export function bytesFilter() {
 	}
 }
 
+/**
+ * @ngInject
+ */
 export function authorsFilter() {
 	return function(authors) {
 		let ret = '';
@@ -27,22 +33,34 @@ export function authorsFilter() {
 	};
 }
 
+/**
+ * @ngInject
+ */
 export function escapeFilter() {
 	return window.escape;
 }
 
+/**
+ * @ngInject
+ */
 export function hexFilter() {
 	return function(data) {
 		return data ? data.toString(16) : '';
 	}
 }
 
+/**
+ * @ngInject
+ */
 export function hashPrefixFilter() {
 	return function(data) {
 		return '#' + data;
 	}
 }
 
+/**
+ * @ngInject
+ */
 export function fileExtFilter() {
 	return function(files, exts) {
 		return filter(files, function(file) {

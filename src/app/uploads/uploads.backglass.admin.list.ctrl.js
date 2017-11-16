@@ -3,12 +3,12 @@ import UploadsBackglassModerateAdminModalTpl from './uploads.backglass.moderate.
 export default class UploadsBackglassListAdminCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $scope
 	 * @param $uibModal
 	 * @param {ApiHelper} ApiHelper
 	 * @param {UploadHelper} UploadHelper
 	 * @param BackglassResource
+	 * @ngInject
 	 */
 	constructor($scope, $uibModal, ApiHelper, UploadHelper, BackglassResource) {
 

@@ -1,6 +1,7 @@
 import angular from 'angular';
 import AuthService from './auth.service';
 import AuthInterceptorService from './auth.interceptor.service';
+import AuthInterceptorConfig from './auth.interceptor.config';
 import AuthCallbackCtrl from './auth.callback.ctrl';
 import LoginService from './login.service';
 import LoginModalCtrl from './login.modal.ctrl';
@@ -16,7 +17,5 @@ export default angular
 	.controller('LoginModalCtrl', LoginModalCtrl)
 	.controller('TokenCreateModalCtrl', TokenCreateModalCtrl)
 	.controller('EmailConfirmationCtrl', EmailConfirmationCtrl)
-	.config(function($httpProvider) {
-		$httpProvider.interceptors.push('AuthInterceptorService');
-	})
+	.config(AuthInterceptorConfig)
 	.name;

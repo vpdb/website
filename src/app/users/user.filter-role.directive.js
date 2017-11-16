@@ -1,3 +1,6 @@
+/**
+ * @ngInject
+ */
 export default function() {
 	return {
 		restrict: 'A',

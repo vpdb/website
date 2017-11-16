@@ -11,7 +11,6 @@ import MediumInfoModalTpl from '../media/medium.info.modal.pug';
 export default class GameDetailsCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $stateParams
 	 * @param $uibModal
 	 * @param $localStorage
@@ -29,6 +28,7 @@ export default class GameDetailsCtrl {
 	 * @param RomResource
 	 * @param GameRatingResource
 	 * @param GameStarResource
+	 * @ngInject
 	 */
 	constructor($stateParams, $uibModal, $localStorage,
 				App, ApiHelper, AuthService, Flavors, ConfigService, DownloadService, ModalService, TrackerService,

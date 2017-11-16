@@ -2,11 +2,12 @@ import { isObject } from 'lodash';
 import * as videojs from 'video.js';
 
 /**
+ * @todo Check what's wrong with https://github.com/LonnyGomes/vjs-video or use it
  * @param $parse
  * @param $http
  * @param $timeout
  * @param {AuthService} AuthService
- * @todo Check what's wrong with https://github.com/LonnyGomes/vjs-video or use it
+ * @ngInject
  */
 export default function($parse, $http, $timeout, AuthService) {
 	return {

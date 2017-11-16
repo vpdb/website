@@ -1,3 +1,8 @@
+/**
+ * @param ModalService
+ * @return {{restrict: string, link: link}}
+ * @ngInject
+ */
 export default function(ModalService) {
 	return {
 		restrict: 'A',

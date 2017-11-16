@@ -16,6 +16,7 @@ export default class BackglassAddCtrl {
 	 * @param FileResource
 	 * @param BackglassResource
 	 * @param {BootstrapPatcher} BootstrapPatcher
+	 * @ngInject
 	 */
 	constructor($state, $stateParams, $localStorage, $uibModal,
 				App, AuthService, ApiHelper, ModalService, TrackerService,

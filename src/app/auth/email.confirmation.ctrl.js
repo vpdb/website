@@ -8,6 +8,7 @@ export default class EmailConfirmationCtrl {
 	 * @param {LoginService} LoginService
 	 * @param {ModalFlashService} ModalFlashService
 	 * @param ProfileResource
+	 * @ngInject
 	 */
 	constructor($state, $stateParams, ApiHelper, AuthService, LoginService, ModalFlashService, ProfileResource) {
 

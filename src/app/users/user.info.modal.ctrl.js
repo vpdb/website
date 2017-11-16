@@ -1,11 +1,11 @@
 export default class UserInfoModalCtrl {
 
 	/**
-	 * Class constructor
 	 * @param {ModalService} ModalService
 	 * @param UserResource
 	 * @param UserStarResource
 	 * @param username
+	 * @ngInject
 	 */
 	constructor(ModalService, UserResource, UserStarResource, username) {
 

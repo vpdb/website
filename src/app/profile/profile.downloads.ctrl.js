@@ -1,12 +1,12 @@
 export default class ProfileDownloadsCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $scope
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
 	 * @param ProfileResource
+	 * @ngInject
 	 */
 	constructor($scope, App, AuthService, ApiHelper, ProfileResource) {
 

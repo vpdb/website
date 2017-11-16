@@ -7,7 +7,7 @@ import UserInfoModalTpl from './user.info.modal.pug';
  * @param $uibModal
  * @param $rootScope
  * @param {AuthService} AuthService
- * @return {{restrict: string, link: link}}
+ * @ngInject
  */
 export default function userDetails($compile, $uibModal, $rootScope, AuthService) {
 	return {

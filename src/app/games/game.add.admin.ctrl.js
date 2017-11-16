@@ -4,7 +4,6 @@ import { assign, omit } from 'lodash';
 export default class GameAddAdminCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $scope
 	 * @param $window
 	 * @param $localStorage
@@ -18,6 +17,7 @@ export default class GameAddAdminCtrl {
 	 * @param GameResource
 	 * @param FileResource
 	 * @param GameRequestResource
+	 * @ngInject
 	 */
 	constructor($scope, $window, $localStorage, $state,
 				App, ApiHelper, AuthService, ModalService, TrackerService,

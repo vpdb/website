@@ -28,6 +28,7 @@ export default class ReleaseDetailsCtrl {
 	 * @param ReleaseRatingResource
 	 * @param ReleaseCommentResource
 	 * @param ReleaseModerationCommentResource
+	 * @ngInject
 	 */
 	constructor($timeout, $stateParams, $location, $localStorage, $uibModal,
 				App, AuthService, ApiHelper, ReleaseService, TrackerService, GameResource,

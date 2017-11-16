@@ -1,11 +1,11 @@
 export default class ProfileNotificationsCtrl {
 
 	/**
-	 * Class constructor
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
 	 * @param ProfileResource
+	 * @ngInject
 	 */
 	constructor(App, AuthService, ApiHelper, ProfileResource) {
 

@@ -8,10 +8,10 @@ import { orderBy, compact, map } from 'lodash';
 export default class GameReleaseDetailsCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $scope
 	 * @param {App} App
 	 * @param {ReleaseService} ReleaseService
+	 * @ngInject
 	 */
 	constructor($scope, App, ReleaseService) {
 

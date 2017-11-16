@@ -1,10 +1,10 @@
 export default class UploadsListAdminCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $scope
 	 * @param {App} App
 	 * @param {TrackerService} TrackerService
+	 * @ngInject
 	 */
 	constructor($scope, App, TrackerService) {
 

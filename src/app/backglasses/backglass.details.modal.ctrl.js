@@ -4,6 +4,14 @@ import BackglassEditModalTpl from './backglass.edit.modal.pug';
 
 export default class BackglassDetailsModalCtrl {
 
+	/**
+	 * @param $uibModal
+	 * @param $uibModalInstance
+	 * @param {AuthService} AuthService
+	 * @param {DownloadService} DownloadService
+	 * @param params
+	 * @ngInject
+	 */
 	constructor($uibModal, $uibModalInstance, AuthService, DownloadService, params) {
 
 		this.$uibModal = $uibModal;

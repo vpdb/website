@@ -7,10 +7,10 @@
 export default class TrackerService {
 
 	/**
-	 * Constructor
 	 * @param $rootScope
 	 * @param {Config} Config
 	 * @param {AuthService} AuthService
+	 * @ngInject
 	 */
 	constructor($rootScope, Config, AuthService) {
 

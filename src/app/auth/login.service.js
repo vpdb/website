@@ -2,6 +2,10 @@ import { isEmpty }  from 'lodash';
 
 export default class LoginService {
 
+	/**
+	 * @param {Config} Config
+	 * @ngInject
+	 */
 	constructor(Config) {
 		this.loginParams = {
 			open: false,

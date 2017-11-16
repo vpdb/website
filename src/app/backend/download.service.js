@@ -9,6 +9,7 @@ export default class DownloadService {
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ConfigService} ConfigService
+	 * @ngInject
 	 */
 	constructor(App, AuthService, ConfigService) {
 		this.App = App;

@@ -29,6 +29,7 @@ import { includes } from 'lodash';
  * @param {FileUploadHelperService} FileUploadHelperService
  * @param {ConfigService} ConfigService
  * @param FileResource
+ * @ngInject
  */
 export default function($parse, $compile, Upload, ApiHelper, AuthService, ModalService,
 						FileUploadHelperService, ConfigService, FileResource) {

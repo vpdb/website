@@ -11,6 +11,7 @@ export default class BuildEditAdminModalCtrl {
 	 * @param BuildResource
 	 * @param ReleaseResource
 	 * @param build
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, App, ApiHelper, BootstrapPatcher, BuildResource, ReleaseResource, build) {
 

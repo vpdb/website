@@ -13,6 +13,7 @@ export default class ApiHelper {
 	 * @param {App} App
 	 * @param {ModalService} ModalService
 	 * @param {ModalFlashService} ModalFlashService
+	 * @ngInject
 	 */
 	constructor($state, App, ModalService, ModalFlashService) {
 		this.$state = $state;

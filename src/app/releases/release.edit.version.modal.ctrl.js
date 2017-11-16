@@ -3,6 +3,21 @@ import ReleaseAddBaseCtrl from './release.add.base.ctrl';
 
 export default class ReleaseEditVersionModalCtrl extends ReleaseAddBaseCtrl {
 
+	/**
+	 * @param $uibModalInstance
+	 * @param {ApiHelper} ApiHelper
+	 * @param {AuthService} AuthService
+	 * @param {ReleaseMeta} ReleaseMeta
+	 * @param {BootstrapPatcher} BootstrapPatcher
+	 * @param {ModalService} ModalService
+	 * @param game
+	 * @param release
+	 * @param version
+	 * @param FileResource
+	 * @param ReleaseVersionResource
+	 * @param BuildResource
+	 * @ngInject
+	 */
 	constructor($uibModalInstance, ApiHelper, AuthService, ReleaseMeta, BootstrapPatcher, ModalService,
 				game, release, version, FileResource, ReleaseVersionResource, BuildResource) {
 		super($uibModal, ApiHelper, AuthService, BootstrapPatcher, BuildResource, FileResource);

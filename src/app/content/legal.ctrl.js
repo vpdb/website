@@ -5,6 +5,7 @@ export default class LegalCtrl {
 	 * @param {App} App
 	 * @param {ConfigService} ConfigService
 	 * @param {TrackerService} TrackerService
+	 * @ngInject
 	 */
 	constructor(App, ConfigService, TrackerService) {
 

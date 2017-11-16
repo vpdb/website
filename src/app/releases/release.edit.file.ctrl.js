@@ -16,6 +16,7 @@ export default class ReleaseEditFileCtrl {
 	 * @param GameResource
 	 * @param ReleaseResource
 	 * @param TagResource
+	 * @ngInject
 	 */
 	constructor($state, $stateParams, $uibModal,
 				App, ApiHelper, AuthService, Flavors, TrackerService,

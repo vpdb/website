@@ -3,10 +3,10 @@ import $ from 'jquery';
 export default class MediumInfoModalCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $timeout
 	 * @param {DownloadService} DownloadService
 	 * @param params
+	 * @ngInject
 	 */
 	constructor($timeout, DownloadService, params) {
 

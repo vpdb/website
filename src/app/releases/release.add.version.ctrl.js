@@ -21,6 +21,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 	 * @param GameResource
 	 * @param ReleaseVersionResource
 	 * @param {TrackerService} TrackerService
+	 * @ngInject
 	 */
 	constructor($uibModal, $state, $stateParams, $localStorage,
 				App, ApiHelper, AuthService, ModalService, ReleaseMeta, Flavors, BootstrapPatcher,

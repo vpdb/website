@@ -12,6 +12,7 @@ export default class ModalFlashService {
 	/**
 	 * @param $uibModal
 	 * @param {ModalService} ModalService
+	 * @ngInject
 	 */
 	constructor($uibModal, ModalService) {
 		this.$uibModal = $uibModal;

@@ -1,3 +1,7 @@
+/**
+ * @param $timeout
+ * @ngInject
+ */
 export default function heightAnimation($timeout) {
 	return {
 		enter: function(element, done) {

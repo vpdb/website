@@ -1,10 +1,10 @@
 export default class TagAddModalCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $uibModalInstance
 	 * @param {ApiHelper} ApiHelper
 	 * @param TagResource
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, ApiHelper, TagResource) {
 

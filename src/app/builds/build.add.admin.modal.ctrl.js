@@ -10,6 +10,7 @@ export default class BuildAddAdminModalCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param BuildResource
 	 * @param {BootstrapPatcher} BootstrapPatcher
+	 * @ngInject
 	 */
 	constructor($uibModal, $uibModalInstance, App, ApiHelper, BuildResource, BootstrapPatcher) {
 

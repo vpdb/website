@@ -3,7 +3,6 @@ import { map } from 'lodash';
 export default class UploadsBackglassModerateAdminModalCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
@@ -12,6 +11,7 @@ export default class UploadsBackglassModerateAdminModalCtrl {
 	 * @param BackglassResource
 	 * @param BackglassModerationResource
 	 * @param params
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, App, ApiHelper, UploadHelper, DownloadService,
 				BackglassResource, BackglassModerationResource, params) {

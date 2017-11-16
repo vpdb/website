@@ -1,6 +1,9 @@
 import { min } from 'lodash';
 import TopBadgeDirectiveTpl from './top-badge.directive.pug';
 
+/**
+ * @ngInject
+ */
 export default function() {
 	return {
 		restrict: 'E',

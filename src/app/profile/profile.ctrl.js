@@ -1,5 +1,11 @@
 export default class ProfileCtrl {
 
+	/**
+	 * @param $state
+	 * @param $uibModal
+	 * @param {AuthService} AuthService
+	 * @ngInject
+	 */
 	constructor($state, $uibModal, AuthService) {
 
 		this.$state = $state;

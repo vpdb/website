@@ -1,11 +1,11 @@
 export default class GameRequestModalCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $uibModalInstance
 	 * @param {ApiHelper} ApiHelper
 	 * @param {ModalService} ModalService
 	 * @param GameRequestResource
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, ApiHelper, ModalService, GameRequestResource) {
 

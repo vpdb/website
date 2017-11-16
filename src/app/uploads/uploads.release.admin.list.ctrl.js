@@ -8,6 +8,7 @@ export default class UploadsReleaseListAdminCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {UploadHelper} UploadHelper
 	 * @param ReleaseResource
+	 * @ngInject
 	 */
 	constructor($scope, $uibModal, ApiHelper, UploadHelper, ReleaseResource) {
 

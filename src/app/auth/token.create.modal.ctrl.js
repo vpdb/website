@@ -1,10 +1,10 @@
 export default class TokenCreateModalCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $uibModalInstance
 	 * @param {ApiHelper} ApiHelper
 	 * @param TokenResource
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, ApiHelper, TokenResource) {
 

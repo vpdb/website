@@ -4,6 +4,7 @@ export default class RulesCtrl {
 	 * Class constructor
 	 * @param {App} App
 	 * @param {TrackerService} TrackerService
+	 * @ngInject
 	 */
 	constructor(App, TrackerService) {
 

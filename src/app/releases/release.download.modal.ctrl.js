@@ -11,6 +11,7 @@ export default class ReleaseDownloadModalCtrl {
 	 * @param {Flavors} Flavors
 	 * @param RomResource
 	 * @param params
+	 * @ngInject
 	 */
 	constructor($scope, $timeout, $uibModalInstance, App, DownloadService, Flavors, RomResource, params) {
 

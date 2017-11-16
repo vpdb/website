@@ -5,13 +5,13 @@ import UserEditAdminModalTpl from './user.edit.admin.modal.pug';
 export default class UserListAdminCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $scope
 	 * @param $uibModal
 	 * @param {App} App
 	 * @param {TrackerService} TrackerService
 	 * @param UserResource
 	 * @param RolesResource
+	 * @ngInject
 	 */
 	constructor($scope, $uibModal, TrackerService, App, UserResource, RolesResource) {
 

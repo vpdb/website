@@ -9,6 +9,10 @@ import RatingDirectiveTpl from './rating.directive.pug';
  *  rating-votes="game.rating.votes",
  *  rating-user="gameRating"
  *  rating-action="rateGame($rating)"
+ *
+ * @param $parse
+ * @param $animate
+ * @ngInject
  */
 export default function($parse, $animate) {
 	return {

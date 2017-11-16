@@ -3,12 +3,12 @@ import GameRequestModalTpl from './game.request.modal.pug';
 export default class GameSelectModalCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $uibModal
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param GameResource
 	 * @param {{ title:string, text:string }} params
+	 * @ngInject
 	 */
 	constructor($uibModal, $uibModalInstance, App, GameResource, params) {
 

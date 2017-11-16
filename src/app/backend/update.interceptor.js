@@ -1,3 +1,10 @@
+/**
+ * @param $rootScope
+ * @param $localStorage
+ * @param $timeout
+ * @return {{response: response}}
+ * @ngInject
+ */
 export default function($rootScope, $localStorage, $timeout) {
 	return {
 		response: function(response) {

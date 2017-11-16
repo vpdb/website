@@ -11,6 +11,7 @@ export default class BuildListAdminCtrl {
 	 * @param {App} App
 	 * @param {TrackerService} TrackerService
 	 * @param BuildResource
+	 * @ngInject
 	 */
 	constructor($uibModal, App, TrackerService, BuildResource) {
 		App.theme('light');

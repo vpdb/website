@@ -16,6 +16,7 @@ export default class AppCtrl {
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {Config} Config
+	 * @ngInject
 	 */
 	constructor($rootScope, $state, $localStorage, $uibModal, App, AuthService, Config) {
 		console.log('Application controller loaded.');

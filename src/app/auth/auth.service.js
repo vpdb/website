@@ -23,6 +23,7 @@ export default class AuthService {
 	 * @param {ConfigService} ConfigService
 	 * @param TokenResource
 	 * @param ProfileResource
+	 * @ngInject
 	 */
 	constructor($window, $localStorage, $rootScope, $location, $http, $state, $timeout,
 				App, ApiHelper, Config, ConfigService, TokenResource, ProfileResource) {

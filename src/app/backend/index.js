@@ -15,6 +15,7 @@ import { PlanResource } from './plan.resource';
 import { BackglassResource, BackglassModerationResource } from './backglass.resource';
 import { IpdbResource } from './ipdb.resource';
 import updateInterceptor from './update.interceptor';
+import updateInterceptorConfig from './update.interceptor.config';
 
 export default angular
 	.module('vpdb.backend', [])
@@ -51,5 +52,5 @@ export default angular
  	.service('UserConfirmationResource', UserConfirmationResource)
  	.service('UserStarResource', UserStarResource)
 	.factory('UpdateInterceptor', updateInterceptor)
-	.config(($httpProvider) => $httpProvider.interceptors.push('UpdateInterceptor'))
+	.config(updateInterceptorConfig)
 	.name;

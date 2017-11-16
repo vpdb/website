@@ -1,3 +1,6 @@
+/**
+ * @ngInject
+ */
 export function gameTypeFilter() {
 	return function(type) {
 		if (type) {
@@ -19,6 +22,9 @@ export function gameTypeFilter() {
 	};
 }
 
+/**
+ * @ngInject
+ */
 export function ratingFormatFilter() {
 	return function(rating) {
 		rating = parseFloat(rating);

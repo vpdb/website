@@ -23,6 +23,7 @@ export default class AuthInterceptorService {
 	 * @param $injector
 	 * @param $q
 	 * @param {ConfigService} ConfigService
+	 * @ngInject
 	 */
 	constructor($injector, $q, ConfigService) {
 

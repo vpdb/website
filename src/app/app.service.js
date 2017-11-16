@@ -15,6 +15,7 @@ export default class App {
 	 * @param {LoginService} LoginService
 	 * @param {ModalFlashService} ModalFlashService
 	 * @param ProfileResource
+	 * @ngInject
 	 */
 	constructor($rootScope, $window, $timeout, $uibModal, $localStorage, $injector, LoginService, ModalFlashService, ProfileResource) {
 		this.$rootScope = $rootScope;

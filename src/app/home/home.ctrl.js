@@ -8,7 +8,6 @@ import { extend, isEqual, map } from 'lodash';
 export default class HomeCtrl {
 
 	/**
-	 * Constructor
 	 * @param $scope
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
@@ -18,6 +17,7 @@ export default class HomeCtrl {
 	 * @param GameResource
 	 * @param ReleaseResource
 	 * @param {TrackerService} TrackerService
+	 * @ngInject
 	 */
 	constructor($scope, App, AuthService, ApiHelper, LoginService, ReleaseService, GameResource, ReleaseResource, TrackerService) {
 

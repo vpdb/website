@@ -26,6 +26,14 @@ import PrivacyTpl from './content/privacy.pug';
 import Error404Tpl from './errors/error.404.pug';
 import ConfigService from './core/config.service';
 
+/**
+ * @param $urlRouterProvider
+ * @param $locationProvider
+ * @param $stateProvider
+ * @param $sceDelegateProvider
+ * @param {Config} Config
+ * @ngInject
+ */
 export default function routes($urlRouterProvider, $locationProvider, $stateProvider, $sceDelegateProvider, Config) {
 
 	// home

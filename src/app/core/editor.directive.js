@@ -2,6 +2,7 @@ import EditorTpl from './editor.directive.pug';
 
 /**
  * The editor with markdown preview.
+ * @ngInject
  */
 export default function() {
 	return {

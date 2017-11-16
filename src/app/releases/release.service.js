@@ -8,11 +8,11 @@ import { filter, orderBy, flatten, map, keys, values } from 'lodash';
 export default class ReleaseService {
 
 	/**
-	 * Class constructor
 	 * @param {AuthService} AuthService
 	 * @param {Flavors} Flavors
 	 * @param {ModalService} ModalService
 	 * @param ReleaseStarResource
+	 * @ngInject
 	 */
 	constructor(AuthService, Flavors, ModalService, ReleaseStarResource) {
 		this.AuthService = AuthService;

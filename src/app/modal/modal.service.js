@@ -9,6 +9,7 @@ export default class ModalService {
 	/**
 	 * @param $uibModal
 	 * @param ModalMarkdownFiddle
+	 * @ngInject
 	 */
 	constructor($uibModal, ModalMarkdownFiddle) {
 		this.$uibModal = $uibModal;

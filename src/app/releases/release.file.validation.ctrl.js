@@ -9,6 +9,7 @@ export default class ReleaseFileValidationCtrl {
 	 * @param {AuthService} AuthService
 	 * @param ReleaseFileValidationResource
 	 * @param params
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, App, ApiHelper, AuthService, ReleaseFileValidationResource, params) {
 

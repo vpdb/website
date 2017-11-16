@@ -10,6 +10,7 @@ export default class BackglassEditModalCtrl {
 	 * @param GameResource
 	 * @param BackglassResource
 	 * @param params
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, App, ApiHelper, AuthService, ModalService,
 				GameResource, BackglassResource, params) {

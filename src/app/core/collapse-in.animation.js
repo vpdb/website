@@ -1,3 +1,8 @@
+/**
+ * @param $timeout
+ * @return {{enter: enter, beforeRemoveClass: beforeRemoveClass, removeClass: removeClass}}
+ * @ngInject
+ */
 export default function collapseInAnimation($timeout) {
 
 	let height;

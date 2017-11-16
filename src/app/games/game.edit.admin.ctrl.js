@@ -12,6 +12,7 @@ export default class GameEditAdminCtrl {
 	 * @param {TrackerService} TrackerService
 	 * @param GameSystems
 	 * @param GameResource
+	 * @ngInject
 	 */
 	constructor($state, $stateParams, $scope, App, ApiHelper, AuthService, TrackerService, GameSystems, GameResource) {
 

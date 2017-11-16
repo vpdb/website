@@ -1,5 +1,9 @@
 export default class BootstrapPatcher {
 
+	/**
+	 * @param $templateCache
+	 * @ngInject
+	 */
 	constructor($templateCache) {
 		this.$templateCache = $templateCache;
 	}

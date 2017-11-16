@@ -2,6 +2,12 @@
 
 export default class EditorCtrl {
 
+	/**
+	 * @param $scope
+	 * @param $element
+	 * @param UserResource
+	 * @ngInject
+	 */
 	constructor($scope, $element, UserResource) {
 		this.$scope = $scope;
 		this.$element = $element;

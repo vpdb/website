@@ -1,5 +1,9 @@
 export default class ConfigService {
 
+	/**
+	 * @param {Config} Config
+	 * @ngInject
+	 */
 	constructor(Config) {
 
 		this.Config = Config;

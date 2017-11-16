@@ -26,6 +26,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 	 * @param BuildResource
 	 * @param GameResource
 	 * @param GameReleaseNameResource
+	 * @ngInject
 	 */
 	constructor($scope, $uibModal, $localStorage, $state, $stateParams,
 				App, AuthService, ModalService, ApiHelper, Flavors, ReleaseMeta, TrackerService, BootstrapPatcher,

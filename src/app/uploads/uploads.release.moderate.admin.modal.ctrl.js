@@ -3,7 +3,6 @@ import { map } from 'lodash';
 export default class UploadsReleaseModerateAdminModalCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
@@ -14,6 +13,7 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 	 * @param FileBlockmatchResource
 	 * @param ReleaseModerationCommentResource
 	 * @param params
+	 * @ngInject
 	 */
 	constructor($uibModalInstance, App, ApiHelper, UploadHelper, ModalService,
 				ReleaseResource, ReleaseModerationResource, FileBlockmatchResource,

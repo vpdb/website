@@ -3,7 +3,6 @@ import { isObject, isEqual, includes, assign, omit } from 'lodash';
 export default class GameListCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $scope
 	 * @param $location
 	 * @param {App} App
@@ -11,6 +10,7 @@ export default class GameListCtrl {
 	 * @param {AuthService} AuthService
 	 * @param {TrackerService} TrackerService
 	 * @param GameResource
+	 * @ngInject
 	 */
 	constructor($scope, $location, App, AuthService, ApiHelper, TrackerService, GameResource) {
 

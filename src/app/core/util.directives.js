@@ -2,6 +2,9 @@ import $ from 'jquery';
 import angular from 'angular';
 import Showdown from 'showdown';
 
+/**
+ * @ngInject
+ */
 export function onEnter() {
 	return {
 		link: function(scope, element, attrs) {
@@ -17,12 +20,18 @@ export function onEnter() {
 	};
 }
 
+/**
+ * @ngInject
+ */
 export function focusOn() {
 	return function(scope, elem, attr) {
 		elem[0].focus();
 	};
 }
 
+/**
+ * @ngInject
+ */
 export function fallbackIcon() {
 	return {
 		link: function postLink(scope, element, attrs) {
@@ -33,6 +42,11 @@ export function fallbackIcon() {
 	};
 }
 
+/**
+ * @param $filter
+ * @param $sce
+ * @ngInject
+ */
 export function jsonLd($filter, $sce) {
 	return {
 		restrict: 'E',
@@ -51,6 +65,11 @@ export function jsonLd($filter, $sce) {
 	};
 }
 
+/**
+ * @param $sanitize
+ * @param $compile
+ * @ngInject
+ */
 export function markdown($sanitize, $compile) {
 	const converter = new Showdown.Converter();
 	return {
@@ -77,6 +96,9 @@ export function markdown($sanitize, $compile) {
 	};
 }
 
+/**
+ * @ngInject
+ */
 export function sort() {
 	return {
 		restrict: 'A',

@@ -5,14 +5,13 @@ import BuildAddModalTpl from '../builds/build.add.modal.pug';
 export default class ReleaseAddBaseCtrl {
 
 	/**
-	 * Parent class constructor
-	 *
 	 * @param $uibModal
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
 	 * @param {BootstrapPatcher} BootstrapPatcher
 	 * @param BuildResource
 	 * @param FileResource
+	 * @ngInject
 	 */
 	constructor($uibModal, ApiHelper, AuthService, BootstrapPatcher, BuildResource, FileResource) {
 

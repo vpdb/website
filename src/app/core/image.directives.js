@@ -1,6 +1,11 @@
 import $ from 'jquery';
 import { forEach, isObject } from 'lodash';
 
+/**
+ * @param $timeout
+ * @param $parse
+ * @ngInject
+ */
 export function makeLoaded($timeout, $parse) {
 	return {
 		scope: true,
@@ -56,6 +61,7 @@ export function makeLoaded($timeout, $parse) {
  *
  * @param $parse
  * @param {AuthService} AuthService
+ * @ngInject
  */
 export function imgBg($parse, AuthService) {
 	return {
@@ -128,6 +134,9 @@ export function imgBg($parse, AuthService) {
 	};
 }
 
+/**
+ * @ngInject
+ */
 export function imgSrc() {
 	return {
 		restrict: 'A',

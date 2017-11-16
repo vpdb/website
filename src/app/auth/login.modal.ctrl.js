@@ -20,6 +20,7 @@ export default class LoginModalCtrl {
 	 * @param AuthResource
 	 * @param UserResource
 	 * @param {{ postLogin:{action:string, params:any}, headMessage:string, topMessage:string, message:string }} opts
+	 * @ngInject
 	 */
 	constructor($window, $uibModalInstance, $localStorage, Config, ConfigService, LoginService,
 				App, ApiHelper, AuthService, AuthResource, UserResource, opts) {

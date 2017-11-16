@@ -12,6 +12,7 @@ export default class AuthCallbackCtrl {
 	 * @param {AuthService} AuthService
 	 * @param {ModalService} ModalService
 	 * @param AuthResource
+	 * @ngInject
 	 */
 	constructor($stateParams, $location, $localStorage, AuthService, ModalService, AuthResource) {
 

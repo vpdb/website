@@ -1,4 +1,9 @@
 export class UserResource {
+	/**
+	 * @param $resource
+	 * @param {ConfigService} ConfigService
+	 * @ngInject
+	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/users/:userid'), {}, {
 			update: { method: 'PUT' },
@@ -10,6 +15,11 @@ export class UserResource {
 }
 
 export class UserStarResource {
+	/**
+	 * @param $resource
+	 * @param {ConfigService} ConfigService
+	 * @ngInject
+	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/users/:userId/star'), {}, {
 		});
@@ -17,6 +27,11 @@ export class UserStarResource {
 }
 
 export class UserConfirmationResource {
+	/**
+	 * @param $resource
+	 * @param {ConfigService} ConfigService
+	 * @ngInject
+	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/users/:userId/send-confirmation'), {}, {
 			send: { method: 'POST' }

@@ -5,7 +5,6 @@ import TokenCreateModalTpl from '../auth/token.create.modal.pug';
 export default class ProfileSettingsCtrl {
 
 	/**
-	 * Class constructor
 	 * @param $scope
 	 * @param $uibModal
 	 * @param {App} App
@@ -15,6 +14,7 @@ export default class ProfileSettingsCtrl {
 	 * @param {TrackerService} TrackerService
 	 * @param ProfileResource
 	 * @param TokenResource
+	 * @ngInject
 	 */
 	constructor($scope, $uibModal, App, AuthService, ApiHelper, ModalService, TrackerService,
 				ProfileResource, TokenResource) {

@@ -1,5 +1,8 @@
 import { omit } from 'lodash';
 
+/**
+ * @ngInject
+ */
 export function validationStatus() {
 	return function(validation, displayName) {
 		const name = validation ? validation.status : 'unknown';
@@ -10,6 +13,9 @@ export function validationStatus() {
 	};
 }
 
+/**
+ * @ngInject
+ */
 export function validationTooltip() {
 	return function(validation) {
 		if (!validation) {
@@ -23,6 +29,9 @@ export function validationTooltip() {
 	};
 }
 
+/**
+ * @ngInject
+ */
 export function allowedFlavors() {
 	return function(flavors, file) {
 		if (file) {
