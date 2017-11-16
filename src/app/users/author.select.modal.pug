@@ -12,7 +12,9 @@ include ../template/_mixins
 
 		.form-group(ng-class="{ error: vm.errors.user }")
 			.input-group
-				input.form-control(type="text", placeholder="Start typing...",
+				input.form-control(
+					type="text",
+					placeholder="Start typing...",
 					ng-model="vm.query",
 					ng-change="vm.queryChange()",
 					uib-typeahead="user as user.name for user in vm.findUser($viewValue)",
@@ -20,7 +22,8 @@ include ../template/_mixins
 					typeahead-loading="searching",
 					typeahead-template-url="userListItem",
 					typeahead-min-length="3",
-					typeahead-wait-ms="250")
+					typeahead-wait-ms="250"
+				)
 				span.input-group-addon
 					+icon('circle-o-notch').small.svg-spin.ng-hide(ng-show="vm.searching")
 					+icon('check').smaller.ng-hide(ng-show="!vm.searching && vm.isValidUser")
@@ -41,7 +44,7 @@ include ../template/_mixins
 				.col-sm-7
 					input#role.form-control(type="text", ng-model="vm.role", placeholder="3D Models, Playfield, Scripts, ...")
 				.col-sm-3
-					button.btn.btn-default.pull-right(ng-click="vm.addRole(role)")
+					button.btn.btn-default.pull-right(ng-click="vm.addRole(vm.role)")
 						+icon('plus-circle').space-right
 						| Add
 			.form-group(ng-show="vm.roles.length > 0")

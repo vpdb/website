@@ -9,7 +9,7 @@ include ../template/_mixins
 		+icon('{{ "medal-" + (vm.file.validation | validationStatus) }}').validation-badge
 		| &nbsp;{{ vm.file.validation | validationStatus:true }}
 	.modal-body
-		p {{ message }}
+		p {{ vm.message }}
 		div.markdown(markdown="vm.file.validation.message", ng-show="vm.file.validation.message")
 
 		div(ng-show="vm.AuthService.hasPermission('releases/validate')")

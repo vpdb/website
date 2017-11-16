@@ -1,6 +1,4 @@
-lib-cov
 *.seed
-*.log
 *.csv
 *.dat
 *.out
@@ -8,41 +6,17 @@ lib-cov
 *.gz
 *.iml
 
-test
-
-pids
-logs
 /dist
-/devsite
+/node_modules
 /coverage
-/data/storage*
-/data/gen/games/backglass
-/data/gen/games/logo
-/gfx/export
-/gfx/mockups
-/gfx/favicon
-/gfx/svg-defs.svg
-/vpdb-svg
-
-results
-server/config/settings.js
-server/scripts/credentials.js
-test/coverage
-
-npm-debug.log
-node_modules
-bower_components
 
 gitinfo.json
 raml.json
 postman*.json
 
-.restart
-.reload
 .idea/bashsupport_project.xml
 .idea/compiler.xml
 .idea/copyright/
-.idea/dictionaries/
 .idea/encodings.xml
 .idea/modules.xml
 .idea/scopes/

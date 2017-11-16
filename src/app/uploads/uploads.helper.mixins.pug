@@ -33,15 +33,15 @@ mixin authors(entity)
 
 //-- BLOCK MATCHES
 //---------------------------------------------------------------------
-mixin blockmatches
+mixin blockmatches(vm, entity)
 	h3.h--smaller.h--primary
 		| Similar Releases
-		a(ng-click="blockmatchInfo()")
+		a(ng-click=`${vm}.blockmatchInfo()`)
 			+icon('info').small.shift-up.space-left
-	label(ng-hide="files.length > 0") No similar releases found.
-	div(ng-repeat="file in files")
-		b(ng-show="files.length > 1") {{ file.file.name }}
-		hr(ng-show="files.length > 1")
+	label(ng-hide=`${entity}.files.length > 0`) No similar releases found.
+	div(ng-repeat=`file in ${entity}.files`)
+		b(ng-show=`${entity}.files.length > 1`) {{ file.file.name }}
+		hr(ng-show=`${entity}.files.length > 1`)
 		table.table.table-triple-striped
 			colgroup
 				col(width="20px")
@@ -66,7 +66,7 @@ mixin blockmatches
 
 //-- HISTORY
 //---------------------------------------------------------------------
-mixin history
+mixin history(entity)
 	h3.h--smaller.h--primary History
 	table.table.table-striped
 		colgroup
@@ -75,7 +75,7 @@ mixin history
 			col
 			col
 			col
-		tr(ng-repeat="item in history")
+		tr(ng-repeat=`item in ${entity}.history`)
 			td(nowrap) {{ item.created_at | date : 'short' }}
 			td
 				+icon('{{ item.icon }}')
@@ -85,9 +85,9 @@ mixin history
 
 //-- MESSAGE
 //---------------------------------------------------------------------
-mixin message(sendMessageOnly)
+mixin message(vm, entity, sendMessageOnly)
 	h3.h--smaller.h--primary Message
-	.media.media--no-margin.collapse-in-animation(ng-repeat="comment in comments track by comment.id")
+	.media.media--no-margin.collapse-in-animation(ng-repeat=`comment in ${entity}.comments track by comment.id`)
 		.collapse-in-animation-inner
 			.media-left.avatar
 				img.img-avatar.pull-left(gravatar-src="comment.from.gravatar_id", gravatar-default="retro", fallback-icon="user")
@@ -101,23 +101,23 @@ mixin message(sendMessageOnly)
 					.panel-body
 						div.markdown(markdown="comment.message")
 
-	.form-group(ng-class="{ error: errors.message }")
-		editor.tabset--light(ng-model="message", user="auth.user", placeholder="Message to user (mandatory if refusal)", markdown-text="Markdown enabled.")
+	.form-group(ng-class=`{ error: ${vm}.errors.message }`)
+		editor.tabset--light(ng-model=`${vm}.message`, user=`${vm}.AuthService.user`, placeholder="Message to user (mandatory if refusal)", markdown-text="Markdown enabled.")
 	if sendMessageOnly
-		button.btn.btn-hollow.pull-right.shift-up-3x(ng-click="sendMessage()", ng-disabled="submitting") Send Message Only
-	div.alert.alert-danger.padder-bottom(ng-show="errors.message")
+		button.btn.btn-hollow.pull-right.shift-up-3x(ng-click=`${vm}.sendMessage()`, ng-disabled="submitting") Send Message Only
+	div.alert.alert-danger.padder-bottom(ng-show=`${vm}.errors.message`)
 		+icon('warning').shift-up.space-right
-		| {{ errors.message }}
+		| {{ #{vm}.errors.message }}
 
 
-mixin footer(entity)
+mixin footer(vm, entity)
 	button.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
-		button.btn.btn-primary.btn-red(ng-hide=`${entity}.moderation.is_refused`, ng-click="refuse()", ng-disabled="submitting")
+		button.btn.btn-primary.btn-red(ng-hide=`${entity}.moderation.is_refused`, ng-click=`${vm}.refuse()`, ng-disabled="submitting")
 			+icon('thumb-down').space-right.shift-down-1px
 			| Refuse
-		button.btn.btn-default(ng-show=`${entity}.moderation.is_approved || ${entity}.moderation.is_refused`, ng-click="moderate()", ng-disabled="submitting")
+		button.btn.btn-default(ng-show=`${entity}.moderation.is_approved || ${entity}.moderation.is_refused`, ng-click=`${vm}.moderate()`, ng-disabled="submitting")
 			+icon('thumbs-up-down').space-right
 			| Moderate
-		button.btn.btn-primary.btn-green(ng-hide=`${entity}.moderation.is_approved`, ng-click="approve()", ng-disabled="submitting")
+		button.btn.btn-primary.btn-green(ng-hide=`${entity}.moderation.is_approved`, ng-click=`${vm}.approve()`, ng-disabled="submitting")
 			+icon('thumb-up').space-right.shift-up-1px
 			| Approve

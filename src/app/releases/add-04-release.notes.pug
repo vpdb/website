@@ -12,16 +12,20 @@
 	label.control-label Release Date
 	.row
 		.col-sm-3: .input-group
-			input.form-control.datepicker(type='text', ng-model='vm.meta.releaseDate', ng-required='true',
+			input.form-control.datepicker(
+				type="text",
+				ng-model="vm.meta.releaseDate",
 				uib-datepicker-popup="yyyy-MM-dd",
 				format-day-header="EE"
 				is-open="calendarOpened",
 				close-text="Close",
 				show-weeks="false",
-				starting-day="1")
+				starting-day="1",
+				ng-required
+			)
 			span.input-group-addon: +icon('calendar').a(ng-click='vm.openCalendar($event)')
 		.col-sm-2
-			uib-timepicker(ng-model="vm.meta.releaseTime", hour-step="1", minute-step="5", show-meridian="ismeridian")
+			uib-timepicker(ng-model="vm.meta.releaseTime", hour-step="1", minute-step="5", show-meridian="false")
 		.col-sm-7
 			i Leave empty for submission time.
 

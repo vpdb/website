@@ -10,7 +10,7 @@ h1(ng-show="vm.roms.length > 0 || !vm.game.restrictions.rom.mpu") ROMs
 	//- upload drop panel
 	div(uib-collapse="vm.romUploadCollapsed")
 		.well.well--full-width.well--dropzone(
-			file-upload="{ controller: vm, type: 'rom', status: meta.romFiles, onSuccess: onRomUpload, allowedExtensions: ['zip'], allowMultipleFiles: true, disableSelect: true }"
+			file-upload="{ controller: vm, type: 'rom', status: vm.meta.romFiles, onSuccess: vm.onRomUpload, allowedExtensions: ['zip'], allowMultipleFiles: true, disableSelect: true }"
 			ngf-drag-over-class="'well--dragging'"
 		)
 			ul.list--files
@@ -66,7 +66,7 @@ table.table.table-double-striped(ng-show="vm.roms.length > 0")
 			th DLs
 			th Size
 	tbody
-		tr.selectable(ng-repeat-start="rom in vm.roms", ng-click="isCollapsed = !isCollapsed", ng-init="isCollapsed=true")
+		tr.selectable(ng-repeat-start="rom in vm.roms", ng-click="isCollapsed = !isCollapsed", ng-init="isCollapsed = true")
 			td: b {{ rom.id }}
 			td {{ rom.version }}
 			td.hidden-xs {{ rom.languages.join(', ') }}

@@ -7,8 +7,7 @@ include ../template/timepicker
 		.alert.alert-danger.no-space-top(ng-show="vm.game.restrictions.release.mpu")
 			+icon('warning').space-right.shift-up
 			b Game Restriction <br>
-			| This is a {{ game.mpu.short }} game. In order to respect the industry, we don't allow users to download {{ game.mpu.short }} games. You still can upload backglasses but be aware that only you will able to see them until the situation changes.
-
+			| This is a {{ vm.game.mpu.short }} game. In order to respect the industry, we don't allow users to download {{ vm.game.mpu.short }} games. You still can upload backglasses but be aware that only you will able to see them until the situation changes.
 
 		h1.h--primary Add a new Backglass
 		hr.hr--primary
@@ -64,16 +63,20 @@ include ../template/timepicker
 			label.control-label Release Date
 			.row
 				.col-sm-3: .input-group
-					input.form-control.datepicker(type='text', ng-model='vm.meta.releaseDate', ng-required='true',
-					uib-datepicker-popup="yyyy-MM-dd",
-					format-day-header="EE"
-					is-open="vm.calendarOpened",
-					close-text="Close",
-					show-weeks="false",
-					starting-day="1")
+					input.form-control.datepicker(
+						type="text",
+						ng-model="vm.meta.releaseDate",
+						ng-required="true",
+						uib-datepicker-popup="yyyy-MM-dd",
+						format-day-header="EE"
+						is-open="vm.calendarOpened",
+						close-text="Close",
+						show-weeks="false",
+						starting-day="1"
+					)
 					span.input-group-addon: +icon('calendar').a(ng-click="vm.openCalendar($event)")
 				.col-sm-2
-					uib-timepicker(ng-model="vm.meta.releaseTime", hour-step="1", minute-step="5", show-meridian="ismeridian")
+					uib-timepicker(ng-model="vm.meta.releaseTime", hour-step="1", minute-step="5", show-meridian="false")
 				.col-sm-7
 					i Leave empty for submission time.
 
@@ -108,7 +111,6 @@ include ../template/timepicker
 			| {{ vm.errors.authors }}
 		p Everybody you add here will have write permissions to the backglass you are about to create, i.e. they can edit the backglass and add new versions.
 		p You can add acknowledgements below for people who provided help or resources but are not considered as authors for that particular backglass.
-
 
 		//---------------------------------------------------------------------
 		h4 Acknowledgements

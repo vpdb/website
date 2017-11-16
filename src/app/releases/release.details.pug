@@ -10,7 +10,7 @@ p.padder-top(ng-show="vm.pageLoading")
 	//-====================================================================
 	.col-sm-4.col-md-3.col-sm-push-8.col-md-push-9.col--menu(ng-show="vm.found")
 
-		a.a--block.text-center(ui-sref="gameDetails({id: game.id})")
+		a.a--block.text-center(ui-sref="gameDetails({id: vm.game.id})")
 			img.img--logo(ng-src="{{ vm.App.img(vm.game.logo, 'medium') }}").padder-bottom
 
 		//-- PLAYFIELD SHOTS
@@ -33,7 +33,7 @@ p.padder-top(ng-show="vm.pageLoading")
 
 		//-- DOWNLOAD BUTTON
 		//---------------------------------------------------------------------
-		.text-center: button.btn.btn-primary.padder-top.padder-bottom.text-center(ng-click="vm.download(game)")
+		.text-center: button.btn.btn-primary.padder-top.padder-bottom.text-center(ng-click="vm.download(vm.game)")
 			+icon('download-circle').space-right.hidden-sm.hidden-md
 			| Download
 
@@ -65,21 +65,21 @@ p.padder-top(ng-show="vm.pageLoading")
 
 		//-- AUTHOR ZONE
 		//---------------------------------------------------------------------
-		.panel--rect-block.padder-top(ng-show="(vm.AuthService.hasPermission('releases/update-own') && vm.AuthService.isAuthor(release)) || vm.AuthService.hasPermission('releases/update')")
+		.panel--rect-block.padder-top(ng-show="(vm.AuthService.hasPermission('releases/update-own') && vm.AuthService.isAuthor(vm.release)) || vm.AuthService.hasPermission('releases/update')")
 			h1.text-center
 				+icon('gear').space-right
-				| {{vm.zoneName}} Zone
+				| {{ vm.zoneName }} Zone
 
 			.center
 				ul.ul--no-list
-					li: a.text-center(ui-sref="vm.addReleaseVersion({ id: vm.game.id, releaseId: vm.release.id })")
+					li: a.text-center(ui-sref="addReleaseVersion({ id: vm.game.id, releaseId: vm.release.id })")
 						+icon('plus-circle').space-right.shift-up
 						| Upload File
-					li: a.text-center(ui-sref="vm.editRelease({ id: vm.game.id, releaseId: vm.release.id })")
+					li: a.text-center(ui-sref="editRelease({ id: vm.game.id, releaseId: vm.release.id })")
 						+icon('pencil-circle').space-right.shift-up
 						| Edit Release
 					li(ng-hide="vm.release.moderation && !vm.release.moderation.is_approved")
-						input#showModeration.checkbox--toggle(type='checkbox', ng-model="showModeration")
+						input#showModeration.checkbox--toggle(type='checkbox', ng-model="vm.showModeration")
 						label(for="showModeration")
 						label.a.a--light(for="showModeration") Show Moderation
 
@@ -139,10 +139,10 @@ p.padder-top(ng-show="vm.pageLoading")
 
 		.title.padder-top
 			h1.title-main.h--primary(property="v:itemreviewed")
-				a.a--primary(ui-sref="vm.gameDetails({id: vm.game.id})") {{ vm.game.title }}
+				a.a--primary(ui-sref="gameDetails({id: vm.game.id})") {{ vm.game.title }}
 				| &nbsp;&middot; {{ vm.release.name }} {{ vm.latestVersion.version }}
 			h1.title-sub
-				.badge.badge--tag.badge--small.shift-down(ng-repeat="tag in vm.release.tags", uib-tooltip="{{tag.description}}", tooltip-append-to-body="true") {{ tag.name }}
+				.badge.badge--tag.badge--small.shift-down(ng-repeat="tag in vm.release.tags", uib-tooltip="{{ tag.description }}", tooltip-append-to-body="true") {{ tag.name }}
 		hr
 
 		div.markdown(markdown="vm.release.description", ng-show="vm.release.description")
@@ -211,7 +211,7 @@ p.padder-top(ng-show="vm.pageLoading")
 			tbody
 				tr(ng-repeat="flavor in vm.flavorGrid")
 					td.validation-badge(ng-class='flavor.file.validation | validationStatus')
-						a(ng-click="vm.validateFile(release, flavor.version.version, flavor.file)", uib-tooltip="{{ flavor.file.validation | validationTooltip }}", tooltip-placement="right", tooltip-append-to-body="true", tooltip-popup-delay="500")
+						a(ng-click="vm.validateFile(vm.release, flavor.version.version, flavor.file)", uib-tooltip="{{ flavor.file.validation | validationTooltip }}", tooltip-placement="right", tooltip-append-to-body="true", tooltip-popup-delay="500")
 							+icon('{{ "medal-" + (flavor.file.validation | validationStatus) }}')
 					td.td--img
 						img.img--rounded(ng-src="{{ vm.App.img(flavor.file.playfield_image, 'square') }}")
@@ -250,9 +250,9 @@ p.padder-top(ng-show="vm.pageLoading")
 		//-- NEW COMMENT
 		//---------------------------------------------------------------------
 		div(ng-show="vm.AuthService.hasPermission('comments/add')")
-			h3.h--smaller.h--primary() Add a Comment:
+			h3.h--smaller.h--primary Add a Comment:
 			editor(ng-model="vm.newComment", user="vm.AuthService.user", placeholder="Your comment", markdown-text="Comments are parsed with Markdown.")
-			button.btn.btn-default.padder-top.pull-right(ng-click="vm.addComment(release.id)") Comment
+			button.btn.btn-default.padder-top.pull-right(ng-click="vm.addComment(vm.release.id)") Comment
 
 		.clearfix
 		p.padder-bottom-2x

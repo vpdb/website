@@ -44,19 +44,22 @@ mixin buildForm(edit)
 				label.shift-down(for="buildRange")
 		div.alert.alert-danger.padder-bottom(ng-show="vm.errors.type")
 			+icon('warning').shift-up.space-right
-			| {{ verrors.type }}
+			| {{ vm.errors.type }}
 
 		//- RELEASE DATE
 		.form-group(ng-class="{ error: vm.errors.built_at }")
 			label.col-sm-3.control-label Released at
 			.col-sm-3: .input-group
-				input.form-control.datepicker(type='text', ng-model='vm.build.built_at', ng-required='true',
+				input.form-control.datepicker(
+					type="text",
+					ng-model="vm.build.built_at",
 					uib-datepicker-popup="yyyy-MM-dd",
 					format-day-header="EE"
 					is-open="vm.calendarOpened",
 					close-text="Close",
 					show-weeks="false",
-					starting-day="1"
+					starting-day="1",
+					ng-required
 				)
 				span.input-group-addon: +icon('calendar').a(ng-click="vm.openCalendar($event)")
 		div.alert.alert-danger.padder-bottom(ng-show="vm.errors.built_at")

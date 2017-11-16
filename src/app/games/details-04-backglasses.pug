@@ -1,6 +1,6 @@
 h1.padder-top-2x(ng-show="vm.game.backglasses.length > 0 || !vm.game.restrictions.release.mpu || !vm.game.restrictions.backglass.mpu") DirectB2S Backglasses
 label(ng-hide="vm.game.backglasses.length > 0 || (vm.game.restrictions.release.mpu && vm.game.restrictions.backglass.mpu)") No backglasses available.
-p(ng-show="vm.game.backglasses.length === 0 && !vm.game.restrictions.release.mpu && vm.game.restrictions.backglass.mpu") This is a {{ game.mpu.short }} game. Those games are still in production and out of respect to the industry, we won't be offering any backglasses for this game.
+p(ng-show="vm.game.backglasses.length === 0 && !vm.game.restrictions.release.mpu && vm.game.restrictions.backglass.mpu") This is a {{ vm.game.mpu.short }} game. Those games are still in production and out of respect to the industry, we won't be offering any backglasses for this game.
 .row: .col-md-4.col-sm-6.col-xs-12.fade-animation(ng-repeat="backglass in vm.game.backglasses", ng-click="vm.showBackglass(backglass)")
 	.panel.panel--animated.ng-cloak
 		.restricted-overlay(ng-show="vm.game.restrictions.backglass.mpu")

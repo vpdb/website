@@ -32,7 +32,7 @@ include ../template/_mixins
 			h4.h--primary.padder-top-2x Authors
 			i.pull-left(ng-show="vm.updatedRelease.authors.length == 0") No authors added.
 			.row--fullwidth
-				.media.media--mini.media--mini-noborders.col-sm-4(ng-repeat="author in vm.updatedRelease.authors", ng-mouseenter="hovering=true", ng-mouseleave="hovering=false")
+				.media.media--mini.media--mini-noborders.col-sm-4(ng-repeat="author in vm.updatedRelease.authors", ng-mouseenter="hovering = true", ng-mouseleave="hovering = false")
 					.media-left.media-middle
 						img.img-avatar.img-avatar--sm(gravatar-src="author.user.gravatar_id", gravatar-default="retro", fallback-icon="user")
 					.media-body
@@ -117,18 +117,18 @@ include ../template/_mixins
 				label URL
 		.row.row--fullwidth(ng-repeat="link in vm.updatedRelease.links")
 			.form-group.col-sm-3
-				input.form-control(type="text", ng-model="vm.link.label")
+				input.form-control(type="text", ng-model="link.label")
 			.form-group.col-sm-9
 				.input-group
-					input.form-control(type="text", ng-model="vm.link.url")
+					input.form-control(type="text", ng-model="link.url")
 					span.input-group-addon: +icon('trash').smaller.a(ng-click="vm.removeLink(link)")
 		.row.row--fullwidth
 			.form-group.col-sm-3
 				input.form-control(type="text", ng-model="vm.newLink.label")
 			.form-group.col-sm-9
 				.input-group
-					input.form-control(type="text", ng-model="vm.newLink.url", on-enter="vm.addLink(newLink)")
-					span.input-group-addon: +icon('plus-circle').smaller.a(ng-click="vm.addLink(newLink)")
+					input.form-control(type="text", ng-model="vm.newLink.url", on-enter="vm.addLink(vm.newLink)")
+					span.input-group-addon: +icon('plus-circle').smaller.a(ng-click="vm.addLink(vm.newLink)")
 
 
 		//- ACKNOWLEDGEMENTS
@@ -183,5 +183,6 @@ include ../template/_mixins
 						ng-repeat="file in version.files | filter:tableFile",
 						ng-src="{{ file.playfield_image.variations['square'].url }}"
 						uib-tooltip="{{ vm.Flavors.orientation.values[file.flavor.orientation].other }} / {{ vm.Flavors.lighting.values[file.flavor.lighting].name }} / {{ vm.flattenBuilds(file.compatibility) }}"
-						tooltip-append-to-body="true")
+						tooltip-append-to-body="true"
+					)
 

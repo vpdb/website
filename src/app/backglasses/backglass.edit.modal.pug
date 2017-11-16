@@ -8,15 +8,18 @@ include ../template/_mixins
 		h3.h--no-margin Select Game
 		p {{ vm.params.text }}
 		.form-group
-			input.form-control.input-lg(type="text", placeholder="Start typing...",
-			ng-model="query",
-			uib-typeahead="game as game.title for game in vm.findGame($viewValue)",
-			typeahead-on-select="vm.gameSelected($item, $model, $label)",
-			typeahead-loading="searching",
-			typeahead-template-url="gameListItem",
-			typeahead-min-length="3",
-			typeahead-wait-ms="250",
-			focus-on)
+			input.form-control.input-lg(
+				type="text",
+				placeholder="Start typing...",
+				ng-model="query",
+				uib-typeahead="game as game.title for game in vm.findGame($viewValue)",
+				typeahead-on-select="vm.gameSelected($item, $model, $label)",
+				typeahead-loading="searching",
+				typeahead-template-url="gameListItem",
+				typeahead-min-length="3",
+				typeahead-wait-ms="250",
+				focus-on
+			)
 
 		//-- DESCRIPTION
 		//---------------------------------------------------------------------
@@ -40,7 +43,6 @@ include ../template/_mixins
 
 
 script#gameListItem(type="text/ng-template")
-
 	div.media.media--game-item
 		.media-left
 			.img.img--ar-bg(img-bg="vm.App.img(match.model.backglass, 'small')")

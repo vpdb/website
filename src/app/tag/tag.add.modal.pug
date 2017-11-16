@@ -21,7 +21,7 @@ include ../template/_mixins
 				label.col-sm-3.control-label Description
 				.col-sm-7
 					textarea.form-control(ng-model="vm.tag.description", ng-required)
-			div.alert.alert-danger(ng-show="errors.description")
+			div.alert.alert-danger(ng-show="vm.errors.description")
 				+icon('warning').shift-up.space-right
 				| {{ vm.errors.description }}
 

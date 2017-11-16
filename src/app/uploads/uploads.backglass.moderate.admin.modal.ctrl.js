@@ -6,6 +6,7 @@ export default class UploadsBackglassModerateAdminModalCtrl {
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
+	 * @param {AuthService} AuthService
 	 * @param {UploadHelper} UploadHelper
 	 * @param {DownloadService} DownloadService
 	 * @param BackglassResource
@@ -13,11 +14,12 @@ export default class UploadsBackglassModerateAdminModalCtrl {
 	 * @param params
 	 * @ngInject
 	 */
-	constructor($uibModalInstance, App, ApiHelper, UploadHelper, DownloadService,
+	constructor($uibModalInstance, App, ApiHelper, AuthService, UploadHelper, DownloadService,
 				BackglassResource, BackglassModerationResource, params) {
 
 		this.$uibModalInstance = $uibModalInstance;
 		this.App = App;
+		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
 		this.DownloadService = DownloadService;
 		this.BackglassModerationResource = BackglassModerationResource;

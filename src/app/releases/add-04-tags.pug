@@ -13,10 +13,12 @@
 			jqyoui-droppable="{ multiple: true, onDrop: 'vm.tagDropped' }"
 		)
 			div.padder-top(ng-repeat="tag in vm.meta.tags")
-				.badge.badge--tag(ng-model="vm.meta.tags",
-				data-drag="true",
-				data-jqyoui-options="{ revert: 'invalid' }",
-				jqyoui-draggable="{ animate: true, index: {{$index}} }")
+				.badge.badge--tag(
+					ng-model="vm.meta.tags",
+					data-drag="true",
+					data-jqyoui-options="{ revert: 'invalid' }",
+					jqyoui-draggable="{ animate: true, index: {{$index}} }"
+				)
 					| {{ tag.name }}
 					+icon('times-circle').small.shift-up.space-left.a(ng-click="vm.removeTag(tag)")
 				i.space-left {{ tag.description }}
@@ -29,11 +31,11 @@
 				data-jqyoui-options="{ accept:':not([ng-model=tags])', activeClass: 'active', hoverClass: 'hover' }",
 				jqyoui-droppable="{ multiple: true, onDrop: 'vm.tagDropped' }"
 			)
-
 				//- EXISTING
 				h5.hr--margin-small.h--shift-up Existing Tags
 				.badge.badge--tag(
-					ng-repeat="tag in tags", ng-model="vm.tags",
+					ng-repeat="tag in vm.tags",
+					ng-model="vm.tags",
 					data-drag="true",
 					data-jqyoui-options="{ revert: 'invalid' }",
 					jqyoui-draggable='{ animate: true, index: {{$index}} }'
@@ -43,7 +45,8 @@
 						uib-tooltip="{{ tag.description }}",
 						tooltip-append-to-body="false",
 						tooltip-trigger="click",
-						tooltip-popup-delay="200")
+						tooltip-popup-delay="200"
+					)
 				i(ng-show="vm.tags.length == 0") No more tags available.
 
 		button.btn.btn-default.padder-top.pull-right(ng-click="vm.createTag()")

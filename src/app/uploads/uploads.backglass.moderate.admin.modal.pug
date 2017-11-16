@@ -18,9 +18,9 @@ include ./uploads.helper.mixins.pug
 
 		+info('vm.backglass')
 		+authors('vm.backglass')
-		+history()
-		+message(false)
+		+history('vm.backglass')
+		+message('vm', 'vm.backglass', false)
 
 		.clearfix.padder-top
 	.modal-footer
-		+footer('vm.backglass')
+		+footer('vm', 'vm.backglass')

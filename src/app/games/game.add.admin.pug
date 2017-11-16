@@ -64,7 +64,7 @@ include ../template/_mixins
 							+icon('warning').shift-up.space-right
 							| {{ vm.errors['ipdb.number'] }}
 
-				.form-group(ng-class="{ error: errors.id }")
+				.form-group(ng-class="{ error: vm.errors.id }")
 					label.col-sm-3.control-label(for="gameId1") Game ID
 					.col-sm-6
 						.input-group
@@ -281,7 +281,7 @@ include ../template/_mixins
 							.img.img--ar-logo.img--fit.loaded(img-bg="vm.game.mediaFile.logo")
 								.text-center.vertical-center--100
 									uib-progressbar.progress--fixed-absolute.progress-striped.active(
-										value="game.mediaFile.logo.progress", ng-show="vm.game.mediaFile.logo.uploading")
+										value="vm.game.mediaFile.logo.progress", ng-show="vm.game.mediaFile.logo.uploading")
 									.span(ng-show="!img.url")
 										+icon('photo').svg-4x(ng-class="{ transparent: vm.game.mediaFile.logo.uploading }")
 										p {{ vm.mediaFile.logo.uploadText }}

@@ -6,6 +6,7 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
+	 * @param {AuthService} AuthService
 	 * @param {UploadHelper} UploadHelper
 	 * @param {ModalService} ModalService
 	 * @param ReleaseResource
@@ -15,13 +16,14 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 	 * @param params
 	 * @ngInject
 	 */
-	constructor($uibModalInstance, App, ApiHelper, UploadHelper, ModalService,
+	constructor($uibModalInstance, App, ApiHelper, AuthService, UploadHelper, ModalService,
 				ReleaseResource, ReleaseModerationResource, FileBlockmatchResource,
 				ReleaseModerationCommentResource, params) {
 
 		this.$uibModalInstance = $uibModalInstance;
 		this.App = App;
 		this.ApiHelper = ApiHelper;
+		this.AuthService = AuthService;
 		this.ModalService = ModalService;
 		this.ReleaseModerationResource = ReleaseModerationResource;
 		this.ReleaseModerationCommentResource = ReleaseModerationCommentResource;

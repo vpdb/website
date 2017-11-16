@@ -30,7 +30,7 @@ export default class GameReleaseDetailsCtrl {
 				}
 				return {
 					type: file.playfield_image.file_type,
-					url: file.playfield_image.variations[App.pixelSuffix('medium')].url,
+					url: App.img(file.playfield_image, 'medium'),
 					full: file.playfield_image.variations.full.url
 				};
 			})), 'type', true)[0];

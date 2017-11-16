@@ -31,12 +31,10 @@ include ../template/_mixins
 					label(for="includeGameMedia") Include game media
 
 			.col-sm-6
-
 				p
 					input#includePlayfieldImage.checkbox--toggle(type="checkbox", ng-model="vm.downloadRequest.playfield_image")
 					label(for="includePlayfieldImage")
 					label(for="includePlayfieldImage") Include playfield shots
-
 				p
 					input#includePlayfieldVideo.checkbox--toggle(type="checkbox", ng-model="vm.downloadRequest.playfield_video")
 					label(for="includePlayfieldVideo")
@@ -47,7 +45,7 @@ include ../template/_mixins
 		h3.hr--margin-smaller(ng-show="vm.game.backglasses.length > 0") Include Backglass:
 		.row(ng-show="vm.game.backglasses.length > 0").padder-bottom-2x
 			.col-sm-3(ng-repeat="backglass in vm.game.backglasses")
-				.flavor-item(ng-class="{ active: downloadRequest.backglass === backglass.id }", ng-click="vm.selectBackglass(backglass)")
+				.flavor-item(ng-class="{ active: vm.downloadRequest.backglass === backglass.id }", ng-click="vm.selectBackglass(backglass)")
 					img.img.img-responsive.img--rounded-more(img-src="{{ vm.App.img(backglass.versions[0].file, 'medium') }}")
 					.text-center.padder-top
 						label.label--block
@@ -71,8 +69,8 @@ include ../template/_mixins
 			tbody
 				tr(ng-repeat="rom in vm.roms")
 					td
-						input.checkbox--check(id="rom-{{ rom.id }}", type="checkbox", ng-click="vm.toggleRom(rom)")
-						label(for="rom-{{ rom.id }}"): b {{ rom.id }}
+						input.checkbox--check(ng-attr-id="rom-{{ rom.id }}", type="checkbox", ng-click="vm.toggleRom(rom)")
+						label(ng-attr-for="rom-{{ rom.id }}"): b {{ rom.id }}
 					td {{ rom.version }}
 					td.hidden-xs {{ rom.languages.join(', ') }}
 					td.hidden-xs {{ rom.notes }}

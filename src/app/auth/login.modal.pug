@@ -75,7 +75,7 @@ include ../template/_mixins
 			| {{ vm.error }}
 		div.alert.alert-success(ng-show="vm.message")
 			+icon('vm.info').space-right.shift-up
-			| {{ message }}
+			| {{ vm.message }}
 
 		.text-center.padder-top.i(ng-show="vm.message2", ng-bind-html="vm.message2")
 
@@ -91,7 +91,7 @@ include ../template/_mixins
 		hr.hr--light.padder-top-4x(ng-hide="vm.registering")
 		.clearfix
 
-		h3.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()", ng-hide="vm.LoginService.loginParams.localOnly") {{ registering ? "Login" : "Register" }}
+		h3.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()", ng-hide="vm.LoginService.loginParams.localOnly") {{ vm.registering ? "Login" : "Register" }}
 		button.btn.btn-default(ng-click="$close()") Cancel
-		button.btn.btn--secondary(ng-hide="registering", ng-click="vm.login()") Login
-		button.btn.btn--secondary(ng-show="registering", ng-click="vm.register()") Register
+		button.btn.btn--secondary(ng-hide="vm.registering", ng-click="vm.login()") Login
+		button.btn.btn--secondary(ng-show="vm.registering", ng-click="vm.register()") Register

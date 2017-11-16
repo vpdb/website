@@ -11,7 +11,8 @@ img.img--logo(ng-src="{{ vm.App.img(vm.game.logo, 'medium') }}")
 	rating-votes="vm.game.rating.votes",
 	rating-user="vm.gameRating"
 	rating-action="vm.rateGame($rating)"
-	rating-readonly="!vm.AuthService.hasPermission('games/rate')")
+	rating-readonly="!vm.AuthService.hasPermission('games/rate')"
+)
 
 top-badge(ng-model="vm.game.pinside.ranks", site="Pinside", href="https://pinside.com/pinball/archive/{{ vm.game.pinside.ids[0] }}")
 
@@ -26,7 +27,7 @@ hr
 			tooltip-append-to-body="true",
 			ng-show="vm.AuthService.hasPermission('games/star')",
 			ng-class="{ 'a--primary': vm.gameStarred }"
-			)
+		)
 			+icon('star')(ng-click="vm.toggleStar()").shift-up-2x
 		+icon('star-circle').svg-2x.shift-up-2x.space-right
 		| {{ vm.game.counter.stars | number }} star{{ vm.game.counter.stars != 1 ? 's' : '' }}

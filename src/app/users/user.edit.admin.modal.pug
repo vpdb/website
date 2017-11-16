@@ -36,8 +36,8 @@ include ../template/_mixins
 				.col-sm-8
 					ul.list--checkboxes
 						li(ng-repeat="role in vm.roles", ng-hide="!vm.AuthService.hasRole('root') && (role.id == 'root' || role.id == 'admin')")
-							input.checkbox--check.nested(id="checked-{{ role.id }}", type="checkbox", name="selectedRoles[]", value="{{ role.id }}", ng-checked="vm.user.roles.indexOf(role.id) > -1", ng-click="vm.toggleSelection(role.id)")
-							label.checkbox(for="checked-{{ role.id }}")
+							input.checkbox--check.nested(ng-attr-id="checked-{{ role.id }}", type="checkbox", name="selectedRoles[]", value="{{ role.id }}", ng-checked="vm.user.roles.indexOf(role.id) > -1", ng-click="vm.toggleSelection(role.id)")
+							label.checkbox(ng-attr-for="checked-{{ role.id }}")
 								h4.h--no-margin.h--lighter {{ role.name }}
 								div {{ role.description }}
 

@@ -28,7 +28,7 @@ include ../template/_mixins
 		.title
 			h1.title-main.h--primary
 				span(property="v:itemreviewed") {{ vm.game.title }}
-				a(ng-show="vm.AuthService.hasPermission('games/update')", ui-sref="vm.editGame({ id: vm.game.id })")
+				a(ng-show="vm.AuthService.hasPermission('games/update')", ui-sref="editGame({ id: vm.game.id })")
 					+icon('edit').space-left
 			h1.title-sub.h--small {{ vm.game.manufacturer }} &middot; {{ vm.game.year }}
 		hr
@@ -40,5 +40,3 @@ include ../template/_mixins
 
 	.content-end &nbsp;
 	jsonld(json="vm.ldGame")
-
-

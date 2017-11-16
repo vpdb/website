@@ -56,7 +56,7 @@ module.exports  = function(options) {
 
 			new webpack.optimize.CommonsChunkPlugin({
 				name: 'vendors',
-				minChunks: isExternal
+				minChunks: m => /node_modules/.test(m.context)
 			}),
 
 			new webpack.ProvidePlugin({
@@ -76,11 +76,3 @@ module.exports  = function(options) {
 		}
 	}
 };
-
-function isExternal(module) {
-	const context = module.context;
-	if (typeof context !== 'string') {
-		return false;
-	}
-	return context.indexOf('node_modules') !== -1;
-}
