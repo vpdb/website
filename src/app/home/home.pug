@@ -16,7 +16,7 @@ include ../template/paginator
 				.row.fade2-animation(ng-show="vm.games.length > 0")
 					.clear
 						+icon('times')(ng-click="vm.q = ''").a
-					.paginator(ng-show="vm.pagination.count > 12)
+					.paginator(ng-show="vm.pagination.count > 12")
 						+paginator('vm.pagination', 'vm.paginate')
 
 					.col-md-3.col-sm-4.col-xs-6(ng-repeat="game in vm.games", ui-sref="gameDetails({ id: game.id})")
