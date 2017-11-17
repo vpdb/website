@@ -3,11 +3,18 @@ import { browser, element, by } from 'protractor';
 export class HomePage {
 
 	searchInput = element(by.model('vm.q'));
-	noResult = element(by.id('noresult'));
-	panelToggle = element(by.css('[ng-click="whatsThis = !whatsThis"]'));
+	searchResult = element(by.id('search-result'));
+	noResult = element(by.id('no-result'));
+	panel = element(by.id('whats-this'));
+	panelToggle = element(by.id('toggle'));
+	panelTitle = this.panel.element(by.css('h3'));
+	panelClose = this.panel.element(by.css('.clear > svg'));
+
+	loginButton = element(by.id('login-btn'));
+	loginModal = element(by.id('login-modal'));
 
 	get() {
-		browser.get('http://localhost:3333/');
+		browser.get(browser.params.url);
 	}
 
 	search(query: string) {
@@ -22,5 +29,7 @@ export class HomePage {
 		return this.noResult.getText();
 	}
 
-
+	openLoginModal() {
+		this.loginButton.click();
+	}
 }

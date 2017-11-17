@@ -7,7 +7,7 @@ include ../template/paginator
 
 	//- search
 	//-------------------------------------------------------------------------
-	.collapse--search
+	#search-result.collapse--search
 
 		div(uib-collapse="vm.searchResult")
 			.spacer &nbsp;
@@ -26,7 +26,7 @@ include ../template/paginator
 								h1.h--small {{ game.title }}
 								label.label--subtitle {{ game.manufacturer }} &middot; {{ game.year }}
 
-				p#noresult.padder-bottom-2x(ng-show="!vm.games.length && !vm.searching"): i No games found containing "{{ vm.q }}".
+				p#no-result.padder-bottom-2x(ng-show="!vm.games.length && !vm.searching"): i No games found containing "{{ vm.q }}".
 				p#searching.padder-bottom-2x(ng-show="!vm.games.length && vm.searching"): i Searching...
 
 		.searchbox.abs-center
@@ -38,7 +38,7 @@ include ../template/paginator
 
 	//- info
 	//-------------------------------------------------------------------------
-	.collapse--info
+	#whats-this.collapse--info
 		div(uib-collapse="whatsThis")
 			.spacer &nbsp;
 		.panel(uib-collapse="!whatsThis")
@@ -67,7 +67,7 @@ include ../template/paginator
 			p.padder-top-2x
 
 		.abs-center
-			a.a--lighter(ng-click="whatsThis = !whatsThis")
+			a#toggle.a--lighter(ng-click="whatsThis = !whatsThis")
 				+icon('{{ vm.searching ? "circle-o-notch" : "vpdb-o" }}')(ng-class="{ 'svg-spin': vm.searching }").svg-3x
 
 .row.row--padded

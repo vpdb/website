@@ -65,7 +65,7 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 				//- login / logout
 				//-------------------------------------------
 				li(ng-hide="vm.AuthService.isAuthenticated")
-					a(ng-click="vm.login()")
+					a#login-btn(ng-click="vm.login()")
 						+icon('lock').small.space-right.shift-up
 						span.space-right Login <small>or Register</small>
 				li.uib-dropdown(ng-show="vm.AuthService.isAuthenticated", uib-dropdown)
