@@ -37,11 +37,11 @@ include ../template/_mixins
 				.form-group
 					label.col-sm-4.control-label Username
 					.col-sm-6
-						input.form-control(ng-model="vm.userPass.username", ng-required)
+						input#login-username.form-control(ng-model="vm.userPass.username", ng-required)
 				.form-group
 					label.col-sm-4.control-label Password
 					.col-sm-6
-						input.form-control(ng-model="vm.userPass.password", type="password", ng-keyup="$event.keyCode === 13 && vm.login()")
+						input#login-password.form-control(ng-model="vm.userPass.password", type="password", ng-keyup="$event.keyCode === 13 && vm.login()")
 
 		//- REGISTER
 		div(ng-show="vm.registering && !vm.LoginService.loginParams.localOnly")
@@ -50,15 +50,15 @@ include ../template/_mixins
 				.form-group(ng-class="{ error: vm.errors.email }")
 					label.col-sm-4.control-label Email
 					.col-sm-6
-						input.form-control(ng-model="vm.email", ng-required)
-				.form-group(ng-class="{ error: errors.username }")
+						input#register-email.form-control(ng-model="vm.email", ng-required)
+				.form-group(ng-class="{ error: vm.errors.username }")
 					label.col-sm-4.control-label Username
 					.col-sm-6
-						input.form-control(ng-model="vm.userPass.username", ng-required)
+						input#register-username.form-control(ng-model="vm.userPass.username", ng-required)
 				.form-group(ng-class="{ error: vm.errors.password }")
 					label.col-sm-4.control-label Password
 					.col-sm-6
-						input.form-control(ng-model="vm.userPass.password", type="password")
+						input#register-password.form-control(ng-model="vm.userPass.password", type="password")
 
 		//- ERRORS
 		div.alert.alert-danger(ng-show="vm.errors.email")
@@ -91,7 +91,7 @@ include ../template/_mixins
 		hr.hr--light.padder-top-4x(ng-hide="vm.registering")
 		.clearfix
 
-		h3.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()", ng-hide="vm.LoginService.loginParams.localOnly") {{ vm.registering ? "Login" : "Register" }}
+		h3#login-toggle.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()", ng-hide="vm.LoginService.loginParams.localOnly") {{ vm.registering ? "Login" : "Register" }}
 		button.btn.btn-default(ng-click="$close()") Cancel
-		button.btn.btn--secondary(ng-hide="vm.registering", ng-click="vm.login()") Login
-		button.btn.btn--secondary(ng-show="vm.registering", ng-click="vm.register()") Register
+		button#login-submit.btn.btn--secondary(ng-hide="vm.registering", ng-click="vm.login()") Login
+		button#register-submit.btn.btn--secondary(ng-show="vm.registering", ng-click="vm.register()") Register

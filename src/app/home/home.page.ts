@@ -1,4 +1,5 @@
 import { browser, element, by } from 'protractor';
+import { LoginModalPage } from '../auth/login.modal.page';
 
 export class HomePage {
 
@@ -11,7 +12,7 @@ export class HomePage {
 	panelClose = this.panel.element(by.css('.clear > svg'));
 
 	loginButton = element(by.id('login-btn'));
-	loginModal = element(by.id('login-modal'));
+	loginModal = new LoginModalPage(element(by.id('login-modal')));
 
 	get() {
 		browser.get(browser.params.url);
@@ -21,8 +22,16 @@ export class HomePage {
 		this.searchInput.sendKeys(query);
 	}
 
+	clearSearch() {
+		this.searchInput.clear();
+	}
+
 	togglePanel() {
 		this.panelToggle.click();
+	}
+
+	closePanel() {
+		this.panelClose.click();
 	}
 
 	getNoResult() {
