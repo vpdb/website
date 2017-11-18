@@ -1,15 +1,18 @@
+import { browser, protractor } from 'protractor';
 import { LoginModalPage } from './login.modal.page';
 import { HomePage } from '../home/home.page';
+import { internet } from 'faker';
+
+const until = protractor.ExpectedConditions;
 
 describe('Login Modal', () => {
 
-
 	beforeAll(() => {
-		const homePage = new HomePage();
-		homePage.get();
-		homePage.openLoginModal();
+		this.homePage = new HomePage();
+		this.homePage.get();
+		this.homePage.openLoginModal();
 
-		this.loginModal = homePage.loginModal;
+		this.loginModal = this.homePage.loginModal;
 	});
 
 	it('should toggle between login and register', () => {
@@ -33,11 +36,26 @@ describe('Login Modal', () => {
 		this.loginModal.toggle();
 	});
 
-	// it('should register correctly', () => {
-	// 	this.loginModal.register();
-	// 	expect(this.loginModal.successMessage.isDisplayed()).toBeTruthy();
-	// 	expect(this.loginModal.successMessage.getText()).toContain('Registration successful.');
-	// 	expect(this.loginModal.loginSubmit.isDisplayed()).toBeTruthy();
-	// });
+	it('should register and login correctly', () => {
+		const username = internet.userName().replace(/[^a-z0-9]+/gi, '');
+		const password = internet.password(6);
+
+		this.loginModal.toggleRegister();
+		this.loginModal.setRegister(internet.email().toLowerCase(), username, password);
+		this.loginModal.submitRegister();
+
+		expect(this.loginModal.successMessage.isDisplayed()).toBeTruthy();
+		expect(this.loginModal.successMessage.getText()).toContain('Registration successful.');
+		expect(this.loginModal.loginSubmit.isDisplayed()).toBeTruthy();
+
+		this.loginModal.toggleLogin();
+		this.loginModal.setLogin(username, password);
+		this.loginModal.submitLogin();
+
+		expect(this.loginModal.element.isPresent()).not.toBeTruthy();
+		expect(this.homePage.loggedUser.getText()).toEqual(username.toUpperCase());
+		
+		this.homePage.logout();
+	});
 
 });

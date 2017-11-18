@@ -19,7 +19,7 @@ export class LoginModalPage {
 	public registerSubmit = this.element.element(by.id('register-submit'));
 	public toggleButton = this.element.element(by.id('login-toggle'));
 	public dismissButton = this.element.element(by.id('dismiss-button'));
-	public successMessage = this.element.element(by.css('.alert-success'));
+	public successMessage = this.element.element(by.css('.modal-body > .alert-success[ng-show="vm.message"]'));
 
 	toggle(): promise.Promise<void> {
 		return this.toggleButton.click();

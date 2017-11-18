@@ -4,6 +4,7 @@ import { LoginModalPage } from '../auth/login.modal.page';
 
 export class HomePage {
 
+	loggedUser = element(by.id('logged-user'));
 	searchInput = element(by.model('vm.q'));
 	searchResult = element(by.id('search-result'));
 	noResult = element(by.id('no-result'));
@@ -14,6 +15,7 @@ export class HomePage {
 
 	loginButton = element(by.id('login-btn'));
 	loginModal = new LoginModalPage(element(by.id('login-modal')));
+	logoutButton = element(by.id('logout-btn'));
 
 	get() {
 		browser.get(browser.params.url);
@@ -41,5 +43,10 @@ export class HomePage {
 
 	openLoginModal(): promise.Promise<void> {
 		return this.loginButton.click();
+	}
+
+	logout() {
+		this.loggedUser.click();
+		this.logoutButton.click();
 	}
 }

@@ -71,7 +71,7 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 				li.uib-dropdown(ng-show="vm.AuthService.isAuthenticated", uib-dropdown)
 					a.space-right.uib-dropdown-toggle(uib-dropdown-toggle)
 						img.img-avatar.img-avatar--xsm.space-right(gravatar-src="vm.AuthService.user.gravatar_id", gravatar-default="retro")
-						span.space-right-2x.hidden-sm {{ vm.AuthService.user.name }}
+						span#logged-user.space-right-2x.hidden-sm {{ vm.AuthService.user.name }}
 						+icon('angle-down').smaller.shift-up
 					ul.uib-dropdown-menu(uib-dropdown-menu)
 						li
@@ -79,7 +79,7 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 								+icon('user').space-right.shift-up
 								span Profile
 						li
-							a(ng-click="vm.AuthService.logout(); navCollapsed = true")
+							a#logout-btn(ng-click="vm.AuthService.logout(); navCollapsed = true")
 								+icon('exit').space-right.shift-up
 								span Logout
 
