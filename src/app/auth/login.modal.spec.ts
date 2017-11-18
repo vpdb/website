@@ -1,5 +1,5 @@
+import { LoginModalPage } from './login.modal.page';
 import { HomePage } from '../home/home.page';
-import { by, element } from "protractor";
 
 describe('Login Modal', () => {
 
@@ -13,19 +13,31 @@ describe('Login Modal', () => {
 	});
 
 	it('should toggle between login and register', () => {
+		this.loginModal.toggleLogin();
+		expect(this.loginModal.loginSubmit.isDisplayed()).toBeTruthy();
+		expect(this.loginModal.registerSubmit.isDisplayed()).not.toBeTruthy();
 		expect(this.loginModal.toggleButton.getText()).toEqual('Register');
-		this.loginModal.toggle();
+		this.loginModal.toggleRegister();
+		expect(this.loginModal.loginSubmit.isDisplayed()).not.toBeTruthy();
+		expect(this.loginModal.registerSubmit.isDisplayed()).toBeTruthy();
 		expect(this.loginModal.toggleButton.getText()).toEqual('Login');
 		this.loginModal.toggle();
 	});
 
 	it('should show validation errors when registering', () => {
-		this.loginModal.toggle();
+		this.loginModal.toggleRegister();
 		this.loginModal.submitRegister();
-		expect(this.loginModal.formGroup(this.loginModal.registerEmail).getAttribute('class')).toMatch('error');
-		expect(this.loginModal.formGroup(this.loginModal.registerUsername).getAttribute('class')).toMatch('error');
-		expect(this.loginModal.formGroup(this.loginModal.registerPassword).getAttribute('class')).toMatch('error');
+		expect(LoginModalPage.formGroup(this.loginModal.registerEmail).getAttribute('class')).toMatch('error');
+		expect(LoginModalPage.formGroup(this.loginModal.registerUsername).getAttribute('class')).toMatch('error');
+		expect(LoginModalPage.formGroup(this.loginModal.registerPassword).getAttribute('class')).toMatch('error');
 		this.loginModal.toggle();
-	})
+	});
+
+	// it('should register correctly', () => {
+	// 	this.loginModal.register();
+	// 	expect(this.loginModal.successMessage.isDisplayed()).toBeTruthy();
+	// 	expect(this.loginModal.successMessage.getText()).toContain('Registration successful.');
+	// 	expect(this.loginModal.loginSubmit.isDisplayed()).toBeTruthy();
+	// });
 
 });

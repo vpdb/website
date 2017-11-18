@@ -1,3 +1,4 @@
+import { promise } from 'selenium-webdriver';
 import { browser, element, by } from 'protractor';
 import { LoginModalPage } from '../auth/login.modal.page';
 
@@ -34,11 +35,11 @@ export class HomePage {
 		this.panelClose.click();
 	}
 
-	getNoResult() {
+	getNoResult(): promise.Promise<string> {
 		return this.noResult.getText();
 	}
 
-	openLoginModal() {
-		this.loginButton.click();
+	openLoginModal(): promise.Promise<void> {
+		return this.loginButton.click();
 	}
 }

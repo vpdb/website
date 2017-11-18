@@ -92,6 +92,6 @@ include ../template/_mixins
 		.clearfix
 
 		h3#login-toggle.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()", ng-hide="vm.LoginService.loginParams.localOnly") {{ vm.registering ? "Login" : "Register" }}
-		button.btn.btn-default(ng-click="$close()") Cancel
+		button#dismiss-button.btn.btn-default(ng-click="$close()") Cancel
 		button#login-submit.btn.btn--secondary(ng-hide="vm.registering", ng-click="vm.login()") Login
 		button#register-submit.btn.btn--secondary(ng-show="vm.registering", ng-click="vm.register()") Register

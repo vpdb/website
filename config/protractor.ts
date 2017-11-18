@@ -13,13 +13,13 @@ export let config: Config = {
 	},
 	onPrepare: () => {
 		// register root user
-		browser.driver.get('http://localhost:3333');
-		browser.driver.findElement(by.id('login-btn')).click();
-		browser.driver.findElement(by.id('login-toggle')).click();
-		browser.driver.findElement(by.id('register-email')).sendKeys(LoginModalPage.EMAIL);
-		browser.driver.findElement(by.id('register-username')).sendKeys(LoginModalPage.USERNAME);
-		browser.driver.findElement(by.id('register-password')).sendKeys(LoginModalPage.PASSWORD);
-		browser.driver.findElement(by.id('register-submit')).click();
-		browser.driver.findElement(by.id('dismiss-button')).click();
+		return browser.driver.get('http://localhost:3333')
+			.then(() => browser.driver.findElement(by.id('login-btn')).click())
+			.then(() => browser.driver.findElement(by.id('login-toggle')).click())
+			.then(() => browser.driver.findElement(by.id('register-email')).sendKeys(LoginModalPage.EMAIL))
+			.then(() => browser.driver.findElement(by.id('register-username')).sendKeys(LoginModalPage.USERNAME))
+			.then(() => browser.driver.findElement(by.id('register-password')).sendKeys(LoginModalPage.PASSWORD))
+			.then(() => browser.driver.findElement(by.id('register-submit')).click())
+			.then(() => browser.driver.findElement(by.id('dismiss-button')).click());
 	}
 };
