@@ -17,6 +17,13 @@ export class AppPage {
 		return this.loginButton.click();
 	}
 
+	loginAs(username: string) {
+		this.openLoginModal();
+		this.loginModal.toggleLogin();
+		this.loginModal.setLogin(browser.users[username].username, browser.users[username].password);
+		this.loginModal.submitLogin();
+	}
+
 	logout() {
 		this.loggedUser.click();
 		this.logoutButton.click();

@@ -60,16 +60,4 @@ describe('Login Modal', () => {
 		appPage.openLoginModal();
 	});
 
-	it('should be able to login as contributor', () => {
-		loginModal.toggleLogin();
-		loginModal.setLogin(browser.users.contributor.username, browser.users.contributor.password);
-		loginModal.submitLogin();
-
-		expect(loginModal.element.isPresent()).not.toBeTruthy();
-		expect(appPage.loggedUser.getText()).toEqual('CONTRIBUTOR');
-
-		appPage.logout();
-		appPage.openLoginModal();
-	});
-
 });
