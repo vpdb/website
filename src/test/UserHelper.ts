@@ -2,15 +2,9 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export class UserHelper {
 
-	createUsers(baseUrl: string) : Promise<User[]> {
-		const rootUser:User = { username: 'root', password: 'cVVQr53f5TCZtHcR', email: 'root@vpdb.io' };
-		const users:User[] = [
-			{ username: 'admin', password: 'vaDwjPf2pP7RwWx6', roles: [ 'member', 'admin' ], email: 'admin@vpdb.io' },
-			{ username: 'contributor', password: 'qm5LKQjZEQMrjhmp', roles: [ 'member', 'contributor' ], email: 'contributor@vpdb.io' },
-			{ username: 'member', password: 'x8gWyTrUhcCq9JHV', email: 'member@vpdb.io' },
-		];
+	createUsers(baseUrl: string, rootUser:User, otherUsers:User[]) : Promise<User[]> {
 		return this.authenticateOrCreateUser(baseUrl, rootUser).then(rootUser => {
-			return Promise.all(users.map(user => this.authenticateOrCreateUser(baseUrl, user, rootUser))).then(users => {
+			return Promise.all(otherUsers.map(user => this.authenticateOrCreateUser(baseUrl, user, rootUser))).then(users => {
 				return [ rootUser, ...users];
 			});
 		});

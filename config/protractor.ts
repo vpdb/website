@@ -18,10 +18,16 @@ export let config: Config = {
 		// setup reporter
 		jasmine.getEnv().addReporter(new SpecReporter());
 
-		// register root user
+		// register users
 		console.log('Creating users...');
+		const rootUser:User = { username: 'root', password: 'cVVQr53f5TCZtHcR', email: 'root@vpdb.io' };
+		const users:User[] = [
+			{ username: 'admin', password: 'vaDwjPf2pP7RwWx6', roles: [ 'member', 'admin' ], email: 'admin@vpdb.io' },
+			{ username: 'contributor', password: 'qm5LKQjZEQMrjhmp', roles: [ 'member', 'contributor' ], email: 'contributor@vpdb.io' },
+			{ username: 'member', password: 'x8gWyTrUhcCq9JHV', email: 'member@vpdb.io' },
+		];
 		const userHelper = new UserHelper();
-		return userHelper.createUsers('http://localhost:7357/api').then(users => {
+		return userHelper.createUsers('http://localhost:7357/api', rootUser, users).then(users => {
 			browser.users = {};
 			users.forEach((user:User) => {
 				browser.users[user.username] = user;

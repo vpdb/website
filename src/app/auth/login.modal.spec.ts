@@ -69,6 +69,6 @@ describe('Login Modal', () => {
 
 		this.homePage.logout();
 		this.homePage.openLoginModal();
-	})
+	});
 
 });
