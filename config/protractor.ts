@@ -1,5 +1,8 @@
-import { browser, by, Config } from 'protractor';
-import { LoginModalPage } from "../src/app/auth/login.modal.page";
+import axios from 'axios';
+import { Config } from 'protractor';
+import { SpecReporter } from 'jasmine-spec-reporter';
+import { LoginModalPage } from '../src/app/auth/login.modal.page';
+
 
 export let config: Config = {
 	framework: 'jasmine',
@@ -12,14 +15,24 @@ export let config: Config = {
 		url: 'http://localhost:3333'
 	},
 	onPrepare: () => {
+
+		// setup reporter
+		jasmine.getEnv().addReporter(new SpecReporter());
+
 		// register root user
-		return browser.driver.get('http://localhost:3333')
-			.then(() => browser.driver.findElement(by.id('login-btn')).click())
-			.then(() => browser.driver.findElement(by.id('login-toggle')).click())
-			.then(() => browser.driver.findElement(by.id('register-email')).sendKeys(LoginModalPage.EMAIL))
-			.then(() => browser.driver.findElement(by.id('register-username')).sendKeys(LoginModalPage.USERNAME))
-			.then(() => browser.driver.findElement(by.id('register-password')).sendKeys(LoginModalPage.PASSWORD))
-			.then(() => browser.driver.findElement(by.id('register-submit')).click())
-			.then(() => browser.driver.findElement(by.id('dismiss-button')).click());
+		console.log('Creating root user...');
+		return axios.post('http://localhost:7357/api/v1/users', {
+			username: LoginModalPage.USERNAME,
+			password: LoginModalPage.PASSWORD,
+			email: LoginModalPage.EMAIL
+
+		}).then(response => {
+			if (response.status !== 201) {
+				console.warn('Could not create root user (%s): ', response.status, response.data);
+			}
+		}, err => {
+			console.error('Error creating root user: %s', err.message);
+			console.error(err.response.data);
+		});
 	}
 };
