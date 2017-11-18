@@ -15,7 +15,7 @@ describe('Login Modal', () => {
 		this.loginModal = this.homePage.loginModal;
 	});
 
-	it('should toggle between login and register', () => {
+	fit('should toggle between login and register', () => {
 		this.loginModal.toggleLogin();
 		expect(this.loginModal.loginSubmit.isDisplayed()).toBeTruthy();
 		expect(this.loginModal.registerSubmit.isDisplayed()).not.toBeTruthy();
@@ -54,7 +54,7 @@ describe('Login Modal', () => {
 
 		expect(this.loginModal.element.isPresent()).not.toBeTruthy();
 		expect(this.homePage.loggedUser.getText()).toEqual(username.toUpperCase());
-		
+
 		this.homePage.logout();
 	});
 
