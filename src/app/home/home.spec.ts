@@ -2,34 +2,30 @@ import { HomePage } from './home.page';
 
 describe('Home Page', () => {
 
+	const homePage = new HomePage();
+
 	beforeAll(() => {
-		this.homePage = new HomePage();
-		this.homePage.get();
+		homePage.get();
 	});
 
 	it('should be in initial state', () => {
-		expect(this.homePage.noResult.isDisplayed()).not.toBeTruthy();
-		expect(this.homePage.panelTitle.isDisplayed()).not.toBeTruthy();
+		expect(homePage.noResult.isDisplayed()).not.toBeTruthy();
+		expect(homePage.panelTitle.isDisplayed()).not.toBeTruthy();
 	});
 
 	it('should search in games', () => {
-		this.homePage.search('qwert');
-		expect(this.homePage.noResult.isDisplayed()).toBeTruthy();
-		expect(this.homePage.getNoResult()).toEqual('No games found containing "qwert".');
-		this.homePage.clearSearch();
-		expect(this.homePage.noResult.isDisplayed()).not.toBeTruthy();
+		homePage.search('qwert');
+		expect(homePage.noResult.isDisplayed()).toBeTruthy();
+		expect(homePage.getNoResult()).toEqual('No games found containing "qwert".');
+		homePage.clearSearch();
+		expect(homePage.noResult.isDisplayed()).not.toBeTruthy();
 	});
 
 	it('should expand the info panel', () => {
-		this.homePage.togglePanel();
-		expect(this.homePage.panelTitle.isDisplayed()).toBeTruthy();
-		this.homePage.closePanel();
-		expect(this.homePage.panelTitle.isDisplayed()).not.toBeTruthy();
-	});
-
-	it('should open the login modal when clicking on login', () => {
-		this.homePage.openLoginModal();
-		expect(this.homePage.loginModal.element.isDisplayed()).toBeTruthy();
+		homePage.togglePanel();
+		expect(homePage.panelTitle.isDisplayed()).toBeTruthy();
+		homePage.closePanel();
+		expect(homePage.panelTitle.isDisplayed()).not.toBeTruthy();
 	});
 
 });

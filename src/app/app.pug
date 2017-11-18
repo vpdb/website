@@ -50,10 +50,10 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 					a.btn.btn-hollow.uib-dropdown-toggle(uib-dropdown-toggle) Upload
 					ul.uib-dropdown-menu(uib-dropdown-menu)
 						li(ng-show="vm.AuthService.hasPermission('games/add')")
-							a(ui-sref="addGame", ng-click="navCollapsed = true")
+							a#upload-game-btn(ui-sref="addGame", ng-click="navCollapsed = true")
 								span Game Data
 						li(ng-show="vm.AuthService.hasPermission('releases/add')")
-							a(ng-click="vm.uploadRelease(); navCollapsed = true")
+							a#upload-release-btn(ng-click="vm.uploadRelease(); navCollapsed = true")
 								span Recreation
 						//li
 							a

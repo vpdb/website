@@ -13,10 +13,6 @@ export class HomePage {
 	panelTitle = this.panel.element(by.css('h3'));
 	panelClose = this.panel.element(by.css('.clear > svg'));
 
-	loginButton = element(by.id('login-btn'));
-	loginModal = new LoginModalPage(element(by.id('login-modal')));
-	logoutButton = element(by.id('logout-btn'));
-
 	get() {
 		browser.get(browser.params.url);
 	}
@@ -39,14 +35,5 @@ export class HomePage {
 
 	getNoResult(): promise.Promise<string> {
 		return this.noResult.getText();
-	}
-
-	openLoginModal(): promise.Promise<void> {
-		return this.loginButton.click();
-	}
-
-	logout() {
-		this.loggedUser.click();
-		this.logoutButton.click();
 	}
 }
