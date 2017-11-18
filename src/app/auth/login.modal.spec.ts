@@ -15,7 +15,7 @@ describe('Login Modal', () => {
 		this.loginModal = this.homePage.loginModal;
 	});
 
-	fit('should toggle between login and register', () => {
+	it('should toggle between login and register', () => {
 		this.loginModal.toggleLogin();
 		expect(this.loginModal.loginSubmit.isDisplayed()).toBeTruthy();
 		expect(this.loginModal.registerSubmit.isDisplayed()).not.toBeTruthy();
@@ -56,6 +56,19 @@ describe('Login Modal', () => {
 		expect(this.homePage.loggedUser.getText()).toEqual(username.toUpperCase());
 
 		this.homePage.logout();
+		this.homePage.openLoginModal();
 	});
+
+	it('should be able to login as contributor', () => {
+		this.loginModal.toggleLogin();
+		this.loginModal.setLogin(browser.users.contributor.username, browser.users.contributor.password);
+		this.loginModal.submitLogin();
+
+		expect(this.loginModal.element.isPresent()).not.toBeTruthy();
+		expect(this.homePage.loggedUser.getText()).toEqual('CONTRIBUTOR');
+
+		this.homePage.logout();
+		this.homePage.openLoginModal();
+	})
 
 });
