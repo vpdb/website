@@ -96,6 +96,7 @@ export function imgBg($parse, AuthService) {
 			};
 
 			const setImg = function(value) {
+				console.log('setImg:', value);
 				const url = isObject(value) ? value.url : value;
 				let isProtected = isObject(value) ? value.is_protected : false;
 
@@ -110,7 +111,7 @@ export function imgBg($parse, AuthService) {
 					if (!isProtected) {
 						setImgUrl(url);
 					} else {
-						console.log('getting auth token for %s', url);
+						console.debug('img-bg: adding url %s to be collected', url);
 						AuthService.addUrlToken(url, setImgUrl);
 					}
 				}

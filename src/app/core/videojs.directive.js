@@ -45,8 +45,8 @@ export default function($parse, $http, $timeout, AuthService) {
 
 					const waitAndSetUrl = function(url) {
 						element.attr('source', url);
-						$http({ method: 'HEAD', url: url }).success(() => {
-//								console.log(new Date() + ' Back from HEAD, id = %s', attrs.id);
+						$http({ method: 'HEAD', url: url }).then(() => {
+//							console.log(new Date() + ' Back from HEAD, id = %s', attrs.id);
 							const src = { type: 'video/mp4', src: url };
 							if (!player) {
 								player = videojs(attrs.id, setup, function() {
@@ -60,9 +60,9 @@ export default function($parse, $http, $timeout, AuthService) {
 							scope.videoLoading = false;
 							scope.$emit('videoLoaded');
 
-						}).error((data, status) => {
-							console.error('Error fetching HEAD of uploaded video: ' + status);
-							console.error(data);
+						}).catch(response => {
+							console.error('Error fetching HEAD of uploaded video: ' + response.status);
+							console.error(response);
 						});
 					};
 

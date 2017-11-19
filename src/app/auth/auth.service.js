@@ -368,8 +368,10 @@ export default class AuthService {
 			}
 		});
 		this.paths = uniqBy(paths.concat(this.paths));
+		console.debug('AuthService: Added %d URLs to be collected.', this.paths.length);
 		if (fetch) {
-			this.fetchUrlTokens();
+			// wait one digestion cycle so all paths can be added before collecting tokens
+			this.$timeout(() => this.fetchUrlTokens(), 0);
 		}
 		return this;
 	}
@@ -377,7 +379,7 @@ export default class AuthService {
 	/**
 	 * Requests storage tokens for previously collected URLs.
 	 * @see #collectUrlProps
-	 * @param {array} [paths]
+	 * @param {string[]} [paths]
 	 * @param {function(err:Error, {token:string, expires:string, user:object}=)} [callback]
 	 * @return {AuthService}
 	 */
@@ -386,30 +388,34 @@ export default class AuthService {
 		if (!isString(paths) && (!isObject(paths) || keys(paths).length === 0)) {
 			return this;
 		}
+		console.debug('AuthService: Collecting tokens for %d URLs.', paths.length);
 		this.$http({
 			method: 'POST',
 			url: this.ConfigService.storageUri('/authenticate'),
 			data: { paths: paths }
-		}).then(data => {
+		}).then(response => {
+			console.debug('AuthService: Tokens collected.', response.data);
 			if (callback) {
-				return callback(null, data);
+				console.debug('AuthService: Returning through provided callback.');
+				return callback(null, response.data);
 			}
-			this.storageTokens = data;
+			this.storageTokens = response.data;
 			this.paths = [];
 			if (this.storageTokenCallbacks) {
-				forEach(data, (token, path) => {
+				console.debug('AuthService: Executing storage token callbacks.');
+				forEach(response.data, (token, path) => {
 					if (this.storageTokenCallbacks[path]) {
 						this.storageTokenCallbacks[path](token);
 						delete this.storageTokenCallbacks[path];
 					}
 				});
 			}
-		}, (data, status) => {
+		}).catch(response => {
 			if (callback) {
-				callback(status, data);
+				callback(response, data);
 			}
-			console.error('Error fetching tokens: ' + status);
-			console.error(data);
+			console.error('Error fetching tokens: ' + response.status);
+			console.error(response);
 		});
 		return this;
 	}
@@ -427,16 +433,16 @@ export default class AuthService {
 	 */
 	addUrlToken(url, callback) {
 		if (this.storageTokens && this.storageTokens[url]) {
-			console.log('already have storage token.');
+			console.log('AuthService: already have storage token.');
 			return callback(url + (~url.indexOf('?') ? '&' : '?') + 'token=' + this.storageTokens[url]);
 		}
 		if (!includes(this.paths, url)) {
-			return console.error('Path "%s" neither in collected paths nor in received tokens. Might forgot to collect URL props on some object?', url);
+			return console.error('AuthService: Path "%s" neither in collected paths nor in received tokens. Might forgot to collect URL props on some object?', url);
 		}
-		console.log('getting storage token.');
+		console.debug('AuthService: Adding callback for url %s', url);
 		this.storageTokenCallbacks = this.storageTokenCallbacks || [];
 		this.storageTokenCallbacks[url] = token => {
-			console.log('got storage token: %s', token);
+			console.debug('AuthService: got storage token: %s', token);
 			callback(url + (~url.indexOf('?') ? '&' : '?') + 'token=' + token);
 		};
 		return this;
