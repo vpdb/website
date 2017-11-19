@@ -47,14 +47,14 @@ include ../template/_mixins
 
 			.form-horizontal(ng-show="vm.game.origin == 'recreation'")
 				.form-group(ng-class="{ error: vm.errors['ipdb.number'] }")
-					label.col-sm-3.control-label(for="ipdbUrl") IPDB
+					label.col-sm-3.control-label(for="ipdb-url") IPDB
 					.col-sm-6
-						input#ipdbUrl.form-control(type="text", ng-model="vm.game.ipdbUrl", placeholder="URL or Number", on-enter="vm.refresh()")
+						input#ipdb-url.form-control(type="text", ng-model="vm.game.ipdbUrl", placeholder="URL or Number", on-enter="vm.refresh()")
 						a.a--lighter#ipdbLink(href="http://www.ipdb.org/search.pl?any={{ vm.game.title | escape }}&search=Search+Database&searchtype=quick", target="_blank")
 							+icon('external-link').small.shift-up.space-right
 							| Search title on IPDB.org
 					.col-sm-3
-						button.btn.btn-default.btn--width-med.pull-right(ng-click="vm.refresh()")
+						button#ipdb-fetch.btn.btn-default.btn--width-med.pull-right(ng-click="vm.refresh()")
 							+icon('refresh').space-right
 							| Fetch
 
@@ -65,10 +65,10 @@ include ../template/_mixins
 							| {{ vm.errors['ipdb.number'] }}
 
 				.form-group(ng-class="{ error: vm.errors.id }")
-					label.col-sm-3.control-label(for="gameId1") Game ID
+					label.col-sm-3.control-label(for="game-id-1") Game ID
 					.col-sm-6
 						.input-group
-							input#gameId1.form-control(type="text", ng-model="vm.game.id", placeholder="Common Abbreviation", ng-change="vm.game.data.idValidated = false", on-enter="vm.check()")
+							input#game-id-1.form-control(type="text", ng-model="vm.game.id", placeholder="Common Abbreviation", ng-change="vm.game.data.idValidated = false", on-enter="vm.check()")
 							span.input-group-addon(ng-class="{ transparent: !vm.game.data.idValidated }")
 								+icon('check').small(ng-show="vm.game.data.idValid")
 								+icon('times').small(ng-hide="vm.game.data.idValid")
@@ -297,8 +297,8 @@ include ../template/_mixins
 						li There should be enough contrast on white as well as on black background.
 
 			hr
-			button.btn.btn-default.btn-lg(ng-click="vm.reset()") Reset
-			button.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="vm.submitting") Add New Game
+			button#reset-btn.btn.btn-default.btn-lg(ng-click="vm.reset()") Reset
+			button#submit-btn.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="vm.submitting") Add New Game
 			.clearfix
 
 			p

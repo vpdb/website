@@ -27,15 +27,23 @@ describe('App', () => {
 
 	describe('as contributor', () => {
 
-		it('should be able to access the upload menu for game, release and backglass.', () => {
+		beforeAll(() => {
 			appPage.loginAs('contributor');
 			expect(appPage.uploadButton.isDisplayed()).toBeTruthy();
+		});
+
+		afterAll(() => {
+			appPage.logout();
+		});
+
+		it('should be able to access the upload menu for game, release and backglass.', () => {
+
 			appPage.uploadButton.click();
 			expect(appPage.uploadGameButton.isDisplayed()).toBeTruthy();
 			expect(appPage.uploadReleaseButton.isDisplayed()).toBeTruthy();
 			expect(appPage.uploadBackglassButton.isDisplayed()).toBeTruthy();
 			appPage.uploadButton.click();
-			appPage.logout();
+
 		})
 	});
 
