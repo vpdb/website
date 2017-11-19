@@ -14,6 +14,8 @@ export class AppPage {
 	uploadReleaseButton = element(by.id('upload-release-btn'));
 	uploadBackglassButton = element(by.id('upload-backglass-btn'));
 
+	spinner = element(by.css('.spinner'));
+
 	get() {
 		browser.get(browser.params.url);
 	}
@@ -32,5 +34,13 @@ export class AppPage {
 	logout() {
 		this.loggedUser.click();
 		this.logoutButton.click();
+	}
+
+	isLoading() {
+		this.spinner.isDisplayed();
+	}
+
+	waitUntilLoaded() {
+		browser.wait(() => this.spinner.isDisplayed().then(result => !result), 10000);
 	}
 }

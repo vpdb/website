@@ -1,5 +1,5 @@
-import { promise } from 'selenium-webdriver';
-import { browser, element, by, ElementFinder } from 'protractor';
+import { resolve } from 'path'
+import { by, element, ElementFinder } from 'protractor';
 import { AppPage } from "../app.page";
 
 export class GameAddAdminPage {
@@ -10,8 +10,14 @@ export class GameAddAdminPage {
 	gameIdRecreation = element(by.id('game-id-1'));
 	resetButton = element(by.id('reset-btn'));
 	submitButton = element(by.id('submit-btn'));
+	gameInfoPanel = element(by.id('game-info-panel'));
+	gameInfoTitle = this.gameInfoPanel.element(by.css('h2'));
 
 	backglassError = element(by.css('[ng-show="vm.errors[\'_backglass\']"]'));
+
+	backglassUploadSelect = element(by.id('backglass-upload'));
+	backglassUpload = element(by.id('ngf-backglass-upload'));
+	logoUpload = element(by.id('ngf-logo-upload'));
 
 	get() {
 		const appPage = new AppPage();
@@ -23,6 +29,21 @@ export class GameAddAdminPage {
 
 	submit() {
 		this.submitButton.click();
+	}
+
+	reset() {
+		this.resetButton.click();
+	}
+
+	fetchIpdb(ipdb:string) {
+		this.ipdbUrl.sendKeys(ipdb);
+		this.ipdbFetchButton.click();
+	}
+
+	uploadBackglass(fileName:string) {
+		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
+		this.backglassUploadSelect.click();
+		this.backglassUpload.sendKeys(path);
 	}
 
 	static formGroup(input: ElementFinder) {

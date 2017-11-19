@@ -98,7 +98,7 @@ include ../template/_mixins
 							| {{ vm.errors.year }}
 
 			.col-md-offset-2.col-md-8.col-sm-offset-1.col-sm-10(ng-show="vm.game.origin == 'recreation'")
-				.panel(ng-show="vm.game.data.fetched")
+				#game-info-panel.panel(ng-show="vm.game.data.fetched")
 					.panel-heading
 						h2.h--small.text-center {{ vm.game.title }}
 					.panel-body
@@ -230,7 +230,7 @@ include ../template/_mixins
 			//- backglass
 			.row.padder-top
 				.col-sm-6
-					.panel.panel--blank(
+					#backglass-upload.panel.panel--blank(
 						file-upload="{ controller: vm, type: 'backglass', key: 'backglass', status: vm.game.mediaFile, onSuccess: vm.onBackglassUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }"
 						ngf-drag-over-class="'panel--dragging'"
 					)
@@ -273,7 +273,7 @@ include ../template/_mixins
 			//- logo
 			.row.padder-top
 				.col-sm-6
-					.panel.panel--blank(
+					#logo-upload.panel.panel--blank(
 						file-upload="{ controller: vm, type: 'logo', key: 'logo', status: vm.game.mediaFile, onSuccess: vm.onLogoUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }"
 						ngf-drag-over-class="'panel--dragging'"
 					)
