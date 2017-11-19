@@ -1,5 +1,5 @@
 import { resolve } from 'path'
-import { by, element, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { AppPage } from "../app.page";
 
 export class GameAddAdminPage {
@@ -15,9 +15,15 @@ export class GameAddAdminPage {
 
 	backglassError = element(by.css('[ng-show="vm.errors[\'_backglass\']"]'));
 
-	backglassUploadSelect = element(by.id('backglass-upload'));
 	backglassUpload = element(by.id('ngf-backglass-upload'));
+	backglassUploadPanel = element(by.id('backglass-upload'));
+	backglassImage = this.backglassUploadPanel.element(by.css('.img--ar-bg'));
+	backglassProgress = this.backglassUploadPanel.element(by.css('.progress'));
+
 	logoUpload = element(by.id('ngf-logo-upload'));
+	logoUploadPanel = element(by.id('logo-upload'));
+	logoImage = this.logoUploadPanel.element(by.css('.img--ar-logo'));
+	logoProgress = this.logoUploadPanel.element(by.css('.progress'));
 
 	get() {
 		const appPage = new AppPage();
@@ -42,8 +48,22 @@ export class GameAddAdminPage {
 
 	uploadBackglass(fileName:string) {
 		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
-		this.backglassUploadSelect.click();
+		this.backglassUploadPanel.click();
 		this.backglassUpload.sendKeys(path);
+	}
+
+	waitUntilBackglassUploaded() {
+		browser.wait(() => this.backglassProgress.isDisplayed().then(result => !result), 5000);
+	}
+
+	uploadLogo(fileName:string) {
+		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
+		this.logoUploadPanel.click();
+		this.logoUpload.sendKeys(path);
+	}
+
+	waitUntilLogoUploaded() {
+		browser.wait(() => this.logoProgress.isDisplayed().then(result => !result), 5000);
 	}
 
 	static formGroup(input: ElementFinder) {

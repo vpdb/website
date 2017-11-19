@@ -1,5 +1,5 @@
 import { GameAddAdminPage } from './game.add.admin.page';
-import { AppPage } from "../app.page";
+import { AppPage } from '../app.page';
 
 describe('Add new game', () => {
 
@@ -8,7 +8,6 @@ describe('Add new game', () => {
 	beforeAll(() => {
 		addGamePage.get();
 	});
-
 
 	it('should display validation errors', () => {
 		addGamePage.submit();
@@ -27,9 +26,18 @@ describe('Add new game', () => {
 		addGamePage.reset();
 	});
 
-	fit('should upload a backglass', () => {
-
+	it('should upload a backglass', () => {
 		addGamePage.uploadBackglass('backglass-1280x1024.png');
+		addGamePage.waitUntilBackglassUploaded();
+		expect(addGamePage.backglassImage.getAttribute('style')).toContain('background-image: url');
+		addGamePage.reset();
+	});
+
+	it('should upload a logo', () => {
+		addGamePage.uploadLogo('game.logo-800x300.png');
+		addGamePage.waitUntilLogoUploaded();
+		expect(addGamePage.logoImage.getAttribute('style')).toContain('background-image: url');
+		addGamePage.reset();
 	});
 
 });

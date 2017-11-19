@@ -96,7 +96,6 @@ export function imgBg($parse, AuthService) {
 			};
 
 			const setImg = function(value) {
-				console.log('setImg:', value);
 				const url = isObject(value) ? value.url : value;
 				let isProtected = isObject(value) ? value.is_protected : false;
 
