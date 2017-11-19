@@ -6,14 +6,11 @@ import { AppPage } from "../app.page";
 describe('Login Modal', () => {
 
 	const appPage = new AppPage();
-	let loginModal:LoginModalPage;
+	const loginModal = appPage.loginModal;
 
 	beforeAll(() => {
-
 		appPage.get();
 		appPage.openLoginModal();
-
-		loginModal = appPage.loginModal;
 	});
 
 	it('should toggle between login and register', () => {

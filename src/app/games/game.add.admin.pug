@@ -13,7 +13,7 @@ include ../template/_mixins
 			h1 1. Enter Title
 			hr
 			.form-group(ng-class="{ error: vm.errors.title }")
-				input.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.game.title", on-enter="vm.searchOnIpdb()")
+				input#title.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.game.title", on-enter="vm.searchOnIpdb()")
 				.alert.alert-danger(ng-show="vm.errors.title")
 					+icon('warning').shift-up.space-right
 					| {{ vm.errors.title }}

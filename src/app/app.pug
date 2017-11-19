@@ -47,7 +47,7 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 				//- upload menu
 				//-------------------------------------------
 				li.hidden-sm.uib-dropdown(ng-show="(vm.AuthService.hasPermission('releases/add') || vm.AuthService.hasPermission('games/add') || vm.AuthService.hasPermission('backglasses/add')) && themeName === 'theme-dark'", uib-dropdown)
-					a.btn.btn-hollow.uib-dropdown-toggle(uib-dropdown-toggle) Upload
+					a#upload-btn.btn.btn-hollow.uib-dropdown-toggle(uib-dropdown-toggle) Upload
 					ul.uib-dropdown-menu(uib-dropdown-menu)
 						li(ng-show="vm.AuthService.hasPermission('games/add')")
 							a#upload-game-btn(ui-sref="addGame", ng-click="navCollapsed = true")
@@ -55,11 +55,8 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 						li(ng-show="vm.AuthService.hasPermission('releases/add')")
 							a#upload-release-btn(ng-click="vm.uploadRelease(); navCollapsed = true")
 								span Recreation
-						//li
-							a
-								span Original Game
 						li(ng-show="vm.AuthService.hasPermission('backglasses/add')")
-							a(ng-click="vm.uploadBackglass(); navCollapsed = true")
+							a#upload-backglass-btn(ng-click="vm.uploadBackglass(); navCollapsed = true")
 								span Direct B2S
 
 				//- login / logout

@@ -9,6 +9,11 @@ export class AppPage {
 	loginModal = new LoginModalPage(element(by.id('login-modal')));
 	logoutButton = element(by.id('logout-btn'));
 
+	uploadButton = element(by.id('upload-btn'));
+	uploadGameButton = element(by.id('upload-game-btn'));
+	uploadReleaseButton = element(by.id('upload-release-btn'));
+	uploadBackglassButton = element(by.id('upload-backglass-btn'));
+
 	get() {
 		browser.get(browser.params.url);
 	}
