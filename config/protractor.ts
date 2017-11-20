@@ -6,7 +6,9 @@ import { User, UserHelper } from '../src/test/UserHelper';
 export let config: Config = {
 	framework: 'jasmine',
 	capabilities: {
-		browserName: 'chrome'
+		browserName: 'chrome',
+		'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+		'build': process.env.TRAVIS_BUILD_NUMBER
 	},
 	specs: [ '../**/*.spec.js' ],
 	seleniumAddress: 'http://localhost:4444/wd/hub',
@@ -43,6 +45,8 @@ export let config: Config = {
 			});
 			console.log('Global users are:', browser.users);
 		});
-	}
+	},
+	sauceUser: process.env.SAUCE_USERNAME,
+	sauceKey: process.env.SAUCE_ACCESS_KEY
 };
 
