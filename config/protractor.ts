@@ -18,6 +18,15 @@ export let config: Config = {
 		// setup reporter
 		jasmine.getEnv().addReporter(new SpecReporter());
 
+		// setup chrome throttling
+		// browser.driver.setNetworkConditions({
+		// 	offline: false,
+		// 	latency: 5, // Additional latency (ms).
+		// 	download_throughput: 500 * 1024, // Maximal aggregated download throughput.
+		// 	upload_throughput: 500 * 1024 // Maximal aggregated upload throughput.
+		// });
+
+
 		// register users
 		console.log('Creating users...');
 		const rootUser:User = { username: 'root', password: 'cVVQr53f5TCZtHcR', email: 'root@vpdb.io' };
