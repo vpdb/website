@@ -30,10 +30,10 @@ export class UserHelper {
 			}
 			return UserHelper.getUser(response, user);
 		}, err => {
-			if (err.response.status === 401) {
+			if (err.response && err.response.status === 401) {
 				return null;
 			}
-			throw new Error('Error authenticating user: ' + JSON.stringify(err.response.data));
+			throw new Error('Error authenticating user: ' + JSON.stringify(err.response));
 		});
 	}
 
