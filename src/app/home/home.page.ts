@@ -14,7 +14,7 @@ export class HomePage {
 	panelClose = this.panel.element(by.css('.clear > svg'));
 
 	get() {
-		browser.get(browser.params.url);
+		browser.get(browser.baseUrl);
 	}
 
 	search(query: string) {

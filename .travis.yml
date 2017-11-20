@@ -11,6 +11,10 @@ env:
   - secure: OU9dJgXyU5mTR6STs5QULzGN5qCVzNChg2sIYgu+VL6MG3yHSZcu/Xs93tLo//U1H3cS7HP7cMM/rEdHfGnsXAoP5g/v9vcFvw9bFxxzhTMQvTHjEbyc/t6htUJMr+cZPkpj7QTKoDUv48Xy+dZlG6hjiyCyYsgkxFMLnII5kiU2dc2R+FU4Tq1cv7UdCUwG5j4NuU3Osem7yBhTCojuUu0JEddO7g6E6uYFiZfYA1ydAZDsZUw0TtyDlOQqbLDYOSTQRmZfThnwHxmuzvITvVk1cEvYz/13hmFbUMYCA5c76AZx4n5r3x670XggIn8iAbZzWm+SX95jOjBhYl6VCwhpjjOjkte+XF+xJ6Wf+YqZ7dLPAzur1zs0Qs2wEX1PivVwq/UavUtrwt3tgwiYHglMi4KozFdW8B83GeeCyaHA0WEVKSbXW+FsIsefNDfPeQ8GGqx665pm8Bn2UgmgxfOAzKEztaPUdsgwIU1Z9IUI7DLbGVFY2DxsFXnHZSkV7SV6uJTE2PSBfHItMnldKhFqKcRN5sB3nrOeb3dVi3i2Hy8EVfwSaxlPrCaC/b7nTiZshs0Hh1+orpRNPbglzcU2ky0ASZFCq0hCzh7dIkBf9pV/CQe/EGA/j/nj0JeOK0tP3HYoloKvTiqf5TCMspW/D+RmbzzyhyKnvFYlF+0=
   - secure: OXRxPC56GSm+ToD4nQ51G0omgwyqvksVZkt8ruk7WiioV2UFBZ5H9WlsNqqataJk/wcnkJA7OMlNswzPD5GCsBmCJXAH+MyILVSpFwRvar6tPdpcbIE/AdDMSAXXgYYaPghO475W4807ntmcE0XQZiOTG8PSKFy4TFpNFdHloBzoeLnml1weXab/D7R3MZYawJn1abV94pPooTJP+NS75moO2+fqOdgNpr65wrZJxR2xq3WQiqFLsTZAhOh9ge+HU+UhJ0t4spWb2zi+vuzCLnd0coDVK3A8QGHJ+ex+TJHu82JP3TVoaPO3vh8MOpJlhkLpF/T53dcITGr0VAOKgeXukvc0y60T7zlWMngdII/23eCrDuUMDDMHM0sDKcPan9trOmVwpwPfeaLa+fT1I9Yhzmd+EY7Aw3nq/UWoK1OpCPa1J6cmWbla92Ds0KqtmQ3dMia4VgQ0PU6KvGbWdarYDOMgqN3+Bri3ZYx9BXIELMbytLPypi6H5Ahs3Q3FpIVMMrNcoXV6E8yknrWCR7aDnr90euITw8XLGEuW82Altt2z/It9JKzw86Y3jg5NgrOh4E9PaXof/BCB2RnGn9ZrI0XIR185rPzM1VX3TwO8Bm9At/umSMK4j0I6El1mBgt7IMgkIxSC0LFy+ioqFYpStVW3j6ZAOuDg3D0fZDA=
   - BUILDER="Travis CI"
+  - PORT=8081
+  - APP_SETTINGS=./src/config/settings-sauce.js
+  - NODE_ENV=test
+  - WEBAPP=dist
 addons:
   sauce_connect: true
   apt:
@@ -22,3 +26,25 @@ addons:
       - optipng
       - g++-4.8
       - mongodb-org-server
+before_script:
+  - npm run build:test
+  - npm run test:compile
+  - wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz -O /tmp/ffmpeg.tar.gz
+  - wget http://www.rarlab.com/rar/rarlinux-x64-5.3.0.tar.gz -O /tmp/rar.tar.gz
+  - mkdir bin
+  - cd bin
+  - tar -xvf /tmp/ffmpeg.tar.gz --strip 1 --no-anchored ffmpeg ffprobe
+  - tar -xvf /tmp/rar.tar.gz --strip 1
+  - cd ..
+  - export PATH=$(pwd)/bin:$PATH
+  - wget https://github.com/vpdb/server/archive/backend.zip
+  - unzip -e backend.zip
+  - cd server-backend
+  - npm install
+  - mkdir -p data/storage-test-protected
+  - mkdir -p data/storage-test-public
+  - node app.js &
+  - cd ..
+  - sleep 10
+script:
+  - npm run test:protractor

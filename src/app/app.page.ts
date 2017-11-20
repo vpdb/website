@@ -17,7 +17,7 @@ export class AppPage {
 	spinner = element(by.css('.spinner'));
 
 	get() {
-		browser.get(browser.params.url);
+		browser.get(browser.baseUrl);
 	}
 
 	openLoginModal(): promise.Promise<void> {

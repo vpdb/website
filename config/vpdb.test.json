@@ -3,19 +3,19 @@
 	"apiUri": {
 		"protocol": "http",
 		"hostname": "localhost",
-		"port": 7357,
+		"port": 4445,
 		"pathname": "/api/v1"
 	},
 	"storageUri": {
 		"protocol": "http",
 		"hostname": "localhost",
-		"port": 7357,
+		"port": 4445,
 		"pathname": "/storage/v1"
 	},
 	"webUri": {
 		"protocol": "http",
 		"hostname": "localhost",
-		"port": 3333
+		"port": 4445
 	},
 	"ga": {
 		"enabled": false

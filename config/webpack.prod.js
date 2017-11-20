@@ -20,8 +20,7 @@ module.exports = function(options) {
 						comments: false
 					}
 				}
-			}),
-			new BundleAnalyzerPlugin()
+			})
 		],
 
 		/**

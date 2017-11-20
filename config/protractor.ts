@@ -2,6 +2,7 @@ import { browser, Config } from 'protractor';
 import { SpecReporter } from 'jasmine-spec-reporter';
 import { User, UserHelper } from '../src/test/UserHelper';
 
+const vpdbConfig = require('../../config/vpdb.' + (process.env.CONFIG || 'test') + '.json');
 
 export let config: Config = {
 	framework: 'jasmine',
@@ -11,10 +12,7 @@ export let config: Config = {
 		'build': process.env.TRAVIS_BUILD_NUMBER
 	},
 	specs: [ '../**/*.spec.js' ],
-	seleniumAddress: 'http://localhost:4444/wd/hub',
-	params: {
-		url: 'http://localhost:3333'
-	},
+	baseUrl: vpdbConfig.webUri.protocol + '://' + vpdbConfig.webUri.hostname + ':' + vpdbConfig.webUri.port,
 	onPrepare: () => {
 
 		// setup reporter
