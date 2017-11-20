@@ -8,6 +8,10 @@ describe('App', () => {
 		appPage.get();
 	});
 
+	afterAll(() => {
+		appPage.waitUtilFinished();
+	});
+
 	describe('as anonymous', () => {
 
 		it('should open the login modal when clicking on login', () => {

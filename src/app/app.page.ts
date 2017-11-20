@@ -1,5 +1,4 @@
-import { promise } from 'selenium-webdriver';
-import { browser, element, by } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { LoginModalPage } from './auth/login.modal.page';
 
 export class AppPage {
@@ -20,8 +19,9 @@ export class AppPage {
 		browser.get(browser.baseUrl);
 	}
 
-	openLoginModal(): promise.Promise<void> {
-		return this.loginButton.click();
+	openLoginModal() {
+		this.loginButton.click();
+		browser.wait(() => this.loginModal.element.isDisplayed(), 1000);
 	}
 
 	loginAs(username: string) {
@@ -42,5 +42,9 @@ export class AppPage {
 
 	waitUntilLoaded() {
 		browser.wait(() => this.spinner.isDisplayed().then(result => !result), 10000);
+	}
+
+	waitUtilFinished() {
+		browser.wait(() => this.loginButton.isDisplayed(), 1000);
 	}
 }

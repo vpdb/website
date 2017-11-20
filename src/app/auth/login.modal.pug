@@ -44,8 +44,9 @@ include ../template/_mixins
 						input#login-password.form-control(ng-model="vm.userPass.password", type="password", ng-keyup="$event.keyCode === 13 && vm.login()")
 
 		//- REGISTER
-		div(ng-show="vm.registering && !vm.LoginService.loginParams.localOnly")
-			h3.h--shift-up Or, register with your Email:
+		div(ng-show="vm.registering")
+			h3.h--shift-up(ng-hide="vm.LoginService.loginParams.localOnly") Or, register with your Email:
+			h3.h--shift-up(ng-show="vm.LoginService.loginParams.localOnly") Register with your Email:
 			form.form-horizontal(role="form")
 				.form-group(ng-class="{ error: vm.errors.email }")
 					label.col-sm-4.control-label Email
@@ -91,7 +92,7 @@ include ../template/_mixins
 		hr.hr--light.padder-top-4x(ng-hide="vm.registering")
 		.clearfix
 
-		h3#login-toggle.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()", ng-hide="vm.LoginService.loginParams.localOnly") {{ vm.registering ? "Login" : "Register" }}
+		h3#login-toggle.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()") {{ vm.registering ? "Login" : "Register" }}
 		button#dismiss-button.btn.btn-default(ng-click="$close()") Cancel
 		button#login-submit.btn.btn--secondary(ng-hide="vm.registering", ng-click="vm.login()") Login
 		button#register-submit.btn.btn--secondary(ng-show="vm.registering", ng-click="vm.register()") Register
