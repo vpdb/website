@@ -391,7 +391,7 @@ export default class AuthService {
 		console.debug('AuthService: Collecting tokens for %d URLs.', paths.length);
 		this.$http({
 			method: 'POST',
-			url: this.ConfigService.storageUri('/authenticate'),
+			url: this.ConfigService.storageUri('/v1/authenticate'),
 			data: { paths: paths }
 		}).then(response => {
 			console.debug('AuthService: Tokens collected.', response.data);

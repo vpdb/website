@@ -1,12 +1,10 @@
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
-const ENV = process.env.ENV = process.env.NODE_ENV = 'dev';
-
 // see: https://github.com/AngularClass/angular-starter/blob/master/config/webpack.dev.js
 module.exports = function(options) {
 
-	return webpackMerge(commonConfig({ env: ENV }), {
+	return webpackMerge(commonConfig(options), {
 
 		/**
 		 * Developer tool to enhance debugging

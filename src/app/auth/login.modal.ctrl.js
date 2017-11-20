@@ -62,7 +62,7 @@ export default class LoginModalCtrl {
 		if (this.opts.postLogin) {
 			this.AuthService.addPostLoginAction(this.opts.postLogin.action, this.opts.postLogin.params);
 		}
-		this.$window.location.href = this.ConfigService.apiUri('/redirect/' + providerId);
+		this.$window.location.href = this.ConfigService.apiUri('/v1/redirect/' + providerId);
 	}
 
 	/**

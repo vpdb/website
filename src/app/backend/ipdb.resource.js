@@ -5,7 +5,7 @@ export class IpdbResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/ipdb/:id'), {}, {
+		return $resource(ConfigService.apiUri('/v1/ipdb/:id'), {}, {
 		});
 	}
 }

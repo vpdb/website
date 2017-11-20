@@ -9,7 +9,7 @@
 		"outDir": "test"
 	},
 	"include": [
-		"config/protractor.ts",
+		"config/protractor.*.ts",
 		"src/app/**/*.spec.ts"
 	]
 }

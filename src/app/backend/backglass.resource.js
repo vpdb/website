@@ -5,7 +5,7 @@ export class BackglassResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/backglasses/:id'), {}, {
+		return $resource(ConfigService.apiUri('/v1/backglasses/:id'), {}, {
 			update: { method: 'PATCH' }
 		});
 	}
@@ -18,7 +18,7 @@ export class BackglassModerationResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/backglasses/:id/moderate'), {}, {
+		return $resource(ConfigService.apiUri('/v1/backglasses/:id/moderate'), {}, {
 		});
 	}
 }

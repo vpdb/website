@@ -140,7 +140,7 @@ export default function($parse, $compile, Upload, ApiHelper, AuthService, ModalS
 
 					// post data
 					Upload.upload({
-						url: ConfigService.storageUri('/files'),
+						url: ConfigService.storageUri('/v1/files'),
 						method: 'POST',
 						params: { type: params.type, content_type: mimeType },
 						data: { file: file }

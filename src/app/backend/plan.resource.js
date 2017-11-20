@@ -5,7 +5,7 @@ export class PlanResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/plans'), {}, {
+		return $resource(ConfigService.apiUri('/v1/plans'), {}, {
 		});
 	}
 }

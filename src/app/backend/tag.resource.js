@@ -5,7 +5,7 @@ export class TagResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/tags/:id'), {}, {
+		return $resource(ConfigService.apiUri('/v1/tags/:id'), {}, {
 		});
 	}
 }

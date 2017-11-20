@@ -5,7 +5,7 @@ export class ReleaseResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/releases/:release'), {}, {
+		return $resource(ConfigService.apiUri('/v1/releases/:release'), {}, {
 			update: { method: 'PATCH' }
 		});
 	}
@@ -18,7 +18,7 @@ export class ReleaseCommentResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/releases/:releaseId/comments'), {}, {
+		return $resource(ConfigService.apiUri('/v1/releases/:releaseId/comments'), {}, {
 		});
 	}
 }
@@ -30,7 +30,7 @@ export class ReleaseRatingResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/releases/:releaseId/rating'), {}, {
+		return $resource(ConfigService.apiUri('/v1/releases/:releaseId/rating'), {}, {
 			update: { method: 'PUT' }
 		});
 	}
@@ -43,7 +43,7 @@ export class ReleaseStarResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/releases/:releaseId/star'), {}, {
+		return $resource(ConfigService.apiUri('/v1/releases/:releaseId/star'), {}, {
 		});
 	}
 }
@@ -55,7 +55,7 @@ export class ReleaseModerationResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/releases/:releaseId/moderate'), {}, {
+		return $resource(ConfigService.apiUri('/v1/releases/:releaseId/moderate'), {}, {
 		});
 	}
 }
@@ -67,7 +67,7 @@ export class ReleaseModerationCommentResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/releases/:releaseId/moderate/comments'), {}, {
+		return $resource(ConfigService.apiUri('/v1/releases/:releaseId/moderate/comments'), {}, {
 		});
 	}
 }
@@ -79,7 +79,7 @@ export class ReleaseVersionResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/releases/:releaseId/versions/:version'), {}, {
+		return $resource(ConfigService.apiUri('/v1/releases/:releaseId/versions/:version'), {}, {
 			update: { method: 'PATCH' }
 		});
 	}
@@ -92,7 +92,7 @@ export class ReleaseFileValidationResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/releases/:releaseId/versions/:version/files/:fileId/validate'), {}, {
+		return $resource(ConfigService.apiUri('/v1/releases/:releaseId/versions/:version/files/:fileId/validate'), {}, {
 		});
 	}
 }

@@ -5,7 +5,7 @@ export class GameResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/games/:id'), {}, {
+		return $resource(ConfigService.apiUri('/v1/games/:id'), {}, {
 			head: { method: 'HEAD' },
 			update: { method: 'PATCH' }
 		});
@@ -19,7 +19,7 @@ export class GameRatingResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/games/:gameId/rating'), {}, {
+		return $resource(ConfigService.apiUri('/v1/games/:gameId/rating'), {}, {
 			'update': { method: 'PUT' }
 		});
 	}
@@ -32,7 +32,7 @@ export class GameStarResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/games/:gameId/star'), {}, {
+		return $resource(ConfigService.apiUri('/v1/games/:gameId/star'), {}, {
 		});
 	}
 }
@@ -44,7 +44,7 @@ export class GameRequestResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/game_requests/:id'), {}, {
+		return $resource(ConfigService.apiUri('/v1/game_requests/:id'), {}, {
 			update: { method: 'PATCH' }
 		});
 	}
@@ -57,6 +57,6 @@ export class GameReleaseNameResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/games/:gameId/release-name'), {}, {});
+		return $resource(ConfigService.apiUri('/v1/games/:gameId/release-name'), {}, {});
 	}
 }

@@ -4,13 +4,13 @@
 		"protocol": "https",
 		"hostname": "api.vpdb.io",
 		"port": 443,
-		"pathname": "/v1"
+		"pathname": ""
 	},
 	"storageUri": {
 		"protocol": "https",
 		"hostname": "storage.vpdb.io",
 		"port": 443,
-		"pathname": "/v1"
+		"pathname": ""
 	},
 	"webUri": {
 		"protocol": "https",

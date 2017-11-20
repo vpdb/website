@@ -5,7 +5,7 @@ export class RomResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/games/:id/roms'), {}, {
+		return $resource(ConfigService.apiUri('/v1/games/:id/roms'), {}, {
 		});
 	}
 }

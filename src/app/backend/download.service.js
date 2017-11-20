@@ -51,7 +51,7 @@ export default class DownloadService {
 	 */
 	downloadRelease(releaseId, downloadRequest, callback) {
 
-		const path = '/releases/' + releaseId;
+		const path = '/v1/releases/' + releaseId;
 		const url = this.ConfigService.storageUri(path);
 		this.AuthService.fetchUrlTokens(url, (err, tokens) => {
 			// todo treat error

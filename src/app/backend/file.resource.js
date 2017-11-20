@@ -5,7 +5,7 @@ export class FileResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/files/:id'), {}, {
+		return $resource(ConfigService.apiUri('/v1/files/:id'), {}, {
 		});
 	}
 }
@@ -17,7 +17,7 @@ export class FileBlockmatchResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/files/:id/blockmatch'), {}, {
+		return $resource(ConfigService.apiUri('/v1/files/:id/blockmatch'), {}, {
 		});
 	}
 }

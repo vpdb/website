@@ -43,7 +43,6 @@ describe('App', () => {
 			expect(appPage.uploadReleaseButton.isDisplayed()).toBeTruthy();
 			expect(appPage.uploadBackglassButton.isDisplayed()).toBeTruthy();
 			appPage.uploadButton.click();
-
 		})
 	});
 

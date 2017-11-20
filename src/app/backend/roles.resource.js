@@ -5,7 +5,7 @@ export class RolesResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/roles/:role'), {}, {
+		return $resource(ConfigService.apiUri('/v1/roles/:role'), {}, {
 		});
 	}
 }

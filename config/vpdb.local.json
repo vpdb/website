@@ -4,13 +4,13 @@
 		"protocol": "http",
 		"hostname": "localhost",
 		"port": 3000,
-		"pathname": "/api/v1"
+		"pathname": "/api"
 	},
 	"storageUri": {
 		"protocol": "http",
 		"hostname": "localhost",
 		"port": 3000,
-		"pathname": "/storage/v1"
+		"pathname": "/storage"
 	},
 	"webUri": {
 		"protocol": "http",

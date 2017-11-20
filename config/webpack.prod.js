@@ -1,14 +1,11 @@
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-
-const ENV = process.env.ENV = process.env.NODE_ENV = 'prod';
 
 module.exports = function(options) {
 
-	return webpackMerge(commonConfig({ env: ENV }), {
+	return webpackMerge(commonConfig(options), {
 
 		plugins: [
 			new UglifyJSPlugin({
