@@ -14,6 +14,7 @@
 		"build:analyze": "run-s build:clean build:analyze:run",
 		"test:run:local": "run-s test:clean test:compile test:protractor:local",
 		"test:run:saucelabs": "run-s test:clean test:compile test:protractor:saucelabs",
+		"test:run:browserstack": "run-s test:clean test:compile test:protractor:browserstack",
 
 		"build:clean": "rimraf ./dist",
 		"build:prod:run": "cross-env CONFIG=prod ENV=prod webpack --bail --progress --profile",
@@ -22,7 +23,8 @@
 		"test:clean": "rimraf ./test",
 		"test:compile": "tsc",
 		"test:protractor:local": "cross-env CONFIG=test protractor test/config/protractor.local.js",
-		"test:protractor:saucelabs": "cross-env CONFIG=test protractor test/config/protractor.saucelabs.js"
+		"test:protractor:saucelabs": "cross-env CONFIG=test protractor test/config/protractor.saucelabs.js",
+		"test:protractor:browserstack": "cross-env CONFIG=test protractor test/config/protractor.browserstack.js"
 	},
 	"author": "freezy <freezy@vpdb.io>",
 	"license": "GPLv2",
