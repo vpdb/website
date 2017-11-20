@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "The web application of https://vpdb.io.",
 	"main": "index.js",
+	"engines" : { "node" : ">=8.0" },
 	"scripts": {
 		"serve:prod": "cross-env ENV=prod CONFIG=prod webpack-dev-server --history-api-fallback --inline --progress",
 		"serve:dev:local": "cross-env ENV=dev CONFIG=local webpack-dev-server --history-api-fallback --inline --progress",
