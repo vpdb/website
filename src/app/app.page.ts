@@ -1,4 +1,4 @@
-import { browser, by, element } from 'protractor';
+import { browser, by, element, ExpectedConditions as until } from 'protractor';
 import { LoginModalPage } from './auth/login.modal.page';
 
 export class AppPage {
@@ -21,7 +21,7 @@ export class AppPage {
 
 	openLoginModal() {
 		this.loginButton.click();
-		browser.wait(() => this.loginModal.element.isDisplayed(), 1000);
+		browser.wait(until.presenceOf(this.loginModal.element), 1000);
 	}
 
 	loginAs(username: string) {

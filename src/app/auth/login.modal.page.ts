@@ -1,5 +1,5 @@
 import { promise } from 'selenium-webdriver';
-import { browser, element, by, ElementHelper, ElementFinder } from 'protractor';
+import { by, ElementFinder } from 'protractor';
 
 export class LoginModalPage {
 

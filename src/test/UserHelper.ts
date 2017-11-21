@@ -33,7 +33,7 @@ export class UserHelper {
 			if (err.response && err.response.status === 401) {
 				return null;
 			}
-			throw new Error('Error authenticating user: ' + JSON.stringify(err.response ? err.response.data : err));
+			throw new Error('Error authenticating user: ' + JSON.stringify(err.response ? err.response.data : null));
 		});
 	}
 

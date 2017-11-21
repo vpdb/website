@@ -46,8 +46,13 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 
 				//- upload menu
 				//-------------------------------------------
-				li.hidden-sm.uib-dropdown(ng-show="(vm.AuthService.hasPermission('releases/add') || vm.AuthService.hasPermission('games/add') || vm.AuthService.hasPermission('backglasses/add')) && themeName === 'theme-dark'", uib-dropdown)
-					a#upload-btn.btn.btn-hollow.uib-dropdown-toggle(uib-dropdown-toggle) Upload
+				li.uib-dropdown(ng-show="(vm.AuthService.hasPermission('releases/add') || vm.AuthService.hasPermission('games/add') || vm.AuthService.hasPermission('backglasses/add')) && themeName === 'theme-dark'", uib-dropdown)
+					//a#upload-btn1.btn.btn-hollow.uib-dropdown-toggle(uib-dropdown-toggle) Upload
+					a#upload-btn.uib-dropdown-toggle(uib-dropdown-toggle)
+						span.hidden-sm.btn.btn-hollow Upload
+						span.visible-sm-inline
+							span: +icon('upload-circle').svg-2x.shift-up.space-right
+							+icon('angle-down').smaller.shift-up
 					ul.uib-dropdown-menu(uib-dropdown-menu)
 						li(ng-show="vm.AuthService.hasPermission('games/add')")
 							a#upload-game-btn(ui-sref="addGame", ng-click="navCollapsed = true")

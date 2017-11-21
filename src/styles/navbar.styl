@@ -78,12 +78,21 @@
 	> .active > a
 		cursor default
 
-	.btn.btn-hollow
-		font-family $font-content
-		font-size $font-size-small
-		padding 4px 12px
-		margin-top 10px
-		margin-bottom 9px
+	#upload-btn
+		padding-bottom 0
+		.btn.btn-hollow
+			font-family $font-content
+			font-size $font-size-small
+			top -5px
+			padding 4px 12px
+			line-height 20px
+			margin-bottom 4px
+		> .visible-sm-inline > span
+			position relative
+			top 5px
+			> svg.svg-icon
+				vertical-align top
+				margin-bottom 12px
 
 	.img-avatar
 		margin-top -15px
