@@ -58,10 +58,7 @@ export default class LoginModalCtrl {
 	 */
 	oauth(providerId) {
 
-		this.AuthService.setPostLoginRedirect();
-		if (this.opts.postLogin) {
-			this.AuthService.addPostLoginAction(this.opts.postLogin.action, this.opts.postLogin.params);
-		}
+		this.setRedirect();
 		this.$window.location.href = this.ConfigService.apiUri('/v1/redirect/' + providerId);
 	}
 
@@ -70,11 +67,7 @@ export default class LoginModalCtrl {
 	 */
 	login() {
 
-		this.AuthService.setPostLoginRedirect();
-		if (this.opts.postLogin) {
-			this.AuthService.addPostLoginAction(this.opts.postLogin.action, this.opts.postLogin.params);
-		}
-		// noinspection JSUnresolvedFunction
+		this.setRedirect();
 		this.AuthResource.authenticate(this.userPass, result => {
 			this.errors = {};
 			this.error = null;
@@ -97,11 +90,8 @@ export default class LoginModalCtrl {
 	 */
 	register() {
 
-		this.AuthService.setPostLoginRedirect();
-		if (this.opts.postLogin) {
-			this.AuthService.addPostLoginAction(this.opts.postLogin.action, this.opts.postLogin.params);
-		}
-		// noinspection JSUnresolvedFunction
+		this.setRedirect();
+
 		this.UserResource.register(extend(this.userPass, { email: this.email }), () => {
 			this.errors = {};
 			this.error = null;
@@ -111,6 +101,13 @@ export default class LoginModalCtrl {
 			this.message2 = 'You will get an email shortly.<br>Once you have confirmed it, you\'re good to go!';
 			this.registering = !this.registering;
 		}, this.ApiHelper.handleErrors(this));
+	}
+
+	setRedirect() {
+		this.AuthService.setPostLoginRedirect();
+		if (this.opts.postLogin) {
+			this.AuthService.addPostLoginAction(this.opts.postLogin.action, this.opts.postLogin.params);
+		}
 	}
 
 	/**

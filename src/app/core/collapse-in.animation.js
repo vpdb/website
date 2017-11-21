@@ -1,6 +1,6 @@
 /**
  * @param $timeout
- * @return {{enter: enter, beforeRemoveClass: beforeRemoveClass, removeClass: removeClass}}
+ * @return {{enter: (function(*=, *)), beforeRemoveClass: (function(*, *, *)), removeClass: (function(*, *, *))}}
  * @ngInject
  */
 export default function collapseInAnimation($timeout) {
@@ -12,7 +12,7 @@ export default function collapseInAnimation($timeout) {
 	return {
 
 		// classes: collapse-in-animation ng-animate ng-enter
-		enter: function(element, done) {
+		enter(element, done) {
 			$timeout(function() {
 				// save height for later
 				height = element.get(0).offsetHeight;
@@ -45,7 +45,7 @@ export default function collapseInAnimation($timeout) {
 		},
 
 		// classes: collapse-in-animation ng-hide ng-animate ng-hide-animate ng-hide-remove
-		beforeRemoveClass: function(element, className, done) {
+		beforeRemoveClass(element, className, done) {
 
 			// save height for later
 			height = element.get(0).offsetHeight;
@@ -59,7 +59,7 @@ export default function collapseInAnimation($timeout) {
 		},
 
 		// classes: collapse-in-animation         ng-animate ng-hide-animate ng-hide-remove ng-hide-remove-active
-		removeClass: function(element, className, done) {
+		removeClass(element, className, done) {
 
 			// outer: animate height to saved height
 			element.css('height', height + 'px');

@@ -67,7 +67,7 @@ export default class GameEditAdminCtrl {
 		this.backglass = {
 			dimensions: bg.metadata.size.width + '×' + bg.metadata.size.height,
 			test: ar === 1.25 ? 'optimal' : (arDiff < this.maxAspectRatioDifference ? 'warning' : 'error'),
-			ar: ar,
+			ar,
 			arDiff: Math.round(arDiff * 100)
 		};
 	}
