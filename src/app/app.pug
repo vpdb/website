@@ -71,7 +71,7 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 						+icon('lock').small.space-right.shift-up
 						span.space-right Login <small>or Register</small>
 				li.uib-dropdown(ng-show="vm.AuthService.isAuthenticated", uib-dropdown)
-					a.space-right.uib-dropdown-toggle(uib-dropdown-toggle)
+					a#user-btn.space-right.uib-dropdown-toggle(uib-dropdown-toggle)
 						img.img-avatar.img-avatar--xsm.space-right(gravatar-src="vm.AuthService.user.gravatar_id", gravatar-default="retro")
 						span#logged-user.space-right-2x.hidden-sm {{ vm.AuthService.user.name }}
 						+icon('angle-down').smaller.shift-up

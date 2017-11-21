@@ -4,7 +4,6 @@ import { LoginModalPage } from '../auth/login.modal.page';
 
 export class HomePage {
 
-	loggedUser = element(by.id('logged-user'));
 	searchInput = element(by.model('vm.q'));
 	searchResult = element(by.id('search-result'));
 	noResult = element(by.id('no-result'));

@@ -1,4 +1,3 @@
-import { browser } from 'protractor';
 import { LoginModalPage } from './login.modal.page';
 import { internet } from 'faker';
 import { AppPage } from "../app.page";
@@ -51,7 +50,7 @@ describe('Login Modal', () => {
 		loginModal.submitLogin();
 
 		expect(loginModal.element.isPresent()).not.toBeTruthy();
-		expect(appPage.loggedUser.getText()).toEqual(username.toUpperCase());
+		expect(appPage.getLoggedUsername()).toEqual(username);
 
 		appPage.logout();
 		appPage.openLoginModal();

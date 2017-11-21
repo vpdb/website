@@ -3,7 +3,7 @@ import { LoginModalPage } from './auth/login.modal.page';
 
 export class AppPage {
 
-	loggedUser = element(by.id('logged-user'));
+	userButton = element(by.id('user-btn'));
 	loginButton = element(by.id('login-btn'));
 	loginModal = new LoginModalPage(element(by.id('login-modal')));
 	logoutButton = element(by.id('logout-btn'));
@@ -32,7 +32,7 @@ export class AppPage {
 	}
 
 	logout() {
-		this.loggedUser.click();
+		this.userButton.click();
 		this.logoutButton.click();
 	}
 
@@ -46,5 +46,13 @@ export class AppPage {
 
 	waitUtilFinished() {
 		browser.wait(() => this.loginButton.isDisplayed(), 1000);
+	}
+
+	getLoggedUsername() {
+		//const user = JSON.parse(browser.executeScript("return window.localStorage.getItem('key');");
+		//expect(value).toEqual(expectedValue);
+		//browser.wait(() => element(by.css('img.img-avatar')).isDisplayed(), 1000);
+		//return this.loggedUser.getAttribute('textContent');
+		return browser.driver.executeScript("return document.getElementById('logged-user').innerHTML");
 	}
 }

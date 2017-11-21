@@ -23,7 +23,7 @@ describe('App', () => {
 		it('should be able to login as a pre-defined user', () => {
 			appPage.loginAs('contributor');
 			expect(appPage.loginModal.element.isPresent()).not.toBeTruthy();
-			expect(appPage.loggedUser.getText()).toEqual('CONTRIBUTOR');
+			expect(appPage.getLoggedUsername()).toEqual('contributor');
 			appPage.logout();
 		});
 
