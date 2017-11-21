@@ -9,7 +9,9 @@ export let config: Config = merge(commonConfig, {
 	capabilities: {
 		'browserstack.local': true,
 		'browserstack.user': process.env.BROWSERSTACK_USER,
-		'browserstack.key': process.env.BROWSERSTACK_KEY
+		'browserstack.key': process.env.BROWSERSTACK_KEY,
+		'build': 'Codeship build ' + process.env.CI_BUILD_NUMBER,
+		'project': 'vpdb/website'
 	},
 	onPrepare: () => {
 		setupReporter();
