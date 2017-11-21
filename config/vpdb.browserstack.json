@@ -1,0 +1,34 @@
+{
+	"authHeader": "Authorization",
+	"apiUri": {
+		"protocol": "http",
+		"hostname": "localhost",
+		"port": 7357,
+		"pathname": "/api"
+	},
+	"storageUri": {
+		"protocol": "http",
+		"hostname": "localhost",
+		"port": 7357,
+		"pathname": "/storage"
+	},
+	"webUri": {
+		"protocol": "http",
+		"hostname": "localhost",
+		"port": 7357
+	},
+	"ga": {
+		"enabled": false
+	},
+	"authProviders": {
+		"local": true,
+		"google": false,
+		"github": false,
+		"ipboard": [ ]
+	},
+	"documentRevisions": {
+		"rules": 2,
+		"privacy": 1,
+		"legal": 1
+	}
+}

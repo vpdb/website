@@ -26,9 +26,11 @@ export let config: Config = {
 		// 	upload_throughput: 500 * 1024 // Maximal aggregated upload throughput.
 		// });
 
+		console.log('Creating users before tests.');
+		console.log('API URL for setup: %s', apiBaseUrl);
+		console.log('Base URL for testing: %s', webBaseUrl);
 
 		// register users
-		console.log('Creating users...');
 		const rootUser:User = { username: 'root', password: 'cVVQr53f5TCZtHcR', email: 'root@vpdb.io' };
 		const users:User[] = [
 			{ username: 'admin', password: 'vaDwjPf2pP7RwWx6', roles: [ 'member', 'admin' ], email: 'admin@vpdb.io' },
