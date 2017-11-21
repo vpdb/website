@@ -1,6 +1,7 @@
 import { browser, Config } from 'protractor';
 import { SpecReporter } from 'jasmine-spec-reporter';
 import { User, UserHelper } from '../src/test/UserHelper';
+import { FileDetector } from 'selenium-webdriver/remote';
 
 const vpdbConfig = require('../../config/vpdb.' + (process.env.CONFIG || 'test') + '.json');
 const webBaseUrl = vpdbConfig.webUri.protocol + '://' + vpdbConfig.webUri.hostname + ':' + vpdbConfig.webUri.port;
@@ -17,6 +18,9 @@ export let config: Config = {
 
 		// setup reporter
 		jasmine.getEnv().addReporter(new SpecReporter());
+
+		console.log('Setting file detector to remote.'); // https://www.browserstack.com/automate/node
+		browser.setFileDetector(new FileDetector());
 
 		// setup chrome throttling
 		// browser.driver.setNetworkConditions({

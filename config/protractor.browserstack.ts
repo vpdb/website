@@ -3,8 +3,7 @@ import { Config } from 'protractor';
 
 import { config as commonConfig } from './protractor.common';
 
-
-export let config:Config = merge(commonConfig, {
+export let config: Config = merge(commonConfig, {
 	seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
 	capabilities: {
 		'browserstack.local': true,
@@ -12,4 +11,3 @@ export let config:Config = merge(commonConfig, {
 		'browserstack.key': process.env.BROWSERSTACK_KEY
 	},
 });
-
