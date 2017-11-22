@@ -56,7 +56,6 @@ export default class GameAddAdminCtrl {
 	}
 
 	$onInit() {
-		console.log('$onInit called!');
 		if (this.$localStorage.newGame) {
 			this.game  = this.$localStorage.newGame;
 			this.AuthService.collectUrlProps(this.game, true);
@@ -210,10 +209,10 @@ export default class GameAddAdminCtrl {
 			});
 
 			// go to game page
-			this.$state.go('gameDetails', { id: id });
+			this.$state.go('gameDetails', { id });
 
 		}, this.ApiHelper.handleErrors(this, () => this.submitting = false));
-	};
+	}
 
 	onBackglassUpload(status) {
 		const bg = status.storage;
@@ -228,7 +227,7 @@ export default class GameAddAdminCtrl {
 		this.backglass = {
 			dimensions: bg.metadata.size.width + '×' + bg.metadata.size.height,
 			test: ar === 1.25 ? 'optimal' : (arDiff < this.maxAspectRatioDifference ? 'warning' : 'error'),
-			ar: ar,
+			ar,
 			arDiff: Math.round(arDiff * 100)
 		};
 	}

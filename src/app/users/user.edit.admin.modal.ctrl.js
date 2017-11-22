@@ -47,7 +47,7 @@ export default class UserEditAdminModalCtrl {
 		else {
 			this.user.roles.push(roleName);
 		}
-	};
+	}
 
 	save() {
 		const updatedUser = this.UserResource.update({ userid: this.user.id }, this.user, () => {
@@ -57,18 +57,18 @@ export default class UserEditAdminModalCtrl {
 			}
 			this.$uibModalInstance.close();
 		}, this.ApiHelper.handleErrors(this));
-	};
+	}
 
 	sendConfirmation() {
 		this.UserConfirmationResource.send({ userId: this.user.id }, {}, () => {
 			this.App.showNotification('Notification mail sent.');
 
 		}, this.ApiHelper.handleErrors(this));
-	};
+	}
 
 	reset() {
 		const user = cloneDeep(this.originalUser);
 		this.user = pick(user, this.fields);
 		this.user._plan = user.plan.id;
-	};
+	}
 }

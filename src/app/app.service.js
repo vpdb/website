@@ -3,7 +3,8 @@ import { max, map, keys } from 'lodash';
 
 import LoginModalTpl from './auth/login.modal.pug';
 
-export default class App {
+export default class
+App {
 
 	/**
 	 * @param $rootScope
@@ -139,7 +140,7 @@ export default class App {
 	 */
 	setLoading(loading) {
 		this.$rootScope.loading = loading;
-	};
+	}
 
 	showLoginTimeoutMessage() {
 		this.$rootScope.timeoutNoticeCollapsed = false;

@@ -113,5 +113,5 @@ export default class HomeCtrl {
 
 	paginate(link) {
 		this.refresh(link.query);
-	};
+	}
 }

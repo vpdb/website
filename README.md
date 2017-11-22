@@ -10,7 +10,7 @@ This the code of the website. For the API, check out the [server project](https:
 
 ## Quick Start
 
-Since the web application is completely decoupled from the server, you can easy run it locally and use `api.vpdb.io` as backend.
+Since the web application is completely decoupled from the server, you can easily run it locally and use `api.vpdb.io` as backend.
 
 You're going to need to have [Node.js](https://nodejs.org/) and [git](https://git-scm.com/downloads) installed.
 

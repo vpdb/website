@@ -76,7 +76,7 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 			this.App.showNotification('Release "' + this.release.name + '" successfully refused.');
 			this.refresh();
 		}, this.ApiHelper.handleErrors(this));
-	};
+	}
 
 	approve() {
 		this.submitting = true;

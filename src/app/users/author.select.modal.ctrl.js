@@ -91,5 +91,5 @@ export default class AuthorSelectModalCtrl {
 		if (valid) {
 			this.$uibModalInstance.close({ user: this.user, roles: this.roles });
 		}
-	};
+	}
 }

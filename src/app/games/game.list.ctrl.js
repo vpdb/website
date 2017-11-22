@@ -140,7 +140,7 @@ export default class GameListCtrl {
 			this.games = this.GameResource.query(query, this.ApiHelper.handlePagination(this, { loader: true }));
 			this.$query = query;
 		}
-	};
+	}
 
 	queryToUrl(query) {
 		const defaults = {
