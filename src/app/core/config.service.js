@@ -88,9 +88,9 @@ export default class ConfigService {
 
 	isAuthUrl(urlOrPath) {
 		if (urlOrPath[0] === '/') {
-			return urlOrPath === this.Config.apiUri.pathname + '/authenticate';
+			return urlOrPath === this.Config.apiUri.pathname + '/v1/authenticate';
 		} else {
-			return urlOrPath === ConfigService.uri(this.Config.apiUri) + '/authenticate';
+			return urlOrPath === ConfigService.uri(this.Config.apiUri) + '/v1/authenticate';
 		}
 	}
 }

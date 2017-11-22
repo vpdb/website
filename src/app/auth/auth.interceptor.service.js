@@ -6,8 +6,8 @@
  * 	- If the request is hitting the VPDB backend
  * 	   - If there is an auth token in local storage
  * 	     - Then add the token to the header
- * 	   - If there is a login token in local storage
- * 	      - Then request an auth token and add it to the header
+ * 	   - Elseif there is an (auto)login token in local storage
+ * 	      - Then retrieve an auth token first and add it to the header
  * 	   - If there is currently an authentication request going on
  * 	     - Subscribe to it and add the token to the header on result
  *
@@ -43,6 +43,7 @@ export default class AuthInterceptorService {
 					// check for valid token
 					if (AuthService.hasToken()) {
 						config.headers[AuthService.getAuthHeader()] = 'Bearer ' + AuthService.getToken();
+						console.debug('[AuthInterceptor] Adding available auth token, resolving.');
 						resolve(config);
 
 					// check for auto login token
@@ -50,12 +51,16 @@ export default class AuthInterceptorService {
 
 						// if already authenticating, don't do launch another request but wait for the other to finish
 						if (AuthService.isAuthenticating) {
+							console.warn('[AuthInterceptor] Got autologin token, but there already seems to be a request. Adding to callback.');
+
 							// this will be executed when the other request finishes
-							AuthService.authCallbacks.push(function(err, result) {
+							AuthService.authCallbacks.push((err, result) => {
 								if (err) {
+									// received error from previous auth request
 									return reject(err);
 								}
 								config.headers[AuthService.getAuthHeader()] = 'Bearer ' + result.token;
+								// received token from previous auth request, continuing..
 								resolve(config);
 							});
 
@@ -63,20 +68,23 @@ export default class AuthInterceptorService {
 							// tell potential other requests that we're already authenticating
 							AuthService.isAuthenticating = true;
 							const AuthResource = $injector.get('AuthResource');
+							// retrieving first auth token before continuing request (due to autologin)
 							AuthResource.authenticate({ token: AuthService.getLoginToken() }, result => {
 
 								config.headers[AuthService.getAuthHeader()] = 'Bearer ' + result.token;
 								AuthService.authenticated(result);
+
+								// received token from autologin, continuing
 								resolve(config);
 
-								// all good, now notify subscribers
+								// now notify subscribers
 								AuthService.isAuthenticating = false;
 								for (let i = 0; i < AuthService.authCallbacks.length; i++) {
 									AuthService.authCallbacks[i](null, result);
 								}
 								AuthService.authCallbacks = [];
 
-							}, function(err) {
+							}, err => {
 								AuthService.clearLoginToken(); // it failed, so no need to keep it around further.
 								reject(err);
 
@@ -90,9 +98,11 @@ export default class AuthInterceptorService {
 						}
 
 					} else {
+						// autologin disabled, moving on.
 						resolve(config);
 					}
 				} else {
+					// no API URL, moving on.
 					resolve(config);
 				}
 			});

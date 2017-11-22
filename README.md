@@ -35,7 +35,7 @@ Running locally you'll need four terminals open.
   the instructions. Then run it with `npm run serve:protractor`.
 - **Webapp**: This repo. Run `npm run serve:test` to spawn the web server.
 - **Selenium**: The Selenium server running the tests. First time: `npm run selenium:init`, then just `npm run selenium`. 
-- **Test runner**: Finally, execute the tests with `npm run test:run:local`
+- **Test runner**: Finally, execute the tests with `npm run test:local`
 
 ## Credits
 
