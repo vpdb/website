@@ -1,6 +1,8 @@
+import { resolve } from 'path';
 import { browser, Config } from 'protractor';
-import { SpecReporter } from 'jasmine-spec-reporter';
 import { User, UserHelper } from '../src/test/UserHelper';
+const JasmineConsoleReporter = require('jasmine-console-reporter');
+const HtmlReporter = require('protractor-beautiful-reporter');
 
 const vpdbConfig = require('../../config/vpdb.' + (process.env.CONFIG || 'test') + '.json');
 const webBaseUrl = vpdbConfig.webUri.protocol + '://' + vpdbConfig.webUri.hostname + ':' + vpdbConfig.webUri.port;
@@ -31,7 +33,19 @@ export let config: Config = {
 
 export function setupReporter() {
 	// setup reporter
-	jasmine.getEnv().addReporter(new SpecReporter());
+	jasmine.getEnv().clearReporters();
+	jasmine.getEnv().addReporter(new JasmineConsoleReporter({
+		colors: 1,           // (0|false)|(1|true)|2
+		cleanStack: 1,       // (0|false)|(1|true)|2|3
+		verbosity: 4,        // (0|false)|1|2|(3|true)|4
+		listStyle: 'indent', // "flat"|"indent"
+		activity: false
+	}));
+	jasmine.getEnv().addReporter(new HtmlReporter({
+		baseDirectory: 'report',
+		docTitle: 'VPDB website test results',
+		gatherBrowserLogs: true
+	}).getJasmine2Reporter());
 }
 
 export function setupUsers() {
