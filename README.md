@@ -29,6 +29,14 @@ The VPDB website uses a somewhat modernized stack of AngularJS using ES6 and Web
 
 Tests are end-to-end using [Protractor](http://www.protractortest.org) through [Codeship](https://codeship.com/) and BrowserStack.
 
+Running locally you'll need four terminals open.
+
+- **Server**: Git clone [vpdb/server](https://github.com/vpdb/server) and install it according to 
+  the instructions. Then run it with `npm run serve:protractor`.
+- **Webapp**: This repo. Run `npm run serve:test` to spawn the web server.
+- **Selenium**: The Selenium server running the tests. First time: `npm run selenium:init`, then just `npm run selenium`. 
+- **Test runner**: Finally, execute the tests with `npm run test:run:local`
+
 ## Credits
 
 [![IntelliJ IDEA][idea-image]][idea-url]
