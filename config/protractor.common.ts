@@ -1,6 +1,6 @@
-import { resolve } from 'path';
 import { browser, Config } from 'protractor';
 import { User, UserHelper } from '../src/test/UserHelper';
+
 const JasmineConsoleReporter = require('jasmine-console-reporter');
 const HtmlReporter = require('protractor-beautiful-reporter');
 
