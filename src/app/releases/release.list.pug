@@ -10,9 +10,9 @@ include ../template/paginator
 		//- view type toggles
 		ul.nav-icons
 			li.a(ng-class="{ active: vm.viewtype == 'compact' }")
-				+icon('th-compact')(ng-click="vm.switchview('compact')")
+				+icon('th-compact')(ng-click="vm.switchView('compact')")
 			li.a(ng-class="{ active: vm.viewtype == 'extended' }")
-				+icon('th-extended')(ng-click="vm.switchview('extended')")
+				+icon('th-extended')(ng-click="vm.switchView('extended')")
 		hr
 
 		//- number of games counter
@@ -103,10 +103,10 @@ include ../template/paginator
 				div(uib-accordion-heading) by Compatibility
 				.row
 					p.space-left-2x Official:
-					.col-xs-6.text-center.a(ng-repeat="build in vm.builds | filter:{is_range:false,type:'release'}" filter-build="{{ build.id }}") {{ build.label }}
+					.col-xs-6.text-center.a(ng-repeat="build in vm.builds | filter:{is_range:false,type:'release'}" filter-build="{{ build.id }}", ng-model="vm.query.filterBuilds") {{ build.label }}
 				.row
 					p.space-left-2x.padder-top Experimental:
-					.col-xs-6.text-center.a(ng-repeat="build in vm.builds | filter:{is_range:false,type:'experimental'}" filter-build="{{ build.id }}") {{ build.label }}
+					.col-xs-6.text-center.a(ng-repeat="build in vm.builds | filter:{is_range:false,type:'experimental'}" filter-build="{{ build.id }}", ng-model="vm.query.filterBuilds") {{ build.label }}
 
 			// flavor filters
 			.panel--inner(uib-accordion-group, ng-repeat="flavor in vm.flavors", is-open="vm.filterFlavorOpen[flavor.name]")
@@ -157,7 +157,7 @@ include ../template/paginator
 		h1 Sort
 		hr
 		ul.list--sort-options
-			li.a(sort="title", d="asc") Name
-			li.a(sort="released_at", d="desc") Date
-			li.a(sort="rating", d="desc") Rating
-			li.a(sort="popularity", d="desc") Popularity
+			li.a(sort="title", sort-default="asc", ng-model="vm.query.sort") Name
+			li.a(sort="released_at", sort-default="desc", ng-model="vm.query.sort") Date
+			li.a(sort="rating", sort-default="desc", ng-model="vm.query.sort") Rating
+			li.a(sort="popularity", sort-default="desc", ng-model="vm.query.sort") Popularity

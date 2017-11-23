@@ -92,7 +92,7 @@ export default class HomeCtrl {
 		query = extend(query, queryOverride);
 
 		// refresh if changes
-		if (!isEqual(this.$query, query)) {
+		if (!isEqual(this.lastReqParams, query)) {
 			this.searching = true;
 
 			// noinspection JSUnresolvedFunction
@@ -105,7 +105,7 @@ export default class HomeCtrl {
 				this.searchResult = true;
 				this.searching = false;
 			}));
-			this.$query = query;
+			this.lastReqParams = query;
 		} else {
 			this.searchResult = true;
 		}

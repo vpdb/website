@@ -1,4 +1,5 @@
-import { values, includes, omit, isEqual, isObject, assign } from 'lodash';
+import { cloneDeep, includes, isEqual, values } from 'lodash';
+import { Param, Params } from "../core/param.helper";
 
 export default class ReleaseListCtrl {
 
@@ -47,184 +48,218 @@ export default class ReleaseListCtrl {
 		const viewTypes = ['extended', 'table'];
 		const defaultViewType = 'compact';
 
-		$localStorage.releases = $localStorage.releases || {};
-
-		// query defaults
-		this.$query = null;
-		this.flavorFilter = { orientation: '', lighting: '' };
-		this.filterTags = [];
-		this.filterBuilds = [];
-		this.filterFlavorOpen = { };
-		this.$scope.sort = 'released_at';
+		this.pageLoading = false;
+		this.lastReqParams = null;
 
 		// stuff we need in the view
 		this.flavors = values(Flavors);
-
 		this.tags = TagResource.query();
 		this.builds = BuildResource.query();
 
 		// view types logic
+		$localStorage.releases = $localStorage.releases || {};
 		const viewtype = $localStorage.releases.viewtype || defaultViewType;
 		this.viewtype = includes(viewTypes, viewtype) ? viewtype : defaultViewType;
 		this.setViewTemplate(this.viewtype);
 
-		// update scope with query variables TODO surely we can refactor this a bit?
-		const urlQuery = this.$location.search();
-		if (urlQuery.q) {
-			this.q = urlQuery.q;
-		}
-		if (urlQuery.starred) {
-			this.starredOnly = true;
-		}
-		if (urlQuery.page) {
-			this.page = urlQuery.page;
-		}
-		if (urlQuery.sort) {
-			this.$scope.sort = urlQuery.sort;
-		}
-		if (urlQuery.tags) {
-			this.filterTagOpen = true;
-			this.filterTags = urlQuery.tags.split(',');
-		}
-		if (urlQuery.builds) {
-			this.filterBuildOpen = true;
-			this.filterBuilds = urlQuery.builds.split(',');
-		}
-		if (urlQuery.flavor) {
-			let f;
-			const queryFlavors = urlQuery.flavor.split(',');
-			for (let i = 0; i < queryFlavors.length; i++) {
-				f = queryFlavors[i].split(':');
-				this.filterFlavorOpen[f[0]] = true;
-				this.flavorFilter[f[0]] = f[1]
-			}
-		}
-		if (urlQuery.validation) {
-			this.filterValidationOpen = true;
-			this.validation = urlQuery.validation;
-		}
+		this.params = new Params([
+			new Param({ name: 'q', defaultValue: '' }),
+			new Param({ name: 'starredOnly', defaultValue: false }),
+			new Param({ name: 'filterBuilds', defaultValue: [], reqName: 'builds', toReq: b => b.join(','), fromUrl: b => b.split(',') }),
+			new Param({ name: 'filterFlavor', defaultValue: [] }),
+			new Param({ name: 'filterTags', defaultValue: [] }),
+			new Param({ name: 'filterValidation', defaultValue: [] }),
+			new Param({ name: 'sort', defaultValue: 'released_at' }),
+			new Param({ name: 'page', defaultValue: 1, fromUrl: page => parseInt(page, 10) }),
+			new Param({ name: 'perPage', defaultValue: 12, fromUrl: null }),
+		]);
+		/** @type {{ q:string, starredOnly:boolean, filterBuilds, filterFlavor, filterTags, filterValidation, sort:string, page:number, perPage:number }} */
+		this.query = this.params.value;
 
-		$scope.$watch(() => this.q, this.refresh.bind(this));
-		$scope.$watch('starredOnly', this.refresh.bind(this));
+		// update query object from url
+		this.params.fromUrl(this.$location.search());
 
-		$scope.$on('dataChangeSort', (event, field, direction) => {
-			this.$scope.sort = (direction === 'desc' ? '-' : '') + field;
-			this.refresh({});
-		});
+		// watch query object for changes
+		$scope.$watch(() => this.query, this.onQueryChanged.bind(this), true);
 
-		$scope.$on('dataToggleTag', (event, tag) => {
-			if (includes(this.filterTags, tag)) {
-				this.filterTags.splice(this.filterTags.indexOf(tag), 1);
-			} else {
-				this.filterTags.push(tag);
-			}
-			this.refresh({});
-		});
+		// trigger first load
+		this.refresh();
 
-		$scope.$on('dataToggleBuild', (event, build) => {
-			if (includes(this.filterBuilds, build)) {
-				this.filterBuilds.splice(this.filterBuilds.indexOf(build), 1);
-			} else {
-				this.filterBuilds.push(build);
-			}
-			this.refresh({});
-		});
-
-		this.refresh({});
+		// query defaults
+		// this.lastReqParams = null;
+		// this.flavorFilter = { orientation: '', lighting: '' };
+		// this.filterTags = [];
+		// this.filterBuilds = [];
+		// this.filterFlavorOpen = { };
+		// this.$scope.sort = 'released_at';
+		//
+		//
+		// // update scope with query variables TODO surely we can refactor this a bit?
+		// const urlQuery = this.$location.search();
+		// if (urlQuery.q) {
+		// 	this.q = urlQuery.q;
+		// }
+		// if (urlQuery.starred) {
+		// 	this.starredOnly = true;
+		// }
+		// if (urlQuery.page) {
+		// 	this.page = urlQuery.page;
+		// }
+		// if (urlQuery.sort) {
+		// 	this.$scope.sort = urlQuery.sort;
+		// }
+		// if (urlQuery.tags) {
+		// 	this.filterTagOpen = true;
+		// 	this.filterTags = urlQuery.tags.split(',');
+		// }
+		// if (urlQuery.builds) {
+		// 	this.filterBuildOpen = true;
+		// 	this.filterBuilds = urlQuery.builds.split(',');
+		// }
+		// if (urlQuery.flavor) {
+		// 	let f;
+		// 	const queryFlavors = urlQuery.flavor.split(',');
+		// 	for (let i = 0; i < queryFlavors.length; i++) {
+		// 		f = queryFlavors[i].split(':');
+		// 		this.filterFlavorOpen[f[0]] = true;
+		// 		this.flavorFilter[f[0]] = f[1]
+		// 	}
+		// }
+		// if (urlQuery.validation) {
+		// 	this.filterValidationOpen = true;
+		// 	this.validation = urlQuery.validation;
+		// }
+		//
+		// $scope.$watch(() => this.q, this.refresh.bind(this));
+		// $scope.$watch('starredOnly', this.refresh.bind(this));
+		//
+		// $scope.$on('dataChangeSort', (event, field, direction) => {
+		// 	this.$scope.sort = (direction === 'desc' ? '-' : '') + field;
+		// 	this.refresh({});
+		// });
+		//
+		// $scope.$on('dataToggleTag', (event, tag) => {
+		// 	if (includes(this.filterTags, tag)) {
+		// 		this.filterTags.splice(this.filterTags.indexOf(tag), 1);
+		// 	} else {
+		// 		this.filterTags.push(tag);
+		// 	}
+		// 	this.refresh({});
+		// });
+		//
+		// $scope.$on('dataToggleBuild', (event, build) => {
+		// 	if (includes(this.filterBuilds, build)) {
+		// 		this.filterBuilds.splice(this.filterBuilds.indexOf(build), 1);
+		// 	} else {
+		// 		this.filterBuilds.push(build);
+		// 	}
+		// 	this.refresh({});
+		// });
+		//
+		// this.refresh({});
 	}
 
-	refresh(queryOverride, firstRunCheck) {
+	/**
+	 * Executed when the query object changes, i.e. the user changes a
+	 * parameter in the DOM.
+	 */
+	onQueryChanged() {
+		this.$location.search(this.params.getUrl());
+		this.refresh();
+	}
 
-		// ignore initial watches
-		if (queryOverride === firstRunCheck) {
-			return;
-		}
-		const urlQuery = this.$location.search();
+	refresh() {
 
-		let query = { sort: this.$scope.sort, thumb_format: this.thumbFormat };
-		if (this.firstQuery) {
-			query.page = urlQuery.page;
-			this.firstQuery = false;
-		}
-		queryOverride = queryOverride || {};
+		// // ignore initial watches
+		// if (queryOverride === firstRunCheck) {
+		// 	return;
+		// }
+		// const urlQuery = this.$location.search();
+		//
+		// let query = { sort: this.$scope.sort, thumb_format: this.thumbFormat };
+		// if (this.firstQuery) {
+		// 	query.page = urlQuery.page;
+		// 	this.firstQuery = false;
+		// }
+		// queryOverride = queryOverride || {};
+		//
+		// // search query
+		// if (this.q && this.q.length > 2) {
+		// 	query.q = this.q;
+		// }
+		// if (!this.q) {
+		// 	delete query.q;
+		// }
+		//
+		// // filter by starred
+		// if (this.starredOnly) {
+		// 	query.starred = 1;
+		// }
+		//
+		// // filter by tags
+		// if (this.filterTags.length) {
+		// 	query.tags = this.filterTags.join(',');
+		// } else {
+		// 	delete query.tags;
+		// }
+		//
+		// // filter by builds
+		// if (this.filterBuilds.length) {
+		// 	query.builds = this.filterBuilds.join(',');
+		// } else {
+		// 	delete query.builds;
+		// }
+		//
+		// // filter by flavor
+		// const queryFlavors = [];
+		// for (let f in this.flavorFilter) {
+		// 	if (this.flavorFilter.hasOwnProperty(f) && this.flavorFilter[f]) {
+		// 		queryFlavors.push(f + ':' + this.flavorFilter[f]);
+		// 	}
+		// }
+		// if (queryFlavors.length > 0) {
+		// 	query.flavor = queryFlavors.join(',');
+		// } else {
+		// 	delete query.flavor;
+		// }
+		//
+		// // filter by validation
+		// if (this.validation) {
+		// 	query.validation = this.validation;
+		// }
+		// if (!this.validation) {
+		// 	delete query.validation;
+		// }
+		//
+		// if (isObject(queryOverride)) {
+		// 	query = assign(query, queryOverride);
+		// }
+		// this.$location.search(this.queryToUrl(query));
+		//
+		// // refresh if changes
+		// if (!isEqual(this.lastReqParams, query)) {
+		// 	this.pageLoading = true;
+		// 	this.releases = this.ReleaseResource.query(query, this.ApiHelper.handlePagination(this, { loader: true }), this.ApiHelper.handleErrors(this));
+		// 	this.lastReqParams = query;
+		// }
 
-		// search query
-		if (this.q && this.q.length > 2) {
-			query.q = this.q;
-		}
-		if (!this.q) {
-			delete query.q;
-		}
-
-		// filter by starred
-		if (this.starredOnly) {
-			query.starred = 1;
-		}
-
-		// filter by tags
-		if (this.filterTags.length) {
-			query.tags = this.filterTags.join(',');
-		} else {
-			delete query.tags;
-		}
-
-		// filter by builds
-		if (this.filterBuilds.length) {
-			query.builds = this.filterBuilds.join(',');
-		} else {
-			delete query.builds;
-		}
-
-		// filter by flavor
-		const queryFlavors = [];
-		for (let f in this.flavorFilter) {
-			if (this.flavorFilter.hasOwnProperty(f) && this.flavorFilter[f]) {
-				queryFlavors.push(f + ':' + this.flavorFilter[f]);
-			}
-		}
-		if (queryFlavors.length > 0) {
-			query.flavor = queryFlavors.join(',');
-		} else {
-			delete query.flavor;
-		}
-
-		// filter by validation
-		if (this.validation) {
-			query.validation = this.validation;
-		}
-		if (!this.validation) {
-			delete query.validation;
-		}
-
-		if (isObject(queryOverride)) {
-			query = assign(query, queryOverride);
-		}
-		this.$location.search(this.queryToUrl(query));
-
-		// refresh if changes
-		if (!isEqual(this.$query, query)) {
+		const reqParams = this.params.toRequest();
+		// only refresh if query object changed
+		if (!isEqual(this.lastReqParams, reqParams)) {
+			this.lastReqParams = reqParams;
 			this.pageLoading = true;
-			this.releases = this.ReleaseResource.query(query, this.ApiHelper.handlePagination(this, { loader: true }), this.ApiHelper.handleErrors(this));
-			this.$query = query;
+			this.releases = this.ReleaseResource.query(reqParams, this.ApiHelper.handlePagination(this, { loader: true }), this.ApiHelper.handleErrors(this));
 		}
 	};
 
-	queryToUrl(query) {
-		const defaults = {
-			sort: 'released_at',
-			page: '1',
-			per_page: '12'
-		};
-		const q = omit(query, function(value, key) {
-			return defaults[key] === value;
-		});
-		delete q.thumb_format;
-		return q;
-	};
-
+	/**
+	 * Updates the query object with the new page.
+	 * @param link
+	 */
 	paginate(link) {
-		this.refresh(link.query);
-	};
+		this.query.page = parseInt(link.query.page, 10);
+		this.refresh();
+	}
 
 	onFlavorChange() {
 		this.refresh({});
@@ -249,7 +284,7 @@ export default class ReleaseListCtrl {
 		}
 	};
 
-	switchview(view) {
+	switchView(view) {
 		if (this.viewtype === view) {
 			return;
 		}
@@ -258,4 +293,5 @@ export default class ReleaseListCtrl {
 		this.setViewTemplate(view);
 		this.refresh({});
 	};
+
 }

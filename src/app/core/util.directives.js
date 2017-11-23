@@ -97,18 +97,28 @@ export function markdown($sanitize, $compile) {
 }
 
 /**
+ * Updates the given model with the selected value.
+ *
+ * The example shows Two values `title` and `popularity` bound to the
+ * `vm.query.sort` model. When clicked, the value direction is `asc`
+ * for `title` and `desc` for `popularity.
+ *
+ * @example
+ * <li> <a sort="title" sort-default="asc" ng-model="vm.query.sort">Title</a></li>
+ * <li> <a sort="popularity" sort-default="desc" ng-model="vm.query.sort">Popularity</a></li>
  * @ngInject
  */
 export function sort() {
 	return {
 		restrict: 'A',
+		scope: { sortModel: '=ngModel' },
 		link: function(scope, element, attrs) {
-			const currentSort = scope.sort[0] === '-' ? scope.sort.substr(1) : scope.sort;
+			const currentSort = scope.sortModel[0] === '-' ? scope.sortModel.substr(1) : scope.sortModel;
 			element = $(element);
 			if (currentSort === attrs.sort) {
 				element.addClass('selected');
 			}
-			if (scope.sort[0] === '-') {
+			if (scope.sortModel[0] === '-') {
 				element.removeClass('asc');
 				element.addClass('desc');
 			} else {
@@ -123,7 +133,7 @@ export function sort() {
 					element.siblings().removeClass('selected');
 					element.addClass('selected');
 					element.addClass('asc');
-					if (attrs.d === 'asc') {
+					if (attrs.sortDefault === 'asc') {
 						element.addClass('asc');
 						element.removeClass('desc');
 					} else {
@@ -131,7 +141,8 @@ export function sort() {
 						element.addClass('desc');
 					}
 				}
-				scope.$emit('dataChangeSort', attrs.sort, element.hasClass('asc') ? 'asc' : 'desc');
+				scope.sortModel = (element.hasClass('asc') ? '' : '-') + attrs.sort;
+				scope.$apply();
 			});
 		}
 	};
