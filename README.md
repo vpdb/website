@@ -22,34 +22,38 @@ You're going to need to have [Node.js](https://nodejs.org/) and [git](https://gi
 
 ## Stack
 
-The VPDB website uses a somewhat modernized stack of AngularJS using ES6 and Webpack. For markup, [pug](https://pugjs.org/api/getting-started.html) is used and [Stylus](http://stylus-lang.com/) for the styles.
-
+The VPDB website uses a somewhat modernized stack of AngularJS using ES6 and 
+Webpack. For markup, [pug](https://pugjs.org/api/getting-started.html) is used 
+and [Stylus](http://stylus-lang.com/) for the styles.
 
 ## Tests
 
-Tests are end-to-end using [Protractor](http://www.protractortest.org) through [Codeship](https://codeship.com/) and BrowserStack.
+Tests are end-to-end using [Protractor](http://www.protractortest.org) through 
+[Codeship](https://codeship.com/) and [BrowserStack](https://www.browserstack.com).
 
 Running locally you'll need four terminals open.
 
-- **Server**: Git clone [vpdb/server](https://github.com/vpdb/server) and install it according to 
-  the instructions. Then run it with `npm run serve:protractor`.
+- **Server**: Git clone [vpdb/server](https://github.com/vpdb/server) and install 
+  it according to the instructions. Then run it with `npm run serve:protractor`.
 - **Webapp**: This repo. Run `npm run serve:test` to spawn the web server.
-- **Selenium**: The Selenium server running the tests. First time: `npm run selenium:init`, then just `npm run selenium`. 
+- **Selenium**: The Selenium server running the tests. First time: `npm run selenium:init`, 
+  then just `npm run selenium`. 
 - **Test runner**: Finally, execute the tests with `npm run test:local`
 
-## Credits
+## Appreciations
 
 [![IntelliJ IDEA][idea-image]][idea-url]
 
 Thanks to JetBrains for their awesome IDE and support of the Open Source Community!
 
-Also thanks to [BrowserStack](https://www.browserstack.com) for offering free end-to-end testing.
+<a href="https://www.browserstack.com"><img width="300" src="https://raw.githubusercontent.com/vpdb/website/master/src/test/browserstack-logo.png"></a>
+
+Also thanks to BrowserStack for offering free end-to-end testing.
 
 ## License
 
 GPLv2, see [LICENSE](LICENSE).
 
-[text-logo]: https://github.com/vpdb/backend/raw/master/gfx/text-logo.png
-[travis-image]: https://img.shields.io/travis/vpdb/backend.svg?style=flat-square
+[text-logo]: https://github.com/vpdb/server/raw/master/gfx/text-logo.png
 [idea-image]: https://raw.githubusercontent.com/vpdb/backend/master/gfx/logo_IntelliJIDEA.png
 [idea-url]: https://www.jetbrains.com/idea/

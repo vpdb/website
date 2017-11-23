@@ -16,17 +16,7 @@ export let config: Config = {
 	specs: [ '../**/*.spec.js' ],
 	baseUrl: webBaseUrl,
 	onPrepare: () => {
-
 		setupReporter();
-
-		// setup chrome throttling
-		// browser.driver.setNetworkConditions({
-		// 	offline: false,
-		// 	latency: 5, // Additional latency (ms).
-		// 	download_throughput: 500 * 1024, // Maximal aggregated download throughput.
-		// 	upload_throughput: 500 * 1024 // Maximal aggregated upload throughput.
-		// });
-
 		return setupUsers();
 	}
 };
@@ -68,4 +58,14 @@ export function setupUsers() {
 		});
 		console.log('Global users are:', browser.users);
 	});
+}
+
+export function throttleBrowser() {
+	// setup chrome throttling
+	// browser.driver.setNetworkConditions({
+	// 	offline: false,
+	// 	latency: 5, // Additional latency (ms).
+	// 	download_throughput: 500 * 1024, // Maximal aggregated download throughput.
+	// 	upload_throughput: 500 * 1024 // Maximal aggregated upload throughput.
+	// });
 }
