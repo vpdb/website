@@ -10,7 +10,6 @@ import ReleaseFileValidationCtrl from './release.file.validation.ctrl';
 import ReleaseSelectPlayfieldModalCtrl from './release.select.playfield.modal.ctrl';
 import ReleaseService from './release.service';
 import { validationStatus, validationTooltip, allowedFlavors } from './release.filters';
-import { filterBuild } from './release.directives';
 import ReleaseMeta from './release.add.meta';
 
 export default angular
@@ -26,7 +25,6 @@ export default angular
 	.controller('ReleaseFileValidationCtrl', ReleaseFileValidationCtrl)
 	.controller('ReleaseSelectPlayfieldModalCtrl', ReleaseSelectPlayfieldModalCtrl)
 	.constant('ReleaseMeta', ReleaseMeta)
-	.directive('filterBuild', filterBuild)
 	.filter('validationStatus', validationStatus)
 	.filter('validationTooltip', validationTooltip)
 	.filter('allowedFlavors', allowedFlavors)

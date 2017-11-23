@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import angular from 'angular';
 import Showdown from 'showdown';
+import { includes } from 'lodash';
 
 /**
  * @ngInject
@@ -142,6 +143,38 @@ export function sort() {
 					}
 				}
 				scope.sortModel = (element.hasClass('asc') ? '' : '-') + attrs.sort;
+				scope.$apply();
+			});
+		}
+	};
+}
+
+/**
+ * Toggles a value in an array.
+ *
+ * The example adds "dof" in the `vm.query.filterTags` array when the user
+ * clicks on the div if it's not there or otherwise removes it.
+ *
+ * @example
+ *  <div filter-array="dof" ng-model="vm.query.filterTags">DOF</div>
+ * @ngInject
+ */
+export function filterArray() {
+	return {
+		restrict: 'A',
+		scope: { filterObjects: '=ngModel' },
+		link: function(scope, element, attrs) {
+			const objectId = attrs.filterArray;
+			if (includes(scope.filterObjects, objectId)) {
+				element.addClass('active');
+			}
+			element.click(function() {
+				element.toggleClass('active');
+				if (includes(scope.filterObjects, objectId)) {
+					scope.filterObjects.splice(scope.filterObjects.indexOf(objectId), 1);
+				} else {
+					scope.filterObjects.push(objectId);
+				}
 				scope.$apply();
 			});
 		}

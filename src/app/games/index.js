@@ -8,7 +8,6 @@ import GameAddAdminCtrl from './game.add.admin.ctrl';
 import GameEditAdminCtrl from './game.edit.admin.ctrl';
 import GameSystems from './game.systems.constant';
 import { gameTypeFilter, ratingFormatFilter } from './game.filters';
-import { filterDecade, filterManufacturer } from './game.directives';
 
 export default angular
 	.module('vpdb.games', [])
@@ -19,8 +18,6 @@ export default angular
 	.controller('GameSelectModalCtrl', GameSelectModalCtrl)
 	.controller('GameAddAdminCtrl', GameAddAdminCtrl)
 	.controller('GameEditAdminCtrl', GameEditAdminCtrl)
-	.directive('filterDecade', filterDecade)
-	.directive('filterManufacturer', filterManufacturer)
 	.filter('gametype', gameTypeFilter)
 	.filter('ratingFormat', ratingFormatFilter)
 	.constant('GameSystems', GameSystems)

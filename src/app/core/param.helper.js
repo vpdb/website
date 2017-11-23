@@ -1,4 +1,4 @@
-import { cloneDeep, pickBy } from 'lodash';
+import { cloneDeep, pickBy, isObject, isArray, defaultsDeep } from 'lodash';
 
 /**
  * This is a helper class that manages mapping between the URL,
@@ -20,7 +20,12 @@ export class Params {
 	fromUrl(urlParams) {
 		this.params.forEach(param => {
 			if (urlParams[param.urlName] && param.fromUrl) {
-				this.value[param.name] = param.fromUrl(urlParams[param.urlName]);
+				if (isObject(param.defaultValue)) {
+					this.value[param.name] = defaultsDeep(param.fromUrl(urlParams[param.urlName]), param.defaultValue);
+				} else {
+					this.value[param.name] = param.fromUrl(urlParams[param.urlName]);
+				}
+
 			}
 		});
 	}
@@ -87,13 +92,13 @@ export class Param {
 		 * Converts the value from the URL to the model. If null, value is never read from the URL.
 		 * @type {function}
 		 */
-		this.fromUrl = obj.fromUrl || (v => v);
+		this.fromUrl = obj.fromUrl || (isArray(this.defaultValue) ? b => b.split(',') : (v => v));
 
 		/**
 		 * Converts the value from the model to the backend API.
 		 * @type {function}
 		 */
-		this.toReq = obj.toReq || (v => v);
+		this.toReq = obj.toReq || (isArray(this.defaultValue) ? b => b.join(',') : (v => v));
 
 		/**
 		 * Converts the value from the model to the URL.

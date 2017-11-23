@@ -1,4 +1,5 @@
-import { cloneDeep, isEqual, pickBy } from 'lodash';
+import { isEmpty, isEqual, pickBy } from 'lodash';
+import { Param, Params } from '../core/param.helper';
 
 export default class GameListCtrl {
 
@@ -32,28 +33,27 @@ export default class GameListCtrl {
 		this.pageLoading = false;
 		this.lastReqParams = null;
 
-		// the default query. params equal to that don't appear in the url.
-		this.defaultQuery = {
-			q: '',
-			filterDecades: [],
-			filterManufacturer: [],
-			includeEmptyGames: false,
-			sort: '-popularity',
-			page: 1,
-			perPage: 12
-		};
-
-		/**
-		 * What we internally save the as query status
-		 * @type {{ q:string, includeEmptyGames:boolean, sort:string, page:number, filterDecades:number[], filterManufacturer:string[] }}
-		 */
-		this.query = cloneDeep(this.defaultQuery);
+		this.params = new Params([
+			new Param({ name: 'q', defaultValue: '' }),
+			new Param({ name: 'filterDecades', defaultValue: [], reqName: 'decade' }),
+			new Param({ name: 'filterManufacturer', defaultValue: [], reqName: 'mfg' }),
+			new Param({ name: 'includeEmptyGames', defaultValue: false, urlName: 'show_empty', reqName: 'min_releases', fromUrl: v => !!v, toReq: v => v ? 0 : 1, toUrl: v => v ? 1 : 0 }),
+			new Param({ name: 'sort', defaultValue: 'released_at' }),
+			new Param({ name: 'page', defaultValue: 1, fromUrl: page => parseInt(page, 10) }),
+			new Param({ name: 'perPage', defaultValue: 12, fromUrl: null })
+		]);
+		/** @type {{ q:string, filterDecades:string[], filterManufacturer:string[], includeEmptyGames:boolean, sort:string, page:number, perPage:number }} */
+		this.query = this.params.value;
 
 		// update query object from url
-		this.updateQueryFromUrl();
+		this.params.fromUrl(this.$location.search());
 
 		// watch query object for changes
 		$scope.$watch(() => this.query, this.onQueryChanged.bind(this), true);
+
+		// collapse statuses
+		$scope.$watch(() => this.query.filterDecades, () => this.filterDecadesOpen = !isEmpty(this.query.filterDecades));
+		$scope.$watch(() => this.query.filterManufacturer, () => this.filterManufacturerOpen = !isEmpty(this.query.filterManufacturer));
 
 		// trigger first load
 		this.refresh();
@@ -64,76 +64,22 @@ export default class GameListCtrl {
 	 * parameter in the DOM.
 	 */
 	onQueryChanged() {
-		this.updateUrlFromQuery();
+		this.$location.search(this.params.getUrl());
 		this.refresh();
-	}
-
-	/**
-	 * Converts the URL parameters to the query object.
-	 */
-	updateQueryFromUrl() {
-		const queryParams = this.$location.search();
-		if (queryParams.q) {
-			this.query.q = queryParams.q;
-		}
-		if (queryParams.decade) {
-			this.query.filterDecades = queryParams.decade.split(',').map(parseInt);
-		}
-		if (queryParams.mfg) {
-			this.query.filterManufacturer = queryParams.mfg.split(',');
-		}
-		if (queryParams.show_empty) {
-			this.query.includeEmptyGames = !!queryParams.show_empty;
-		}
-		if (queryParams.sort) {
-			this.query.sort = queryParams.sort;
-		}
-		if (queryParams.page) {
-			this.query.page = parseInt(queryParams.page);
-		}
-	}
-
-	/**
-	 * Updates the URL with the query object parameters.
-	 * Default parameters are omitted.
-	 */
-	updateUrlFromQuery() {
-		const defaultUrlQuery = GameListCtrl.queryToUrl(this.defaultQuery);
-		const urlQuery = pickBy(GameListCtrl.queryToUrl(this.query), (value, key) => defaultUrlQuery[key] !== value);
-		this.$location.search(urlQuery);
-	}
-
-	/**
-	 * Converts the query object to an URL query for the backend.
-	 */
-	queryToRequest() {
-		const reqParams = { sort: this.query.sort, page: this.query.page };
-		if (this.query.q && this.query.q.length > 2) {
-			reqParams.q = this.query.q;
-		}
-		if (this.query.filterDecades.length) {
-			reqParams.decade = this.query.filterDecades.join(',');
-		}
-		if (this.query.filterManufacturer.length) {
-			reqParams.mfg = this.query.filterManufacturer.join(',');
-		}
-		if (!this.query.includeEmptyGames) {
-			reqParams.min_releases = 1;
-		}
-		return reqParams;
 	}
 
 	/**
 	 * Loads games from the backend
 	 */
 	refresh() {
-		const reqParams = this.queryToRequest();
+		const reqParams = this.params.toRequest();
 		// only refresh if query object changed
 		if (!isEqual(this.lastReqParams, reqParams)) {
 			this.lastReqParams = reqParams;
 			this.pageLoading = true;
-			this.games = this.GameResource.query(reqParams, this.ApiHelper.handlePagination(this, { loader: true }));
+			this.games = this.GameResource.query(reqParams, this.ApiHelper.handlePagination(this, { loader: true }), this.ApiHelper.handleErrors(this));
 		}
+
 	}
 
 	/**
@@ -143,22 +89,5 @@ export default class GameListCtrl {
 	paginate(link) {
 		this.query.page = parseInt(link.query.page, 10);
 		this.refresh();
-	}
-
-	/**
-	 * Converts the query object to URL parameters
-	 * @param query
-	 * @see #updateQueryFromUrl
-	 */
-	static queryToUrl(query) {
-		return {
-			q: query.q,
-			decade: query.filterDecades.join(','),
-			mfg: query.filterManufacturer.join(','),
-			show_empty: query.includeEmptyGames ? 1 : 0,
-			sort: query.sort,
-			page: query.page,
-			per_page: query.perPage
-		};
 	}
 }

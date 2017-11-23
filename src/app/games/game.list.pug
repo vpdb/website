@@ -58,26 +58,26 @@ include ../template/paginator
 		.panel-group--transparent(uib-accordion, close-others="false")
 
 			// year filter
-			panel--inner(uib-accordion-group, is-open="vm.filterYearOpen")
+			panel--inner(uib-accordion-group, is-open="vm.filterDecadesOpen")
 				div(uib-accordion-heading) by Year
 				.row
-					.col-xs-6.text-center.a(filter-decade="1960", ng-model="vm.query.filterDecades") 1960s
-					.col-xs-6.text-center.a(filter-decade="1970", ng-model="vm.query.filterDecades") 1970s
-					.col-xs-6.text-center.a(filter-decade="1980", ng-model="vm.query.filterDecades") 1980s
-					.col-xs-6.text-center.a(filter-decade="1990", ng-model="vm.query.filterDecades") 1990s
-					.col-xs-6.text-center.a(filter-decade="2000", ng-model="vm.query.filterDecades") 2000s
-					.col-xs-6.text-center.a(filter-decade="2010", ng-model="vm.query.filterDecades") 2010s
+					.col-xs-6.text-center.a(filter-array="1960", ng-model="vm.query.filterDecades") 1960s
+					.col-xs-6.text-center.a(filter-array="1970", ng-model="vm.query.filterDecades") 1970s
+					.col-xs-6.text-center.a(filter-array="1980", ng-model="vm.query.filterDecades") 1980s
+					.col-xs-6.text-center.a(filter-array="1990", ng-model="vm.query.filterDecades") 1990s
+					.col-xs-6.text-center.a(filter-array="2000", ng-model="vm.query.filterDecades") 2000s
+					.col-xs-6.text-center.a(filter-array="2010", ng-model="vm.query.filterDecades") 2010s
 
 			// manufacturer filter
 			.panel--inner(uib-accordion-group, is-open="vm.filterManufacturerOpen")
 				div(uib-accordion-heading) by Manufacturer
 				.row
-					.col-xs-6.text-center.a(filter-manufacturer="Bally", ng-model="vm.query.filterManufacturer") Bally
-					.col-xs-6.text-center.a(filter-manufacturer="Capcom", ng-model="vm.query.filterManufacturer") Capcom
-					.col-xs-6.text-center.a(filter-manufacturer="Stern", ng-model="vm.query.filterManufacturer") Stern
-					.col-xs-6.text-center.a(filter-manufacturer="Williams", ng-model="vm.query.filterManufacturer") Williams
-					.col-xs-6.text-center.a(filter-manufacturer="Gottlieb", ng-model="vm.query.filterManufacturer") Gottlieb
-					.col-xs-6.text-center.a(filter-manufacturer="Data East", ng-model="vm.query.filterManufacturer") Data East
+					.col-xs-6.text-center.a(filter-array="Bally", ng-model="vm.query.filterManufacturer") Bally
+					.col-xs-6.text-center.a(filter-array="Capcom", ng-model="vm.query.filterManufacturer") Capcom
+					.col-xs-6.text-center.a(filter-array="Stern", ng-model="vm.query.filterManufacturer") Stern
+					.col-xs-6.text-center.a(filter-array="Williams", ng-model="vm.query.filterManufacturer") Williams
+					.col-xs-6.text-center.a(filter-array="Gottlieb", ng-model="vm.query.filterManufacturer") Gottlieb
+					.col-xs-6.text-center.a(filter-array="Data East", ng-model="vm.query.filterManufacturer") Data East
 
 		h1 Sort
 		hr

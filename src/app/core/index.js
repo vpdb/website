@@ -9,7 +9,7 @@ import editor from './editor.directive';
 import editorMarkdownInfo from './editor.markdown-info.directive';
 import fileUpload from './file.upload.directive';
 import { makeLoaded, imgBg, imgSrc } from './image.directives';
-import { fallbackIcon, focusOn, onEnter, jsonLd, markdown, sort } from './util.directives';
+import { fallbackIcon, focusOn, onEnter, jsonLd, markdown, sort, filterArray } from './util.directives';
 import { bytesFilter, escapeFilter, fileExtFilter, hexFilter, hashPrefixFilter, authorsFilter } from './util.filters';
 import EditorCtrl from './editor.ctrl';
 import CommentCtrl from './comment.ctrl';
@@ -38,6 +38,7 @@ export default angular.module('vpdb.core', [])
 	.directive('jsonld', jsonLd)
 	.directive('markdown', markdown)
 	.directive('sort', sort)
+	.directive('filterArray', filterArray)
 	.directive('fileUpload', fileUpload)
 	.directive('videojs', videoJs)
 	.filter('authors', authorsFilter)
