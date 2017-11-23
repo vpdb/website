@@ -1,5 +1,5 @@
 import ReleaseAddBaseCtrl from './release.add.base.ctrl';
-import { values, filter, includes, cloneDeep, map, flatten } from 'lodash';
+import { values, filter, includes, isArray, cloneDeep, map, flatten } from 'lodash';
 
 import AuthorSelectModalTpl from '../users/author.select.modal.pug';
 import TagAddModalTpl from '../tag/tag.add.modal.pug';
@@ -224,7 +224,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 	 */
 	addLink(link) {
 		this.release.links.push(link);
-		this.newLink = {}
+		this.newLink = {};
 	}
 
 	/**
@@ -295,7 +295,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 			});
 
 			// go to game page
-			$state.go('releaseDetails', { id: this.gameId, releaseId: release.id });
+			this.$state.go('releaseDetails', { id: this.gameId, releaseId: release.id });
 
 		}, this.ApiHelper.handleErrors(this, scope => {
 			this.submitting = false;

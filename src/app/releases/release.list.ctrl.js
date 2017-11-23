@@ -37,12 +37,8 @@ export default class ReleaseListCtrl {
 		this.App = App;
 		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
-		this.Flavors = Flavors;
 		this.ReleaseService = ReleaseService;
-		this.TrackerService = TrackerService;
 		this.ReleaseResource = ReleaseResource;
-		this.TagResource = TagResource;
-		this.BuildResource = BuildResource;
 
 		// view type config
 		const viewTypes = ['extended', 'table'];
@@ -111,7 +107,7 @@ export default class ReleaseListCtrl {
 			this.pageLoading = true;
 			this.releases = this.ReleaseResource.query(reqParams, this.ApiHelper.handlePagination(this, { loader: true }), this.ApiHelper.handleErrors(this));
 		}
-	};
+	}
 
 	/**
 	 * Updates the query object with the new page.

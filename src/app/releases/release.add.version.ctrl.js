@@ -92,7 +92,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 				params: () => {
 					return {
 						release: this.release,
-						file: file
+						file
 					};
 				}
 			}
@@ -109,7 +109,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 	}
 
 	canSelectPlayfield(file) {
-		return ReleaseVersionAddCtrl.getCompatiblePlayfieldImages(this.release, file).length > 0;
+		return this.getCompatiblePlayfieldImages(this.release, file).length > 0;
 	}
 
 	/** Resets all entered data */
@@ -224,14 +224,14 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 		}
 	}
 
-	static getCompatiblePlayfieldImages(release, file) {
+	getCompatiblePlayfieldImages(release, file) {
 		const images = [];
 		release.versions.forEach(version => {
 			version.files.forEach(f => {
 				if ((f.flavor.orientation === 'any' || f.flavor.orientation === file.flavor.orientation) && (f.flavor.lighting === 'any' || f.flavor.lighting === file.flavor.lighting)) {
 					images.push({ version: version, image: f.playfield_image });
 				}
-			})
+			});
 		});
 		return images;
 	}

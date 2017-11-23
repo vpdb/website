@@ -51,7 +51,6 @@
             <item index="43" class="java.lang.String" itemvalue="tooltip-popup-delay" />
             <item index="44" class="java.lang.String" itemvalue="ui-sref" />
             <item index="45" class="java.lang.String" itemvalue="sort-default" />
-            <item index="46" class="java.lang.String" itemvalue="filter-build" />
           </list>
         </value>
       </option>
