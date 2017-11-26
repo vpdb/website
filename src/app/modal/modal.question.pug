@@ -4,11 +4,11 @@ include ../template/_mixins
 	.modal-header
 		h1.h--no-margin.h--small
 			+icon('{{ vm.data.icon }}').space-right
-			| {{ vm.data.title }}
+			span {{ vm.data.title }}
 	.modal-body
 		p {{ vm.data.message }}
 		p.text-center: b {{ vm.data.question }}
 
 	.modal-footer
-		button.btn.btn-default(ng-click="$dismiss()") {{ vm.data.no }}
-		button.btn.btn--secondary(ng-click="$close()") {{ vm.data.yes }}
+		button#modal-no.btn.btn-default(ng-click="$dismiss()") {{ vm.data.no }}
+		button#modal-yes.btn.btn--secondary(ng-click="$close()") {{ vm.data.yes }}

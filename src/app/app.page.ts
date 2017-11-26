@@ -1,5 +1,6 @@
 import { browser, by, element, ExpectedConditions as until } from 'protractor';
 import { LoginModalPage } from './auth/login.modal.page';
+import { ModalErrorInfoPage } from "./modal/modal.error.info.page";
 
 export class AppPage {
 
@@ -7,6 +8,8 @@ export class AppPage {
 	loginButton = element(by.id('login-btn'));
 	loginModal = new LoginModalPage(element(by.id('login-modal')));
 	logoutButton = element(by.id('logout-btn'));
+
+	errorInfoModal = element(by.id('info-error-modal'));
 
 	uploadButton = element(by.id('upload-btn'));
 	uploadGameButton = element(by.id('upload-game-btn'));
@@ -55,4 +58,9 @@ export class AppPage {
 		//return this.loggedUser.getAttribute('textContent');
 		return browser.driver.executeScript("return document.getElementById('logged-user').innerHTML");
 	}
+
+	getErrorInfoModal() {
+		return new ModalErrorInfoPage(this.errorInfoModal);
+	}
+
 }

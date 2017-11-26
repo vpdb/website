@@ -1,13 +1,13 @@
 include ../template/_mixins
 
-.theme-light
+#info-error-modal.theme-light
 	.modal-header
 		h1.h--no-margin.h--small
 			+icon('{{ vm.data.icon }}').space-right
-			| &nbsp;{{ vm.data.title }}
+			span {{ vm.data.title }}
 	.modal-body
 		h4 {{ vm.data.subtitle }}
 		p(ng-bind-html="vm.data.message")
 
 	.modal-footer
-		button.btn.btn-default(ng-click="$close()") {{ vm.data.close }}
+		button#modal-close.btn.btn-default(ng-click="$close()") {{ vm.data.close }}

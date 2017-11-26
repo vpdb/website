@@ -1,8 +1,11 @@
 import { GameAddAdminPage } from './game.add.admin.page';
 import { AppPage } from '../app.page';
+import ipdb from '../../test/ipdb';
+import { browser } from "protractor";
 
 describe('Add new game', () => {
 
+	const appPage = new AppPage();
 	const addGamePage = new GameAddAdminPage();
 
 	beforeAll(() => {
@@ -17,7 +20,6 @@ describe('Add new game', () => {
 	});
 
 	it('should display the game info from IPDB', () => {
-		const appPage = new AppPage();
 
 		addGamePage.fetchIpdb('3781');
 		appPage.waitUntilLoaded();
@@ -38,6 +40,24 @@ describe('Add new game', () => {
 		addGamePage.waitUntilLogoUploaded();
 		expect(addGamePage.logoImage.getAttribute('style')).toContain('background-image: url');
 		addGamePage.reset();
+	});
+
+	it('should successfully add a new game', () => {
+		const game = ipdb[Math.floor(Math.random() * ipdb.length)];
+		addGamePage.fetchIpdb(String(game.ipdb.number));
+		appPage.waitUntilLoaded();
+		addGamePage.uploadBackglass('backglass-1280x1024.png');
+		addGamePage.waitUntilBackglassUploaded();
+		addGamePage.uploadLogo('game.logo-800x300.png');
+		addGamePage.waitUntilLogoUploaded();
+		addGamePage.submit();
+
+		const modal = appPage.getErrorInfoModal();
+		expect(modal.title.getText()).toEqual('GAME CREATED!');
+		expect(modal.subtitle.getText()).toEqual(game.title.toUpperCase());
+		expect(modal.message.getText()).toEqual('The game has been successfully created.');
+		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/');
+		addGamePage.get();
 	});
 
 });

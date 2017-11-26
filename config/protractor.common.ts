@@ -23,7 +23,7 @@ export let config: Config = {
 
 export function setupReporter() {
 	// setup reporter
-	jasmine.getEnv().clearReporters();
+	//jasmine.getEnv().clearReporters();
 	jasmine.getEnv().addReporter(new JasmineConsoleReporter({
 		colors: 1,           // (0|false)|(1|true)|2
 		cleanStack: 1,       // (0|false)|(1|true)|2|3
