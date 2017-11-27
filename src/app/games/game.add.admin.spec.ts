@@ -12,6 +12,10 @@ describe('Add new game', () => {
 		addGamePage.get();
 	});
 
+	afterAll(() => {
+		appPage.logout();
+	});
+
 	it('should display validation errors', () => {
 		addGamePage.submit();
 		expect(GameAddAdminPage.formGroup(addGamePage.title).getAttribute('class')).toMatch('error');
@@ -57,7 +61,8 @@ describe('Add new game', () => {
 		expect(modal.subtitle.getText()).toEqual(game.title.toUpperCase());
 		expect(modal.message.getText()).toEqual('The game has been successfully created.');
 		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/');
-		addGamePage.get();
+		modal.close();
+		addGamePage.navigate();
 	});
 
 });

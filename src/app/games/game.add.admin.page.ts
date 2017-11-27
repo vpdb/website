@@ -4,6 +4,8 @@ import { AppPage } from "../app.page";
 
 export class GameAddAdminPage {
 
+	appPage = new AppPage();
+
 	title = element(by.id('title'));
 	ipdbUrl = element(by.id('ipdb-url'));
 	ipdbFetchButton = element(by.id('ipdb-fetch'));
@@ -26,11 +28,14 @@ export class GameAddAdminPage {
 	logoProgress = this.logoUploadPanel.element(by.css('.progress'));
 
 	get() {
-		const appPage = new AppPage();
-		appPage.get();
-		appPage.loginAs('contributor');
-		appPage.uploadButton.click();
-		appPage.uploadGameButton.click();
+		this.appPage.get();
+		this.appPage.loginAs('contributor');
+		this.navigate();
+	}
+
+	navigate() {
+		this.appPage.uploadButton.click();
+		this.appPage.uploadGameButton.click();
 	}
 
 	submit() {

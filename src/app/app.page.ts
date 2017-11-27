@@ -43,6 +43,10 @@ export class AppPage {
 		this.spinner.isDisplayed();
 	}
 
+	isLogged() {
+		!this.loginButton.isDisplayed();
+	}
+
 	waitUntilLoaded() {
 		browser.wait(() => this.spinner.isDisplayed().then(result => !result), 10000);
 	}
