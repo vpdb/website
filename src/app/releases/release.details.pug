@@ -29,7 +29,7 @@ p.padder-top(ng-show="vm.pageLoading")
 				rating-votes="vm.release.rating.votes",
 				rating-user="vm.releaseRating"
 				rating-action="vm.rateRelease($rating)",
-				rating-readonly="!vm.AuthService.hasPermission('releases/rate')")
+				rating-readonly="{{ !vm.AuthService.hasPermission('releases/rate') }}")
 
 		//-- DOWNLOAD BUTTON
 		//---------------------------------------------------------------------

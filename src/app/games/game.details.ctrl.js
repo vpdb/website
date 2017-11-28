@@ -170,7 +170,7 @@ export default class GameDetailsCtrl {
 		// RATINGS
 		if (this.AuthService.hasPermission('games/rate')) {
 			this.GameRatingResource.get({gameId: this.gameId}).$promise.then(result => {
-				this.gameRating = result.value;
+				this.userGameRating = result.value;
 			}, err => {});
 		}
 
@@ -280,9 +280,9 @@ export default class GameDetailsCtrl {
 	rateGame(rating) {
 		const done = result => {
 			this.game.rating = result.game;
-			this.gameRating = rating;
+			this.userGameRating = rating;
 		};
-		if (this.gameRating) {
+		if (this.userGameRating) {
 			this.GameRatingResource.update({ gameId: this.gameId }, { value: rating }, done);
 			this.App.showNotification('Successfully updated rating.');
 

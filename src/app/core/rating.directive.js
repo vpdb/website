@@ -16,22 +16,28 @@ import RatingDirectiveTpl from './rating.directive.pug';
 export default function($animate) {
 	return {
 		restrict: 'C',
-		scope: true,
+		scope: {
+			ratingAvg: '=',
+			ratingVotes: '=',
+			ratingUser: '=',
+			ratingAction: '&',
+			ratingReadonly: '@'
+		},
 		templateUrl: RatingDirectiveTpl,
-		link: function(scope, elem) {
+		link: function(scope, elem, attr, ctrl) {
 			elem.mouseenter(function(e) {
 				e.preventDefault();
-				scope.editStart();
+				ctrl.editStart();
 				scope.$apply();
 			});
 			elem.mouseleave(function(e) {
 				e.preventDefault();
-				scope.editEnd();
+				ctrl.editEnd();
 				scope.$apply();
 			});
 			$animate.enabled(elem, false);
 		},
 		controller: 'RatingDirectiveCtrl',
-		controllerAs: 'vm'
+		controllerAs: 'ratingVm'
 	};
 }

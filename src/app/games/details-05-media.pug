@@ -4,6 +4,6 @@ h1.padder-top-2x Media
 label(ng-hide="vm.game.media.length > 0") No media available.
 .row: .col-md-4.col-sm-6.col-xs-12.fade-animation(ng-repeat="medium in vm.game.media", ng-click="vm.showMedium(medium)")
 	.panel.panel--animated.ng-cloak
-		.img.img--rounded-top(img-bg="vm.App.img(medium.file, media[medium.category].variation)", ng-class="{{ vm.mediaConfig[medium.category].imgclass }}")
+		.img.img--rounded-top(img-bg="vm.App.img(medium.file, vm.mediaConfig[medium.category].variation)", ng-class="{{ vm.mediaConfig[medium.category].imgclass }}")
 		.img.img--rounded-top.img--placeholder.loaded(ng-class="{{ vm.mediaConfig[medium.category].imgclass }}")
 .clearfix

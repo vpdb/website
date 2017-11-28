@@ -1,15 +1,15 @@
 include ../template/_mixins
 
 .ratingbox__left-col
-	.ratingbox__rating.rating-user(ng-class="{ 'rating-10': vm.ratingHover == 10, 'color-primary': vm.boxHovering }") {{ vm.rating | ratingFormat }}
+	.ratingbox__rating.rating-user(ng-class="{ 'rating-10': ratingVm.ratingHover == 10, 'color-primary': ratingVm.boxHovering }") {{ ratingVm.rating | ratingFormat }}
 .ratingbox__right-col
-	span.rating-stars(ng-mouseleave="vm.rateEnd()")
+	span.rating-stars(ng-mouseleave="ratingVm.rateEnd()")
 		each val in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 			span.star-wrapper(
-				ng-mouseover=`vm.rateStart(${val})`,
-				ng-click=`vm.rate(${val})`,
-				ng-class=`{ 'star-on': value >= ${val}, 'star-off': value < ${val}, selecting: vm.boxHovering }`
+				ng-mouseover=`ratingVm.rateStart(${val})`,
+				ng-click=`ratingVm.rate(${val})`,
+				ng-class=`{ 'star-on': ratingVm.value >= ${val}, 'star-off': ratingVm.value < ${val}, selecting: ratingVm.boxHovering }`
 			)
 				+icon(val % 2 ? 'star-left' : 'star-right').star
-	span.votes(ng-show="vm.ratingVotes") {{ vm.ratingVotes | number }} vote{{ vm.ratingVotes == 1 ? '' : 's' }}
-	span.votes(ng-hide="vm.ratingVotes") no votes
+	span.votes(ng-show="ratingVm.numVotes") {{ ratingVm.numVotes | number }} vote{{ ratingVm.numVotes == 1 ? '' : 's' }}
+	span.votes(ng-hide="ratingVm.numVotes") no votes

@@ -3,35 +3,34 @@ export default class RatingDirectiveCtrl {
 	/**
 	 * @param $scope
 	 * @param $element
-	 * @param $attrs
-	 * @param $parse
 	 * @ngInject
 	 */
-	constructor($scope, $element, $attrs, $parse) {
-
-		this.ratingAvg = $parse($attrs.ratingAvg);
-		this.ratingUser = $parse($attrs.ratingUser);
-		this.ratingAction = $parse($attrs.ratingAction);
-		this.readOnly = $parse($attrs.ratingReadonly)($scope);
+	constructor($scope, $element) {
 
 		this.$scope = $scope;
 
-		if (this.readOnly) {
-			$element.addClass('readonly');
-		}
+		// read user rating
+		$scope.$watch('ratingReadonly', () => {
+			this.readOnly = $scope.ratingReadonly === 'true';
+			if (!this.readOnly) {
+				$element.removeClass('readonly');
+			} else {
+				$element.addClass('readonly');
+			}
+		});
 
-		// init: read average rating
-		$scope.$watch(this.ratingAvg, rating => {
+		// read average rating
+		$scope.$watch('ratingAvg', rating => {
 			if (rating && !this.boxHovering) {
 				this.rating = rating;
 				this.value = rating;
 			}
 		});
 
-		// init: read number of votes
-		$scope.$watch($parse($attrs.ratingVotes), votes => {
+		// read number of votes
+		$scope.$watch('ratingVotes', votes => {
 			if (votes) {
-				this.ratingVotes = votes;
+				this.numVotes = votes;
 			}
 		});
 	}
@@ -45,7 +44,7 @@ export default class RatingDirectiveCtrl {
 		if (this.readOnly) {
 			return;
 		}
-		const rating = this.ratingUser(this.$scope);
+		const rating = this.$scope.ratingUser;
 		this.boxHovering = true;
 		this.rating = rating;
 		this.value = rating;
@@ -60,7 +59,7 @@ export default class RatingDirectiveCtrl {
 		if (this.readOnly) {
 			return;
 		}
-		const rating = this.ratingAvg(this.$scope);
+		const rating = this.$scope.ratingAvg;
 		this.boxHovering = false;
 		this.rating = rating;
 		this.value = rating;
@@ -91,7 +90,7 @@ export default class RatingDirectiveCtrl {
 		if (this.readOnly) {
 			return;
 		}
-		const rating = this.ratingUser(this.$scope);
+		const rating = this.$scope.ratingUser;
 		this.starHovering = false;
 		this.rating = rating;
 		this.value = rating;
@@ -102,7 +101,6 @@ export default class RatingDirectiveCtrl {
 		if (this.readOnly) {
 			return;
 		}
-		this.$scope.$rating = this.value;
-		this.ratingAction(this.$scope);
+		this.$scope.ratingAction({ $rating: this.value });
 	}
 }
