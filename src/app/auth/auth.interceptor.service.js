@@ -21,11 +21,14 @@ export default class AuthInterceptorService {
 
 	/**
 	 * @param $injector
+	 * @param $log
 	 * @param $q
 	 * @param {ConfigService} ConfigService
 	 * @ngInject
 	 */
-	constructor($injector, $q, ConfigService) {
+	constructor($injector, $log, $q, ConfigService) {
+
+		this.$log = $log;
 
 		// noinspection JSUnusedGlobalSymbols
 		this.request = (config) => {
@@ -43,7 +46,7 @@ export default class AuthInterceptorService {
 					// check for valid token
 					if (AuthService.hasToken()) {
 						config.headers[AuthService.getAuthHeader()] = 'Bearer ' + AuthService.getToken();
-						console.debug('[AuthInterceptor] Adding available auth token, resolving.');
+						this.$log.debug('[AuthInterceptor] Adding available auth token, resolving.');
 						resolve(config);
 
 					// check for auto login token
@@ -51,7 +54,7 @@ export default class AuthInterceptorService {
 
 						// if already authenticating, don't do launch another request but wait for the other to finish
 						if (AuthService.isAuthenticating) {
-							console.warn('[AuthInterceptor] Got autologin token, but there already seems to be a request. Adding to callback.');
+							this.$log.warn('[AuthInterceptor] Got autologin token, but there already seems to be a request. Adding to callback.');
 
 							// this will be executed when the other request finishes
 							AuthService.authCallbacks.push((err, result) => {
@@ -123,7 +126,7 @@ export default class AuthInterceptorService {
 				if (dirty > 0) {
 					// force user update
 					AuthService.tokenReceived(token);
-					console.log(response.config.url + ' ' + response.status + ' Got dirty flag ' + response.headers('x-user-dirty') + ', updating local user (' + token + ')');
+					this.$log.info(response.config.url + ' ' + response.status + ' Got dirty flag ' + response.headers('x-user-dirty') + ', updating local user (' + token + ')');
 				} else {
 					AuthService.tokenUpdated(token);
 				}
