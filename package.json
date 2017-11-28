@@ -24,7 +24,7 @@
 		"build:test:run": "cross-env ENV=prod CONFIG=test webpack --bail --progress --profile",
 		"build:browserstack:run": "cross-env ENV=prod CONFIG=browserstack webpack --bail --progress --profile",
 		"build:analyze:run": "cross-env CONFIG=prod ENV=analyze webpack --bail --progress --profile",
-		"test:clean": "rimraf ./test",
+		"test:clean": "rimraf ./test ./report",
 		"test:compile": "tsc",
 		"test:protractor:local": "cross-env CONFIG=test protractor test/config/protractor.local.js",
 		"test:protractor:saucelabs": "cross-env CONFIG=test protractor test/config/protractor.saucelabs.js",
