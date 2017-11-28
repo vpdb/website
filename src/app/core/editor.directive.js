@@ -1,4 +1,4 @@
-import EditorTpl from './editor.directive.pug';
+import EditorDirectiveTpl from './editor.directive.pug';
 
 /**
  * The editor with markdown preview.
@@ -14,8 +14,8 @@ export default function() {
 			markdownText: '@'
 		},
 		replace: true,
-		templateUrl: EditorTpl,
-		controller: 'EditorCtrl',
+		templateUrl: EditorDirectiveTpl,
+		controller: 'EditorDirectiveCtrl',
 		controllerAs: 'vm'
 	};
 }

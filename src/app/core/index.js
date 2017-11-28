@@ -3,6 +3,8 @@ import Flavors from './flavors.constant';
 import ConfigService from './config.service';
 import TrackerService from './tracker.service';
 import FileUploadHelperService from './file.upload.helper.service';
+import RatingDirectiveCtrl from './rating.directive.ctrl';
+import TopBadgeDirectiveCtrl from './top-badge.directive.ctrl';
 import ratingBox from './rating.directive';
 import topBadge from './top-badge.directive';
 import editor from './editor.directive';
@@ -11,7 +13,7 @@ import fileUpload from './file.upload.directive';
 import { makeLoaded, imgBg, imgSrc } from './image.directives';
 import { fallbackIcon, focusOn, onEnter, jsonLd, markdown, sort, filterArray } from './util.directives';
 import { bytesFilter, escapeFilter, fileExtFilter, hexFilter, hashPrefixFilter, authorsFilter } from './util.filters';
-import EditorCtrl from './editor.ctrl';
+import EditorDirectiveCtrl from './editor.directive.ctrl';
 import CommentCtrl from './comment.ctrl';
 import heightAnimation from './height.animation';
 import collapseInAnimation from './collapse-in.animation';
@@ -23,8 +25,10 @@ export default angular.module('vpdb.core', [])
 	.service('ConfigService', ConfigService)
 	.service('TrackerService', TrackerService)
 	.service('FileUploadHelperService', FileUploadHelperService)
-	.controller('EditorCtrl', EditorCtrl)
+	.controller('EditorDirectiveCtrl', EditorDirectiveCtrl)
 	.controller('CommentCtrl', CommentCtrl)
+	.controller('RatingDirectiveCtrl', RatingDirectiveCtrl)
+	.controller('TopBadgeDirectiveCtrl', TopBadgeDirectiveCtrl)
 	.directive('editor', editor)
 	.directive('markdownInfo', editorMarkdownInfo)
 	.directive('ratingbox', ratingBox)
