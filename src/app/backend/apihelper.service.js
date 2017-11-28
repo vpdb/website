@@ -1,5 +1,6 @@
-import { isObject, isFunction, map, forEach, set } from 'lodash';
+import angular from 'angular';
 import parseUri from 'parse-uri';
+import { isObject, isFunction, map, forEach, set } from 'lodash';
 
 /**
  * Helper class for API requests.
@@ -10,13 +11,15 @@ export default class ApiHelper {
 
 	/**
 	 * @param $state
+	 * @param $log
 	 * @param {App} App
 	 * @param {ModalService} ModalService
 	 * @param {ModalFlashService} ModalFlashService
 	 * @ngInject
 	 */
-	constructor($state, App, ModalService, ModalFlashService) {
+	constructor($state, $log, App, ModalService, ModalFlashService) {
 		this.$state = $state;
+		this.$log = $log;
 		this.App = App;
 		this.ModalService = ModalService;
 		this.ModalFlashService = ModalFlashService;
@@ -92,18 +95,21 @@ export default class ApiHelper {
 		return response => {
 			if (!response.data) {
 				this.ModalService.error({
-					subtitle: "Connection error",
-					message: "Looks like a request failed due to network problems. Please try again."
+					subtitle: 'Connection error',
+					message: 'Looks like a request failed due to network problems. Please try again.'
 				});
+				this.logError('Connection error', response);
 				return;
 			}
-			if (response.status === 401 && response.data.error === "Token has expired") {
+			if (response.status === 401 && response.data.error === 'Token has expired') {
 				this.ModalService.error({
-					subtitle: "Session timed out",
-					message: "Looks like your session has expired. Try logging in again."
+					subtitle: 'Session timed out',
+					message: 'Looks like your session has expired. Try logging in again.'
 				});
+				this.logError('Session timed out', response);
 				return;
 			}
+			this.logError('Request error', response);
 			if (scope.submitting) {
 				scope.submitting = false;
 			}
@@ -137,6 +143,7 @@ export default class ApiHelper {
 	 */
 	handleErrorsInDialog(title, callback) {
 		return response => {
+			this.logError('Request error', response);
 			let skipError = false;
 			if (callback) {
 				skipError = callback(response);
@@ -159,12 +166,45 @@ export default class ApiHelper {
 	 */
 	handleErrorsInFlashDialog(state, title) {
 		return response => {
+			this.logError('Request error', response);
 			this.ModalFlashService.error({
 				subtitle: title,
 				message: this.parseError(response)
 			});
 			this.$state.go(state);
 		};
+	}
+
+	/**
+	 * Logs the error.
+	 * @param {string} message
+	 * @param response
+	 */
+	logError(message, response) {
+		this.$log.error(message);
+		if (response.config) {
+			this.$log.debug('--> %s %s', response.config.method, response.config.url);
+			if (response.config.headers) {
+				forEach(response.config.headers, (val, key) => {
+					this.$log.debug('--> %s: %s', key, val);
+				});
+			}
+			if (response.config.data) {
+				this.$log.debug('-->');
+				this.$log.debug('--> %s', angular.toJson(response.config.data, true));
+			}
+		}
+		this.$log.debug('<-- %s %s', response.status, response.statusText);
+		const headers = response.headers();
+		if (headers) {
+			forEach(headers, (val, key) => {
+				this.$log.debug('<-- %s: %s', key, val);
+			});
+		}
+		if (response.data) {
+			this.$log.debug('<--');
+			this.$log.debug(angular.toJson(response.data, true));
+		}
 	}
 
 	/**
