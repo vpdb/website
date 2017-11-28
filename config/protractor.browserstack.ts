@@ -18,7 +18,7 @@ function capability(browser:any) {
 export let config: Config = merge(commonConfig, {
 	seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
 	capabilities: null,
-	multiCapabilities: [ 'Chrome', 'Firefox', 'IE', { os: 'OS X', os_version: 'High Sierra', browserName: 'Safari', browser_version: '11.0' } ].map(capability),
+	multiCapabilities: [ 'Chrome', 'Firefox', 'IE'/*, { os: 'OS X', os_version: 'High Sierra', browserName: 'Safari', browser_version: '11.0' } */].map(capability),
 	onPrepare: () => {
 		setupReporter();
 		console.log('Setting file detector to remote.'); // https://www.browserstack.com/automate/node
