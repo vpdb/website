@@ -12,6 +12,10 @@ describe('Add new game', () => {
 		addGamePage.get();
 	});
 
+	afterEach(() => {
+		browser.executeScript('window.scrollTo(0,0);');
+	});
+
 	afterAll(() => {
 		appPage.logout();
 	});
@@ -24,7 +28,6 @@ describe('Add new game', () => {
 	});
 
 	it('should display the game info from IPDB', () => {
-
 		addGamePage.fetchIpdb('3781');
 		appPage.waitUntilLoaded();
 		expect(addGamePage.gameInfoPanel.isDisplayed()).toBeTruthy();

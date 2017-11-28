@@ -64,6 +64,7 @@ export class AppPage {
 	}
 
 	getErrorInfoModal() {
+		browser.wait(until.presenceOf(this.errorInfoModal), 1000);
 		return new ModalErrorInfoPage(this.errorInfoModal);
 	}
 
