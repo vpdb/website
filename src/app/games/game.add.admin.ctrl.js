@@ -79,6 +79,7 @@ export default class GameAddAdminCtrl {
 				uploadText: this.dropText.logo
 			}
 		};
+		delete this.backglass;
 	}
 
 	resetGame() {
