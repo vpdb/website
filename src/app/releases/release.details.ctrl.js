@@ -23,6 +23,7 @@ export default class ReleaseDetailsCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {ReleaseService} ReleaseService
 	 * @param {TrackerService} TrackerService
+	 * @param {BootstrapPatcher} BootstrapPatcher
 	 * @param GameResource
 	 * @param ReleaseResource
 	 * @param ReleaseRatingResource
@@ -31,12 +32,13 @@ export default class ReleaseDetailsCtrl {
 	 * @ngInject
 	 */
 	constructor($timeout, $stateParams, $location, $localStorage, $uibModal,
-				App, AuthService, ApiHelper, ReleaseService, TrackerService, GameResource,
+				App, AuthService, ApiHelper, ReleaseService, TrackerService, BootstrapPatcher, GameResource,
 				ReleaseResource, ReleaseRatingResource, ReleaseCommentResource, ReleaseModerationCommentResource) {
 
 		App.theme('dark');
 		App.setTitle('Release Details');
 		App.setMenu('releases');
+		BootstrapPatcher.patchCarousel();
 
 		this.$timeout = $timeout;
 		this.$location = $location;
@@ -111,11 +113,13 @@ export default class ReleaseDetailsCtrl {
 			this.latestVersion = this.releaseVersions[0];
 
 			// get latest shots
+			let i = 0;
 			this.shots = orderBy(compact(this.latestVersion.files.map(file => {
 				if (!file.playfield_image) {
 					return null;
 				}
 				return {
+					index: i++,
 					type: file.playfield_image.file_type,
 					url: file.playfield_image.variations[this.App.pixelSuffix('medium')].url,
 					full: file.playfield_image.variations.full.url

@@ -15,8 +15,9 @@ p.padder-top(ng-show="vm.pageLoading")
 
 		//-- PLAYFIELD SHOTS
 		//---------------------------------------------------------------------
-		uib-carousel.padder-horizontal(interval="60000")
-			uib-slide(ng-repeat="slide in vm.shots", active="slide.active")
+
+		.padder-horizontal(uib-carousel, active="slide.active", interval="60000")
+			div(uib-slide, ng-repeat="slide in vm.shots", index="slide.index")
 				a.image(href="{{ slide.full }}")
 					img(ng-src="{{ slide.url }}")
 
@@ -262,13 +263,3 @@ p.padder-top(ng-show="vm.pageLoading")
 		p(ng-show="!vm.AuthService.isAuthenticated") If you're looking for a moderated release, try logging in.
 
 	jsonld(json="vm.ldRelease")
-
-script(id="template/carousel/carousel.html", type="text/ng-template")
-	.carousel(ng-mouseenter="pause()", ng-mouseleave="play()", ng-swipe-right="prev()", ng-swipe-left="next()")
-		ol.carousel-indicators(ng-show="slides.length > 1")
-			li(ng-repeat="slide in slides track by $index", ng-class="{active: isActive(slide)}", ng-click="select(slide)")
-		.carousel-inner(ng-transclude="")
-		a.left.carousel-control(ng-click="prev()", ng-show="slides.length > 1")
-			+icon('angle-left')
-		a.right.carousel-control(ng-click="next()", ng-show="slides.length > 1")
-			+icon('angle-right')
