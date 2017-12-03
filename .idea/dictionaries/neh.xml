@@ -2,6 +2,7 @@
   <dictionary name="neh">
     <words>
       <w>autologin</w>
+      <w>axios</w>
       <w>backglass</w>
       <w>backglasses</w>
       <w>directb</w>
@@ -11,6 +12,7 @@
       <w>uglify</w>
       <w>videojs</w>
       <w>viewtype</w>
+      <w>vpdb</w>
     </words>
   </dictionary>
 </component>

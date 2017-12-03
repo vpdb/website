@@ -5,7 +5,7 @@ include ../template/_mixins
 	// right column
 	.col-sm-3.col-sm-push-9.col--menu.text-center
 
-		include details-01-gameinfo
+		include game.details-01-gameinfo.pug
 
 		//-- UPLOAD BUTTONS
 		//---------------------------------------------------------------------
@@ -33,10 +33,10 @@ include ../template/_mixins
 			h1.title-sub.h--small {{ vm.game.manufacturer }} &middot; {{ vm.game.year }}
 		hr
 
-		include details-02-release
-		include details-03-roms
-		include details-04-backglasses
-		include details-05-media
+		include game.details-02-release.pug
+		include game.details-03-roms.pug
+		include game.details-04-backglasses.pug
+		include game.details-05-media.pug
 
 	.content-end &nbsp;
 	jsonld(json="vm.ldGame")
