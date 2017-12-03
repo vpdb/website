@@ -22,6 +22,7 @@ import { includes } from 'lodash';
  *
  * @param $parse
  * @param $compile
+ * @param $log
  * @param {Upload} Upload The module from ng-file-upload
  * @param {ApiHelper} ApiHelper
  * @param {AuthService} AuthService
@@ -31,7 +32,7 @@ import { includes } from 'lodash';
  * @param FileResource
  * @ngInject
  */
-export default function($parse, $compile, Upload, ApiHelper, AuthService, ModalService,
+export default function($parse, $compile, $log, Upload, ApiHelper, AuthService, ModalService,
 						FileUploadHelperService, ConfigService, FileResource) {
 	return {
 		restrict: 'A',
@@ -62,7 +63,8 @@ export default function($parse, $compile, Upload, ApiHelper, AuthService, ModalS
 
 			// can be removed at some point..
 			if (params.key && params.allowMultipleFiles) {
-				console.error('Multiple files allowed AND key set. Probably a bug?')
+				$log.error('Multiple files allowed AND key set. Probably a bug?');
+				return;
 			}
 
 			scope[fctName] = $files => {
@@ -77,6 +79,9 @@ export default function($parse, $compile, Upload, ApiHelper, AuthService, ModalS
 				// check for multiple files
 				let allowMultipleFiles = params.allowMultipleFiles === true;
 				if (!allowMultipleFiles && $files.length > 1) {
+					$log.error('Cannot upload multiple files: ');
+					$files.forEach(file => $log.error('-> %s (%s bytes)', file.name, file.size));
+
 					return ModalService.info({
 						icon: 'upload-circle',
 						title: 'File Upload',
