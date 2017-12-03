@@ -31,6 +31,8 @@ and [Stylus](http://stylus-lang.com/) for the styles.
 Tests are end-to-end using [Protractor](http://www.protractortest.org) through 
 [Codeship](https://codeship.com/) and [BrowserStack](https://www.browserstack.com).
 
+Test results of the latest CI run can also be seen [here](https://results.vpdb.io/).
+
 Running locally you'll need four terminals open.
 
 - **Server**: Git clone [vpdb/server](https://github.com/vpdb/server) and install 
