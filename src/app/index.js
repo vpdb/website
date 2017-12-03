@@ -24,6 +24,7 @@ import 'ment.io';
 import 'ngclipboard';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import 'magnific-popup/dist/magnific-popup.css';
 import '../styles/vpdb.styl';
 
 import core from './core';
