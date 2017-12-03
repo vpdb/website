@@ -49,7 +49,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 		// statuses
 		this.submitting = false;
 		this.showHelp = this.$localStorage.showInstructions.version_add;
-		this.$watch(() => vm.showHelp, () => this.$localStorage.showInstructions.version_add = this.showHelp);
+		this.$watch(() => this.showHelp, () => this.$localStorage.showInstructions.version_add = this.showHelp);
 
 		// fetch game info
 		this.gameId = $stateParams.id;
