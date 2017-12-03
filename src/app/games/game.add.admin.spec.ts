@@ -25,6 +25,7 @@ describe('Add new game', () => {
 		expect(GameAddAdminPage.formGroup(addGamePage.title).getAttribute('class')).toMatch('error');
 		expect(GameAddAdminPage.formGroup(addGamePage.gameIdRecreation).getAttribute('class')).toMatch('error');
 		expect(addGamePage.backglassError.isDisplayed()).toBeTruthy();
+		addGamePage.reset();
 	});
 
 	it('should display the game info from IPDB', () => {
