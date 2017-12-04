@@ -126,7 +126,7 @@ export default class ReleaseListCtrl {
 			default:
 				this.thumbFormat = this.App.pixelSuffix('square');
 		}
-	};
+	}
 
 	switchView(view) {
 		if (this.viewtype === view) {
@@ -136,5 +136,5 @@ export default class ReleaseListCtrl {
 		this.viewtype = view;
 		this.setViewTemplate(view);
 		this.refresh();
-	};
+	}
 }
