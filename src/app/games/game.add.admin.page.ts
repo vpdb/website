@@ -27,6 +27,11 @@ export class GameAddAdminPage {
 	logoImage = this.logoUploadPanel.element(by.css('.img--ar-logo'));
 	logoProgress = this.logoUploadPanel.element(by.css('.progress'));
 
+
+	constructor() {
+
+	}
+
 	get() {
 		this.appPage.get();
 		this.appPage.loginAs('contributor');
@@ -53,7 +58,7 @@ export class GameAddAdminPage {
 
 	uploadBackglass(fileName:string) {
 		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
-		//this.backglassUploadPanel.click();
+		this.backglassUploadPanel.click();
 		this.backglassUpload.sendKeys(path);
 	}
 
@@ -63,7 +68,7 @@ export class GameAddAdminPage {
 
 	uploadLogo(fileName:string) {
 		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
-		//this.logoUploadPanel.click();
+		this.logoUploadPanel.click();
 		this.logoUpload.sendKeys(path);
 	}
 
