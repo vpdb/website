@@ -18,57 +18,57 @@ include ../template/_mixins
 
 		h1 1. Upload Files
 		hr
-		include add-01-upload.files.pug
+		include release.add-01-upload.files.pug
 
 		h1 2. Name your Release
 		hr
-		include add-02-name.pug
+		include release.add-02-name.pug
 
 		h1 3. Define your Flavors
 		hr
-		include add-03-flavors.pug
+		include release.add-03-flavors.pug
 
 		h1 4. Describe your Release
 		hr
 		.form-group
 			editor.tabset--light(ng-model="vm.release.description", placeholder="Description of the release", markdown-text="Markdown enabled. This will show up globally under your release.")
-		include add-04-release.notes.pug
+		include release.add-04-release.notes.pug
 
 		h4
 			+icon('user').shift-up.space-right
 			| Authors
 		hr.hr--light.hr--margin-small
-		include add-04-authors.pug
+		include release.add-04-authors.pug
 
 		h4
 			+icon('tags').shift-up.space-right
 			| Tags
 		hr.hr--light.hr--margin-small
-		include add-04-tags.pug
+		include release.add-04-tags.pug
 
 		h4
 			+icon('wrench').shift-up.space-right
 			| Mod Permission
 		hr.hr--light.hr--margin-small
-		include add-04-mod.permission.pug
+		include release.add-04-mod.permission.pug
 
 		h4
 			+icon('link').shift-up.space-right
 			| Links
 		hr.hr--light.hr--margin-small
-		include add-04-links.pug
+		include release.add-04-links.pug
 
 		h1 5. Set Compatibility
 		hr
-		include add-05-compat.pug
+		include release.add-05-compat.pug
 
 		h1 6. Give Credits
 		hr
-		include add-06-credits.pug
+		include release.add-06-credits.pug
 
 		h1 7. Upload Media
 		hr
-		include add-07-upload.media.pug
+		include release.add-07-upload.media.pug
 
 		//------------------------- FINISH LINE -------------------------------
 		//---------------------------------------------------------------------
