@@ -23,7 +23,7 @@ export let config: Config = {
 
 export function setupReporter() {
 	// setup reporter
-	//jasmine.getEnv().clearReporters();
+	jasmine.getEnv().clearReporters();
 	jasmine.getEnv().addReporter(new JasmineConsoleReporter({
 		colors: 1,           // (0|false)|(1|true)|2
 		cleanStack: 1,       // (0|false)|(1|true)|2|3
@@ -44,8 +44,8 @@ export function setupUsers() {
 	console.log('Base URL for testing: %s', webBaseUrl);
 
 	// register users
-	const rootUser:User = { username: 'root', password: 'cVVQr53f5TCZtHcR', email: 'root@vpdb.io' };
-	const users:User[] = [
+	const rootUser: User = { username: 'root', password: 'cVVQr53f5TCZtHcR', email: 'root@vpdb.io' };
+	const users: User[] = [
 		{ username: 'admin', password: 'vaDwjPf2pP7RwWx6', roles: [ 'member', 'admin' ], email: 'admin@vpdb.io' },
 		{ username: 'contributor', password: 'qm5LKQjZEQMrjhmp', roles: [ 'member', 'contributor' ], email: 'contributor@vpdb.io' },
 		{ username: 'member', password: 'x8gWyTrUhcCq9JHV', email: 'member@vpdb.io' },

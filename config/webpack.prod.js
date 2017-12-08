@@ -2,6 +2,7 @@ const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = function(options) {
 
@@ -17,7 +18,8 @@ module.exports = function(options) {
 						comments: false
 					}
 				}
-			})
+			}),
+			//new BundleAnalyzerPlugin()
 		],
 
 		/**
