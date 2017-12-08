@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { User } from "./models/user";
 
 export class UserHelper {
 
@@ -106,14 +107,3 @@ export class UserHelper {
 	}
 }
 
-export interface User {
-	id?: string,
-	username: string,
-	password: string,
-	name?:string,
-	roles?:string[],
-	email?: string,
-	token?: string,
-	_plan?: string
-	is_active?: boolean
-}

@@ -1,4 +1,4 @@
-import { User } from "../src/test/UserHelper";
+import { User } from "../src/test/models/user";
 
 export const root: User = {
 	username: 'root',
