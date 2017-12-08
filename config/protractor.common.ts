@@ -1,5 +1,6 @@
 import { browser, Config } from 'protractor';
 import { User, UserHelper } from '../src/test/UserHelper';
+import { root, users } from './testusers';
 
 const JasmineConsoleReporter = require('jasmine-console-reporter');
 const HtmlReporter = require('protractor-beautiful-reporter');
@@ -44,14 +45,8 @@ export function setupUsers() {
 	console.log('Base URL for testing: %s', webBaseUrl);
 
 	// register users
-	const rootUser: User = { username: 'root', password: 'cVVQr53f5TCZtHcR', email: 'root@vpdb.io' };
-	const users: User[] = [
-		{ username: 'admin', password: 'vaDwjPf2pP7RwWx6', roles: [ 'member', 'admin' ], email: 'admin@vpdb.io' },
-		{ username: 'contributor', password: 'qm5LKQjZEQMrjhmp', roles: [ 'member', 'contributor' ], email: 'contributor@vpdb.io' },
-		{ username: 'member', password: 'x8gWyTrUhcCq9JHV', email: 'member@vpdb.io' },
-	];
 	const userHelper = new UserHelper();
-	return userHelper.createUsers(apiBaseUrl, rootUser, users).then(users => {
+	return userHelper.createUsers(apiBaseUrl, root, users).then(users => {
 		browser.users = {};
 		users.forEach((user:User) => {
 			browser.users[user.username] = user;
