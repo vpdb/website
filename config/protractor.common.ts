@@ -46,8 +46,8 @@ export function setupUsers() {
 	console.log('Base URL for testing: %s', webBaseUrl);
 
 	// register users
-	const userHelper = new UserHelper();
-	return userHelper.createUsers(apiBaseUrl, root, users).then(users => {
+	const userHelper = new UserHelper(apiBaseUrl);
+	return userHelper.createUsers(root, users).then(users => {
 		browser.users = {};
 		users.forEach((user:User) => {
 			browser.users[user.username] = user;

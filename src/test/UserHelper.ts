@@ -1,27 +1,30 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { User } from "./models/user";
+import { User } from './models/user';
 
 export class UserHelper {
 
-	createUsers(baseUrl: string, rootUser:User, otherUsers:User[]) : Promise<User[]> {
-		return this.authenticateOrCreateUser(baseUrl, rootUser).then(rootUser => {
-			return Promise.all(otherUsers.map(user => this.authenticateOrCreateUser(baseUrl, user, rootUser))).then(users => {
-				return [ rootUser, ...users];
+	constructor(private baseUrl: string) {
+	}
+
+	createUsers(rootUser: User, otherUsers: User[]): Promise<User[]> {
+		return this.authenticateOrCreateUser(rootUser).then(rootUser => {
+			return Promise.all(otherUsers.map(user => this.authenticateOrCreateUser(user, rootUser))).then(users => {
+				return [ rootUser, ...users ];
 			});
 		});
 	}
 
-	authenticateOrCreateUser(baseUrl: string, user:User, creator:User = null) : Promise<User> {
-		return this.authenticateUser(baseUrl, user).then(authenticatedUser => {
+	authenticateOrCreateUser(user: User, creator: User = null): Promise<User> {
+		return this.authenticateUser(user).then(authenticatedUser => {
 			if (authenticatedUser === null) {
-				return this.createUser(baseUrl, user, creator).then(createdUser => this.authenticateUser(baseUrl, createdUser));
+				return this.createUser(user, creator).then(createdUser => this.authenticateUser(createdUser));
 			}
 			return authenticatedUser;
 		});
 	}
 
-	authenticateUser(baseUrl: string, user:User): Promise<User> {
-		return axios.post(baseUrl + '/v1/authenticate', {
+	authenticateUser(user: User): Promise<User> {
+		return axios.post(this.baseUrl + '/v1/authenticate', {
 			username: user.username,
 			password: user.password
 
@@ -38,22 +41,22 @@ export class UserHelper {
 		});
 	}
 
-	createUser(baseUrl: string, user:User, creator:User = null): Promise<User> {
+	createUser(user: User, creator: User = null): Promise<User> {
 
 		let config = UserHelper.getConfig();
 		if (creator) {
 			config.headers.Authorization = 'Bearer ' + creator.token;
 		}
-		return axios.post(baseUrl + '/v1/users', user, config).then(response => {
+		return axios.post(this.baseUrl + '/v1/users', user, config).then(response => {
 			if (response.status !== 201) {
 				throw new Error('Error creating user (' + response.status + '): ' + JSON.stringify(response.data));
 			}
-			const createdUser:User = UserHelper.getUser(response, user);
+			const createdUser: User = UserHelper.getUser(response, user);
 			if (user.roles) {
 				user.id = createdUser.id;
 				user.name = createdUser.name;
 				user._plan = createdUser._plan;
-				return this.updateUser(baseUrl, user, creator);
+				return this.updateUser(user, creator);
 			}
 			return createdUser;
 
@@ -62,13 +65,13 @@ export class UserHelper {
 		});
 	}
 
-	updateUser(baseUrl:string, user:User, creator:User): Promise<User> {
+	updateUser(user: User, creator: User): Promise<User> {
 		let config = UserHelper.getConfig();
 		config.headers.Authorization = 'Bearer ' + creator.token;
-		const userToUpdate:User = JSON.parse(JSON.stringify(user));
+		const userToUpdate: User = JSON.parse(JSON.stringify(user));
 		delete userToUpdate.password;
 		userToUpdate.is_active = true;
-		return axios.put(baseUrl + '/v1/users/' + user.id, userToUpdate, config).then(response => {
+		return axios.put(this.baseUrl + '/v1/users/' + user.id, userToUpdate, config).then(response => {
 			if (response.status !== 200) {
 				throw new Error('Error updating user (' + response.status + '): ' + JSON.stringify(response.data));
 			}
@@ -85,7 +88,7 @@ export class UserHelper {
 		}
 	}
 
-	static getUser(response:AxiosResponse, user:User) : User {
+	static getUser(response: AxiosResponse, user: User): User {
 		let u, token;
 		if (response.data.token) {
 			token = response.data.token;
