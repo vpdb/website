@@ -2,11 +2,12 @@ import { browser, Config } from 'protractor';
 import { UserHelper } from '../src/test/UserHelper';
 import { root, users } from './testusers';
 import { User } from "../src/test/models/user";
+import { VpdbConfig } from "../src/test/models/VpdbConfig";
 
 const JasmineConsoleReporter = require('jasmine-console-reporter');
 const HtmlReporter = require('protractor-beautiful-reporter');
 
-const vpdbConfig = require('../../config/vpdb.' + (process.env.CONFIG || 'test') + '.json');
+const vpdbConfig:VpdbConfig = require('../../config/vpdb.' + (process.env.CONFIG || 'test') + '.json');
 const webBaseUrl = vpdbConfig.webUri.protocol + '://' + vpdbConfig.webUri.hostname + ':' + vpdbConfig.webUri.port;
 const apiBaseUrl = vpdbConfig.apiUri.protocol + '://' + vpdbConfig.apiUri.hostname + ':' + vpdbConfig.apiUri.port + vpdbConfig.apiUri.pathname;
 
@@ -46,7 +47,7 @@ export function setupUsers() {
 	console.log('Base URL for testing: %s', webBaseUrl);
 
 	// register users
-	const userHelper = new UserHelper(apiBaseUrl);
+	const userHelper = new UserHelper(vpdbConfig);
 	return userHelper.createUsers(root, users).then(users => {
 		browser.users = {};
 		users.forEach((user:User) => {

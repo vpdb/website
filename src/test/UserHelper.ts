@@ -1,9 +1,17 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { User } from './models/user';
+import { VpdbConfig } from './models/VpdbConfig';
+import { root, users } from '../../config/testusers';
 
 export class UserHelper {
 
-	constructor(private baseUrl: string) {
+	static users:User[] = [];
+	private api: AxiosInstance;
+
+	constructor(vpdb:VpdbConfig) {
+		this.api = axios.create({
+			baseURL: vpdb.apiUri.protocol + '://' + vpdb.apiUri.hostname + ':' + vpdb.apiUri.port + vpdb.apiUri.pathname
+		});
 	}
 
 	createUsers(rootUser: User, otherUsers: User[]): Promise<User[]> {
@@ -24,7 +32,7 @@ export class UserHelper {
 	}
 
 	authenticateUser(user: User): Promise<User> {
-		return axios.post(this.baseUrl + '/v1/authenticate', {
+		return this.api.post('/v1/authenticate', {
 			username: user.username,
 			password: user.password
 
@@ -32,7 +40,11 @@ export class UserHelper {
 			if (response.status !== 200) {
 				throw new Error('Error authenticating user (' + response.status + '): ' + JSON.stringify(response.data));
 			}
-			return UserHelper.getUser(response, user);
+			const authenticatedUser = UserHelper.readUser(response, user);
+			if (UserHelper.users.filter(u => u.username === user.username).length === 0) {
+				UserHelper.users.push(authenticatedUser);
+			}
+			return authenticatedUser;
 		}, err => {
 			if (err.response && err.response.status === 401) {
 				return null;
@@ -47,11 +59,11 @@ export class UserHelper {
 		if (creator) {
 			config.headers.Authorization = 'Bearer ' + creator.token;
 		}
-		return axios.post(this.baseUrl + '/v1/users', user, config).then(response => {
+		return this.api.post('/v1/users', user, config).then(response => {
 			if (response.status !== 201) {
 				throw new Error('Error creating user (' + response.status + '): ' + JSON.stringify(response.data));
 			}
-			const createdUser: User = UserHelper.getUser(response, user);
+			const createdUser: User = UserHelper.readUser(response, user);
 			if (user.roles) {
 				user.id = createdUser.id;
 				user.name = createdUser.name;
@@ -71,11 +83,11 @@ export class UserHelper {
 		const userToUpdate: User = JSON.parse(JSON.stringify(user));
 		delete userToUpdate.password;
 		userToUpdate.is_active = true;
-		return axios.put(this.baseUrl + '/v1/users/' + user.id, userToUpdate, config).then(response => {
+		return this.api.put('/v1/users/' + user.id, userToUpdate, config).then(response => {
 			if (response.status !== 200) {
 				throw new Error('Error updating user (' + response.status + '): ' + JSON.stringify(response.data));
 			}
-			return UserHelper.getUser(response, user);
+			return UserHelper.readUser(response, user);
 
 		}, err => {
 			throw new Error('Error updating user: ' + JSON.stringify(err.response.data));
@@ -88,7 +100,7 @@ export class UserHelper {
 		}
 	}
 
-	static getUser(response: AxiosResponse, user: User): User {
+	static readUser(response: AxiosResponse, user: User): User {
 		let u, token;
 		if (response.data.token) {
 			token = response.data.token;
@@ -107,6 +119,14 @@ export class UserHelper {
 			_plan: u.plan.id,
 			token: token
 		}
+	}
+
+	getAuthenticatedUser(username:string):Promise<User> {
+		const authenticated = UserHelper.users.filter(u => u.username === username);
+		if (authenticated.length == 1) {
+			return Promise.resolve(authenticated[0]);
+		}
+		return this.authenticateUser(users.filter(u => u.username === username)[0]);
 	}
 }
 
