@@ -10,6 +10,7 @@
 /test
 /node_modules
 /coverage
+/report
 
 gitinfo.json
 raml.json
