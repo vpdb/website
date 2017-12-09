@@ -7,7 +7,7 @@ import { User } from './models/user';
 import { VpdbConfig } from './models/VpdbConfig';
 import Please = require('pleasejs/src/Please.js');
 
-export class FileHelper {
+export class Files {
 
 	private storage: AxiosInstance;
 	private userHelper: UserHelper;

@@ -3,7 +3,7 @@ import { User } from './models/user';
 import { VpdbConfig } from './models/VpdbConfig';
 import { root, users } from '../../config/testusers';
 
-export class UserHelper {
+export class Users {
 
 	static users:User[] = [];
 	private api: AxiosInstance;
@@ -36,13 +36,13 @@ export class UserHelper {
 			username: user.username,
 			password: user.password
 
-		}, UserHelper.getConfig()).then(response => {
+		}, Users.getConfig()).then(response => {
 			if (response.status !== 200) {
 				throw new Error('Error authenticating user (' + response.status + '): ' + JSON.stringify(response.data));
 			}
-			const authenticatedUser = UserHelper.readUser(response, user);
-			if (UserHelper.users.filter(u => u.username === user.username).length === 0) {
-				UserHelper.users.push(authenticatedUser);
+			const authenticatedUser = Users.readUser(response, user);
+			if (Users.users.filter(u => u.username === user.username).length === 0) {
+				Users.users.push(authenticatedUser);
 			}
 			return authenticatedUser;
 		}, err => {
@@ -55,7 +55,7 @@ export class UserHelper {
 
 	createUser(user: User, creator: User = null): Promise<User> {
 
-		let config = UserHelper.getConfig();
+		let config = Users.getConfig();
 		if (creator) {
 			config.headers.Authorization = 'Bearer ' + creator.token;
 		}
@@ -63,7 +63,7 @@ export class UserHelper {
 			if (response.status !== 201) {
 				throw new Error('Error creating user (' + response.status + '): ' + JSON.stringify(response.data));
 			}
-			const createdUser: User = UserHelper.readUser(response, user);
+			const createdUser: User = Users.readUser(response, user);
 			if (user.roles) {
 				user.id = createdUser.id;
 				user.name = createdUser.name;
@@ -78,7 +78,7 @@ export class UserHelper {
 	}
 
 	updateUser(user: User, creator: User): Promise<User> {
-		let config = UserHelper.getConfig();
+		let config = Users.getConfig();
 		config.headers.Authorization = 'Bearer ' + creator.token;
 		const userToUpdate: User = JSON.parse(JSON.stringify(user));
 		delete userToUpdate.password;
@@ -87,7 +87,7 @@ export class UserHelper {
 			if (response.status !== 200) {
 				throw new Error('Error updating user (' + response.status + '): ' + JSON.stringify(response.data));
 			}
-			return UserHelper.readUser(response, user);
+			return Users.readUser(response, user);
 
 		}, err => {
 			throw new Error('Error updating user: ' + JSON.stringify(err.response.data));
@@ -122,7 +122,7 @@ export class UserHelper {
 	}
 
 	getAuthenticatedUser(username:string):Promise<User> {
-		const authenticated = UserHelper.users.filter(u => u.username === username);
+		const authenticated = Users.users.filter(u => u.username === username);
 		if (authenticated.length == 1) {
 			return Promise.resolve(authenticated[0]);
 		}

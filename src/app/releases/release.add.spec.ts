@@ -5,9 +5,9 @@ describe('Add new game', () => {
 
 	const fileHelper = new FileHelper(browser.params.vpdb);
 
-	fit('should display validation errors', () => {
+	it('should display validation errors', () => {
 		fileHelper.uploadBackglass().then((backglass:File) => {
-			console.dir(backglass);
+
 		})
 	});
 
