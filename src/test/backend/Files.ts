@@ -2,7 +2,7 @@ import { isBuffer } from 'util';
 import { PNG } from 'pngjs';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import toArray = require('stream-to-array');
-import { UserHelper } from './UserHelper';
+import { Users } from './Users';
 import { User } from './models/user';
 import { VpdbConfig } from './models/VpdbConfig';
 import Please = require('pleasejs/src/Please.js');
@@ -10,13 +10,13 @@ import Please = require('pleasejs/src/Please.js');
 export class Files {
 
 	private storage: AxiosInstance;
-	private userHelper: UserHelper;
+	private users: Users;
 
 	constructor(private vpdb: VpdbConfig) {
 		this.storage = axios.create({
 			baseURL: vpdb.storageUri.protocol + '://' + vpdb.storageUri.hostname + ':' + vpdb.storageUri.port + vpdb.storageUri.pathname
 		});
-		this.userHelper = new UserHelper(vpdb);
+		this.users = new Users(vpdb);
 	}
 
 	uploadBackglass(): Promise<File> {
@@ -29,7 +29,7 @@ export class Files {
 		});
 
 		let token: string;
-		return this.userHelper.getAuthenticatedUser('contributor').then((user: User) => {
+		return this.users.getAuthenticatedUser('contributor').then((user: User) => {
 			token = user.token;
 			return toArray(png.pack());
 

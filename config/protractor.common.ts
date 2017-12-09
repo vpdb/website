@@ -1,5 +1,5 @@
 import { browser, Config } from 'protractor';
-import { UserHelper } from '../src/test/UserHelper';
+import { Users } from '../src/test/backend/Users';
 import { root, users } from './testusers';
 import { User } from "../src/test/models/user";
 import { VpdbConfig } from "../src/test/models/VpdbConfig";
@@ -48,7 +48,7 @@ export function setupUsers() {
 	console.log('Base URL for testing: %s', webBaseUrl);
 
 	// register users
-	const userHelper = new UserHelper(vpdbConfig);
+	const userHelper = new Users(vpdbConfig);
 	return userHelper.createUsers(root, users).then(users => {
 		browser.users = {};
 		users.forEach((user:User) => {

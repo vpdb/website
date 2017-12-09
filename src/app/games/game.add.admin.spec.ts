@@ -1,7 +1,7 @@
+import { browser } from "protractor";
 import { GameAddAdminPage } from './game.add.admin.page';
 import { AppPage } from '../app.page';
-import ipdb from '../../test/ipdb';
-import { browser } from "protractor";
+import { Games } from '../../test/backend/Games';
 
 describe('Add new game', () => {
 
@@ -51,7 +51,7 @@ describe('Add new game', () => {
 	});
 
 	it('should successfully add a new game', () => {
-		const game = ipdb[Math.floor(Math.random() * ipdb.length)];
+		const game = Games.popGame();
 		addGamePage.fetchIpdb(String(game.ipdb.number));
 		appPage.waitUntilLoaded();
 		addGamePage.uploadBackglass('backglass-1280x1024.png');

@@ -1,6 +1,6 @@
 import { resolve } from 'path'
 import { browser, by, element, ElementFinder } from 'protractor';
-import { AppPage } from "../app.page";
+import { AppPage } from '../app.page';
 
 export class GameAddAdminPage {
 
