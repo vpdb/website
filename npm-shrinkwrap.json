@@ -830,12 +830,6 @@
 			"integrity": "sha512-awEYSSTn7dauwVCYSx2CJaPTu0Z1Ht2oR1b2AD3CYao6ZRb+opb6EL43fzmD7eMFgMHzTBWSUzlWSD+S8xN0Nw==",
 			"dev": true
 		},
-		"@types/pleasejs": {
-			"version": "0.0.27",
-			"resolved": "https://registry.npmjs.org/@types/pleasejs/-/pleasejs-0.0.27.tgz",
-			"integrity": "sha1-MkfBPV41tClmu/fSbzNzqNg1bJQ=",
-			"dev": true
-		},
 		"@types/pngjs": {
 			"version": "3.3.0",
 			"resolved": "https://registry.npmjs.org/@types/pngjs/-/pngjs-3.3.0.tgz",

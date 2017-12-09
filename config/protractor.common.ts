@@ -18,6 +18,7 @@ export let config: Config = {
 	},
 	specs: [ '../**/*.spec.js' ],
 	baseUrl: webBaseUrl,
+	params: { vpdb: vpdbConfig },
 	onPrepare: () => {
 		setupReporter();
 		return setupUsers();
