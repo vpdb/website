@@ -27,11 +27,6 @@ export class GameAddAdminPage {
 	logoImage = this.logoUploadPanel.element(by.css('.img--ar-logo'));
 	logoProgress = this.logoUploadPanel.element(by.css('.progress'));
 
-
-	constructor() {
-
-	}
-
 	get() {
 		this.appPage.get();
 		this.appPage.loginAs('contributor');

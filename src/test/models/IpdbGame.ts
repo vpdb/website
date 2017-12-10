@@ -9,7 +9,7 @@ export interface IpdbGame {
 	year: number
 	manufacturer?: string,
 	model_number?: string,
-	game_type?: "ss" | "em" | "pm",
+	game_type?: "ss" | "em" | "pm" | "na",
 	short?: string[],
 	produced_units?: number,
 	themes?: string[],

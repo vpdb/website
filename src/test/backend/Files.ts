@@ -1,11 +1,12 @@
 import { isBuffer } from 'util';
 import { PNG } from 'pngjs';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import Please = require('pleasejs/src/Please.js');
 import toArray = require('stream-to-array');
 import { Users } from './Users';
-import { User } from './models/user';
-import { VpdbConfig } from './models/VpdbConfig';
-import Please = require('pleasejs/src/Please.js');
+import { User } from '../models/user';
+import { File } from '../models/File';
+import { VpdbConfig } from '../models/VpdbConfig';
 
 export class Files {
 

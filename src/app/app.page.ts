@@ -32,6 +32,7 @@ export class AppPage {
 		this.loginModal.toggleLogin();
 		this.loginModal.setLogin(browser.users[username].username, browser.users[username].password);
 		this.loginModal.submitLogin();
+		browser.wait(() => this.getLoggedUsername().then(loggedUsername => loggedUsername === username), 1000);
 	}
 
 	logout() {

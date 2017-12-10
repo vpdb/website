@@ -51,7 +51,7 @@ describe('Add new game', () => {
 	});
 
 	it('should successfully add a new game', () => {
-		const game = Games.popGame();
+		const game = Games.getGame();
 		addGamePage.fetchIpdb(String(game.ipdb.number));
 		appPage.waitUntilLoaded();
 		addGamePage.uploadBackglass('backglass-1280x1024.png');
