@@ -4,7 +4,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import Please = require('pleasejs/src/Please.js');
 import toArray = require('stream-to-array');
 import { Users } from './Users';
-import { User } from '../models/user';
+import { User } from '../models/User';
 import { File } from '../models/File';
 import { VpdbConfig } from '../models/VpdbConfig';
 

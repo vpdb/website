@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { User } from '../models/user';
+import { User } from '../models/User';
 import { VpdbConfig } from '../models/VpdbConfig';
 import { users } from '../../../config/testusers';
 

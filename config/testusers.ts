@@ -1,4 +1,4 @@
-import { User } from "../src/test/models/user";
+import { User } from '../src/test/models/User';
 
 export const root: User = {
 	username: 'root',
