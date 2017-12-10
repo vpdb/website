@@ -41,6 +41,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 		this.$state = $state;
 		this.$localStorage = $localStorage;
 		this.App = App;
+		this.AuthService = AuthService;
 		this.ModalService = ModalService;
 		this.ReleaseResource = ReleaseResource;
 		this.GameReleaseNameResource = GameReleaseNameResource;
@@ -115,7 +116,9 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 			this.$localStorage.release_meta = {};
 		}
 		this.meta = this.$localStorage.release_meta[this.gameId] = cloneDeep(this.ReleaseMeta);
-		this.meta.users[currentUser.id] = currentUser;
+		if (currentUser) {
+			this.meta.users[currentUser.id] = currentUser;
+		}
 		this.meta.releaseDate = new Date();
 		this.newLink = {};
 		this.meta.idMap = {};
@@ -137,15 +140,18 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 				changes: '*Initial release.*',
 				files: [ ]
 			} ],
-			authors: [ {
-				_user: currentUser.id,
-				roles: [ 'Table Creator' ]
-			} ],
+			authors: [ ],
 			_tags: [ ],
 			links: [ ],
 			acknowledgements: '',
 			original_version: null
 		};
+		if (currentUser) {
+			this.$localStorage.release[this.gameId].authors.push({
+				_user: currentUser.id,
+				roles: [ 'Table Creator' ]
+			});
+		}
 		this.releaseVersion = this.release.versions[0];
 		this.errors = {};
 		this.filesError = null;

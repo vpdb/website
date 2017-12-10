@@ -8,6 +8,11 @@ include ../template/_mixins
 			b Game Restriction <br>
 			| This is a {{ vm.game.mpu.short }} game. In order to respect the industry, we don't allow users to download {{ vm.game.mpu.short }} games. You still can upload releases but be aware that only you will able to see them until the situation changes.
 
+		.alert.alert-danger.no-space-top(ng-show="!vm.AuthService.isAuthenticated")
+			+icon('warning').space-right.shift-up
+			b Not logged! <br>
+			| You gotta be logged in to upload files. You can do that by clicking on the "login" link on the top right side.
+
 		h1.h--primary Add a new Release
 		hr.hr--primary
 
@@ -76,8 +81,8 @@ include ../template/_mixins
 		.alert.alert-danger.alert--inverted.padder-bottom(ng-show="vm.errors && vm.errors.__count")
 			+icon('warning').shift-up.space-right
 			| There were errors while submitting your release. Please scroll up and fix the marked fields.
-		button.btn.btn-default.btn-lg(ng-click="vm.reset()") Reset
-		button.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="vm.submitting") Add New Release
+		button.btn.btn-default.btn-lg(ng-click="vm.reset()", ng-disabled="!vm.AuthService.isAuthenticated") Reset
+		button#submit-btn.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="vm.submitting || !vm.AuthService.isAuthenticated") Add New Release
 		.clearfix
 
 		//- TODO fix
