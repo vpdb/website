@@ -1,6 +1,6 @@
 .form-group(ng-class="{ error: vm.errors.name }")
 	.input-group
-		input.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.release.name", ng-disabled="!vm.AuthService.isAuthenticated")
+		input#name.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.release.name", ng-disabled="!vm.AuthService.isAuthenticated")
 		span.input-group-addon(uib-tooltip="Click for an inspirational random title!", tooltip-placement="right", tooltip-append-to-body="true")
 			+icon('bulb').a(ng-click="vm.generateReleaseName()")
 	.alert.alert-danger(ng-show="vm.errors.name")

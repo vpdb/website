@@ -1,8 +1,10 @@
 import { resolve } from 'path'
 import { browser, by, element, ElementFinder } from 'protractor';
 import { AppPage } from '../app.page';
+import { BasePage } from '../../test/BasePage';
+import { promise } from 'selenium-webdriver';
 
-export class GameAddAdminPage {
+export class GameAddAdminPage extends BasePage {
 
 	appPage = new AppPage();
 
@@ -14,8 +16,6 @@ export class GameAddAdminPage {
 	submitButton = element(by.id('submit-btn'));
 	gameInfoPanel = element(by.id('game-info-panel'));
 	gameInfoTitle = this.gameInfoPanel.element(by.css('h2'));
-
-	backglassError = element(by.css('[ng-show="vm.errors[\'_backglass\']"]'));
 
 	backglassUpload = element(by.id('ngf-backglass-upload'));
 	backglassUploadPanel = element(by.id('backglass-upload'));
@@ -71,8 +71,16 @@ export class GameAddAdminPage {
 		browser.wait(() => this.logoProgress.isDisplayed().then(result => !result), 5000);
 	}
 
-	static formGroup(input: ElementFinder) {
-		return input.element(by.xpath('./ancestor::div[contains(concat(" ", @class, " "), " form-group ")][1]'));
+	hasTitleValidatorErrors(): promise.Promise<boolean> {
+		return this.hasClass(this.formGroup(this.title), 'error');
+	}
+
+	hasRecreationIdValidationErrors(): promise.Promise<boolean> {
+		return this.hasClass(this.formGroup(this.gameIdRecreation), 'error');
+	}
+
+	hasBackglassValidationErrors() {
+		return element(by.css(`[ng-show="vm.errors['_backglass']"]`)).isDisplayed();
 	}
 
 }

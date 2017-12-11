@@ -22,9 +22,9 @@ describe('Add new game', () => {
 
 	it('should display validation errors', () => {
 		addGamePage.submit();
-		expect(GameAddAdminPage.formGroup(addGamePage.title).getAttribute('class')).toMatch('error');
-		expect(GameAddAdminPage.formGroup(addGamePage.gameIdRecreation).getAttribute('class')).toMatch('error');
-		expect(addGamePage.backglassError.isDisplayed()).toBeTruthy();
+		expect(addGamePage.hasTitleValidatorErrors()).toBe(true);
+		expect(addGamePage.hasRecreationIdValidationErrors()).toBe(true);
+		expect(addGamePage.hasBackglassValidationErrors()).toBe(true);
 		addGamePage.reset();
 	});
 

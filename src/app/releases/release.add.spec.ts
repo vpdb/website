@@ -2,7 +2,7 @@ import { browser } from 'protractor';
 import { Games } from '../../test/backend/Games';
 import { Game } from '../../test/models/Game';
 import { ReleaseAddPage } from './release.add.page';
-import { AppPage } from "../app.page";
+import { AppPage } from '../app.page';
 
 describe('Add new game', () => {
 
@@ -27,8 +27,14 @@ describe('Add new game', () => {
 		appPage.logout();
 	});
 
-	it('should display validation errors', () => {
+	it('should display validation errors when no file uploaded', () => {
+		releaseAddPage.clearAuthors();
 		releaseAddPage.submit();
+		expect(releaseAddPage.hasFileUploadValidationError()).toBe(true);
+		expect(releaseAddPage.hasNameValidationError()).toBe(true);
+		expect(releaseAddPage.hasVersionValidationError()).toBe(true);
+		expect(releaseAddPage.hasAuthorValidationError()).toBe(true);
+		expect(releaseAddPage.hasLicenseValidationError()).toBe(true);
 	});
 
 });
