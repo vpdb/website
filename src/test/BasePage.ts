@@ -1,5 +1,5 @@
-import { by, ElementFinder } from "protractor";
-import { promise } from "selenium-webdriver";
+import { by, ElementFinder } from 'protractor';
+import { promise } from 'selenium-webdriver';
 
 export class BasePage {
 

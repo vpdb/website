@@ -23,6 +23,7 @@ span(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 
 			//- drop zone
 			.panel.panel--blank.playfield--image(
+				id="playfield-image-{{ $index }}-upload",
 				file-upload="{ controller: vm, type: 'playfield', key: vm.getMediaKey(file, 'playfield_image'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }",
 				ngf-drag-over-class="'panel--dragging'",
 				ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_image }"
@@ -53,6 +54,7 @@ span(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 			h4.h--large Video
 
 			.panel.panel--blank.playfield--video(
+				id="playfield-video-{{ $index }}-upload",
 				file-upload="{ controller: vm, type: vm.getPlayfieldType(file), key: vm.getMediaKey(file, 'playfield_video'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['flv', 'f4v', 'mp4', 'avi'], allowMultipleFiles: false, disableSelect: true }",
 				ngf-drag-over-class="'panel--dragging'",
 				ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_video }",
@@ -65,6 +67,7 @@ span(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 
 			//- drop zone
 			.panel.panel--blank.playfield--image(
+				id="playfield-video2-{{ $index }}-upload",
 				file-upload="{ controller: vm, type: vm.getPlayfieldType(file), key: vm.getMediaKey(file, 'playfield_video'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['flv', 'f4v', 'mp4', 'avi'], allowMultipleFiles: false }",
 				ngf-drag-over-class="'panel--dragging'",
 				ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_video }",

@@ -35,6 +35,16 @@ describe('Add new game', () => {
 		expect(releaseAddPage.hasVersionValidationError()).toBe(true);
 		expect(releaseAddPage.hasAuthorValidationError()).toBe(true);
 		expect(releaseAddPage.hasLicenseValidationError()).toBe(true);
+		releaseAddPage.reset();
+	});
+
+	it('should display validation errors when a file is uploaded.', () => {
+		const fileName = 'blank.vpt';
+		releaseAddPage.uploadFile(fileName);
+		releaseAddPage.submit();
+		expect(releaseAddPage.hasFlavorValidationError(fileName)).toBe(true);
+		expect(releaseAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
+		releaseAddPage.reset();
 	});
 
 });

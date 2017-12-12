@@ -1,18 +1,20 @@
+import { resolve } from 'path';
+import { browser, by, element } from 'protractor';
 import { promise } from 'selenium-webdriver';
 import { Game } from '../../test/models/Game';
 import { BasePage } from '../../test/BasePage';
 import { AppPage } from '../app.page';
-import { browser, by, element } from 'protractor';
 
 export class ReleaseAddPage extends BasePage {
 
-	appPage = new AppPage();
+	private appPage = new AppPage();
 
-	name = element(by.id('name'));
-	fileUpload = element(by.id('ngf-file-upload'));
-	fileUploadPanel = element(by.id('file-upload'));
-	version = element(by.id('version'));
-	submitButton = element(by.id('submit-btn'));
+	private name = element(by.id('name'));
+	private filesUpload = element(by.id('ngf-files-upload'));
+	private filesUploadPanel = element(by.id('files-upload'));
+	private version = element(by.id('version'));
+	private resetButton = element(by.id('reset-btn'));
+	private submitButton = element(by.id('submit-btn'));
 
 	get(game:Game) {
 		this.appPage.get();
@@ -29,12 +31,22 @@ export class ReleaseAddPage extends BasePage {
 		});
 	}
 
+	uploadFile(fileName:string) {
+		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
+		this.filesUploadPanel.click();
+		this.filesUpload.sendKeys(path);
+	}
+
+	reset() {
+		this.resetButton.click();
+	}
+
 	submit() {
 		this.submitButton.click();
 	}
 
 	hasFileUploadValidationError(): promise.Promise<boolean> {
-		return this.hasClass(this.fileUploadPanel, 'error');
+		return this.hasClass(this.filesUploadPanel, 'error');
 	}
 
 	hasNameValidationError(): promise.Promise<boolean> {
@@ -51,5 +63,15 @@ export class ReleaseAddPage extends BasePage {
 
 	hasLicenseValidationError(): promise.Promise<boolean> {
 		return element(by.css('.alert[ng-show="vm.errors.license"]')).isDisplayed();
+	}
+
+	hasFlavorValidationError(filename:string): promise.Promise<boolean> {
+		const fileFlavor = element(by.xpath(`//*[@id='flavors']//*[contains(text(),'${filename}')]/ancestor::li[contains(concat(" ", @class, " "), " panel ")][1]`));
+		return this.hasClass(fileFlavor, 'error');
+	}
+
+	hasCompatibilityValidationError(filename:string): promise.Promise<boolean> {
+		const fileFlavor = element(by.xpath(`//*[@id='compatibility']//*[contains(text(),'${filename}')]/ancestor::li[contains(concat(" ", @class, " "), " panel ")][1]`));
+		return this.hasClass(fileFlavor, 'error');
 	}
 }
