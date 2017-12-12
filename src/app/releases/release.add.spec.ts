@@ -38,12 +38,13 @@ describe('Add new release', () => {
 		releaseAddPage.reset();
 	});
 
-	it('should display validation errors when a file is uploaded.', () => {
+	fit('should display validation errors when a file is uploaded.', () => {
 		const fileName = 'blank.vpt';
 		releaseAddPage.uploadFile(fileName);
 		releaseAddPage.submit();
 		expect(releaseAddPage.hasFlavorValidationError(fileName)).toBe(true);
 		expect(releaseAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
+		expect(releaseAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
 		releaseAddPage.reset();
 	});
 

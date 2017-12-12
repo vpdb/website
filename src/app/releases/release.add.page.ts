@@ -66,12 +66,14 @@ export class ReleaseAddPage extends BasePage {
 	}
 
 	hasFlavorValidationError(filename:string): promise.Promise<boolean> {
-		const fileFlavor = element(by.xpath(`//*[@id='flavors']//*[contains(text(),'${filename}')]/ancestor::li[contains(concat(" ", @class, " "), " panel ")][1]`));
-		return this.hasClass(fileFlavor, 'error');
+		return this.hasClass(this.parentWithText('flavors', filename), 'error');
 	}
 
 	hasCompatibilityValidationError(filename:string): promise.Promise<boolean> {
-		const fileFlavor = element(by.xpath(`//*[@id='compatibility']//*[contains(text(),'${filename}')]/ancestor::li[contains(concat(" ", @class, " "), " panel ")][1]`));
-		return this.hasClass(fileFlavor, 'error');
+		return this.hasClass(this.parentWithText('compatibility', filename), 'error');
+	}
+
+	hasPlayfieldImageValidationError(filename:string): promise.Promise<boolean> {
+		return this.parentWithText('media', filename, 'span', 'ng-scope').element(by.css('.alert')).isDisplayed();
 	}
 }
