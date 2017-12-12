@@ -4,7 +4,7 @@ import { Game } from '../../test/models/Game';
 import { ReleaseAddPage } from './release.add.page';
 import { AppPage } from '../app.page';
 
-describe('Add new game', () => {
+describe('Add new release', () => {
 
 	const appPage = new AppPage();
 	const releaseAddPage = new ReleaseAddPage();
