@@ -166,6 +166,7 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 		this.$uibModal.open({
 			templateUrl: AuthorSelectModalTpl,
 			controller: 'AuthorSelectModalCtrl',
+			controllerAs: 'vm',
 			resolve: {
 				subject: () => this.release,
 				meta: () => this.meta,
