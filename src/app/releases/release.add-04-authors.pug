@@ -9,7 +9,7 @@ i.pull-left(ng-show="vm.release.authors.length == 0") No authors added.
 		.media--edit-panel.fade-animation(ng-show="hovering")
 			+icon('pencil').pos-pencil.a.smaller(ng-click="vm.addAuthor(author)")
 			+icon('trash').pos-trash.a.smaller(ng-click="vm.removeAuthor(author)")
-button.btn.btn-default.padder-top.pull-right(ng-click="vm.addAuthor()")
+button#add-author-btn.btn.btn-default.padder-top.pull-right(ng-click="vm.addAuthor()")
 	+icon('plus-circle').space-right
 	| Add Author
 .clearfix.padder-bottom

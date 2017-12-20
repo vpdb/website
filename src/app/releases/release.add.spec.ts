@@ -38,7 +38,7 @@ describe('Add new release', () => {
 		releaseAddPage.reset();
 	});
 
-	fit('should display validation errors when a file is uploaded.', () => {
+	it('should display validation errors when a file is uploaded.', () => {
 		const fileName = 'blank.vpt';
 		releaseAddPage.uploadFile(fileName);
 		releaseAddPage.submit();
@@ -47,5 +47,7 @@ describe('Add new release', () => {
 		expect(releaseAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
 		releaseAddPage.reset();
 	});
+
+	it('should be able to add an author');
 
 });

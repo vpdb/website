@@ -4,6 +4,7 @@ import { promise } from 'selenium-webdriver';
 import { Game } from '../../test/models/Game';
 import { BasePage } from '../../test/BasePage';
 import { AppPage } from '../app.page';
+import { AuthorSelectModalPage } from "../users/author.select.modal.page";
 
 export class ReleaseAddPage extends BasePage {
 
@@ -29,6 +30,22 @@ export class ReleaseAddPage extends BasePage {
 			const delButton = author.element(by.css('[ng-click="vm.removeAuthor(author)"]'));
 			delButton.click();
 		});
+	}
+
+	addAuthor(name:string = '', role:string = '') {
+		element(by.id('add-author-btn')).click();
+		const authorModal = new AuthorSelectModalPage();
+		if (name) {
+			authorModal.search(name);
+			authorModal.selectSearchResult(0);
+		}
+		if (role) {
+			authorModal.addRole(role);
+		}
+
+		if (name && role) {
+			authorModal.submit();
+		}
 	}
 
 	uploadFile(fileName:string) {
