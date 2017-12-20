@@ -30,7 +30,7 @@ describe('Add author', () => {
 		appPage.logout();
 	});
 
-	it('should display validation errors');
+	//it('should display validation errors');
 
 	it('should find a member', () => {
 		authorSelectModal.search('memb');

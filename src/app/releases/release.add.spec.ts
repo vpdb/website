@@ -48,6 +48,6 @@ describe('Add new release', () => {
 		releaseAddPage.reset();
 	});
 
-	it('should be able to add an author');
+	//it('should be able to add an author');
 
 });
