@@ -26,6 +26,32 @@ The VPDB website uses a somewhat modernized stack of AngularJS using ES6 and
 Webpack. For markup, [pug](https://pugjs.org/api/getting-started.html) is used 
 and [Stylus](http://stylus-lang.com/) for the styles.
 
+## Build Modes
+
+Since the the website is completely decoupled from the server, you can choose any
+server to run with. Basically, when running the website, there are two factors:
+
+1. Which backend to use
+2. How to compile
+
+There are two compilation options, `prod` and `dev`. The only difference is that
+`prod` minimizes and tree-shakes the code, resulting in a smaller bundle but 
+longer compilation time.
+
+The most common ways to build are:
+
+| npm script        |                                     | Server           | Minify |
+|-------------------|-------------------------------------|------------------|--------|
+| `serve:dev:local` | Development using local server      | `localhost:3000` | no     |
+| `serve:dev:prod`  | Development using production server | `api.vpdb.io`    | no     |
+| `serve:test`      | Automated tests                     | `localhost:7357` | yes    |
+| `build:prod`      | Build for production site           | `api.vpdb.io`    | yes    |
+| `build:analyze`   | Build and show bundle analysis      | *n/a*            | yes    |
+
+All `serve` commands will hot-reload your code while you change files locally. 
+You can easily add additional server end-points by creating a new VPDB config 
+in the `config` folder and set the `CONFIG` environment variable accordingly.
+
 ## Tests
 
 Tests are end-to-end using [Protractor](http://www.protractortest.org) through 
@@ -37,7 +63,7 @@ Running locally you'll need four terminals open.
 
 - **Server**: Git clone [vpdb/server](https://github.com/vpdb/server) and install 
   it according to the instructions. Then run it with `npm run serve:protractor`.
-- **Webapp**: This repo. Run `npm run serve:test` to spawn the web server.
+- **Website**: This repo. Run `npm run serve:test` to spawn the web server.
 - **Selenium**: The Selenium server running the tests. First time: `npm run selenium:init`, 
   then just `npm run selenium`. 
 - **Test runner**: Finally, execute the tests with `npm run test:local`
