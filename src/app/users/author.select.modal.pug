@@ -12,7 +12,7 @@ include ../template/_mixins
 
 		.form-group(ng-class="{ error: vm.errors.user }")
 			.input-group
-				input.form-control(
+				input#user-search.form-control(
 					type="text",
 					placeholder="Start typing...",
 					ng-model="vm.query",
@@ -44,7 +44,7 @@ include ../template/_mixins
 				.col-sm-7
 					input#role.form-control(type="text", ng-model="vm.role", placeholder="3D Models, Playfield, Scripts, ...")
 				.col-sm-3
-					button.btn.btn-default.pull-right(ng-click="vm.addRole(vm.role)")
+					button#add-btn.btn.btn-default.pull-right(ng-click="vm.addRole(vm.role)")
 						+icon('plus-circle').space-right
 						| Add
 			.form-group(ng-show="vm.roles.length > 0")
@@ -59,8 +59,8 @@ include ../template/_mixins
 			| {{ vm.errors.roles }}
 
 	.modal-footer
-		button.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
-		button.btn.btn--secondary(ng-click="vm.add()") {{ adding ? 'Add' : 'Update' }} Author
+		button#cancel-btn.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
+		button#submit-btn.btn.btn--secondary(ng-click="vm.add()") {{ vm.adding ? 'Add' : 'Update' }} Author
 
 	script#userListItem(type="text/ng-template")
 		div.media.media--mini
