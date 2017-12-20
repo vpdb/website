@@ -7,14 +7,6 @@ module.exports = function(options) {
 	return webpackMerge(commonConfig(options), {
 
 		/**
-		 * Developer tool to enhance debugging
-		 *
-		 * See: http://webpack.github.io/docs/configuration.html#devtool
-		 * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
-		 */
-		devtool: 'cheap-module-source-map',
-
-		/**
 		 * Webpack Development Server configuration
 		 * Description: The webpack-dev-server is a little node.js Express server.
 		 * The server emits information about the compilation state to the client,

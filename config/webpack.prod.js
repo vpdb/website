@@ -2,7 +2,6 @@ const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = function(options) {
 
@@ -10,6 +9,7 @@ module.exports = function(options) {
 
 		plugins: [
 			new UglifyJSPlugin({
+				sourceMap: true,
 				uglifyOptions: {
 					mangle: true,
 					compress: true,
@@ -19,16 +19,7 @@ module.exports = function(options) {
 					}
 				}
 			}),
-			//new BundleAnalyzerPlugin()
 		],
-
-		/**
-		 * Developer tool to enhance debugging
-		 *
-		 * See: http://webpack.github.io/docs/configuration.html#devtool
-		 * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
-		 */
-		devtool: 'source-map',
 
 		/**
 		 * Webpack Development Server configuration
