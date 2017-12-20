@@ -11,7 +11,7 @@ const iconsContext = resolve(__dirname, '../src/icons');
 
 module.exports  = function(options) {
 	const isProd = options.env === 'prod';
-	const cssLoader = { loader: 'css-loader', options: { sourceMap: false, minimize: isProd } };
+	const cssLoader = { loader: 'css-loader', options: { sourceMap: true, minimize: isProd } };
 	return {
 		entry: {
 			app: './src/app/index.js'
@@ -32,7 +32,7 @@ module.exports  = function(options) {
 				{ test: /\.html$/, loader: 'raw-loader' },
 				{ test: /\.(eot|woff|woff2|ttf|png|svg|jpg|swf)$/, loader: { loader: 'file-loader', options: { name: '[path][name]-[sha256:hash:base58:8].[ext]', context: staticContext } }, exclude: iconsContext },
 				{ test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: cssLoader}) },
-				{ test: /\.styl$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ cssLoader, 'stylus-loader'] }) },
+				{ test: /\.styl$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ cssLoader, 'stylus-loader?sourceMap'] }) },
 				{ test: /\.svg$/, use: [
 					{ loader: 'svg-sprite-loader', options: { extract: true } },
 					{ loader: 'svgo-loader', options: { plugins: [ { removeDoctype: true }, { removeXMLProcInst: true }, { removeComments: true }, { removeMetadata: true }, { removeEditorsNSData: true }, { cleanupAttrs: true }, { convertStyleToAttrs: true }, { removeRasterImages: true }, { cleanupNumericValues: true }, { convertColors: true }, { removeUnknownsAndDefaults: true }, { removeNonInheritableGroupAttrs: true }, { removeUselessStrokeAndFill: true }, { removeViewBox: true }, { cleanupEnableBackground: true }, { removeHiddenElems: true }, { removeEmptyText: true }, { convertShapeToPath: true }, { moveElemsAttrsToGroup: true }, { moveGroupAttrsToElems: true }, { collapseGroups: true }, { convertPathData: true }, { convertTransform: true }, { removeEmptyAttrs: true }, { removeEmptyContainers: true }, { mergePaths: true }, { cleanupIDs: true }, { removeUnusedNS: true }, { transformsWithOnePath: false }, { sortAttrs: true }, { removeTitle: true } ] } }
