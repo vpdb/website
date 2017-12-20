@@ -11,7 +11,7 @@ import ngAnimate from 'angular-animate';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
 import ngTouch from 'angular-touch';
-import uiRouter from 'angular-ui-router';
+import uiRouter from '@uirouter/angularjs';
 import uiBootstrap from 'angular-ui-bootstrap';
 import ngElastic from 'angular-elastic';
 import ngFileUpload from 'ng-file-upload';
