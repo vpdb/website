@@ -1,6 +1,6 @@
 import { browser, Config } from 'protractor';
 import { Users } from '../src/test/backend/Users';
-import { root, users } from './testusers';
+import { root, users } from './users';
 import { User } from '../src/test/models/User';
 import { VpdbConfig } from "../src/test/models/VpdbConfig";
 

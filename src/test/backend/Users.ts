@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { User } from '../models/User';
 import { VpdbConfig } from '../models/VpdbConfig';
-import { users } from '../../../config/testusers';
+import { users } from '../../../config/users';
 
 export class Users {
 
