@@ -1,5 +1,6 @@
 import { browser } from 'protractor';
 import { Games } from '../../test/backend/Games';
+import { Users } from '../../test/backend/Users';
 import { Game } from '../../test/models/Game';
 import { ReleaseAddPage } from './release.add.page';
 import { AppPage } from '../app.page';
@@ -9,14 +10,14 @@ describe('Add new release', () => {
 	const appPage = new AppPage();
 	const releaseAddPage = new ReleaseAddPage();
 	const games:Games = new Games(browser.params.vpdb);
+	const users:Users = new Users(browser.params.vpdb);
 
 	let game:Game;
 
 	beforeAll(() => {
-		return games.createGame().then((g:Game) => {
-			game = g;
-			releaseAddPage.get(game);
-		});
+		return users.authenticateOrCreateUser('rlsaddauthor')
+			.then(() => games.createGame())
+			.then((game:Game) => releaseAddPage.get(game));
 	});
 
 	afterEach(() => {
@@ -48,6 +49,10 @@ describe('Add new release', () => {
 		releaseAddPage.reset();
 	});
 
-	//it('should be able to add an author');
+	it('should be able to add an author', () => {
+		releaseAddPage.addAuthor('rlsaddauthor', 'Drama Queen');
+		expect(releaseAddPage.hasAuthor('rlsaddauthor', 'Drama Queen')).toBe(true);
+		releaseAddPage.reset();
+	});
 
 });

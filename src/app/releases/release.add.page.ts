@@ -13,6 +13,7 @@ export class ReleaseAddPage extends BasePage {
 	private name = element(by.id('name'));
 	private filesUpload = element(by.id('ngf-files-upload'));
 	private filesUploadPanel = element(by.id('files-upload'));
+	private authors = element.all(by.repeater('author in vm.release.authors'));
 	private version = element(by.id('version'));
 	private resetButton = element(by.id('reset-btn'));
 	private submitButton = element(by.id('submit-btn'));
@@ -24,8 +25,7 @@ export class ReleaseAddPage extends BasePage {
 	}
 
 	clearAuthors() {
-		const authors = element.all(by.repeater('author in vm.release.authors'));
-		authors.each(author => {
+		this.authors.each(author => {
 			browser.actions().mouseMove(author).perform();
 			const delButton = author.element(by.css('[ng-click="vm.removeAuthor(author)"]'));
 			delButton.click();
@@ -46,6 +46,12 @@ export class ReleaseAddPage extends BasePage {
 		if (name && role) {
 			authorModal.submit();
 		}
+	}
+
+	hasAuthor(name:string, role:string) {
+		const author = this.authors.filter(el => el.element(by.css('.media-body h6')).getText().then(text => text === name)).first();
+		return author.element(by.css('.media-body > span')).getText().then(text => text === role);
+
 	}
 
 	uploadFile(fileName:string) {
