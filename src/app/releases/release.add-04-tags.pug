@@ -49,7 +49,7 @@
 					)
 				i(ng-show="vm.tags.length == 0") No more tags available.
 
-		button.btn.btn-default.padder-top.pull-right(ng-click="vm.createTag()")
+		button#add-tag-btn.btn.btn-default.padder-top.pull-right(ng-click="vm.createTag()")
 			+icon('plus-circle').space-right
 			| Create New Tag
 

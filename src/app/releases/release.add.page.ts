@@ -48,6 +48,10 @@ export class ReleaseAddPage extends BasePage {
 		}
 	}
 
+	createTag() {
+		element(by.id('add-tag-btn')).click();
+	}
+
 	hasAuthor(name:string, role:string) {
 		const author = this.authors.filter(el => el.element(by.css('.media-body h6')).getText().then(text => text === name)).first();
 		return author.element(by.css('.media-body > span')).getText().then(text => text === role);

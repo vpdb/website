@@ -12,7 +12,7 @@ include ../template/_mixins
 			.form-group(ng-class="{ error: vm.errors.name }")
 				label.col-sm-3.control-label Name
 				.col-sm-7
-					input.form-control(ng-model="vm.tag.name", ng-required)
+					input#tag-name.form-control(ng-model="vm.tag.name", ng-required)
 			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.name")
 				+icon('warning').shift-up.space-right
 				| {{ vm.errors.name }}
@@ -20,12 +20,11 @@ include ../template/_mixins
 			.form-group(ng-class="{ error: vm.errors.description }")
 				label.col-sm-3.control-label Description
 				.col-sm-7
-					textarea.form-control(ng-model="vm.tag.description", ng-required)
+					textarea#tag-description.form-control(ng-model="vm.tag.description", ng-required)
 			div.alert.alert-danger(ng-show="vm.errors.description")
 				+icon('warning').shift-up.space-right
 				| {{ vm.errors.description }}
 
-
 	.modal-footer
-		button.btn.btn-default(ng-click="$dismiss()") Cancel
-		button.btn.btn--secondary(ng-click="vm.create()") Create
+		button#cancel-btn.btn.btn-default(ng-click="$dismiss()") Cancel
+		button#submit-btn.btn.btn--secondary(ng-click="vm.create()") Create

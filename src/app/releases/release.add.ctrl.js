@@ -201,7 +201,8 @@ export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
 	createTag() {
 		this.$uibModal.open({
 			templateUrl: TagAddModalTpl,
-			controller: 'TagAddModalCtrl'
+			controller: 'TagAddModalCtrl',
+			controllerAs: 'vm'
 		}).result.then(newTag => {
 			this.tags.push(newTag);
 		});

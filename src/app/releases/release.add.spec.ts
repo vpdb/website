@@ -12,8 +12,6 @@ describe('Add new release', () => {
 	const games:Games = new Games(browser.params.vpdb);
 	const users:Users = new Users(browser.params.vpdb);
 
-	let game:Game;
-
 	beforeAll(() => {
 		return users.authenticateOrCreateUser('rlsaddauthor')
 			.then(() => games.createGame())
