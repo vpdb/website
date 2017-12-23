@@ -49,6 +49,14 @@ export class AuthorSelectModalPage extends BasePage {
 		return this.findRole(title).then(roles => roles.length === 1);
 	}
 
+	hasAuthorValidationError() {
+		return this.hasClass(this.formGroup(this.searchBox), 'error');
+	}
+
+	hasRoleValidationError() {
+		return element(by.css('.alert[ng-show="vm.errors.roles"]')).isDisplayed();
+	}
+
 	getSubmitButtonText(): promise.Promise<string> {
 		return this.submitButton.getText();
 	}

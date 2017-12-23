@@ -31,7 +31,12 @@ describe('Add author', () => {
 		appPage.logout();
 	});
 
-	//it('should display validation errors');
+	it('should display validation errors', () => {
+		authorSelectModal.submit();
+		expect(authorSelectModal.hasAuthorValidationError()).toBe(true);
+		expect(authorSelectModal.hasRoleValidationError()).toBe(true);
+		authorSelectModal.dismiss();
+	});
 
 	it('should find a member', () => {
 		authorSelectModal.search('memb');
