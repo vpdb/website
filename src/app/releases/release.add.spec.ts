@@ -4,6 +4,8 @@ import { Users } from '../../test/backend/Users';
 import { Game } from '../../test/models/Game';
 import { ReleaseAddPage } from './release.add.page';
 import { AppPage } from '../app.page';
+import { company } from 'faker';
+import { release } from "os";
 
 describe('Add new release', () => {
 
@@ -50,6 +52,39 @@ describe('Add new release', () => {
 	it('should be able to add an author', () => {
 		releaseAddPage.addAuthor('rlsaddauthor', 'Drama Queen');
 		expect(releaseAddPage.hasAuthor('rlsaddauthor', 'Drama Queen')).toBe(true);
+		releaseAddPage.reset();
+	});
+
+	//it('should be able to edit an author');
+
+	it('should be able to create a new tag', () => {
+		const tagName = company.bsAdjective();
+		releaseAddPage.createTag(tagName, company.catchPhraseDescriptor());
+		expect(releaseAddPage.hasTag(tagName)).toBe(true);
+		expect(releaseAddPage.hasSelectedTag(tagName)).toBe(false);
+		releaseAddPage.reset();
+	});
+
+	it('should be able to add an existing tag', () => {
+		releaseAddPage.selectTag('HD');
+		expect(releaseAddPage.hasTag('HD')).toBe(false);
+		expect(releaseAddPage.hasSelectedTag('HD')).toBe(true);
+		releaseAddPage.reset();
+	});
+
+	it('should be able to remove a tag by dragging', () => {
+		releaseAddPage.selectTag('3D');
+		releaseAddPage.removeTagByDrag('3D');
+		expect(releaseAddPage.hasTag('3D')).toBe(true);
+		expect(releaseAddPage.hasSelectedTag('3D')).toBe(false);
+		releaseAddPage.reset();
+	});
+
+	it('should be able to remove a tag by clicking', () => {
+		releaseAddPage.selectTag('3D');
+		releaseAddPage.removeTagByClick('3D');
+		expect(releaseAddPage.hasTag('3D')).toBe(true);
+		expect(releaseAddPage.hasSelectedTag('3D')).toBe(false);
 		releaseAddPage.reset();
 	});
 

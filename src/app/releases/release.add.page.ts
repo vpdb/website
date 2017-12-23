@@ -1,10 +1,11 @@
 import { resolve } from 'path';
 import { browser, by, element } from 'protractor';
 import { promise } from 'selenium-webdriver';
+import { AuthorSelectModalPage } from '../users/author.select.modal.page';
+import { TagAddModalPage } from '../tag/tag.add.modal.page';
 import { Game } from '../../test/models/Game';
 import { BasePage } from '../../test/BasePage';
 import { AppPage } from '../app.page';
-import { AuthorSelectModalPage } from "../users/author.select.modal.page";
 
 export class ReleaseAddPage extends BasePage {
 
@@ -14,6 +15,8 @@ export class ReleaseAddPage extends BasePage {
 	private filesUpload = element(by.id('ngf-files-upload'));
 	private filesUploadPanel = element(by.id('files-upload'));
 	private authors = element.all(by.repeater('author in vm.release.authors'));
+	private tagsSelected = element.all(by.repeater('tag in vm.meta.tags'));
+	private tagsExisting = element.all(by.repeater('tag in vm.tags'));
 	private version = element(by.id('version'));
 	private resetButton = element(by.id('reset-btn'));
 	private submitButton = element(by.id('submit-btn'));
@@ -48,14 +51,46 @@ export class ReleaseAddPage extends BasePage {
 		}
 	}
 
-	createTag() {
-		element(by.id('add-tag-btn')).click();
-	}
-
 	hasAuthor(name:string, role:string) {
 		const author = this.authors.filter(el => el.element(by.css('.media-body h6')).getText().then(text => text === name)).first();
 		return author.element(by.css('.media-body > span')).getText().then(text => text === role);
 
+	}
+
+	createTag(name:string = null, description:string = null) {
+		element(by.id('add-tag-btn')).click();
+		const tagModal = new TagAddModalPage();
+		if (name !== null && description !== null) {
+			tagModal.setName(name);
+			tagModal.setDescription(description);
+			tagModal.submit();
+		}
+	}
+
+	selectTag(name:string) {
+		const tag = this.tagsExisting.filter(el => el.getText().then(text => text === name)).first();
+		browser.actions().dragAndDrop(tag, element(by.id('selected-tags'))).mouseUp().perform();
+		browser.wait(() => this.hasSelectedTag(name), 5000);
+	}
+
+	removeTagByClick(name:string) {
+		return this.findSelectedTag(name).first().element(by.tagName('svg')).click();
+	}
+
+	removeTagByDrag(name:string) {
+		const tag = this.findSelectedTag(name).first().element(by.className('badge'));
+		browser.actions().dragAndDrop(tag, element(by.id('tags'))).mouseUp().perform();
+		browser.wait(() => this.hasTag(name), 5000);
+	}
+
+	hasTag(name:string) {
+		return this.tagsExisting
+			.filter(el => el.getText().then(text => text === name))
+			.then(els => els.length === 1);
+	}
+
+	hasSelectedTag(name:string) {
+		return this.findSelectedTag(name).then(els => els.length === 1);
 	}
 
 	uploadFile(fileName:string) {
@@ -101,6 +136,10 @@ export class ReleaseAddPage extends BasePage {
 	}
 
 	hasPlayfieldImageValidationError(filename:string): promise.Promise<boolean> {
-		return this.parentWithText('media', filename, 'span', 'ng-scope').element(by.css('.alert')).isDisplayed();
+		return this.parentWithText('media', filename, 'span', 'ng-scope').element(by.className('alert')).isDisplayed();
+	}
+
+	private findSelectedTag(name:string) {
+		return this.tagsSelected.filter(el => el.element(by.className('badge')).getText().then(text => text === name));
 	}
 }

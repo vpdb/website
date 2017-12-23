@@ -6,7 +6,7 @@
 
 		//- SELECTED
 		h5.h--shift-up.hr--margin-small Selected Tags
-		.panel--dropzone-alt(
+		#selected-tags.panel--dropzone-alt(
 			ng-model="vm.meta.tags",
 			data-drop="true",
 			data-jqyoui-options="{ accept: '.badge:not([ng-model=vm.meta.tags])', activeClass: 'active', 'hoverClass': 'hover' }",
@@ -25,7 +25,7 @@
 			i(ng-show="vm.meta.tags.length == 0") No tags selected. Drag and drop them from the right hand pane in here.
 	.col-sm-6
 		.rel-pos
-			.panel--dropzone-alt-2(
+			#tags.panel--dropzone-alt-2(
 				ng-model="vm.tags",
 				data-drop="true",
 				data-jqyoui-options="{ accept:':not([ng-model=tags])', activeClass: 'active', hoverClass: 'hover' }",
@@ -44,7 +44,6 @@
 					+icon('question-circle').small.shift-up.space-left.a(
 						uib-tooltip="{{ tag.description }}",
 						tooltip-append-to-body="false",
-						tooltip-trigger="click",
 						tooltip-popup-delay="200"
 					)
 				i(ng-show="vm.tags.length == 0") No more tags available.
