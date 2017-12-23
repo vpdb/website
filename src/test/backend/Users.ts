@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { User } from '../models/User';
 import { VpdbConfig } from '../models/VpdbConfig';
-import { users } from '../../../config/users';
+import { root, users } from '../../../config/users';
 
 export class Users {
 
@@ -14,6 +14,12 @@ export class Users {
 		});
 	}
 
+	/**
+	 * Creates all pre-defined users.
+	 * @param {User} rootUser Root user, i.e. first created user
+	 * @param {User[]} otherUsers Other users to create
+	 * @returns {Promise<User[]>} Created users
+	 */
 	createUsers(rootUser: User, otherUsers: User[]): Promise<User[]> {
 		return this.authenticateOrCreateUser(rootUser).then(rootUser => {
 			return Promise.all(otherUsers.map(user => this.authenticateOrCreateUser(user, rootUser))).then(users => {
@@ -22,7 +28,28 @@ export class Users {
 		});
 	}
 
-	authenticateOrCreateUser(user: User, creator: User = null): Promise<User> {
+	/**
+	 * Returns a pre-defined user with a valid token.
+	 * @param {string} username Username
+	 * @returns {Promise<User>} Authenticated user
+	 */
+	getAuthenticatedUser(username:string):Promise<User> {
+		const authenticated = Users.users.filter(u => u.username === username);
+		if (authenticated.length == 1) {
+			return Promise.resolve(authenticated[0]);
+		}
+		return this.authenticateUser(users.filter(u => u.username === username)[0]);
+	}
+
+	/**
+	 * Authenticates a user or creates and authenticates a user if it doesn't exist.
+	 *
+	 * @param {User | string} usernameOrUser If string provided, email and password are generated.
+	 * @param {User} creator User with which the new user should be created.
+	 * @returns {Promise<User>} Authenticated user
+	 */
+	authenticateOrCreateUser(usernameOrUser: User|string, creator: User = null): Promise<User> {
+		const user:User = typeof usernameOrUser === 'string' ? Users.generateUser(usernameOrUser) : usernameOrUser;
 		return this.authenticateUser(user).then(authenticatedUser => {
 			if (authenticatedUser === null) {
 				return this.createUser(user, creator).then(createdUser => this.authenticateUser(createdUser));
@@ -31,7 +58,12 @@ export class Users {
 		});
 	}
 
-	authenticateUser(user: User): Promise<User> {
+	/**
+	 * Authenticates a user.
+	 * @param {User} user User to authenticate
+	 * @returns {Promise<User>} Authenticated user
+	 */
+	private authenticateUser(user: User): Promise<User> {
 		return this.api.post('/v1/authenticate', {
 			username: user.username,
 			password: user.password
@@ -53,7 +85,13 @@ export class Users {
 		});
 	}
 
-	createUser(user: User, creator: User = null): Promise<User> {
+	/**
+	 * Creates a user.
+	 * @param {User} user User to create
+	 * @param {User} creator User with which the new user should be created.
+	 * @returns {Promise<User>} Created user
+	 */
+	private createUser(user: User, creator: User = null): Promise<User> {
 
 		let config = Users.getConfig();
 		if (creator) {
@@ -68,7 +106,7 @@ export class Users {
 				user.id = createdUser.id;
 				user.name = createdUser.name;
 				user._plan = createdUser._plan;
-				return this.updateUser(user, creator);
+				return this.updateUser(user);
 			}
 			return createdUser;
 
@@ -77,30 +115,55 @@ export class Users {
 		});
 	}
 
-	updateUser(user: User, creator: User): Promise<User> {
-		let config = Users.getConfig();
-		config.headers.Authorization = 'Bearer ' + creator.token;
-		const userToUpdate: User = JSON.parse(JSON.stringify(user));
-		delete userToUpdate.password;
-		userToUpdate.is_active = true;
-		return this.api.put('/v1/users/' + user.id, userToUpdate, config).then(response => {
-			if (response.status !== 200) {
-				throw new Error('Error updating user (' + response.status + '): ' + JSON.stringify(response.data));
-			}
-			return Users.readUser(response, user);
+	/**
+	 * Creates a user with the given username.
+	 * @param {string} username
+	 * @param roles User roles, default: 'member'.
+	 */
+	private static generateUser(username:string, roles:string[] = [ 'member' ]): User {
 
-		}, err => {
-			throw new Error('Error updating user: ' + JSON.stringify(err.response.data));
+		const crypto = require('crypto');
+		const secret = 'username';
+		const password = crypto.createHmac('sha256', secret).digest('base64').substring(0, 10);
+		return {
+			username: username,
+			password: password,
+			roles: roles,
+			email: username + '@vpdb.io'
+		}
+	}
+
+	/**
+	 * Updates the user, typically to add roles.
+	 * @param {User} user User to update
+	 * @returns {Promise<User>} Updated user
+	 */
+	private updateUser(user: User): Promise<User> {
+		return this.authenticateUser(root).then(creator => {
+			let config = Users.getConfig();
+			config.headers.Authorization = 'Bearer ' + creator.token;
+			const userToUpdate: User = JSON.parse(JSON.stringify(user));
+			delete userToUpdate.password;
+			userToUpdate.is_active = true;
+			return this.api.put('/v1/users/' + user.id, userToUpdate, config).then(response => {
+				if (response.status !== 200) {
+					throw new Error('Error updating user (' + response.status + '): ' + JSON.stringify(response.data));
+				}
+				return Users.readUser(response, user);
+
+			}, err => {
+				throw new Error('Error updating user: ' + JSON.stringify(err.response.data));
+			});
 		});
 	}
 
-	static getConfig(): AxiosRequestConfig {
+	private static getConfig(): AxiosRequestConfig {
 		return {
 			headers: { 'Content-Type': 'application/json' }
 		}
 	}
 
-	static readUser(response: AxiosResponse, user: User): User {
+	private static readUser(response: AxiosResponse, user: User): User {
 		let u, token;
 		if (response.data.token) {
 			token = response.data.token;
@@ -119,14 +182,6 @@ export class Users {
 			_plan: u.plan.id,
 			token: token
 		}
-	}
-
-	getAuthenticatedUser(username:string):Promise<User> {
-		const authenticated = Users.users.filter(u => u.username === username);
-		if (authenticated.length == 1) {
-			return Promise.resolve(authenticated[0]);
-		}
-		return this.authenticateUser(users.filter(u => u.username === username)[0]);
 	}
 }
 

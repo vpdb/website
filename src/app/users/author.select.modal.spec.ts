@@ -1,5 +1,6 @@
 import { browser } from 'protractor';
 import { Games } from '../../test/backend/Games';
+import { Users } from '../../test/backend/Users';
 import { Game } from '../../test/models/Game';
 import { AppPage } from '../app.page';
 import { ReleaseAddPage } from '../releases/release.add.page';
@@ -11,14 +12,14 @@ describe('Add author', () => {
 	const releaseAddPage = new ReleaseAddPage();
 	const authorSelectModal = new AuthorSelectModalPage();
 	const games:Games = new Games(browser.params.vpdb);
-
-	let game:Game;
+	const users:Users = new Users(browser.params.vpdb);
 
 	beforeAll(() => {
-		return games.createGame().then((g:Game) => {
-			game = g;
-			releaseAddPage.get(game);
-		});
+
+		return users.authenticateOrCreateUser('membah')
+			.then(() => users.authenticateOrCreateUser('membrrr'))
+			.then(() => games.createGame())
+			.then((game:Game) => releaseAddPage.get(game));
 	});
 
 	beforeEach(() => {
@@ -41,7 +42,7 @@ describe('Add author', () => {
 
 	it('should select a member', () => {
 		authorSelectModal.search('memb');
-		authorSelectModal.selectSearchResult(0);
+		authorSelectModal.selectSearchResult('member');
 		expect(authorSelectModal.getSelectedName()).toBe('member');
 
 		authorSelectModal.dismiss();

@@ -18,8 +18,12 @@ export class AuthorSelectModalPage extends BasePage {
 		return this.searchResults.count().then(count => count > 0);
 	}
 
-	selectSearchResult(position: number) {
-		this.searchResults.get(position).click();
+	selectSearchResult(nameOrPosition: string|number) {
+		if (typeof nameOrPosition === 'string') {
+			this.searchResults.filter(r => r.element(by.css('h3')).getText().then(text => text === nameOrPosition)).first().click();
+		} else {
+			this.searchResults.get(nameOrPosition).click();
+		}
 	}
 
 	getSelectedName(): promise.Promise<string> {
