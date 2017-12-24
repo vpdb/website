@@ -19,13 +19,11 @@ export let config: Config = merge(commonConfig, {
 	seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
 	capabilities: null,
 	multiCapabilities: [
-			'Chrome',
-			'Firefox',
-			// 'IE',
-			'Edge',
-			{ os: 'OS X', os_version: 'High Sierra', browserName: 'Safari', browser_version: '11.0' },
-			{ device: 'iPad 5th', realMobile: true, os_version: '11.0' },
-			{ device: 'Google Nexus 9', realMobile: true, os_version: '5.1' }
+			{ browserName: 'Chrome', os: 'Windows' },
+			{ browserName: 'Firefox', os: 'Windows' },
+			{ browserName: 'Edge', browser_version: '16.0' },
+			{ browserName: 'IE', browser_version: '11.0' },
+			{ browserName: 'Safari', browser_version: '11.0', os: 'OS X', os_version: 'High Sierra' }
 		].map(capability),
 	onPrepare: () => {
 		setupReporter();
