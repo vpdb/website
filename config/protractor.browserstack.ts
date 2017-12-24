@@ -22,9 +22,10 @@ export let config: Config = merge(commonConfig, {
 			'Chrome',
 			'Firefox',
 			// 'IE',
+			'Edge',
 			{ os: 'OS X', os_version: 'High Sierra', browserName: 'Safari', browser_version: '11.0' },
-			{ device: 'iPad 5th', realMobile: 'true', os_version: '11.0' },
-			{ device: 'Google Pixel', realMobile: 'true', os_version: '8.0' }
+			{ device: 'iPad 5th', realMobile: true, os_version: '11.0' },
+			{ device: 'Google Nexus 9', realMobile: true, os_version: '5.1' }
 		].map(capability),
 	onPrepare: () => {
 		setupReporter();
