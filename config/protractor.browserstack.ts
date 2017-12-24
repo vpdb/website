@@ -21,8 +21,10 @@ export let config: Config = merge(commonConfig, {
 	multiCapabilities: [
 			{ browserName: 'Chrome', os: 'Windows' },
 			{ browserName: 'Firefox', os: 'Windows' },
-			{ browserName: 'Edge', browser_version: '16.0' },
-			{ browserName: 'IE', browser_version: '11.0' },
+			{ browserName: 'Chrome', os: 'OS X' },
+			{ browserName: 'Firefox', os: 'OS X' },
+			//{ browserName: 'Edge', browser_version: '16.0' },
+			//{ browserName: 'IE', browser_version: '11.0' },
 			{ browserName: 'Safari', browser_version: '11.0', os: 'OS X', os_version: 'High Sierra' }
 		].map(capability),
 	onPrepare: () => {
