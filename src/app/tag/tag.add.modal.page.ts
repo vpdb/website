@@ -5,7 +5,7 @@ export class TagAddModalPage extends BasePage {
 
 	private name = element(by.id('tag-name'));
 	private description = element(by.id('tag-description'));
-	private submitButton = element(by.id('submit-btn'));
+	private submitButton = element(by.id('tag-submit-btn'));
 
 	setName(name: string) {
 		this.name.sendKeys(name);
@@ -24,7 +24,7 @@ export class TagAddModalPage extends BasePage {
 	}
 
 	dismiss() {
-		element(by.id('cancel-btn')).click();
+		element(by.id('tag-cancel-btn')).click();
 	}
 
 	submit() {

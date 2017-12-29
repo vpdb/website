@@ -59,8 +59,8 @@ include ../template/_mixins
 			| {{ vm.errors.roles }}
 
 	.modal-footer
-		button#cancel-btn.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
-		button#submit-btn.btn.btn--secondary(ng-click="vm.add()") {{ vm.adding ? 'Add' : 'Update' }} Author
+		button#author-cancel-btn.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
+		button#author-submit-btn.btn.btn--secondary(ng-click="vm.add()") {{ vm.adding ? 'Add' : 'Update' }} Author
 
 	script#userListItem(type="text/ng-template")
 		div.media.media--mini

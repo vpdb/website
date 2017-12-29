@@ -18,8 +18,8 @@ export class ReleaseAddPage extends BasePage {
 	private tagsSelected = element.all(by.repeater('tag in vm.meta.tags'));
 	private tagsExisting = element.all(by.repeater('tag in vm.tags'));
 	private version = element(by.id('version'));
-	private resetButton = element(by.id('reset-btn'));
-	private submitButton = element(by.id('submit-btn'));
+	private resetButton = element(by.id('release-reset-btn'));
+	private submitButton = element(by.id('release-submit-btn'));
 
 	get(game:Game) {
 		this.appPage.get();
@@ -79,7 +79,7 @@ export class ReleaseAddPage extends BasePage {
 
 	removeTagByDrag(name:string) {
 		const tag = this.findSelectedTag(name).first().element(by.className('badge'));
-		browser.actions().dragAndDrop(tag, element(by.id('tags'))).mouseUp().perform();
+		browser.actions().dragAndDrop(tag, element(by.id('available-tags'))).mouseUp().perform();
 		browser.wait(() => this.hasTag(name), 5000);
 	}
 

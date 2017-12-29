@@ -12,8 +12,8 @@ export class GameAddAdminPage extends BasePage {
 	ipdbUrl = element(by.id('ipdb-url'));
 	ipdbFetchButton = element(by.id('ipdb-fetch'));
 	gameIdRecreation = element(by.id('game-id-1'));
-	resetButton = element(by.id('reset-btn'));
-	submitButton = element(by.id('submit-btn'));
+	resetButton = element(by.id('game-reset-btn'));
+	submitButton = element(by.id('game-submit-btn'));
 	gameInfoPanel = element(by.id('game-info-panel'));
 	gameInfoTitle = this.gameInfoPanel.element(by.css('h2'));
 

@@ -7,7 +7,7 @@ export class AuthorSelectModalPage extends BasePage {
 	private searchBox = element(by.id('user-search'));
 	private searchResult = element(by.css('#user-search + ul.dropdown-menu'));
 	private searchResults = this.searchResult.all(by.repeater('match in matches track by $index'));
-	private submitButton = element(by.id('submit-btn'));
+	private submitButton = element(by.id('author-submit-btn'));
 	private addedRoles = element.all(by.repeater('r in vm.roles'));
 
 	search(name: string) {
@@ -62,7 +62,7 @@ export class AuthorSelectModalPage extends BasePage {
 	}
 
 	dismiss() {
-		element(by.id('cancel-btn')).click();
+		element(by.id('author-cancel-btn')).click();
 	}
 
 	submit() {
