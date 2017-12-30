@@ -51,6 +51,13 @@ export class ReleaseAddPage extends BasePage {
 		}
 	}
 
+	editAuthor(name:string) {
+		const author = this.authors.filter(el => el.element(by.css('.media-body h6')).getText().then(text => text === name)).first();
+		browser.actions().mouseMove(author).perform();
+		const editButton = author.element(by.css('[ng-click="vm.addAuthor(author)"]'));
+		editButton.click();
+	}
+
 	hasAuthor(name:string, role:string) {
 		const author = this.authors.filter(el => el.element(by.css('.media-body h6')).getText().then(text => text === name)).first();
 		return author.element(by.css('.media-body > span')).getText().then(text => text === role);

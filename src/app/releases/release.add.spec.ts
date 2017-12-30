@@ -5,7 +5,7 @@ import { Game } from '../../test/models/Game';
 import { ReleaseAddPage } from './release.add.page';
 import { AppPage } from '../app.page';
 import { company } from 'faker';
-import { release } from "os";
+import { AuthorSelectModalPage } from "../users/author.select.modal.page";
 
 describe('Add new release', () => {
 
@@ -55,7 +55,15 @@ describe('Add new release', () => {
 		releaseAddPage.reset();
 	});
 
-	//it('should be able to edit an author');
+	it('should be able to edit an author', () => {
+		releaseAddPage.editAuthor('member');
+		const authorModal = new AuthorSelectModalPage();
+		expect(authorModal.getSubmitButtonText()).toContain('UPDATE');
+		authorModal.removeRole('Table Creator');
+		authorModal.addRole('Coke Fetcher');
+		authorModal.submit();
+		expect(releaseAddPage.hasAuthor('member', 'Coke Fetcher')).toBe(true);
+	});
 
 	it('should be able to create a new tag', () => {
 		const tagName = company.bsAdjective();
