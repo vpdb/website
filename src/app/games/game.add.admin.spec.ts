@@ -38,14 +38,12 @@ describe('Add new game', () => {
 
 	it('should upload a backglass', () => {
 		addGamePage.uploadBackglass('backglass-1280x1024.png');
-		addGamePage.waitUntilBackglassUploaded();
 		expect(addGamePage.backglassImage.getAttribute('style')).toContain('background-image: url');
 		addGamePage.reset();
 	});
 
 	it('should upload a logo', () => {
 		addGamePage.uploadLogo('game.logo-800x300.png');
-		addGamePage.waitUntilLogoUploaded();
 		expect(addGamePage.logoImage.getAttribute('style')).toContain('background-image: url');
 		addGamePage.reset();
 	});
@@ -55,9 +53,7 @@ describe('Add new game', () => {
 		addGamePage.fetchIpdb(String(game.ipdb.number));
 		appPage.waitUntilLoaded();
 		addGamePage.uploadBackglass('backglass-1280x1024.png');
-		addGamePage.waitUntilBackglassUploaded();
 		addGamePage.uploadLogo('game.logo-800x300.png');
-		addGamePage.waitUntilLogoUploaded();
 		addGamePage.submit();
 
 		const modal = appPage.getErrorInfoModal();

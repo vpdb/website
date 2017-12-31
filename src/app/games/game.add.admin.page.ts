@@ -55,9 +55,6 @@ export class GameAddAdminPage extends BasePage {
 		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
 		this.backglassUploadPanel.click();
 		this.backglassUpload.sendKeys(path);
-	}
-
-	waitUntilBackglassUploaded() {
 		browser.wait(() => this.backglassProgress.isDisplayed().then(result => !result), 5000);
 	}
 
@@ -65,9 +62,6 @@ export class GameAddAdminPage extends BasePage {
 		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
 		this.logoUploadPanel.click();
 		this.logoUpload.sendKeys(path);
-	}
-
-	waitUntilLogoUploaded() {
 		browser.wait(() => this.logoProgress.isDisplayed().then(result => !result), 5000);
 	}
 
