@@ -13,11 +13,15 @@ describe('Add new release', () => {
 	const releaseAddPage = new ReleaseAddPage();
 	const games:Games = new Games(browser.params.vpdb);
 	const users:Users = new Users(browser.params.vpdb);
+	let game:Game;
 
 	beforeAll(() => {
 		return users.authenticateOrCreateUser('rlsaddauthor')
 			.then(() => games.createGame())
-			.then((game:Game) => releaseAddPage.get(game));
+			.then((createdGame:Game) =>  {
+				game = createdGame;
+				releaseAddPage.get(game)
+			});
 	});
 
 	afterEach(() => {
@@ -94,6 +98,29 @@ describe('Add new release', () => {
 		expect(releaseAddPage.hasTag('3D')).toBe(true);
 		expect(releaseAddPage.hasSelectedTag('3D')).toBe(false);
 		releaseAddPage.reset();
+	});
+
+	fit('should be able to add a minimal release', () => {
+		const fileName = 'blank.vpt';
+		releaseAddPage.uploadFile(fileName);
+		releaseAddPage.generateReleaseName();
+		releaseAddPage.setFlavor(fileName, 0, 0); // orientation: desktop
+		releaseAddPage.setFlavor(fileName, 1, 1); // lighting: day
+		releaseAddPage.setVersion('v1.0.0');
+		releaseAddPage.setModPermission(1);
+		releaseAddPage.setCompatibility(fileName, 0, 0);
+		releaseAddPage.setCompatibility(fileName, 0, 1);
+		releaseAddPage.uploadPlayfield(fileName,'playfield-1920x1080.png');
+		releaseAddPage.submit();
+
+		const modal = appPage.getErrorInfoModal();
+		expect(modal.title.getText()).toEqual('RELEASE CREATED!');
+		expect(modal.subtitle.getText()).toEqual(game.title.toUpperCase());
+		expect(modal.message.getText()).toContain('The release has been successfully created.');
+		expect(modal.message.getText()).toContain('You will be notified');
+		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + game.id + '/releases/');
+		modal.close();
+		releaseAddPage.navigate(game);
 	});
 
 });

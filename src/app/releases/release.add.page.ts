@@ -18,12 +18,22 @@ export class ReleaseAddPage extends BasePage {
 	private tagsSelected = element.all(by.repeater('tag in vm.meta.tags'));
 	private tagsExisting = element.all(by.repeater('tag in vm.tags'));
 	private version = element(by.id('version'));
+	private modPermission = element(by.id('mod-permission'));
+	private availableTags = element(by.id('available-tags'));
+	private selectedTags = element(by.id('selected-tags'));
+	private generateNameButton = element(by.id('generate-name-btn'));
+	private addAuthorButton = element(by.id('add-author-btn'));
+	private addTagButton = element(by.id('add-tag-btn'));
 	private resetButton = element(by.id('release-reset-btn'));
 	private submitButton = element(by.id('release-submit-btn'));
 
 	get(game:Game) {
 		this.appPage.get();
 		this.appPage.loginAs('member');
+		this.navigate(game);
+	}
+
+	navigate(game:Game) {
 		browser.get(browser.baseUrl + '/games/' + game.id + '/add-release');
 	}
 
@@ -35,8 +45,13 @@ export class ReleaseAddPage extends BasePage {
 		});
 	}
 
+	generateReleaseName() {
+		this.generateNameButton.click();
+		browser.wait(() => this.name.getAttribute('value').then(text => !!text), 5000);
+	}
+
 	addAuthor(name:string = '', role:string = '') {
-		element(by.id('add-author-btn')).click();
+		this.addAuthorButton.click();
 		const authorModal = new AuthorSelectModalPage();
 		if (name) {
 			authorModal.search(name);
@@ -65,7 +80,7 @@ export class ReleaseAddPage extends BasePage {
 	}
 
 	createTag(name:string = null, description:string = null) {
-		element(by.id('add-tag-btn')).click();
+		this.addTagButton.click();
 		const tagModal = new TagAddModalPage();
 		if (name !== null && description !== null) {
 			tagModal.setName(name);
@@ -76,7 +91,7 @@ export class ReleaseAddPage extends BasePage {
 
 	selectTag(name:string) {
 		const tag = this.tagsExisting.filter(el => el.getText().then(text => text === name)).first();
-		browser.actions().dragAndDrop(tag, element(by.id('selected-tags'))).mouseUp().perform();
+		browser.actions().dragAndDrop(tag, this.selectedTags).mouseUp().perform();
 		browser.wait(() => this.hasSelectedTag(name), 5000);
 	}
 
@@ -86,7 +101,7 @@ export class ReleaseAddPage extends BasePage {
 
 	removeTagByDrag(name:string) {
 		const tag = this.findSelectedTag(name).first().element(by.className('badge'));
-		browser.actions().dragAndDrop(tag, element(by.id('available-tags'))).mouseUp().perform();
+		browser.actions().dragAndDrop(tag, this.availableTags).mouseUp().perform();
 		browser.wait(() => this.hasTag(name), 5000);
 	}
 
@@ -104,6 +119,40 @@ export class ReleaseAddPage extends BasePage {
 		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
 		this.filesUploadPanel.click();
 		this.filesUpload.sendKeys(path);
+	}
+
+	uploadPlayfield(tableFileName:string, imageFileName:string) {
+		const path = resolve(__dirname, '../../../../src/test/assets/', imageFileName);
+		const panel = this.parentWithText('media', tableFileName, 'span', 'ng-scope');
+		const uploadPanel = panel.element(by.className('playfield--image'));
+		return uploadPanel.getAttribute('id').then(id => {
+			panel.click();
+			element(by.id('ngf-' + id)).sendKeys(path);
+		});
+	}
+
+	setFlavor(fileName:string, type:number, value:number) {
+		const panel = this.parentWithText('flavors', fileName);
+		panel.all(by.tagName('tr')).get(type)
+			.all(by.tagName('td')).get(value)
+			.element(by.tagName('label'))
+			.click();
+	}
+
+	setVersion(version:string) {
+		this.version.sendKeys(version);
+	}
+
+	setModPermission(pos:number) {
+		this.modPermission.all(by.tagName('label')).get(pos).click();
+	}
+
+	setCompatibility(fileName:string, type:number, value:number) {
+		const panel = this.parentWithText('compatibility', fileName);
+		panel.all(by.css('.col--list-files-right > .col-md-4')).get(type)
+			.all(by.css('.simple-list')).get(value)
+			.element(by.tagName('label'))
+			.click();
 	}
 
 	reset() {
