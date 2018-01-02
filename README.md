@@ -10,9 +10,11 @@ This the code of the website. For the API, check out the [server project](https:
 
 ## Quick Start
 
-Since the web application is completely decoupled from the server, you can easily run it locally and use `api.vpdb.io` as backend.
+Since the web application is completely decoupled from the server, you can 
+easily run it locally and use `api.vpdb.io` as backend.
 
-You're going to need to have [Node.js](https://nodejs.org/) and [git](https://git-scm.com/downloads) installed.
+You're going to need to have [Node.js](https://nodejs.org/) and 
+[git](https://git-scm.com/downloads) installed.
 
 1. `git clone https://github.com/vpdb/website vpdb-website`
 2. `cd vpdb-website`
@@ -28,8 +30,8 @@ and [Stylus](http://stylus-lang.com/) for the styles.
 
 ## Build Modes
 
-Since the the website is completely decoupled from the server, you can choose any
-server to run with. Basically, when running the website, there are two factors:
+Since the the website is separated from the server, you can choose any server 
+to run with. Basically, when running the website, there are two factors:
 
 1. Which backend to use
 2. How to compile
@@ -68,7 +70,7 @@ Running locally you'll need four terminals open.
   then just `npm run selenium`. 
 - **Test runner**: Finally, execute the tests with `npm run test:local`
 
-## Appreciations
+## Credits
 
 [![IntelliJ IDEA][idea-image]][idea-url]
 
@@ -76,7 +78,7 @@ Thanks to JetBrains for their awesome IDE and support of the Open Source Communi
 
 <a href="https://www.browserstack.com"><img width="300" src="https://raw.githubusercontent.com/vpdb/website/master/src/test/browserstack-logo.png"></a>
 
-Also thanks to BrowserStack for offering free end-to-end testing.
+Also huge thanks to BrowserStack for offering free end-to-end testing for this project.
 
 ## License
 
