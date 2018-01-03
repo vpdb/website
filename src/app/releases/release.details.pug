@@ -223,7 +223,7 @@ p.padder-top(ng-show="vm.pageLoading")
 						| {{ flavor.lighting.name }} <br>
 						i {{ flavor.lighting.other }}
 					td(ng-show="!vm.$localStorage.showFilenames")
-						span(ng-repeat="compat in flavor.file.compatibility") {{ compat.label }}
+						span(ng-repeat="compat in flavor.file.compatibility") {{ $index > 0 ? ', ' : '' }}{{ compat.label }}
 					td(ng-show="vm.$localStorage.showFilenames") {{ flavor.file.file.name }}
 					td(ng-show="vm.$localStorage.showFilenames") {{ flavor.version.version }}
 					td {{ flavor.file.file.bytes | bytes }}
