@@ -35,6 +35,11 @@ export default function() {
 		replace: true,
 		templateUrl: EditorDirectiveTpl,
 		controller: 'EditorDirectiveCtrl',
-		controllerAs: 'vm'
+		controllerAs: 'vm',
+		link: (scope, elem, attrs) => {
+			if (attrs.id) {
+				scope.textareaId = attrs.id;
+			}
+		}
 	};
 }

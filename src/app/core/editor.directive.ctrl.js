@@ -93,9 +93,6 @@ export default class EditorCtrl {
 		return ~item.name.indexOf(' ') ? '@"' + item.name + '"' : '@' + item.name;
 	}
 
-
-
-
 	static matchAll(text, regex) {
 		regex = new RegExp(regex.source, 'gi');
 		let match;
