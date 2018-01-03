@@ -76,15 +76,12 @@ export class AppPage {
 	}
 
 	getLoggedUsername() {
-		//const user = JSON.parse(browser.executeScript("return window.localStorage.getItem('key');");
-		//expect(value).toEqual(expectedValue);
-		//browser.wait(() => element(by.css('img.img-avatar')).isDisplayed(), 1000);
-		//return this.loggedUser.getAttribute('textContent');
+		// might be hidden in small viewports, so we need to retrieve it differently.
 		return browser.driver.executeScript("return document.getElementById('logged-user').innerHTML");
 	}
 
 	getErrorInfoModal() {
-		browser.wait(until.presenceOf(this.errorInfoModal), 1000);
+		browser.wait(until.presenceOf(this.errorInfoModal), 3000);
 		return new ModalErrorInfoPage(this.errorInfoModal);
 	}
 
