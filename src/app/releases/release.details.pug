@@ -120,7 +120,7 @@ p.padder-top(ng-show="vm.pageLoading")
 
 				editor(ng-model="vm.newModerationComment", user="vm.AuthService.user", placeholder="Comment about release moderation", markdown-text="Comments are parsed with Markdown.")
 
-				button.btn.btn-hollow.pull-right.shift-up-2x(ng-click="vm.addModerationComment(vm.release.id)") Reply
+				button.btn.btn-hollow.pull-right.padder-top(ng-click="vm.addModerationComment(vm.release.id)") Reply
 				.clearfix
 
 			.alert.alert-info(ng-show="!vm.release.moderation.is_refused && !vm.release.moderation.is_approved")

@@ -50,7 +50,7 @@ include ../template/_mixins
 			.form-group(ng-show="vm.roles.length > 0")
 				label.col-sm-2.control-label Roles
 				.col-sm-10
-					.badge(ng-repeat="r in vm.roles") {{ r }}
+					.badge.space-right(ng-repeat="r in vm.roles") {{ r }}
 						span.a(ng-click="vm.removeRole(r)") &times;
 
 		.clearfix
