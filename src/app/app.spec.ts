@@ -45,7 +45,6 @@ describe('App', () => {
 			expect(appPage.getLoggedUsername()).toEqual('contributor');
 			appPage.logout();
 		});
-
 	});
 
 	describe('as contributor', () => {

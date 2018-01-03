@@ -53,21 +53,20 @@ describe('Add new version to release', () => {
 		//appPage.logout();
 	});
 
-	xit('should display validation errors when no file uploaded', () => {
+	it('should display validation errors when no file uploaded', () => {
 		versionAddPage.submit();
 		expect(versionAddPage.hasFileUploadValidationError()).toBe(true);
 		versionAddPage.reset();
 	});
 
-	//
 	// it('should display validation errors when a file is uploaded.', () => {
 	// 	const fileName = 'blank.vpt';
-	// 	releaseAddPage.uploadFile(fileName);
-	// 	releaseAddPage.submit();
-	// 	expect(releaseAddPage.hasFlavorValidationError(fileName)).toBe(true);
-	// 	expect(releaseAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
-	// 	expect(releaseAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
-	// 	releaseAddPage.reset();
+	// 	versionAddPage.uploadFile(fileName);
+	// 	versionAddPage.submit();
+	// 	expect(versionAddPage.hasFlavorValidationError(fileName)).toBe(true);
+	// 	expect(versionAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
+	// 	expect(versionAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
+	// 	versionAddPage.reset();
 	// });
 	//
 	// it('should be able to add an author', () => {

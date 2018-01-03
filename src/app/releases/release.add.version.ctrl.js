@@ -39,13 +39,14 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 	 * @param BuildResource
 	 * @param FileResource
 	 * @param GameResource
+	 * @param ReleaseResource
 	 * @param ReleaseVersionResource
 	 * @param {TrackerService} TrackerService
 	 * @ngInject
 	 */
 	constructor($scope, $uibModal, $state, $stateParams, $localStorage,
 				App, ApiHelper, AuthService, ModalService, ReleaseMeta, Flavors, BootstrapPatcher,
-				BuildResource, FileResource, GameResource, ReleaseVersionResource, TrackerService) {
+				BuildResource, FileResource, GameResource, ReleaseResource, ReleaseVersionResource, TrackerService) {
 
 		super($uibModal, ApiHelper, AuthService, BootstrapPatcher, BuildResource, FileResource);
 
@@ -74,25 +75,23 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 		// fetch game info
 		this.gameId = $stateParams.id;
 		this.releaseId = $stateParams.releaseId;
-		this.game = GameResource.get({ id: this.gameId }, () => {
-			this.release = find(this.game.releases, { id: this.releaseId });
-			if (this.release) {
-				App.setTitle('Upload Files - ' + this.game.title + ' (' + this.release.name + ')');
-				TrackerService.trackPage();
+		this.release = ReleaseResource.get({ release: this.releaseId }, () => {
+			App.setTitle('Upload Files - ' + this.game.title + ' (' + this.release.name + ')');
+			TrackerService.trackPage();
 
-				// populate versions
-				this.versions = map(orderBy(this.release.versions, 'released_at', false), 'version');
+			// populate versions
+			this.versions = map(orderBy(this.release.versions, 'released_at', false), 'version');
 
-				// init data: either copy from local storage or reset.
-				if (this.$localStorage.release_version && this.$localStorage.release_version[this.releaseId]) {
-					this.releaseVersion = this.$localStorage.release_version[this.releaseId];
-					this.meta = this.$localStorage.release_version_meta[this.releaseId];
-					AuthService.collectUrlProps(this.meta, true);
-				} else {
-					this.reset();
-				}
+			// init data: either copy from local storage or reset.
+			if (this.$localStorage.release_version && this.$localStorage.release_version[this.releaseId]) {
+				this.releaseVersion = this.$localStorage.release_version[this.releaseId];
+				this.meta = this.$localStorage.release_version_meta[this.releaseId];
+				AuthService.collectUrlProps(this.meta, true);
+			} else {
+				this.reset();
 			}
 		});
+		this.game = GameResource.get({ id: this.gameId });
 
 		// steps
 		this.step = {

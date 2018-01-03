@@ -91,7 +91,7 @@ export class Releases {
 				authors: [ { _user: user.id, roles: [ 'Table Creator' ] } ]
 			};
 
-			return this.api.post<File>('/v1/releases', { }, {
+			return this.api.post<File>('/v1/releases', release, {
 				headers: { [ this.vpdb.authHeader ]: 'Bearer ' + user.token }
 			});
 
