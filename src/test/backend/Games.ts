@@ -59,7 +59,7 @@ export class Games {
 		let token:string;
 		return this.users.getAuthenticatedUser('contributor').then((user: User) => {
 			token = user.token;
-			return this.files.uploadBackglass();
+			return this.files.uploadBackglassImage(user);
 
 		}).then((backglass:File) => {
 			return this.api.post<File>('/v1/games', assign(Games.getGame(), { _backglass: backglass.id }), {

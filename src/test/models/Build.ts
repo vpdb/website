@@ -17,19 +17,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-export interface User {
-	id?: string,
-	username: string,
-	password: string,
-	name?: string,
-	roles?: string[],
-	email?: string,
-	token?: string,
-	_plan?: string
-	is_active?: boolean,
-	gravatar_id?: string,
-	counter?: {
-		comments: number,
-		stars: number
-	}
+export interface Build {
+	id: string,
+	label: string,
+	platform: 'vp',
+	major_version: string,
+	built_at: Date,
+	type: 'release' | 'nightly' | 'experimental',
+	is_range: boolean
 }

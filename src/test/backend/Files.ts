@@ -17,15 +17,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import { readFileSync } from 'fs';
+import { extname, resolve } from 'path';
 import { isBuffer } from 'util';
-import { PNG } from 'pngjs';
+import { ColorType, PNG } from 'pngjs';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import Please = require('pleasejs/src/Please.js');
-import toArray = require('stream-to-array');
 import { Users } from './Users';
-import { User } from '../models/User';
 import { File } from '../models/File';
 import { VpdbConfig } from '../models/VpdbConfig';
+import Please = require('pleasejs/src/Please.js');
+import toArray = require('stream-to-array');
+import { User } from "../models/User";
 
 export class Files {
 
@@ -39,31 +41,94 @@ export class Files {
 		this.users = new Users(vpdb);
 	}
 
-	uploadBackglass(): Promise<File> {
-		const color = Please.make_color({ format: 'rgb' })[0];
-		const png = new PNG({
-			width: 640,
-			height: 512,
-			colorType: 2,
-			bgColor: { red: color.r, green: color.g, blue: color.b }
-		});
-
-		let token: string;
-		return this.users.getAuthenticatedUser('contributor').then((user: User) => {
-			token = user.token;
-			return toArray(png.pack());
-
-		}).then(parts => {
-			const buffers = parts.map(part => isBuffer(part) ? part : Buffer.from(part));
-			const buffer = Buffer.concat(buffers);
+	/**
+	 * Generates a colored backglass image and uploads it to the server.
+	 *
+	 * @param {User} user Authenticated user
+	 * @returns {Promise<File>} Uploaded file
+	 */
+	uploadBackglassImage(user:User): Promise<File> {
+		return this.generateImage(640, 512).then(buffer => {
 			return this.storage.post<File>('/v1/files', buffer, {
 				headers: {
 					'Content-Type': 'image/png',
 					'Content-Disposition': 'attachment; filename="backglass.png"',
-					[ this.vpdb.authHeader ]: 'Bearer ' + token,
+					[ this.vpdb.authHeader ]: 'Bearer ' + user.token,
 				},
 				params: { type: 'backglass' }
 			});
 		}).then((response: AxiosResponse) => response.data);
+	}
+
+	/**
+	 * Generates a colored playfield image and uploads it to the server.
+	 *
+	 * @param {"fs" | "ws"} orientation
+	 * @param {User} user Authenticated user
+	 * @returns {Promise<File>} Uploaded file
+	 */
+	uploadPlayfieldImage(orientation:'fs'|'ws', user:User): Promise<File> {
+		let [ width, height ] = orientation === 'fs' ? [ 1080, 1920 ] : [ 1920, 1080 ];
+		return this.generateImage(width, height).then(buffer => {
+			return this.storage.post<File>('/v1/files', buffer, {
+				headers: {
+					'Content-Type': 'image/png',
+					'Content-Disposition': 'attachment; filename="playfield.png"',
+					[ this.vpdb.authHeader ]: 'Bearer ' + user.token,
+				},
+				params: { type: 'playfield-' + orientation }
+			});
+		}).then((response: AxiosResponse) => response.data);
+	}
+
+	/**
+	 * Uploads a table file from the test assets folder.
+	 *
+	 * @param {string} fileName File name without path
+	 * @param {User} user Authenticated user
+	 * @returns {Promise<File>} Uploaded file
+	 */
+	uploadTableFile(fileName:string, user:User): Promise<File> {
+		const mimeType = extname(fileName) === '.vpx' ? 'application/x-visual-pinball-table-x' : 'application/x-visual-pinball-table';
+		return this.storage.post<File>('/v1/files', this.readAsset(fileName), {
+			headers: {
+				'Content-Type': mimeType,
+				'Content-Disposition': 'attachment; filename="' + fileName + '"',
+				[ this.vpdb.authHeader ]: 'Bearer ' + user.token,
+			},
+			params: { type: 'release' }
+		}).then((response: AxiosResponse) => response.data);
+	}
+
+	/**
+	 * Reads a file from the asset folder into memory.
+	 *
+	 * @param {string} fileName File name without path
+	 * @returns {Buffer} Read binary data
+	 */
+	private readAsset(fileName:string): Buffer {
+		return readFileSync(resolve(__dirname, '../assets', fileName));
+	}
+
+	/**
+	 * Generates a PNG image with a random color for a given resolution.
+	 *
+	 * @param {number} width Width of the image to generate
+	 * @param {number} height Height of the image to generate
+	 * @param {ColorType} colorType Color type
+	 * @returns {Promise<Buffer>} Generated binary data
+	 */
+	private generateImage(width:number, height:number, colorType:ColorType = 2): Promise<Buffer> {
+		const color = Please.make_color({ format: 'rgb' })[0];
+		const png = new PNG({
+			width: width,
+			height: height,
+			colorType: colorType,
+			bgColor: { red: color.r, green: color.g, blue: color.b }
+		});
+		return toArray(png.pack()).then(parts => {
+			const buffers = parts.map(part => isBuffer(part) ? part : Buffer.from(part));
+			return Buffer.concat(buffers);
+		});
 	}
 }
