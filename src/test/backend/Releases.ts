@@ -55,7 +55,7 @@ export class Releases {
 		let tableFile:File;
 		let playfieldImage:File;
 
-		return this.users.getAuthenticatedUser(creator).then((u: User) => {
+		return this.users.authenticateOrCreateUser(creator).then((u: User) => {
 			user = u;
 			if (g) {
 				return g;
@@ -97,6 +97,4 @@ export class Releases {
 
 		}).then((response: AxiosResponse) => response.data);
 	}
-
-	moderateRelease(releaseRelease, )
 }

@@ -107,7 +107,7 @@ export class Files {
 	 * @returns {Buffer} Read binary data
 	 */
 	private readAsset(fileName:string): Buffer {
-		return readFileSync(resolve(__dirname, '../assets', fileName));
+		return readFileSync(resolve(__dirname, '../../../../src/test/assets', fileName));
 	}
 
 	/**

@@ -23,16 +23,11 @@ import { promise } from 'selenium-webdriver';
 import { AuthorSelectModalPage } from '../users/author.select.modal.page';
 import { TagAddModalPage } from '../tag/tag.add.modal.page';
 import { Game } from '../../test/models/Game';
-import { BasePage } from '../../test/BasePage';
-import { AppPage } from '../app.page';
+import { ReleaseAddBasePage } from './release.add.base.page';
 
-export class ReleaseAddPage extends BasePage {
-
-	private appPage = new AppPage();
+export class ReleaseAddPage extends ReleaseAddBasePage {
 
 	private name = element(by.id('name'));
-	private filesUpload = element(by.id('ngf-files-upload'));
-	private filesUploadPanel = element(by.id('files-upload'));
 	private authors = element.all(by.repeater('author in vm.release.authors'));
 	private tagsSelected = element.all(by.repeater('tag in vm.meta.tags'));
 	private tagsExisting = element.all(by.repeater('tag in vm.tags'));
@@ -180,10 +175,6 @@ export class ReleaseAddPage extends BasePage {
 
 	submit() {
 		this.submitButton.click();
-	}
-
-	hasFileUploadValidationError(): promise.Promise<boolean> {
-		return this.hasClass(this.filesUploadPanel, 'error');
 	}
 
 	hasNameValidationError(): promise.Promise<boolean> {

@@ -3,6 +3,7 @@ import { Users } from '../src/test/backend/Users';
 import { root, users } from './users';
 import { User } from '../src/test/models/User';
 import { VpdbConfig } from "../src/test/models/VpdbConfig";
+import { Bootstrap } from "../src/test/Bootstrap";
 
 const JasmineConsoleReporter = require('jasmine-console-reporter');
 const HtmlReporter = require('protractor-beautiful-reporter');
@@ -20,6 +21,7 @@ export let config: Config = {
 	baseUrl: webBaseUrl,
 	params: { vpdb: vpdbConfig },
 	onPrepare: () => {
+		Bootstrap.bootstrap();
 		setupReporter();
 		return setupUsers();
 	}
@@ -27,7 +29,7 @@ export let config: Config = {
 
 export function setupReporter() {
 	// setup reporter
-	jasmine.getEnv().clearReporters();
+	//jasmine.getEnv().clearReporters();
 	jasmine.getEnv().addReporter(new JasmineConsoleReporter({
 		colors: 1,           // (0|false)|(1|true)|2
 		cleanStack: 1,       // (0|false)|(1|true)|2|3

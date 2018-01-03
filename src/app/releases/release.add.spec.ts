@@ -18,13 +18,14 @@
  */
 
 import { browser } from 'protractor';
+import { company } from 'faker';
 import { Games } from '../../test/backend/Games';
+import { Releases } from '../../test/backend/Releases';
 import { Users } from '../../test/backend/Users';
 import { Game } from '../../test/models/Game';
-import { ReleaseAddPage } from './release.add.page';
 import { AppPage } from '../app.page';
-import { company } from 'faker';
-import { AuthorSelectModalPage } from "../users/author.select.modal.page";
+import { ReleaseAddPage } from './release.add.page';
+import { AuthorSelectModalPage } from '../users/author.select.modal.page';
 
 describe('Add new release', () => {
 
@@ -32,6 +33,7 @@ describe('Add new release', () => {
 	const releaseAddPage = new ReleaseAddPage();
 	const games:Games = new Games(browser.params.vpdb);
 	const users:Users = new Users(browser.params.vpdb);
+	const releases:Releases = new Releases(browser.params.vpdb);
 	let game:Game;
 
 	beforeAll(() => {

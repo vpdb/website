@@ -18,7 +18,7 @@
  */
 
 import { resolve } from 'path';
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { assign } from 'lodash';
 import { Files } from './Files';
 import { Users } from './Users';

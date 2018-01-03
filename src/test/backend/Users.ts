@@ -54,7 +54,7 @@ export class Users {
 	 */
 	getAuthenticatedUser(username:string):Promise<User> {
 		const authenticated = Users.users.filter(u => u.username === username);
-		if (authenticated.length == 1) {
+		if (authenticated.length === 1) {
 			return Promise.resolve(authenticated[0]);
 		}
 		return this.authenticateUser(users.filter(u => u.username === username)[0]);
@@ -140,6 +140,12 @@ export class Users {
 	 * @param roles User roles, default: 'member'.
 	 */
 	private static generateUser(username:string, roles:string[] = [ 'member' ]): User {
+
+		// check if pre-defined
+		const predefined = Users.users.filter(u => u.username === username);
+		if (predefined.length === 1) {
+			return predefined[0];
+		}
 
 		const crypto = require('crypto');
 		const secret = 'username';
