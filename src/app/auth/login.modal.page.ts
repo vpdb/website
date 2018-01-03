@@ -19,14 +19,16 @@
 
 import { promise } from 'selenium-webdriver';
 import { by, ElementFinder } from 'protractor';
+import { BasePage } from '../../test/BasePage';
 
-export class LoginModalPage {
+export class LoginModalPage extends BasePage {
 
 	public static EMAIL = "root@vpdb.io";
 	public static USERNAME = "root";
 	public static PASSWORD = "abc123";
 
 	constructor(public element: ElementFinder) {
+		super();
 	}
 
 	public loginUsername = this.element.element(by.id('login-username'));
@@ -89,6 +91,18 @@ export class LoginModalPage {
 			this.setLogin(LoginModalPage.USERNAME, LoginModalPage.PASSWORD);
 			this.submitLogin();
 		});
+	}
+
+	hasEmailValidationError(): promise.Promise<boolean> {
+		return this.hasClass(this.formGroup(this.registerEmail), 'error');
+	}
+
+	hasUsernameValidationError(): promise.Promise<boolean> {
+		return this.hasClass(this.formGroup(this.registerUsername), 'error');
+	}
+
+	hasPasswordValidationError(): promise.Promise<boolean> {
+		return this.hasClass(this.formGroup(this.registerPassword), 'error');
 	}
 
 

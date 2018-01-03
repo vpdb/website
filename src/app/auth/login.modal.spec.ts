@@ -46,9 +46,9 @@ describe('Login Modal', () => {
 	it('should show validation errors when registering', () => {
 		loginModal.toggleRegister();
 		loginModal.submitRegister();
-		expect(LoginModalPage.formGroup(loginModal.registerEmail).getAttribute('class')).toMatch('error');
-		expect(LoginModalPage.formGroup(loginModal.registerUsername).getAttribute('class')).toMatch('error');
-		expect(LoginModalPage.formGroup(loginModal.registerPassword).getAttribute('class')).toMatch('error');
+		expect(loginModal.hasEmailValidationError()).toBeTruthy();
+		expect(loginModal.hasUsernameValidationError()).toBeTruthy();
+		expect(loginModal.hasPasswordValidationError()).toBeTruthy();
 		loginModal.toggle();
 	});
 
