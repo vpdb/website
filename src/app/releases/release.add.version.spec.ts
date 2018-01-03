@@ -59,63 +59,16 @@ describe('Add new version to release', () => {
 		versionAddPage.reset();
 	});
 
-	// it('should display validation errors when a file is uploaded.', () => {
-	// 	const fileName = 'blank.vpt';
-	// 	versionAddPage.uploadFile(fileName);
-	// 	versionAddPage.submit();
-	// 	expect(versionAddPage.hasFlavorValidationError(fileName)).toBe(true);
-	// 	expect(versionAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
-	// 	expect(versionAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
-	// 	versionAddPage.reset();
-	// });
-	//
-	// it('should be able to add an author', () => {
-	// 	releaseAddPage.addAuthor('rlsaddauthor', 'Drama Queen');
-	// 	expect(releaseAddPage.hasAuthor('rlsaddauthor', 'Drama Queen')).toBe(true);
-	// 	releaseAddPage.reset();
-	// });
-	//
-	// it('should be able to edit an author', () => {
-	// 	releaseAddPage.editAuthor('member');
-	// 	const authorModal = new AuthorSelectModalPage();
-	// 	expect(authorModal.getSubmitButtonText()).toContain('UPDATE');
-	// 	authorModal.removeRole('Table Creator');
-	// 	authorModal.addRole('Coke Fetcher');
-	// 	authorModal.submit();
-	// 	expect(releaseAddPage.hasAuthor('member', 'Coke Fetcher')).toBe(true);
-	// });
-	//
-	// it('should be able to create a new tag', () => {
-	// 	const tagName = company.bsAdjective();
-	// 	releaseAddPage.createTag(tagName, company.catchPhraseDescriptor());
-	// 	expect(releaseAddPage.hasTag(tagName)).toBe(true);
-	// 	expect(releaseAddPage.hasSelectedTag(tagName)).toBe(false);
-	// 	releaseAddPage.reset();
-	// });
-	//
-	// it('should be able to add an existing tag', () => {
-	// 	releaseAddPage.selectTag('HD');
-	// 	expect(releaseAddPage.hasTag('HD')).toBe(false);
-	// 	expect(releaseAddPage.hasSelectedTag('HD')).toBe(true);
-	// 	releaseAddPage.reset();
-	// });
-	//
-	// it('should be able to remove a tag by dragging', () => {
-	// 	releaseAddPage.selectTag('3D');
-	// 	releaseAddPage.removeTagByDrag('3D');
-	// 	expect(releaseAddPage.hasTag('3D')).toBe(true);
-	// 	expect(releaseAddPage.hasSelectedTag('3D')).toBe(false);
-	// 	releaseAddPage.reset();
-	// });
-	//
-	// it('should be able to remove a tag by clicking', () => {
-	// 	releaseAddPage.selectTag('3D');
-	// 	releaseAddPage.removeTagByClick('3D');
-	// 	expect(releaseAddPage.hasTag('3D')).toBe(true);
-	// 	expect(releaseAddPage.hasSelectedTag('3D')).toBe(false);
-	// 	releaseAddPage.reset();
-	// });
-	//
+	it('should display validation errors when a file is uploaded.', () => {
+		const fileName = 'blank.vpt';
+		versionAddPage.uploadFile(fileName);
+		versionAddPage.submit();
+		expect(versionAddPage.hasFlavorValidationError(fileName)).toBe(true);
+		expect(versionAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
+		expect(versionAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
+		versionAddPage.reset();
+	});
+
 	// it('should be able to add a minimal release', () => {
 	// 	const fileName = 'blank.vpt';
 	// 	releaseAddPage.uploadFile(fileName);
@@ -137,12 +90,6 @@ describe('Add new version to release', () => {
 	// 	expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + game.id + '/releases/');
 	// 	modal.close();
 	// 	releaseAddPage.navigate(game);
-	// });
-	//
-	// fit('should be able to add a file to an existing release', () => {
-	// 	releases.createRelease('member').then((release:Release) => {
-	//
-	// 	});
 	// });
 
 });
