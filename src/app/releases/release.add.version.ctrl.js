@@ -24,6 +24,7 @@ import ReleaseSelectPlayfieldModalTpl from './release.select.playfield.modal.pug
 export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 
 	/**
+	 * @param $scope
 	 * @param $uibModal
 	 * @param $state
 	 * @param $stateParams
@@ -42,7 +43,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 	 * @param {TrackerService} TrackerService
 	 * @ngInject
 	 */
-	constructor($uibModal, $state, $stateParams, $localStorage,
+	constructor($scope, $uibModal, $state, $stateParams, $localStorage,
 				App, ApiHelper, AuthService, ModalService, ReleaseMeta, Flavors, BootstrapPatcher,
 				BuildResource, FileResource, GameResource, ReleaseVersionResource, TrackerService) {
 
@@ -68,7 +69,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 		// statuses
 		this.submitting = false;
 		this.showHelp = this.$localStorage.showInstructions.version_add;
-		this.$watch(() => this.showHelp, () => this.$localStorage.showInstructions.version_add = this.showHelp);
+		$scope.$watch(() => this.showHelp, () => this.$localStorage.showInstructions.version_add = this.showHelp);
 
 		// fetch game info
 		this.gameId = $stateParams.id;
