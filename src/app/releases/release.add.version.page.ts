@@ -17,14 +17,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import { browser, by, element } from 'protractor';
 import { ReleaseAddBasePage } from './release.add.base.page';
 import { Release } from '../../test/models/Release';
-import { browser, by, element } from "protractor";
 
 export class ReleaseAddVersionPage extends ReleaseAddBasePage {
 
 	private resetButton = element(by.id('version-reset-btn'));
 	private submitButton = element(by.id('version-submit-btn'));
+	private uploadMode = element(by.id('upload-mode'));
 
 	get(release: Release) {
 		this.appPage.get();
@@ -36,6 +37,13 @@ export class ReleaseAddVersionPage extends ReleaseAddBasePage {
 		browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id + '/add');
 	}
 
+	setExistingVersion(number: number) {
+		this.uploadMode.all(by.className('radio--lg')).get(0).element(by.tagName('label')).click();
+		this.uploadMode.element(by.model('vm.meta.version'))
+			.all(by.tagName('option'))
+			.then(options => options[number].click());
+	}
+
 	reset() {
 		this.resetButton.click();
 	}
@@ -43,5 +51,4 @@ export class ReleaseAddVersionPage extends ReleaseAddBasePage {
 	submit() {
 		this.submitButton.click();
 	}
-
 }

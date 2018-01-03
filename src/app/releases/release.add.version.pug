@@ -9,7 +9,7 @@ include ../template/_mixins
 			+icon('info')
 			p Here you can either upload additional flavors for an existing version or upload a new version of you release.
 
-		.row: .col-sm-10.col-sm-offset-1
+		.row: #upload-mode.col-sm-10.col-sm-offset-1
 			select.form-control.pull-right(ng-disabled="vm.meta.mode == 'newVersion'", ng-options="version for version in vm.versions", ng-model="vm.meta.version")
 			.radio--lg: label
 				input.input-lg(type="radio", name="mode", value="newFile", ng-model="vm.meta.mode")

@@ -46,6 +46,22 @@ export class ReleaseAddBasePage extends BasePage {
 		});
 	}
 
+	setFlavor(fileName:string, type:number, value:number) {
+		const panel = this.parentWithText('flavors', fileName);
+		panel.all(by.tagName('tr')).get(type)
+			.all(by.tagName('td')).get(value)
+			.element(by.tagName('label'))
+			.click();
+	}
+
+	setCompatibility(fileName:string, type:number, value:number) {
+		const panel = this.parentWithText('compatibility', fileName);
+		panel.all(by.css('.col--list-files-right > .col-md-4')).get(type)
+			.all(by.css('.simple-list')).get(value)
+			.element(by.tagName('label'))
+			.click();
+	}
+
 	hasFileUploadValidationError(): promise.Promise<boolean> {
 		return this.hasClass(this.filesUploadPanel, 'error');
 	}

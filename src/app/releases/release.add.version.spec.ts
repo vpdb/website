@@ -18,30 +18,22 @@
  */
 
 import { browser } from 'protractor';
-import { company } from 'faker';
-import { Games } from '../../test/backend/Games';
 import { Releases } from '../../test/backend/Releases';
-import { Users } from '../../test/backend/Users';
-import { Game } from '../../test/models/Game';
 import { Release } from '../../test/models/Release';
 import { AppPage } from '../app.page';
 import { ReleaseAddVersionPage } from './release.add.version.page';
-import { AuthorSelectModalPage } from '../users/author.select.modal.page';
-import { Bootstrap } from "../../test/Bootstrap";
 
 describe('Add new version to release', () => {
 
 	const appPage = new AppPage();
 	const versionAddPage = new ReleaseAddVersionPage();
-	const games:Games = new Games(browser.params.vpdb);
-	const users:Users = new Users(browser.params.vpdb);
 	const releases:Releases = new Releases(browser.params.vpdb);
 	let release:Release;
 
 	beforeAll(() => {
 		return releases.createRelease('member').then((createdRelease:Release) => {
 			release = createdRelease;
-			versionAddPage.get(release)
+			versionAddPage.get(release);
 		});
 	});
 
@@ -50,7 +42,7 @@ describe('Add new version to release', () => {
 	});
 
 	afterAll(() => {
-		//appPage.logout();
+		appPage.logout();
 	});
 
 	it('should display validation errors when no file uploaded', () => {
@@ -69,27 +61,24 @@ describe('Add new version to release', () => {
 		versionAddPage.reset();
 	});
 
-	// it('should be able to add a minimal release', () => {
-	// 	const fileName = 'blank.vpt';
-	// 	releaseAddPage.uploadFile(fileName);
-	// 	releaseAddPage.generateReleaseName();
-	// 	releaseAddPage.setFlavor(fileName, 0, 0); // orientation: desktop
-	// 	releaseAddPage.setFlavor(fileName, 1, 1); // lighting: day
-	// 	releaseAddPage.setVersion('v1.0.0');
-	// 	releaseAddPage.setModPermission(1);
-	// 	releaseAddPage.setCompatibility(fileName, 0, 0);
-	// 	releaseAddPage.setCompatibility(fileName, 0, 1);
-	// 	releaseAddPage.uploadPlayfield(fileName,'playfield-1920x1080.png');
-	// 	releaseAddPage.submit();
-	//
-	// 	const modal = appPage.getErrorInfoModal();
-	// 	expect(modal.title.getText()).toEqual('RELEASE CREATED!');
-	// 	expect(modal.subtitle.getText()).toEqual(game.title.toUpperCase());
-	// 	expect(modal.message.getText()).toContain('The release has been successfully created.');
-	// 	expect(modal.message.getText()).toContain('You will be notified');
-	// 	expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + game.id + '/releases/');
-	// 	modal.close();
-	// 	releaseAddPage.navigate(game);
-	// });
+	it('should add a new file to an existing version', () => {
+		const fileName = 'blank.vpt';
+		versionAddPage.uploadFile(fileName);
+		versionAddPage.setExistingVersion(0);
+		versionAddPage.setFlavor(fileName, 0, 0); // orientation: desktop
+		versionAddPage.setFlavor(fileName, 1, 1); // lighting: day
+		versionAddPage.setCompatibility(fileName, 0, 0);
+		versionAddPage.uploadPlayfield(fileName,'playfield-1920x1080.png');
+		versionAddPage.submit();
+
+		const modal = appPage.getErrorInfoModal();
+		expect(modal.title.getText()).toEqual('SUCCESS!');
+		expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
+		expect(modal.subtitle.getText()).toContain(release.name.toUpperCase());
+		expect(modal.message.getText()).toContain('Successfully uploaded new files to version');
+		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+		modal.close();
+		versionAddPage.navigate(release);
+	});
 
 });

@@ -129,28 +129,12 @@ export class ReleaseAddPage extends ReleaseAddBasePage {
 		return this.findSelectedTag(name).then(els => els.length === 1);
 	}
 
-	setFlavor(fileName:string, type:number, value:number) {
-		const panel = this.parentWithText('flavors', fileName);
-		panel.all(by.tagName('tr')).get(type)
-			.all(by.tagName('td')).get(value)
-			.element(by.tagName('label'))
-			.click();
-	}
-
 	setVersion(version:string) {
 		this.version.sendKeys(version);
 	}
 
 	setModPermission(pos:number) {
 		this.modPermission.all(by.tagName('label')).get(pos).click();
-	}
-
-	setCompatibility(fileName:string, type:number, value:number) {
-		const panel = this.parentWithText('compatibility', fileName);
-		panel.all(by.css('.col--list-files-right > .col-md-4')).get(type)
-			.all(by.css('.simple-list')).get(value)
-			.element(by.tagName('label'))
-			.click();
 	}
 
 	reset() {
