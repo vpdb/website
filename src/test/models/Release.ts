@@ -25,9 +25,9 @@ import { User } from "./User";
 
 export interface Release {
 	id?: string,
-	name: string,
+	name?: string,
 	name_sortable?: string,
-	license: 'by-sa' | 'by-nd',
+	license?: 'by-sa' | 'by-nd',
 	description?: string,
 	acknowledgements?: string,
 	released_at?: Date,
@@ -56,7 +56,7 @@ export interface Release {
 		label: string,
 		url: string
 	}[],
-	authors: {
+	authors?: {
 		roles: string[],
 		user?: {
 			id: string
@@ -72,7 +72,7 @@ export interface Release {
 	}[],
 	versions: {
 		version: string,
-		files: {
+		files?: {
 			released_at?: Date,
 			file?: File
 			_file?: string,

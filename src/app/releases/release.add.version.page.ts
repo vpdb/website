@@ -37,11 +37,18 @@ export class ReleaseAddVersionPage extends ReleaseAddBasePage {
 		browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id + '/add');
 	}
 
-	setExistingVersion(number: number) {
+	setExistingVersion(version: string) {
 		this.uploadMode.all(by.className('radio--lg')).get(0).element(by.tagName('label')).click();
 		this.uploadMode.element(by.model('vm.meta.version'))
 			.all(by.tagName('option'))
-			.then(options => options[number].click());
+			.filter(el => el.getText().then(text => text === version))
+			.first()
+			.click();
+	}
+
+	setNewVersion(version: string) {
+		this.uploadMode.all(by.className('radio--lg')).get(1).element(by.tagName('label')).click();
+		this.uploadMode.element(by.model('vm.releaseVersion.version')).sendKeys(version);
 	}
 
 	reset() {

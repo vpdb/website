@@ -18,6 +18,7 @@
  */
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { merge } from 'lodash';
 import { company } from 'faker';
 import { Files } from './Files';
 import { Games } from './Games';
@@ -47,9 +48,12 @@ export class Releases {
 	/**
 	 * Creates a new release on the server.
 	 *
-	 * @return {Promise<Release>}
+	 * @param {string} creator Username of the user creating the release
+	 * @param {Release} release Release data to override default values with
+	 * @param {Game} g Game of the release. If null or not provided, a new game will be created.
+	 * @return {Promise<Release>} Created release
 	 */
-	createRelease(creator:string, g:Game = null): Promise<Release> {
+	createRelease(creator:string, release:Release = null, g:Game = null): Promise<Release> {
 		let user:User;
 		let game:Game;
 		let tableFile:File;
@@ -73,7 +77,7 @@ export class Releases {
 		}).then((file:File) => {
 			playfieldImage = file;
 
-			const release:Release = {
+			const defaultRelease:Release = {
 				name: company.catchPhraseAdjective() + 'Edition',
 				license: 'by-sa',
 				_game: game.id,
@@ -85,13 +89,14 @@ export class Releases {
 							_compatibility: [ '9.9.0' ],
 							flavor: { orientation: 'fs', lighting: 'night' }
 						} ],
-						version: 'v1.0.0'
+						version: '1.0.0'
 					}
 				],
 				authors: [ { _user: user.id, roles: [ 'Table Creator' ] } ]
 			};
 
-			return this.api.post<File>('/v1/releases', release, {
+
+			return this.api.post<File>('/v1/releases', release ? merge(defaultRelease, release) : defaultRelease, {
 				headers: { [ this.vpdb.authHeader ]: 'Bearer ' + user.token }
 			});
 

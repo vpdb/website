@@ -31,7 +31,7 @@ describe('Add new version to release', () => {
 	let release:Release;
 
 	beforeAll(() => {
-		return releases.createRelease('member').then((createdRelease:Release) => {
+		return releases.createRelease('member', { versions: [ { version: '1.0.0' } ] }).then((createdRelease:Release) => {
 			release = createdRelease;
 			versionAddPage.get(release);
 		});
@@ -64,7 +64,7 @@ describe('Add new version to release', () => {
 	it('should add a new file to an existing version', () => {
 		const fileName = 'blank.vpt';
 		versionAddPage.uploadFile(fileName);
-		versionAddPage.setExistingVersion(0);
+		versionAddPage.setExistingVersion('1.0.0');
 		versionAddPage.setFlavor(fileName, 0, 0); // orientation: desktop
 		versionAddPage.setFlavor(fileName, 1, 1); // lighting: day
 		versionAddPage.setCompatibility(fileName, 0, 0);
@@ -80,5 +80,27 @@ describe('Add new version to release', () => {
 		modal.close();
 		versionAddPage.navigate(release);
 	});
+
+	it('should add a new version to an existing release', () => {
+		const fileName = 'blank.vpt';
+		versionAddPage.uploadFile(fileName);
+		versionAddPage.setNewVersion('2.0.0');
+		versionAddPage.setFlavor(fileName, 0, 1); // orientation: fullscreen
+		versionAddPage.setFlavor(fileName, 1, 1); // lighting: day
+		versionAddPage.setCompatibility(fileName, 0, 0);
+		versionAddPage.uploadPlayfield(fileName,'playfield-1080x1920.png');
+		versionAddPage.submit();
+
+		const modal = appPage.getErrorInfoModal();
+		expect(modal.title.getText()).toEqual('SUCCESS!');
+		expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
+		expect(modal.subtitle.getText()).toContain(release.name.toUpperCase());
+		expect(modal.message.getText()).toContain('Successfully uploaded new release version');
+		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+		modal.close();
+		versionAddPage.navigate(release);
+	});
+
+
 
 });
