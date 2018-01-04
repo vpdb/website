@@ -116,8 +116,9 @@ export default class ReleaseBaseCtrl {
 			controller: 'BuildAddModalCtrl',
 			controllerAs: 'vm',
 			size: 'lg'
-		}).result.then(function(newBuild) {
+		}).result.then(newBuild => {
 			// todo
+			console.log(newBuild);
 		});
 	}
 
@@ -310,6 +311,7 @@ export default class ReleaseBaseCtrl {
 	 * @param type
 	 */
 	onBackglassImageError(file, type) {
+		console.error(file, type);
 		//delete this.meta.mediaLinks[this.getMediaKey(file, type)];
 	}
 

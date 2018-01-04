@@ -153,7 +153,7 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 				message: 'You have successfully updated version ' + this.releaseVersion.version + ' of release "' + this.release.name + '".'
 			});
 
-		}, this.ApiHelper.handleErrors(this, null, null, scope, response => {
+		}, this.ApiHelper.handleErrors(this, null, null, this, response => {
 
 			this.pageLoading = false;
 			if (!response.data.errors) {
@@ -171,5 +171,5 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 				}
 			});
 		}));
-	};
+	}
 }

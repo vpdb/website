@@ -3,14 +3,19 @@ module.exports = {
 		browser: true,
 		es6: true
 	},
-	extends: "eslint:recommended",
+	"extends": "eslint:recommended",
 	parserOptions: {
 		sourceType: "module"
 	},
 	rules: {
-		indent: ["error", "tab"],
+		indent: ["error", "tab", {
+			SwitchCase: 1,
+			FunctionDeclaration: { body: 1, parameters: 3 },
+			FunctionExpression: { body: 1, parameters: 3 }
+		} ],
 		"linebreak-style": ["error", "unix"],
 		quotes: ["error", "single"],
-		semi: ["error", "always"]
+		semi: ["error", "always"],
+		"no-console": 1
 	}
 };

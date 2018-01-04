@@ -77,10 +77,11 @@ const app = () => {
 		templateUrl: AppTpl,
 		controller: 'AppCtrl',
 		controllerAs: 'vm'
-	}
+	};
 };
 
 // require all icons
+// eslint-disable-next-line no-undef
 const files = require.context('../icons', false, /\.svg$/);
 files.keys().forEach(files);
 

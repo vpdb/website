@@ -84,8 +84,8 @@ export default class ReleaseDetailsCtrl {
 
 		// seo structured data
 		this.ldRelease = {
-			"@context": "http://schema.org/",
-			"@type": "Product"
+			'@context': 'http://schema.org/',
+			'@type': 'Product'
 		};
 
 		// setup comments
@@ -95,7 +95,7 @@ export default class ReleaseDetailsCtrl {
 		if (this.AuthService.hasPermission('releases/rate')) {
 			this.ReleaseRatingResource.get({ releaseId: this.releaseId }).$promise.then(rating => {
 				this.releaseRating = rating.value;
-			}, err => {});
+			}, console.error);
 		}
 
 		this.fetchData();
@@ -205,11 +205,11 @@ export default class ReleaseDetailsCtrl {
 
 			if (release.rating.votes) {
 				this.ldRelease.aggregateRating = {
-					"@type": "AggregateRating",
-					"ratingValue": release.rating.average,
-					"bestRating": "10",
-					"worstRating": "1",
-					"ratingCount": release.rating.votes
+					'@type': 'AggregateRating',
+					'ratingValue': release.rating.average,
+					'bestRating': '10',
+					'worstRating': '1',
+					'ratingCount': release.rating.votes
 				};
 			}
 			this.TrackerService.trackPage();
@@ -299,8 +299,8 @@ export default class ReleaseDetailsCtrl {
 			}
 		}).result.then(validation => {
 			if (validation) {
-				file.validation = validation
+				file.validation = validation;
 			}
-		}, () => {});
+		}, console.error);
 	}
 }

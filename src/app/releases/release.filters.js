@@ -38,6 +38,7 @@ export function validationStatus() {
 export function validationTooltip() {
 	return function(validation) {
 		if (!validation) {
+			// eslint-disable-next-line
 			return "This file hasn't been validated yet.";
 		}
 		switch (validation.status) {

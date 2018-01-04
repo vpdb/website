@@ -148,7 +148,7 @@ export default class ReleaseEditFileCtrl {
 	 */
 	addLink(link) {
 		this.updatedRelease.links.push(link);
-		this.newLink = {}
+		this.newLink = {};
 	}
 
 	/**
@@ -181,7 +181,7 @@ export default class ReleaseEditFileCtrl {
 	 * Posts the release add form to the server.
 	 */
 	submit() {
-		const release = angular.copy(this.updatedRelease);
+		const release = cloneDeep(this.updatedRelease);
 
 		// map tags
 		release._tags = map(release.tags, 'id');

@@ -48,7 +48,7 @@ export default class BuildAddModalCtrl {
 		$event.preventDefault();
 		$event.stopPropagation();
 		this.calendarOpened = true;
-	};
+	}
 
 	add() {
 		this.BuildResource.save(this.build, build => {

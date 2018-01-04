@@ -433,7 +433,7 @@ export default class AuthService {
 			}
 		}).catch(response => {
 			if (callback) {
-				callback(response, data);
+				callback(response);
 			}
 			this.$log.error('Error fetching tokens: ' + response.status);
 			this.$log.error(response);

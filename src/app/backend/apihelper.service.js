@@ -65,7 +65,7 @@ export default class ApiHelper {
 				scope.pagination.count = parseInt(headers('x-list-count'));
 				scope.pagination.page = parseInt(headers('x-list-page'));
 				scope.pagination.size = parseInt(headers('x-list-size'));
-				scope.pagination.pageCount = Math.ceil(scope.pagination.count / scope.pagination.size)
+				scope.pagination.pageCount = Math.ceil(scope.pagination.count / scope.pagination.size);
 			}
 
 			if (headers('link')) {

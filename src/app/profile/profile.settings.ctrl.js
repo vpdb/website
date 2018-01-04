@@ -204,7 +204,7 @@ export default class ProfileSettingsCtrl {
 				this.App.showNotification('Token successfully deleted.');
 
 			}, this.ApiHelper.handleErrorsInDialog('Error deleting token.'));
-		}, () => {});
+		}, console.error);
 	}
 
 	onTokenCopied() {
@@ -220,15 +220,15 @@ export default class ProfileSettingsCtrl {
 	 */
 	checkPasswordConfirmation(credentials) {
 		if (!credentials.password1) {
-			this.ApiHelper.setError(this, 'password', "You must provide your new password.");
+			this.ApiHelper.setError(this, 'password', 'You must provide your new password.');
 			return false;
 		}
 		if (!credentials.password2) {
-			this.ApiHelper.setError(this, 'password2', "You must confirm your new password.");
+			this.ApiHelper.setError(this, 'password2', 'You must confirm your new password.');
 			return false;
 		}
 		if (credentials.password1 !== credentials.password2) {
-			this.ApiHelper.setError(this, 'password2', "The second password must match the first password.");
+			this.ApiHelper.setError(this, 'password2', 'The second password must match the first password.');
 			return false;
 		}
 		return true;

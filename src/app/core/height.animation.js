@@ -33,7 +33,7 @@ export default function heightAnimation($timeout) {
 			});
 
 			$timeout(function() {
-				const wrapper = element.parents('.ui-view-wrapper').css('height', '');
+				//const wrapper = element.parents('.ui-view-wrapper').css('height', '');
 				done();
 			}, 300); // must be the same as the end of the css transformation
 		},
@@ -49,6 +49,6 @@ export default function heightAnimation($timeout) {
 		addClass : function(element, className, done) { done(); },
 		beforeRemoveClass : function(element, className, done) { done(); },
 		removeClass : function(element, className, done) { done(); },
-		allowCancel : function(element, event, className) {}
+		allowCancel : function() {}
 	};
 }

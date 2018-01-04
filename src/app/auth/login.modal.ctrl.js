@@ -63,7 +63,7 @@ export default class LoginModalCtrl {
 		/** @type {{ username:string, password:string}} */
 		this.userPass = {};
 		this.registering = false;
-		this.email = "";
+		this.email = '';
 		this.message = opts.message || null;
 		this.error = null;
 		this.errors = {};
@@ -115,7 +115,7 @@ export default class LoginModalCtrl {
 			this.errors = {};
 			this.error = null;
 			this.userPass = {};
-			this.email = "";
+			this.email = '';
 			this.message = 'Registration successful.';
 			this.message2 = 'You will get an email shortly.<br>Once you have confirmed it, you\'re good to go!';
 			this.registering = !this.registering;

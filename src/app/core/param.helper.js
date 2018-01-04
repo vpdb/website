@@ -129,7 +129,7 @@ export class Param {
 		 * Condition for the request variable to be added.
 		 * @type {function}
 		 */
-		this.reqCondition = obj.reqCondition || (v => true);
+		this.reqCondition = obj.reqCondition || (() => true);
 	}
 
 }

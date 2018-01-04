@@ -28,7 +28,7 @@ import { includes } from 'lodash';
 export function onEnter() {
 	return {
 		link: function(scope, element, attrs) {
-			element.bind("keypress", function (event) {
+			element.bind('keypress', function (event) {
 				if (event.which === 13) {
 					scope.$apply(function () {
 						scope.$eval(attrs.onEnter);
@@ -44,7 +44,7 @@ export function onEnter() {
  * @ngInject
  */
 export function focusOn() {
-	return function(scope, elem, attr) {
+	return function(scope, elem) {
 		elem[0].focus();
 	};
 }
@@ -76,10 +76,10 @@ export function jsonLd($filter, $sce) {
 		scope: {
 			json: '=json'
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope) {
 			scope.onGetJson = function() {
 				return $sce.trustAsHtml($filter('json')(scope.json));
-			}
+			};
 		},
 		replace: true
 	};

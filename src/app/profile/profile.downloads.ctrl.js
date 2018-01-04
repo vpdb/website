@@ -61,7 +61,7 @@ export default class ProfileDownloadsCtrl {
 	}
 
 	updateExample() {
-		this.exampleName = this.updatedPreferences.tablefile_name.replace(/(\{([^\}]+)\})/g, (m1, m2, m3) => {
+		this.exampleName = this.updatedPreferences.tablefile_name.replace(/(\{([^}]+)\})/g, (m1, m2, m3) => {
 			return this.releaseData[m3] ? this.releaseData[m3] : m1;
 		}) + '.vpx';
 		this.exampleName = this.exampleName.replace('{release_flavor_orientation}', this.updatedPreferences.flavor_tags.orientation.fs);

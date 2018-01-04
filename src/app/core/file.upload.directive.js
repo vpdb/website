@@ -52,7 +52,7 @@ import { includes } from 'lodash';
  * @ngInject
  */
 export default function($parse, $compile, $log, Upload, ApiHelper, AuthService, ModalService,
-						FileUploadHelperService, ConfigService, FileResource) {
+			FileUploadHelperService, ConfigService, FileResource) {
 	return {
 		restrict: 'A',
 		scope: true,
@@ -187,7 +187,7 @@ export default function($parse, $compile, $log, Upload, ApiHelper, AuthService, 
 						}
 					}), evt => status.progress = parseInt(100.0 * evt.loaded / evt.total));
 				});
-			}
+			};
 		}
 	};
 }

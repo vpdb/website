@@ -22,8 +22,7 @@ import { max, map, keys } from 'lodash';
 
 import LoginModalTpl from './auth/login.modal.pug';
 
-export default class
-App {
+export default class App {
 
 	/**
 	 * @param $rootScope
@@ -62,7 +61,7 @@ App {
 		});
 
 		// hide timeout notice when navigating
-		$rootScope.$on('$stateChangeStart', (event, toState) => $rootScope.timeoutNoticeCollapsed = true);
+		$rootScope.$on('$stateChangeStart', () => $rootScope.timeoutNoticeCollapsed = true);
 
 		// check for flash messages
 		$rootScope.$on('$stateChangeSuccess', () => ModalFlashService.process());
@@ -170,7 +169,7 @@ App {
 		const i = max(map(keys(this.$rootScope.notifications).concat([0]), parseInt)) + 1;
 		this.$rootScope.notifications[i] = { message: message, ttl: ttl };
 		this.$timeout(() => delete this.$rootScope.notifications[i], ttl);
-	};
+	}
 
 	downloadLink(link, token, body, callback) {
 		this.$rootScope.downloadLink = link;
@@ -196,5 +195,5 @@ App {
 			windowClass: 'theme-light',
 			resolve: { opts: () => opts }
 		});
-	};
+	}
 }

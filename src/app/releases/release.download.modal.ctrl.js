@@ -69,7 +69,7 @@ export default class ReleaseDownloadModalCtrl {
 					if (!includes(addedCategories, media.category)) {
 						this.downloadRequest.game_media.push(media.id);
 					}
-					addedCategories.push(media.category)
+					addedCategories.push(media.category);
 				});
 			}
 		});
@@ -87,7 +87,7 @@ export default class ReleaseDownloadModalCtrl {
 	// todo refactor (make it more useful)
 	tableFile(file) {
 		return file.file.mime_type && /^application\/x-visual-pinball-table/i.test(file.file.mime_type);
-	};
+	}
 
 	download() {
 		this.DownloadService.downloadRelease(this.release.id, this.downloadRequest, () => {

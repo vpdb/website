@@ -39,6 +39,7 @@ import collapseInAnimation from './collapse-in.animation';
 import videoJs from './videojs.directive';
 
 export default angular.module('vpdb.core', [])
+	// eslint-disable-next-line no-undef
 	.constant('Config', WEBSITE_CONFIG)
 	.constant('Flavors', Flavors)
 	.service('ConfigService', ConfigService)

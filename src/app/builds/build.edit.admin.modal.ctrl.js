@@ -63,7 +63,7 @@ export default class BuildEditAdminModalCtrl {
 	}
 
 	save() {
-		const data = pick(this.build, ["id", "platform", "major_version", "label", "download_url", "support_url", "built_at", "description", "type", "is_range", "is_active"]);
+		const data = pick(this.build, ['id', 'platform', 'major_version', 'label', 'download_url', 'support_url', 'built_at', 'description', 'type', 'is_range', 'is_active']);
 		this.BuildResource.update({ id: this.id }, data, updatedBuild => {
 			this.$uibModalInstance.close(updatedBuild);
 			this.App.showNotification('Successfully updated build.');

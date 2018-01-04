@@ -58,8 +58,8 @@ export default class GameDetailsCtrl {
 
 		this.gameId = $stateParams.id;
 		this.ldGame = {
-			"@context": "http://schema.org/",
-			"@type": "Product"
+			'@context': 'http://schema.org/',
+			'@type': 'Product'
 		};
 
 		this.$uibModal = $uibModal;
@@ -176,11 +176,11 @@ export default class GameDetailsCtrl {
 			}
 			if (this.game.rating.votes) {
 				this.ldGame.aggregateRating = {
-					"@type": "AggregateRating",
-					"ratingValue": this.game.rating.average,
-					"bestRating": "10",
-					"worstRating": "1",
-					"ratingCount": this.game.rating.votes
+					'@type': 'AggregateRating',
+					'ratingValue': this.game.rating.average,
+					'bestRating': '10',
+					'worstRating': '1',
+					'ratingCount': this.game.rating.votes
 				};
 			}
 			this.TrackerService.trackPage();
@@ -190,7 +190,7 @@ export default class GameDetailsCtrl {
 		if (this.AuthService.hasPermission('games/rate')) {
 			this.GameRatingResource.get({gameId: this.gameId}).$promise.then(result => {
 				this.userGameRating = result.value;
-			}, err => {});
+			}, console.error);
 		}
 
 		// STARS
@@ -232,7 +232,7 @@ export default class GameDetailsCtrl {
 			notes: '',
 			language: this.romLanguages[0]
 		};
-	};
+	}
 
 	/**
 	 * Posts all uploaded ROM files to the API
@@ -261,7 +261,7 @@ export default class GameDetailsCtrl {
 				}
 			});
 		});
-	};
+	}
 
 	/**
 	 * Downloads a single ROM
@@ -378,5 +378,5 @@ export default class GameDetailsCtrl {
 			return false;
 		}
 		return !!val;
-	};
+	}
 }

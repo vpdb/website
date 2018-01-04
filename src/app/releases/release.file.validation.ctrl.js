@@ -66,7 +66,7 @@ export default class ReleaseFileValidationCtrl {
 		];
 
 		if (!this.validation.message) {
-			this.validation.message = 'Checked and made sure that:\n\n- DOF config up is to date\n- `controller.vbs` is up to date\n- SoundFX calls are working'
+			this.validation.message = 'Checked and made sure that:\n\n- DOF config up is to date\n- `controller.vbs` is up to date\n- SoundFX calls are working';
 		}
 	}
 

@@ -33,7 +33,7 @@ export default function($parse, $http, $timeout, AuthService) {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
 
-			attrs.type = attrs.type || "video/mp4";
+			attrs.type = attrs.type || 'video/mp4';
 
 			const setup = {
 				techOrder: ['html5', 'flash'],
@@ -44,7 +44,7 @@ export default function($parse, $http, $timeout, AuthService) {
 			};
 
 			const videoid = Math.round(Math.random() * 1000000);
-			attrs.id = "videojs" + videoid;
+			attrs.id = 'videojs' + videoid;
 			element.attr('id', attrs.id);
 
 			let player = null;
@@ -65,7 +65,7 @@ export default function($parse, $http, $timeout, AuthService) {
 					const waitAndSetUrl = function(url) {
 						element.attr('source', url);
 						$http({ method: 'HEAD', url: url }).then(() => {
-//							console.log(new Date() + ' Back from HEAD, id = %s', attrs.id);
+							// console.log(new Date() + ' Back from HEAD, id = %s', attrs.id);
 							const src = { type: 'video/mp4', src: url };
 							if (!player) {
 								player = videojs(attrs.id, setup, function() {

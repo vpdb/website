@@ -1,3 +1,4 @@
+
 /*
  * VPDB - Virtual Pinball Database
  * Copyright (C) 2018 freezy <freezy@vpdb.io>
@@ -16,7 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
 /**
  * Tracker service.
  *
@@ -24,6 +24,7 @@
  * @author freezy <freezy@vpdb.io>
  */
 export default class TrackerService {
+
 
 	/**
 	 * @param $rootScope
@@ -36,6 +37,7 @@ export default class TrackerService {
 		this.$rootScope = $rootScope;
 		this.Config = Config;
 
+		/* eslint-disable no-undef */
 		if (this.Config.ga && this.Config.ga.enabled) {
 			if (AuthService.user) {
 				ga('create', this.Config.ga.id, 'auto', { userId: AuthService.user.id });

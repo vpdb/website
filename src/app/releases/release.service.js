@@ -70,7 +70,7 @@ export default class ReleaseService {
 				}, err);
 			}
 		}
-	};
+	}
 
 
 	flavorGrid(release) {

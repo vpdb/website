@@ -64,7 +64,7 @@ export default class HomeCtrl {
 		this.whatsThis = false;
 
 		// watch query
-		$scope.$watch(() => this.q, (newVal, oldVal, scope) => this.refresh({ q: newVal }));
+		$scope.$watch(() => this.q, (newVal) => this.refresh({ q: newVal }));
 
 		// login?
 		if (LoginService.loginParams.open) {

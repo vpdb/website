@@ -17,8 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import { pick, cloneDeep } from 'lodash';
+import { cloneDeep, pick } from 'lodash';
 
 export default class UserEditAdminModalCtrl {
 
@@ -70,7 +69,7 @@ export default class UserEditAdminModalCtrl {
 
 	save() {
 		const updatedUser = this.UserResource.update({ userid: this.user.id }, this.user, () => {
-			angular.copy(updatedUser, user);
+			this.user = cloneDeep(updatedUser);
 			if (this.AuthService.user.id === this.user.id) {
 				this.AuthService.user = updatedUser;
 			}

@@ -33,7 +33,7 @@ export function bytesFilter() {
 		const units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
 			number = Math.floor(Math.log(bytes) / Math.log(1024));
 		return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
-	}
+	};
 }
 
 /**
@@ -65,7 +65,7 @@ export function escapeFilter() {
 export function hexFilter() {
 	return function(data) {
 		return data ? data.toString(16) : '';
-	}
+	};
 }
 
 /**
@@ -74,7 +74,7 @@ export function hexFilter() {
 export function hashPrefixFilter() {
 	return function(data) {
 		return '#' + data;
-	}
+	};
 }
 
 /**
@@ -86,5 +86,5 @@ export function fileExtFilter() {
 			const ext = file.name.substr(file.name.lastIndexOf('.') + 1, file.name.length).toLowerCase();
 			return includes(exts, ext);
 		});
-	}
+	};
 }

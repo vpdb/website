@@ -144,7 +144,7 @@ export default class BackglassAddCtrl {
 
 		// post to api
 		this.submitting = true;
-		this.BackglassResource.save(this.backglass, backglass => {
+		this.BackglassResource.save(this.backglass, () => {
 			this.backglass.submitted = true;
 			this.submitting = false;
 			this.reset();

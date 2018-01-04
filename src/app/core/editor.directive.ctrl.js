@@ -71,12 +71,12 @@ export default class EditorCtrl {
 
 	textLink() {
 		const textarea = this.$element.find('textarea');
-		this.apply(textarea, EditorCtrl.wrapSelect(textarea, this.$scope.text, '[', '](url)', /([^!]|^)(\[([^\]]*)\]\([^\)]+\))/, { start: 2, end: 5, replace: 2, keep: 3 }));
+		this.apply(textarea, EditorCtrl.wrapSelect(textarea, this.$scope.text, '[', '](url)', /([^!]|^)(\[([^\]]*)\]\([^)]+\))/, { start: 2, end: 5, replace: 2, keep: 3 }));
 	}
 
 	textImage() {
 		const textarea = this.$element.find('textarea');
-		this.apply(textarea, EditorCtrl.wrapSelect(textarea, this.$scope.text, '![', '](url)', /!(\[([^\]]*)\]\([^\)]+\))/, { start: 2, end: 5, replace: 0, keep: 2 }));
+		this.apply(textarea, EditorCtrl.wrapSelect(textarea, this.$scope.text, '![', '](url)', /!(\[([^\]]*)\]\([^)]+\))/, { start: 2, end: 5, replace: 0, keep: 2 }));
 	}
 
 	findUser(query) {
@@ -97,6 +97,7 @@ export default class EditorCtrl {
 		regex = new RegExp(regex.source, 'gi');
 		let match;
 		const matches = [];
+		// eslint-disable-next-line
 		while (match = regex.exec(text)) {
 			matches.push(match);
 		}
@@ -163,7 +164,7 @@ export default class EditorCtrl {
 					text: [text.substring(0, index), matches[i][opts.keep], text.substring(index + matches[i][opts.replace].length)].join(''),
 					start: index,
 					end: index + matches[i][opts.keep].length
-				}
+				};
 			}
 		}
 
@@ -178,7 +179,7 @@ export default class EditorCtrl {
 			text: block,
 			start: start === end ? start + prefixChars.length : prefixChars.length + end + opts.start,
 			end: start === end ? end + prefixChars.length : prefixChars.length + end + opts.end
-		}
+		};
 	}
 
 	static wrap(element, text, chars) {
@@ -195,7 +196,7 @@ export default class EditorCtrl {
 				text: [text.slice(0, start - chars.length), text.slice(start, end), text.slice(end + chars.length)].join(''),
 				start: start - chars.length,
 				end: end - chars.length
-			}
+			};
 		}
 
 		// check if current word is already wrapped in chars
@@ -210,7 +211,7 @@ export default class EditorCtrl {
 				text: [text.slice(0, start), text.slice(start + chars.length, end - chars.length), text.slice(end)].join(''),
 				start: (selection < 0 ? start : selection) - chars.length,
 				end: (selection < 0 ? end : selection) - chars.length
-			}
+			};
 		}
 
 		// ADD
@@ -219,7 +220,7 @@ export default class EditorCtrl {
 			text: [text.slice(0, start), chars, text.slice(start, end), chars, text.slice(end)].join(''),
 			start: (selection < 0 ? start : selection) + chars.length,
 			end: (selection < 0 ? end : selection) + chars.length
-		}
+		};
 	}
 
 	static wrapOnNewLine(element, text, prefixChars, prefixRegex, suffixChars) {
@@ -248,13 +249,13 @@ export default class EditorCtrl {
 						text: [text.slice(0, lineStart), block, text.slice(end)].join(''),
 						start: lineStart,
 						end: lineStart + block.length
-					}
+					};
 				} else {
 					return {
 						text: [text.slice(0, lineStart), text.slice(lineStart + prefixChars.length)].join(''),
 						start: start - prefixChars.length,
 						end: end - prefixChars.length
-					}
+					};
 				}
 			}
 		} else {
@@ -264,7 +265,7 @@ export default class EditorCtrl {
 					text: [text.slice(0, lineStart - prefixChars.length), text.slice(lineStart, lineEnd), text.slice(lineEnd + suffixChars.length)].join(''),
 					start: lineStart - prefixChars.length,
 					end: lineEnd - prefixChars.length
-				}
+				};
 			}
 		}
 
@@ -314,7 +315,7 @@ export default class EditorCtrl {
 			text: [text.slice(0, start), prefixLF, block, suffixLF, text.slice(end)].join(''),
 			start: selStart,
 			end: selEnd
-		}
+		};
 	}
 
 	apply(element, result) {

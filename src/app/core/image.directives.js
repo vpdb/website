@@ -92,6 +92,7 @@ export function imgBg($parse, AuthService) {
 
 			const setImgUrl = function(url) {
 				scope.img = { url: url, pageLoading: true };
+				// eslint-disable-next-line
 				element.css('background-image', "url('" + url + "')");
 				$(element).waitForImages(
 					$.noop,

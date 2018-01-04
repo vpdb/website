@@ -143,9 +143,9 @@ export default class GameAddAdminCtrl {
 
 			this.game = assign(this.game, game);
 			if (this.game.short) {
-				this.game.id = this.game.short[0].replace(/[^a-z0-9\s\-]+/gi, '').replace(/\s+/g, '-').toLowerCase();
+				this.game.id = this.game.short[0].replace(/[^a-z0-9\s-]+/gi, '').replace(/\s+/g, '-').toLowerCase();
 			} else {
-				this.game.id = this.game.title.replace(/[^a-z0-9\s\-]+/gi, '').replace(/\s+/g, '-').toLowerCase();
+				this.game.id = this.game.title.replace(/[^a-z0-9\s-]+/gi, '').replace(/\s+/g, '-').toLowerCase();
 			}
 			this.errors = {};
 			this.error = null;
