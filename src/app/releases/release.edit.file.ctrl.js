@@ -49,6 +49,7 @@ export default class ReleaseEditFileCtrl {
 		this.$state = $state;
 		this.$uibModal = $uibModal;
 		this.App = App;
+		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
 		this.Flavors = Flavors;
 

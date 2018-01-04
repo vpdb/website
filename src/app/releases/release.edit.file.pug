@@ -9,13 +9,13 @@ include ../template/_mixins
 		h1.h--primary Edit Release
 		hr.hr--primary
 		p Here you can edit your release. If you want to add another version or another flavor to an
-			| existing version, use the <i>Upload File</i> button on the right.
+			|  existing version, use the <i>Upload File</i> button on the right.
 
 		//- NAME
 		//-----------------------------------------
 		h4.h--primary.padder-top-2x Release Name
 		.form-group(ng-class="{ error: vm.errors.name }")
-			input.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.updatedRelease.name")
+			input#name.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.updatedRelease.name")
 			.alert.alert-danger(ng-show="vm.errors.name")
 				+icon('warning').shift-up.space-right
 				| {{ vm.errors.name }}
@@ -24,7 +24,7 @@ include ../template/_mixins
 		//-----------------------------------------
 		h4.h--primary.padder-top-2x Description
 		.form-group
-			editor.tabset--light(ng-model="vm.updatedRelease.description", placeholder="Description of the release", markdown-text="Markdown enabled. This will show up globally under your release.")
+			editor#description.tabset--light(ng-model="vm.updatedRelease.description", placeholder="Description of the release", markdown-text="Markdown enabled. This will show up globally under your release.")
 
 		//- AUTHORS
 		//-----------------------------------------
@@ -41,7 +41,7 @@ include ../template/_mixins
 					.media--edit-panel.fade-animation(ng-show="hovering")
 						+icon('pencil').pos-pencil.a.smaller(ng-click="vm.addAuthor(author)")
 						+icon('trash').pos-trash.a.smaller(ng-click="vm.removeAuthor(author)")
-			button.btn.btn-default.padder-top.pull-right(ng-click="vm.addAuthor()")
+			button#add-author-btn.btn.btn-default.padder-top.pull-right(ng-click="vm.addAuthor()")
 				+icon('plus-circle').space-right
 				| Add Author
 			.clearfix.padder-bottom
@@ -58,7 +58,7 @@ include ../template/_mixins
 
 				//- SELECTED
 				h5.h--shift-up.hr--margin-small Selected Tags
-				.panel--dropzone-alt(
+				#selected-tags.panel--dropzone-alt(
 					ng-model="vm.updatedRelease.tags",
 					data-drop="true",
 					data-jqyoui-options="{ accept: '.badge:not([ng-model=vm.updatedRelease.tags])', activeClass: 'active', 'hoverClass': 'hover' }",
@@ -76,7 +76,7 @@ include ../template/_mixins
 					i(ng-show="vm.updatedRelease.tags.length == 0") No tags selected. Drag and drop them from the right hand pane in here.
 			.col-sm-6
 				.rel-pos
-					.panel--dropzone-alt-2(
+					#available-tags.panel--dropzone-alt-2(
 						ng-model="vm.tags",
 						data-drop="true",
 						data-jqyoui-options="{ accept:':not([ng-model=vm.tags])', activeClass: 'active', hoverClass: 'hover' }",
@@ -100,7 +100,7 @@ include ../template/_mixins
 							)
 						i(ng-show="vm.tags.length == 0") No more tags available.
 
-				button.btn.btn-default.padder-top.pull-right(ng-click="vm.createTag()")
+				button#add-tag-btn.btn.btn-default.padder-top.pull-right(ng-click="vm.createTag()")
 					+icon('plus-circle').space-right
 					| Create New Tag
 
@@ -124,18 +124,18 @@ include ../template/_mixins
 					span.input-group-addon: +icon('trash').smaller.a(ng-click="vm.removeLink(link)")
 		.row.row--fullwidth
 			.form-group.col-sm-3
-				input.form-control(type="text", ng-model="vm.newLink.label")
+				input#link-label.form-control(type="text", ng-model="vm.newLink.label")
 			.form-group.col-sm-9
 				.input-group
-					input.form-control(type="text", ng-model="vm.newLink.url", on-enter="vm.addLink(vm.newLink)")
-					span.input-group-addon: +icon('plus-circle').smaller.a(ng-click="vm.addLink(vm.newLink)")
+					input#link-url.form-control(type="text", ng-model="vm.newLink.url", on-enter="vm.addLink(vm.newLink)")
+					span.input-group-addon: +icon('plus-circle')#link-add-btn.smaller.a(ng-click="vm.addLink(vm.newLink)")
 
 
 		//- ACKNOWLEDGEMENTS
 		//-----------------------------------------
 		h4.h--primary Acknowledgements
 		.form-group
-			editor.tabset--light(ng-model="vm.updatedRelease.acknowledgements", placeholder="List of people to thank", markdown-text="Markdown enabled. This will show up under your release's acknowledgements.")
+			editor#acknowledgements.tabset--light(ng-model="vm.updatedRelease.acknowledgements", placeholder="List of people to thank", markdown-text="Markdown enabled. This will show up under your release's acknowledgements.")
 
 
 		//- FOOTER BUTTONS
@@ -148,8 +148,8 @@ include ../template/_mixins
 			+icon('warning').shift-up.space-right
 			| {{ error }}
 		a.btn.btn-hollow.btn-lg.space-right(ui-sref="releaseDetails({ id: vm.game.id, releaseId: vm.release.id })") Cancel
-		button.btn.btn-default.btn-lg(ng-click="vm.reset()") Reset
-		button.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="!vm.AuthService.isAuthenticated") Update
+		button#release-reset-btn.btn.btn-default.btn-lg(ng-click="vm.reset()") Reset
+		button#release-submit-btn.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="!vm.AuthService.isAuthenticated") Update
 		.clearfix
 
 		//- TODO fix

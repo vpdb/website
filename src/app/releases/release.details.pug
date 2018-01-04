@@ -138,15 +138,17 @@ p.padder-top(ng-show="vm.pageLoading")
 					+icon('warning').shift-up.space-right
 					| This release has not been approved for publication.
 
+		//-- TITLE
+		//---------------------------------------------------------------------
 		.title.padder-top
-			h1.title-main.h--primary(property="v:itemreviewed")
+			h1#title.title-main.h--primary(property="v:itemreviewed")
 				a.a--primary(ui-sref="gameDetails({id: vm.game.id})") {{ vm.game.title }}
 				| &nbsp;&middot; {{ vm.release.name }} {{ vm.latestVersion.version }}
 			h1.title-sub
 				.badge.badge--tag.badge--small.shift-down(ng-repeat="tag in vm.release.tags", uib-tooltip="{{ tag.description }}", tooltip-append-to-body="true") {{ tag.name }}
 		hr
 
-		div.markdown(markdown="vm.release.description", ng-show="vm.release.description")
+		div#description.markdown(markdown="vm.release.description", ng-show="vm.release.description")
 
 		//-- AUTHORS
 		//---------------------------------------------------------------------

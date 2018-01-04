@@ -15,8 +15,8 @@
 			span.input-group-addon: +icon('trash').smaller.a(ng-click="vm.removeLink(link)")
 .row.row--fullwidth
 	.form-group.col-sm-3
-		input.form-control(type="text", ng-model="vm.newLink.label")
+		input#link-label.form-control(type="text", ng-model="vm.newLink.label")
 	.form-group.col-sm-9
 		.input-group
-			input.form-control(type="text", ng-model="vm.newLink.url", on-enter="vm.addLink(vm.newLink)")
+			input#link-url.form-control(type="text", ng-model="vm.newLink.url", on-enter="vm.addLink(vm.newLink)")
 			span.input-group-addon: +icon('plus-circle').smaller.a(ng-click="vm.addLink(vm.newLink)")

@@ -36,7 +36,7 @@ include ../template/_mixins
 		h1 4. Describe your Release
 		hr
 		.form-group
-			editor.tabset--light(ng-model="vm.release.description", placeholder="Description of the release", markdown-text="Markdown enabled. This will show up globally under your release.")
+			editor#description.tabset--light(ng-model="vm.release.description", placeholder="Description of the release", markdown-text="Markdown enabled. This will show up globally under your release.")
 		include release.add-04-release.notes.pug
 
 		h4

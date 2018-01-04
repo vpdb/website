@@ -17,18 +17,34 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import { browser, by, element, ElementArrayFinder } from 'protractor';
+import { promise } from 'selenium-webdriver';
+import { resolve } from 'path';
 import { BasePage } from '../../test/BasePage';
-import { AppPage } from "../app.page";
-import { promise } from "selenium-webdriver";
-import { by, element } from "protractor";
-import { resolve } from "path";
+import { AppPage } from '../app.page';
+import { TagAddModalPage } from '../tag/tag.add.modal.page';
+import { AuthorSelectModalPage } from "../users/author.select.modal.page";
 
 export class ReleaseAddBasePage extends BasePage {
 
 	protected appPage = new AppPage();
 
-	protected filesUpload = element(by.id('ngf-files-upload'));
-	protected filesUploadPanel = element(by.id('files-upload'));
+	protected name = element(by.id('name'));
+	protected description = element(by.id('description'));
+	private filesUpload = element(by.id('ngf-files-upload'));
+	private filesUploadPanel = element(by.id('files-upload'));
+	private addAuthorButton = element(by.id('add-author-btn'));
+	private availableTags = element(by.id('available-tags'));
+	private selectedTags = element(by.id('selected-tags'));
+	private tagsSelected = this.selectedTags.all(by.css('*[ng-repeat]'));
+	private tagsAvailable = this.availableTags.all(by.css('*[ng-repeat]'));
+	private addTagButton = element(by.id('add-tag-btn'));
+	private newLinkLabel = element(by.id('link-label'));
+	private newLinkUrl = element(by.id('link-url'));
+	private newLinkButton = element(by.id('link-add-btn'));
+	private acknowledgements = element(by.id('acknowledgements'));
+
+	protected authors:ElementArrayFinder;
 
 	uploadFile(fileName:string) {
 		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
@@ -39,11 +55,19 @@ export class ReleaseAddBasePage extends BasePage {
 	uploadPlayfield(tableFileName:string, imageFileName:string) {
 		const path = resolve(__dirname, '../../../../src/test/assets/', imageFileName);
 		const panel = this.parentWithText('media', tableFileName, 'span', 'ng-scope');
-		const uploadPanel = panel.element(by.className('playfield--image'));
+		const uploadPanel = panel
+			.all(by.className('playfield--image'))
+			.filter(el => el.getAttribute('id').then(id => id.startsWith('playfield-image')))
+			.first();
 		return uploadPanel.getAttribute('id').then(id => {
 			panel.click();
 			element(by.id('ngf-' + id)).sendKeys(path);
 		});
+	}
+
+	setDescription(description:string) {
+		this.description.clear();
+		this.description.sendKeys(description);
 	}
 
 	setFlavor(fileName:string, type:number, value:number) {
@@ -62,8 +86,112 @@ export class ReleaseAddBasePage extends BasePage {
 			.click();
 	}
 
+	addAuthor(name:string = '', role:string = '') {
+		this.addAuthorButton.click();
+		const authorModal = new AuthorSelectModalPage();
+		if (name) {
+			authorModal.search(name);
+			authorModal.selectSearchResult(0);
+		}
+		if (role) {
+			authorModal.addRole(role);
+		}
+
+		if (name && role) {
+			authorModal.submit();
+		}
+	}
+
+	editAuthor(name:string) {
+		const author = this.authors.filter(el => el.element(by.css('.media-body h6')).getText().then(text => text === name)).first();
+		browser.actions().mouseMove(author).perform();
+		const editButton = author.element(by.css('[ng-click="vm.addAuthor(author)"]'));
+		editButton.click();
+	}
+
+	hasAuthor(name:string, role:string) {
+		const author = this.authors.filter(el => el.element(by.css('.media-body h6')).getText().then(text => text === name)).first();
+		return author.element(by.css('.media-body > span')).getText().then(text => text === role);
+
+	}
+
+	clearAuthors() {
+		this.authors.each(author => {
+			browser.actions().mouseMove(author).perform();
+			const delButton = author.element(by.css('[ng-click="vm.removeAuthor(author)"]'));
+			delButton.click();
+		});
+	}
+
+	/**
+	 * Creates a new tag or just opens the tag modal.
+	 *
+	 * Does nothing if name and description are provided and the tag already exists.
+	 *
+	 * @param {string} name
+	 * @param {string} description
+	 */
+	createTag(name:string = null, description:string = null) {
+		if (name !== null && description !== null) {
+			this.hasAvailableTag(name).then(hasTag => {
+				if (hasTag) {
+					console.log('Tag "%s" already exists, not creating.', name);
+					return;
+				}
+				this.addTagButton.click();
+				const tagModal = new TagAddModalPage();
+				tagModal.setName(name);
+				tagModal.setDescription(description);
+				tagModal.submit();
+			});
+		} else {
+			this.addTagButton.click();
+		}
+	}
+
+	selectTag(name:string) {
+		const tag = this.tagsAvailable.filter(el => el.getText().then(text => text === name)).first();
+		browser.actions().dragAndDrop(tag, this.selectedTags).mouseUp().perform();
+		browser.wait(() => this.hasSelectedTag(name), 5000);
+	}
+
+	removeTagByClick(name:string) {
+		return this.findSelectedTag(name).first().element(by.tagName('svg')).click();
+	}
+
+	removeTagByDrag(name:string) {
+		const tag = this.findSelectedTag(name).first().element(by.className('badge'));
+		browser.actions().dragAndDrop(tag, this.availableTags).mouseUp().perform();
+		browser.wait(() => this.hasAvailableTag(name), 5000);
+	}
+
+	hasAvailableTag(name:string) {
+		return this.tagsAvailable
+			.filter(el => el.getText().then(text => text === name))
+			.then(els => els.length === 1);
+	}
+
+	hasSelectedTag(name:string) {
+		return this.findSelectedTag(name).then(els => els.length === 1);
+	}
+
+	private findSelectedTag(name:string) {
+		return this.tagsSelected.filter(el => el.element(by.className('badge')).getText().then(text => text === name));
+	}
+
 	hasFileUploadValidationError(): promise.Promise<boolean> {
 		return this.hasClass(this.filesUploadPanel, 'error');
+	}
+
+	addLink(label: string, url: string) {
+		this.newLinkLabel.sendKeys(label);
+		this.newLinkUrl.sendKeys(url);
+		this.newLinkButton.click();
+	}
+
+	setAcknowledgements(acknowledgements:string) {
+		this.acknowledgements.clear();
+		this.acknowledgements.sendKeys(acknowledgements);
 	}
 
 	hasFlavorValidationError(filename:string): promise.Promise<boolean> {
@@ -76,5 +204,13 @@ export class ReleaseAddBasePage extends BasePage {
 
 	hasPlayfieldImageValidationError(filename:string): promise.Promise<boolean> {
 		return this.parentWithText('media', filename, 'span', 'ng-scope').element(by.className('alert')).isDisplayed();
+	}
+
+	hasNameValidationError(): promise.Promise<boolean> {
+		return this.hasClass(this.formGroup(this.name), 'error');
+	}
+
+	hasAuthorValidationError(): promise.Promise<boolean> {
+		return element(by.css('.alert[ng-show="vm.errors.authors"]')).isDisplayed();
 	}
 }

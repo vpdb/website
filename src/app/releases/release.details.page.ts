@@ -17,30 +17,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import EditorDirectiveTpl from './editor.directive.pug';
+import { BasePage } from '../../test/BasePage';
+import { by, element } from "protractor";
 
-/**
- * The editor with markdown preview.
- * @ngInject
- */
-export default function() {
-	return {
-		restrict: 'E',
-		scope: {
-			text: '=ngModel',
-			user: '=',
-			placeholder: '@',
-			markdownText: '@'
-		},
-		replace: true,
-		templateUrl: EditorDirectiveTpl,
-		controller: 'EditorDirectiveCtrl',
-		controllerAs: 'vm',
-		link: (scope, elem, attrs) => {
-			if (attrs.id) {
-				scope.textareaId = attrs.id;
-				elem.removeAttr('id');
-			}
-		}
-	};
+export class ReleaseDetailsPage extends BasePage {
+
+	private title = element(by.id('title'));
+	private description = element(by.id('description'));
+
+	getDescription() {
+		return this.description.getText();
+	}
+
+	getTitle() {
+		return this.title.getText();
+	}
 }

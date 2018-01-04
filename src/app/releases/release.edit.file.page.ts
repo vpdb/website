@@ -17,45 +17,34 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+
 import { browser, by, element } from 'protractor';
-import { promise } from 'selenium-webdriver';
-import { Game } from '../../test/models/Game';
 import { ReleaseAddBasePage } from './release.add.base.page';
+import { Release } from '../../test/models/Release';
 
-export class ReleaseAddPage extends ReleaseAddBasePage {
+export class ReleaseEditFilePage extends ReleaseAddBasePage {
 
-	private version = element(by.id('version'));
-	private modPermission = element(by.id('mod-permission'));
-	private generateNameButton = element(by.id('generate-name-btn'));
 	private resetButton = element(by.id('release-reset-btn'));
 	private submitButton = element(by.id('release-submit-btn'));
 
 	constructor() {
 		super();
-		this.authors = element.all(by.repeater('author in vm.release.authors'))
+		this.authors = element.all(by.repeater('author in vm.updatedRelease.authors'))
 	}
 
-	get(game:Game) {
+	get(release: Release) {
 		this.appPage.get();
 		this.appPage.loginAs('member');
-		this.navigate(game);
+		this.navigate(release);
 	}
 
-	navigate(game:Game) {
-		browser.get(browser.baseUrl + '/games/' + game.id + '/add-release');
+	navigate(release: Release) {
+		browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id + '/edit');
 	}
 
-	generateReleaseName() {
-		this.generateNameButton.click();
-		browser.wait(() => this.name.getAttribute('value').then(text => !!text), 5000);
-	}
-
-	setVersion(version:string) {
-		this.version.sendKeys(version);
-	}
-
-	setModPermission(pos:number) {
-		this.modPermission.all(by.tagName('label')).get(pos).click();
+	setReleaseName(name:string) {
+		this.name.clear();
+		this.name.sendKeys(name);
 	}
 
 	reset() {
@@ -64,13 +53,5 @@ export class ReleaseAddPage extends ReleaseAddBasePage {
 
 	submit() {
 		this.submitButton.click();
-	}
-
-	hasVersionValidationError(): promise.Promise<boolean> {
-		return this.hasClass(this.formGroup(this.version), 'error');
-	}
-
-	hasLicenseValidationError(): promise.Promise<boolean> {
-		return element(by.css('.alert[ng-show="vm.errors.license"]')).isDisplayed();
 	}
 }
