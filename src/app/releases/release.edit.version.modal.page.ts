@@ -17,8 +17,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import { by, element } from 'protractor';
 import { BasePage } from '../../test/BasePage';
 
 export class ReleaseEditVersionModalPage extends BasePage {
 
+	private submitButton = element(by.id('version-submit-btn'));
+	private closeButton = element(by.id('version-close-btn'));
+
+	submit() {
+		this.submitButton.click();
+	}
+
+	close() {
+		this.closeButton.click();
+	}
 }

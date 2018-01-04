@@ -22,7 +22,7 @@ import AuthorSelectModalTpl from '../users/author.select.modal.pug';
 import TagAddModalTpl from '../tag/tag.add.modal.pug';
 import ReleaseEditVersionModalTpl from './release.edit.version.modal.pug';
 
-export default class ReleaseEditFileCtrl {
+export default class ReleaseEditCtrl {
 	/**
 	 * @param $state
 	 * @param $stateParams

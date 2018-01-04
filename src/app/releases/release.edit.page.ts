@@ -17,14 +17,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-
-import { browser, by, element } from 'protractor';
+import { browser, by, element, ExpectedConditions as until } from 'protractor';
 import { ReleaseAddBasePage } from './release.add.base.page';
 import { Release } from '../../test/models/Release';
 
-export class ReleaseEditFilePage extends ReleaseAddBasePage {
+export class ReleaseEditPage extends ReleaseAddBasePage {
 
-	private versions = element(by.id('#versions'));
+	private versions = element(by.id('versions'));
 	private resetButton = element(by.id('release-reset-btn'));
 	private submitButton = element(by.id('release-submit-btn'));
 
@@ -62,5 +61,6 @@ export class ReleaseEditFilePage extends ReleaseAddBasePage {
 			.filter(el => el.getText().then(text => text === version))
 			.first()
 			.click();
+		browser.wait(until.presenceOf(element(by.className('modal-dialog'))), 1000);
 	}
 }

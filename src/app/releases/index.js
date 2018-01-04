@@ -22,7 +22,7 @@ import ReleaseAddCtrl from './release.add.ctrl';
 import ReleaseAddVersionCtrl from './release.add.version.ctrl';
 import ReleaseListCtrl from './release.list.ctrl';
 import ReleaseDetailsCtrl from './release.details.ctrl';
-import ReleaseEditFileCtrl from './release.edit.file.ctrl';
+import ReleaseEditCtrl from './release.edit.ctrl';
 import ReleaseEditVersionModalCtrl from './release.edit.version.modal.ctrl';
 import ReleaseDownloadModalCtrl from './release.download.modal.ctrl';
 import ReleaseFileValidationCtrl from './release.file.validation.ctrl';
@@ -38,7 +38,7 @@ export default angular
 	.controller('ReleaseAddVersionCtrl', ReleaseAddVersionCtrl)
 	.controller('ReleaseListCtrl', ReleaseListCtrl)
 	.controller('ReleaseDetailsCtrl', ReleaseDetailsCtrl)
-	.controller('ReleaseEditFileCtrl', ReleaseEditFileCtrl)
+	.controller('ReleaseEditFileCtrl', ReleaseEditCtrl)
 	.controller('ReleaseEditVersionModalCtrl', ReleaseEditVersionModalCtrl)
 	.controller('ReleaseDownloadModalCtrl', ReleaseDownloadModalCtrl)
 	.controller('ReleaseFileValidationCtrl', ReleaseFileValidationCtrl)

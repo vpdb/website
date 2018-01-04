@@ -21,13 +21,13 @@ import { browser } from 'protractor';
 import { AppPage } from '../app.page';
 import { Release } from '../../test/models/Release';
 import { Releases } from '../../test/backend/Releases';
-import { ReleaseEditFilePage } from './release.edit.file.page';
+import { ReleaseEditPage } from './release.edit.page';
 import { ReleaseEditVersionModalPage } from './release.edit.version.modal.page';
 
 describe('Edit an existing version of a release', () => {
 
 	const appPage = new AppPage();
-	const releaseEditPage = new ReleaseEditFilePage();
+	const releaseEditPage = new ReleaseEditPage();
 	const versionEditModal = new ReleaseEditVersionModalPage();
 	const releases: Releases = new Releases(browser.params.vpdb);
 	let release: Release;
@@ -51,5 +51,9 @@ describe('Edit an existing version of a release', () => {
 	afterAll(() => {
 		appPage.logout();
 	});
+
+	// it('should display validation errors', () => {
+	// 	versionEditModal.close();
+	// });
 
 });

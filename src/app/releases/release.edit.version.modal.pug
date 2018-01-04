@@ -160,8 +160,8 @@ include ../template/_mixins
 
 
 	.modal-footer
-		button.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
-		button.btn.btn--secondary(ng-click="vm.save()", ng-disabled="!vm.AuthService.isAuthenticated || vm.pageLoading")
+		button#version-close-btn.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
+		button#version-submit-btn.btn.btn--secondary(ng-click="vm.save()", ng-disabled="!vm.AuthService.isAuthenticated || vm.pageLoading")
 			+icon('check-circle').space-right
 			| Save Changes
 

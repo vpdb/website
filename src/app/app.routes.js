@@ -25,7 +25,7 @@ import ReleaseListTpl from './releases/release.list.pug';
 import ReleaseDetailsTpl from './releases/release.details.pug';
 import ReleaseAddTpl from './releases/release.add.pug';
 import ReleaseAddVersionTpl from './releases/release.add.version.pug';
-import ReleaseEditFileTpl from './releases/release.edit.file.pug';
+import ReleaseEditTpl from './releases/release.edit.pug';
 import BackglassAddTpl from './backglasses/backglass.add.pug';
 import AuthCallbackTpl from './auth/auth.callback.pug';
 import EmailConfirmationTpl from './auth/email.confirmation.pug';
@@ -68,7 +68,7 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state('releaseDetails',    { url: '/games/:id/releases/:releaseId', templateUrl: ReleaseDetailsTpl, controller: 'ReleaseDetailsCtrl', controllerAs: 'vm' });
 	$stateProvider.state('addRelease',        { url: '/games/:id/add-release', templateUrl: ReleaseAddTpl });
 	$stateProvider.state('addReleaseVersion', { url: '/games/:id/releases/:releaseId/add', templateUrl: ReleaseAddVersionTpl });
-	$stateProvider.state('editRelease',       { url: '/games/:id/releases/:releaseId/edit', templateUrl: ReleaseEditFileTpl });
+	$stateProvider.state('editRelease',       { url: '/games/:id/releases/:releaseId/edit', templateUrl: ReleaseEditTpl });
 
 	// backglasses
 	$stateProvider.state('addBackglass',      { url: '/games/:id/add-backglass', templateUrl: BackglassAddTpl });

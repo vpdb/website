@@ -22,13 +22,13 @@ import { AppPage } from '../app.page';
 import { Releases } from '../../test/backend/Releases';
 import { Users } from '../../test/backend/Users';
 import { Release } from '../../test/models/Release';
-import { ReleaseEditFilePage } from './release.edit.file.page';
-import { ReleaseDetailsPage } from "./release.details.page";
+import { ReleaseEditPage } from './release.edit.page';
+import { ReleaseDetailsPage } from './release.details.page';
 
 describe('Edit a release', () => {
 
 	const appPage = new AppPage();
-	const releaseEditPage = new ReleaseEditFilePage();
+	const releaseEditPage = new ReleaseEditPage();
 	const users:Users = new Users(browser.params.vpdb);
 	const releases:Releases = new Releases(browser.params.vpdb);
 	let release:Release;
