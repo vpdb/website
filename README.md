@@ -58,8 +58,8 @@ in the `config` folder and set the `CONFIG` environment variable accordingly.
 
 Tests are end-to-end using [Protractor](http://www.protractortest.org) through 
 [Codeship](https://codeship.com/) and [BrowserStack](https://www.browserstack.com).
-
-Test results of the latest CI run can also be seen [here](https://results.vpdb.io/).
+Test results of the latest CI run can be seen [here](https://results.vpdb.io/).
+For more info about how tests and CI are set up, check [this](https://github.com/vpdb/website/tree/master/src/test). 
 
 Running locally you'll need four terminals open.
 
@@ -69,6 +69,8 @@ Running locally you'll need four terminals open.
 - **Selenium**: The Selenium server running the tests. First time: `npm run selenium:init`, 
   then just `npm run selenium`. 
 - **Test runner**: Finally, execute the tests with `npm run test:local`
+
+Before tests, code is linted using [ESLint](https://eslint.org/).
 
 ## Credits
 
