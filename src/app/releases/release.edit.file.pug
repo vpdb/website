@@ -175,7 +175,7 @@ include ../template/_mixins
 		//- VERSIONS
 		//-----------------------------------------
 		h4.h--primary Edit Version
-		table.table.table-striped.table--selectable.primary
+		table#versions.table.table-striped.table--selectable.primary
 			tbody
 				tr.center-vertically(ng-repeat="version in vm.release.versions", ng-click="vm.editVersion(version)")
 					td {{ version.version }}

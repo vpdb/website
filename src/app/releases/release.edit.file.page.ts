@@ -24,6 +24,7 @@ import { Release } from '../../test/models/Release';
 
 export class ReleaseEditFilePage extends ReleaseAddBasePage {
 
+	private versions = element(by.id('#versions'));
 	private resetButton = element(by.id('release-reset-btn'));
 	private submitButton = element(by.id('release-submit-btn'));
 
@@ -53,5 +54,13 @@ export class ReleaseEditFilePage extends ReleaseAddBasePage {
 
 	submit() {
 		this.submitButton.click();
+	}
+
+	editVersion(version: string) {
+		this.versions
+			.all(by.tagName('td'))
+			.filter(el => el.getText().then(text => text === version))
+			.first()
+			.click();
 	}
 }

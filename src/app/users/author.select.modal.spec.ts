@@ -45,7 +45,6 @@ describe('Add author', () => {
 		releaseAddPage.addAuthor();
 	});
 
-
 	afterAll(() => {
 		appPage.logout();
 	});
