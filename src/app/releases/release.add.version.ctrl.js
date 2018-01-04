@@ -17,11 +17,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { values, find, map, orderBy, cloneDeep, isEmpty, isArray } from 'lodash';
-import ReleaseAddBaseCtrl from './release.add.base.ctrl';
+import { values, map, orderBy, cloneDeep, isEmpty, isArray } from 'lodash';
 import ReleaseSelectPlayfieldModalTpl from './release.select.playfield.modal.pug';
+import ReleaseBaseCtrl from './release.base.ctrl';
 
-export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
+export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 
 	/**
 	 * @param $scope
@@ -253,26 +253,5 @@ export default class ReleaseAddVersionCtrl extends ReleaseAddBaseCtrl {
 			});
 		});
 		return images;
-	}
-
-
-	createMeta(file, key) {
-		return {
-			name: file.name,
-			bytes: file.bytes,
-			mimeType: file.mime_type,
-			icon: 'ext-vp' + (/table-x$/i.test(file.mime_type) ? 'x' : 't'),
-			randomId: file._randomId,
-			storage: file,
-			key: key
-		};
-	}
-
-	createLink(file, variation) {
-		return {
-			url: file.variations[variation].url,
-			is_protected: file.variations[variation].is_protected,
-			rotation: 0
-		};
 	}
 }

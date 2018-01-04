@@ -21,7 +21,7 @@ import { indexOf, find, isArray } from 'lodash';
 
 import BuildAddModalTpl from '../builds/build.add.modal.pug';
 
-export default class ReleaseAddBaseCtrl {
+export default class ReleaseBaseCtrl {
 
 	/**
 	 * @param $uibModal
@@ -360,5 +360,25 @@ export default class ReleaseAddBaseCtrl {
 
 		this.meta.mediaLinks[mediaFile.key].rotation = rotation - offset;
 		this.meta.mediaLinks[mediaFile.key].offset = offset;
+	}
+
+	createMeta(file, key) {
+		return {
+			name: file.name,
+			bytes: file.bytes,
+			mimeType: file.mime_type,
+			icon: 'ext-vp' + (/table-x$/i.test(file.mime_type) ? 'x' : 't'),
+			randomId: file._randomId,
+			storage: file,
+			key: key
+		};
+	}
+
+	createLink(file, variation) {
+		return {
+			url: file.variations[variation].url,
+			is_protected: file.variations[variation].is_protected,
+			rotation: 0
+		};
 	}
 }

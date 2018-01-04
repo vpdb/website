@@ -17,13 +17,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import ReleaseAddBaseCtrl from './release.add.base.ctrl';
 import { values, filter, includes, isArray, cloneDeep, map, flatten } from 'lodash';
 
+import ReleaseBaseCtrl from './release.base.ctrl';
 import AuthorSelectModalTpl from '../users/author.select.modal.pug';
 import TagAddModalTpl from '../tag/tag.add.modal.pug';
 
-export default class ReleaseAddCtrl extends ReleaseAddBaseCtrl {
+export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 
 	/**
 	 * @param $scope

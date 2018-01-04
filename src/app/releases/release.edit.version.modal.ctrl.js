@@ -17,13 +17,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { cloneDeep, map, assign, orderBy, find } from 'lodash';
-import ReleaseAddBaseCtrl from './release.add.base.ctrl';
+import { cloneDeep, map, assign, orderBy, find, pick } from 'lodash';
+import ReleaseBaseCtrl from './release.base.ctrl';
 
-export default class ReleaseEditVersionModalCtrl extends ReleaseAddBaseCtrl {
+export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 
 	/**
 	 * @param $uibModalInstance
+	 * @param $uibModal
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
 	 * @param {ReleaseMeta} ReleaseMeta
@@ -37,7 +38,7 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseAddBaseCtrl {
 	 * @param BuildResource
 	 * @ngInject
 	 */
-	constructor($uibModalInstance, ApiHelper, AuthService, ReleaseMeta, BootstrapPatcher, ModalService,
+	constructor($uibModalInstance, $uibModal, ApiHelper, AuthService, ReleaseMeta, BootstrapPatcher, ModalService,
 				game, release, version, FileResource, ReleaseVersionResource, BuildResource) {
 		super($uibModal, ApiHelper, AuthService, BootstrapPatcher, BuildResource, FileResource);
 
@@ -52,11 +53,11 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseAddBaseCtrl {
 		this.game = game;
 		this.release = release;
 		this.releaseVersion = version;
-		this.version = map(version, 'released_at', 'changes');
+		this.version = pick(version, 'released_at', 'changes');
 		this.meta = cloneDeep(ReleaseMeta);
 		this.pageLoading = false;
 
-		this.meta.files = this.version.files.map(file => {
+		this.meta.files = version.files.map(file => {
 			file._randomId = file.file.id;
 			file.file._randomId = file.file.id;
 			const playfieldImageKey = this.getMediaKey(file.file, 'playfield_image');
