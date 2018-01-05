@@ -194,16 +194,16 @@ export class ReleaseAddBasePage extends BasePage {
 		this.acknowledgements.sendKeys(acknowledgements);
 	}
 
-	hasFlavorValidationError(filename:string): promise.Promise<boolean> {
-		return this.hasClass(this.parentWithText('flavors', filename), 'error');
+	hasFlavorValidationError(fileName:string): promise.Promise<boolean> {
+		return this.hasClass(this.parentWithText('flavors', fileName), 'error');
 	}
 
-	hasCompatibilityValidationError(filename:string): promise.Promise<boolean> {
-		return this.hasClass(this.parentWithText('compatibility', filename), 'error');
+	hasCompatibilityValidationError(fileName:string): promise.Promise<boolean> {
+		return this.hasClass(this.parentWithText('compatibility', fileName), 'error');
 	}
 
-	hasPlayfieldImageValidationError(filename:string): promise.Promise<boolean> {
-		return this.parentWithText('media', filename, 'span', 'ng-scope').element(by.className('alert')).isDisplayed();
+	hasPlayfieldImageValidationError(fileName:string): promise.Promise<boolean> {
+		return this.parentWithText('media', fileName, 'span', 'ng-scope').element(by.className('alert')).isDisplayed();
 	}
 
 	hasNameValidationError(): promise.Promise<boolean> {

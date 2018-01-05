@@ -100,7 +100,7 @@ export default class ApiHelper {
 	 * variable is just set to the received error.
 	 *
 	 * @param {object} scope Controller instance to which the error values are applied to.
-	 * @param {{ fieldPrefix:string }} [opt] config Options
+	 * @param {{ fieldPrefix?:string }} [opt] config Options
 	 * @param {function(scope:object, response:object)} [postFct] Executed if provided with given scope as argument, after the errors object has been set
 	 * @param {function(scope:object, response:object)} [preFct] Executed if provided with given scope as argument, before the errors object has been set.
 	 * @return {function(response:object)}
@@ -139,7 +139,7 @@ export default class ApiHelper {
 				if (preFct) {
 					preFct(scope, response);
 				}
-				forEach(response.data.errors, function(err) {
+				response.data.errors.forEach(err => {
 					const path = (opt.fieldPrefix || '') + err.field;
 					set(scope.errors, path, err.message);
 					scope.errors.__count++;

@@ -18,12 +18,21 @@
  */
 
 import { by, element } from 'protractor';
-import { BasePage } from '../../test/BasePage';
+import { ReleaseAddBasePage } from './release.add.base.page';
+import { promise } from 'selenium-webdriver';
 
-export class ReleaseEditVersionModalPage extends BasePage {
+export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 
 	private submitButton = element(by.id('version-submit-btn'));
 	private closeButton = element(by.id('version-close-btn'));
+
+	clearCompatibility(fileName: string) {
+		this.getCompatibilityPanel(fileName).all(by.css('input[checked="checked"]')).each(el => el.click());
+	}
+
+	hasCompatibilityValidationError(fileName:string): promise.Promise<boolean> {
+		return this.getFilePanel(fileName).element(by.css('.alert.compatibility')).isDisplayed();
+	}
 
 	submit() {
 		this.submitButton.click();
@@ -31,5 +40,15 @@ export class ReleaseEditVersionModalPage extends BasePage {
 
 	close() {
 		this.closeButton.click();
+	}
+
+	private getCompatibilityPanel(fileName:string) {
+		return this.getFilePanel(fileName).element(by.className('compatibility'));
+	}
+
+	private getFilePanel(fileName:string) {
+		return element.all(by.repeater('file in vm.meta.files'))
+			.filter(el => el.element(by.css('h2')).getText().then(text => text.includes(fileName)))
+			.first();
 	}
 }

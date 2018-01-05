@@ -52,8 +52,10 @@ describe('Edit an existing version of a release', () => {
 		appPage.logout();
 	});
 
-	// it('should display validation errors', () => {
-	// 	versionEditModal.close();
-	// });
-
+	it('should display validation errors', () => {
+		versionEditModal.clearCompatibility('blank.vpt');
+		versionEditModal.submit();
+		expect(versionEditModal.hasCompatibilityValidationError('blank.vpt')).toBeTruthy();
+		versionEditModal.close();
+	});
 });

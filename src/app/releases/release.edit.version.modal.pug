@@ -43,7 +43,7 @@ include ../template/_mixins
 			hr.hr--primary.hr--shifted-up
 
 			h4.padder-top Compatibility
-			.row.space-left-2x
+			.row.space-left-2x.compatibility
 				.col-md-4
 					span
 						span Official Releases
@@ -65,6 +65,10 @@ include ../template/_mixins
 					.simple-list(ng-repeat="build in vm.builds.experimental | filter:{is_range:false}")
 						input.checkbox--check(ng-checked="vm.getReleaseFile(file)._compatibility.indexOf(build.id) > -1", ng-click="vm.toggleBuild(file, build)", ng-attr-id="dev-{{ file.storage.id }}-{{ build.id }}", type="checkbox")
 						label(ng-attr-for="dev-{{ file.storage.id }}-{{ build.id }}") {{ build.label }}
+
+			.alert.alert-danger.padder-top-2x.compatibility(ng-show="vm.errors.files[vm.meta.files.indexOf(file)]._compatibility")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.files[vm.meta.files.indexOf(file)]._compatibility }}
 
 			.clearfix.padder-top-2x
 
