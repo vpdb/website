@@ -48,7 +48,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 				App, ApiHelper, AuthService, ModalService, ReleaseMeta, Flavors, BootstrapPatcher,
 				BuildResource, FileResource, GameResource, ReleaseResource, ReleaseVersionResource, TrackerService) {
 
-		super($uibModal, ApiHelper, AuthService, BootstrapPatcher, BuildResource, FileResource);
+		super($uibModal, ApiHelper, AuthService, ReleaseMeta, BootstrapPatcher, BuildResource, FileResource);
 
 		App.theme('light');
 		App.setTitle('Upload Files');

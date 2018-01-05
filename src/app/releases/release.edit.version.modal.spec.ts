@@ -54,8 +54,10 @@ describe('Edit an existing version of a release', () => {
 
 	it('should display validation errors', () => {
 		versionEditModal.clearCompatibility('blank.vpt');
+		versionEditModal.rotatePlayfieldImage('blank.vpt');
 		versionEditModal.submit();
 		expect(versionEditModal.hasCompatibilityValidationError('blank.vpt')).toBeTruthy();
+		expect(versionEditModal.hasPlayfieldImageValidationError('blank.vpt')).toBeTruthy();
 		versionEditModal.close();
 	});
 });

@@ -17,8 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { indexOf, find, isArray } from 'lodash';
-
+import { indexOf, find, isArray, cloneDeep } from 'lodash';
 import BuildAddModalTpl from '../builds/build.add.modal.pug';
 
 export default class ReleaseBaseCtrl {
@@ -27,12 +26,13 @@ export default class ReleaseBaseCtrl {
 	 * @param $uibModal
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
+	 * @param {ReleaseMeta} ReleaseMeta
 	 * @param {BootstrapPatcher} BootstrapPatcher
 	 * @param BuildResource
 	 * @param FileResource
 	 * @ngInject
 	 */
-	constructor($uibModal, ApiHelper, AuthService, BootstrapPatcher, BuildResource, FileResource) {
+	constructor($uibModal, ApiHelper, AuthService, ReleaseMeta, BootstrapPatcher, BuildResource, FileResource) {
 
 		BootstrapPatcher.patchCalendar();
 
@@ -41,6 +41,8 @@ export default class ReleaseBaseCtrl {
 		this.AuthService = AuthService;
 		this.BuildResource = BuildResource;
 		this.FileResource = FileResource;
+
+		this.meta = cloneDeep(ReleaseMeta);
 	}
 
 
@@ -355,7 +357,7 @@ export default class ReleaseBaseCtrl {
 		if (releaseFile.flavor && releaseFile.flavor.orientation === 'ws') {
 			rotation = 0;
 
-			// otherwise, assume it's a fullscreen release and rotate accordingly.
+		// otherwise, assume it's a fullscreen release and rotate accordingly.
 		} else if (mediaFile.storage.metadata.size.width > mediaFile.storage.metadata.size.height) {
 			rotation = 90;
 		}

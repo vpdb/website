@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { ReleaseAddBasePage } from './release.add.base.page';
 import { promise } from 'selenium-webdriver';
 
@@ -30,8 +30,17 @@ export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 		this.getCompatibilityPanel(fileName).all(by.css('input[checked="checked"]')).each(el => el.click());
 	}
 
+	rotatePlayfieldImage(fileName: string, clockwise = true) {
+		const index = clockwise ? 1 : 0;
+		this.getFilePanel(fileName).all(by.css('.playfield-image h4 a')).get(index).click();
+	}
+
 	hasCompatibilityValidationError(fileName:string): promise.Promise<boolean> {
 		return this.getFilePanel(fileName).element(by.css('.alert.compatibility')).isDisplayed();
+	}
+
+	hasPlayfieldImageValidationError(fileName:string): promise.Promise<boolean> {
+		return this.getFilePanel(fileName).element(by.css('.alert.media')).isDisplayed();
 	}
 
 	submit() {
@@ -46,8 +55,8 @@ export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 		return this.getFilePanel(fileName).element(by.className('compatibility'));
 	}
 
-	private getFilePanel(fileName:string) {
-		return element.all(by.repeater('file in vm.meta.files'))
+	private getFilePanel(fileName:string): ElementFinder {
+		return element.all(by.id('files'))
 			.filter(el => el.element(by.css('h2')).getText().then(text => text.includes(fileName)))
 			.first();
 	}

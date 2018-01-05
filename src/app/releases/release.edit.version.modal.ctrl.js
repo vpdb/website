@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { cloneDeep, map, assign, orderBy, find, pick } from 'lodash';
+import { map, assign, orderBy, find, pick } from 'lodash';
 import ReleaseBaseCtrl from './release.base.ctrl';
 
 export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
@@ -40,7 +40,7 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 	 */
 	constructor($uibModalInstance, $uibModal, ApiHelper, AuthService, ReleaseMeta, BootstrapPatcher, ModalService,
 				game, release, version, FileResource, ReleaseVersionResource, BuildResource) {
-		super($uibModal, ApiHelper, AuthService, BootstrapPatcher, BuildResource, FileResource);
+		super($uibModal, ApiHelper, AuthService, ReleaseMeta, BootstrapPatcher, BuildResource, FileResource);
 
 		BootstrapPatcher.patchCalendar();
 
@@ -54,7 +54,6 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 		this.release = release;
 		this.releaseVersion = version;
 		this.version = pick(version, 'released_at', 'changes');
-		this.meta = cloneDeep(ReleaseMeta);
 		this.pageLoading = false;
 
 		this.meta.files = version.files.map(file => {
@@ -121,7 +120,7 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 			}
 			const rotation = this.meta.mediaLinks[this.getMediaKey(file.file, 'playfield_image')].rotation;
 			const offset = this.meta.mediaLinks[this.getMediaKey(file.file, 'playfield_image')].offset;
-			const relativeRotation = rotation + offset;
+			const relativeRotation = (rotation + offset + 360) % 360;
 			rotationParams.push((playfield_image.id || playfield_image) + ':' + relativeRotation);
 		});
 
