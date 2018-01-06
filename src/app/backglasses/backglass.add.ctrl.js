@@ -71,6 +71,7 @@ export default class BackglassAddCtrl {
 		// init data: either copy from local storage or reset.
 		if ($localStorage.backglass && $localStorage.backglass[this.gameId] && $localStorage.backglass[this.gameId].versions) {
 			this.backglass = $localStorage.backglass[this.gameId];
+			this.backglass.versions[0].released_at = new Date(this.backglass.versions[0].released_at);
 			this.meta = $localStorage.backglass_meta[this.gameId];
 			AuthService.collectUrlProps(this.meta, true);
 
@@ -104,7 +105,6 @@ export default class BackglassAddCtrl {
 			files: { backglass: { variations: { full: false } } }
 		};
 		this.meta.users[currentUser.id] = currentUser;
-		this.meta.releaseDate = new Date();
 
 		/*
 		 * `backglass` is the object posted to the API.
@@ -117,6 +117,7 @@ export default class BackglassAddCtrl {
 			description: '',
 			versions: [ {
 				version: '',
+				released_at: new Date(),
 				changes: '*Initial release.*',
 				_file: null
 			} ],
@@ -134,21 +135,12 @@ export default class BackglassAddCtrl {
 	 */
 	submit() {
 
-		// update release date if set
-		const releaseDate = this.getReleaseDate();
-		if (releaseDate) {
-			this.backglass.versions[0].released_at = releaseDate;
-		} else {
-			delete this.backglass.versions[0].released_at;
-		}
-
 		// post to api
 		this.submitting = true;
 		this.BackglassResource.save(this.backglass, () => {
 			this.backglass.submitted = true;
 			this.submitting = false;
 			this.reset();
-
 
 			let moderationMsg = '';
 			if (!this.AuthService.hasPermission('backglasses/auto-approve')) {
@@ -215,19 +207,6 @@ export default class BackglassAddCtrl {
 	 */
 	removeAuthor(author) {
 		this.backglass.authors.splice(this.backglass.authors.indexOf(author), 1);
-	}
-
-	/**
-	 * Returns a date object from the date and time picker.
-	 * If empty, returns null.
-	 */
-	getReleaseDate() {
-		if (this.meta.releaseDate || this.meta.releaseTime) {
-			const date = this.meta.releaseDate ? new Date(this.meta.releaseDate) : new Date();
-			const time = this.meta.releaseTime ? new Date(this.meta.releaseTime) : new Date();
-			return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
-		}
-		return null;
 	}
 
 	openCalendar($event) {

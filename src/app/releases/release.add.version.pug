@@ -36,19 +36,17 @@ include ../template/_mixins
 					.col-sm-4: .input-group
 						input.form-control.datepicker(
 							type="text",
-							ng-model="vm.meta.releaseDate",
+							ng-model="vm.releaseVersion.released_at",
 							uib-datepicker-popup="yyyy-MM-dd",
-							is-open="calendarOpened",
+							is-open="vm.calendarOpened",
 							close-text="Close",
 							show-weeks="false",
 							starting-day="1",
-							ng-required
+							ng-required="true"
 						)
 						span.input-group-addon: +icon('calendar').a(ng-click='vm.openCalendar($event)')
-					.col-sm-3
-						uib-timepicker(ng-model="vm.meta.releaseTime", hour-step="1", minute-step="5", show-meridian="false")
-					.col-sm-5
-						i Leave empty for submission time.
+					.col-sm-4
+						div(uib-timepicker, ng-model="vm.releaseVersion.released_at", hour-step="1", minute-step="5", show-meridian="false")
 
 
 		h1 1. Upload Files

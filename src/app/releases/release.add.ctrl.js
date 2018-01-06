@@ -106,6 +106,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		if (this.$localStorage.release && this.$localStorage.release[this.gameId] && this.$localStorage.release[this.gameId].versions) {
 			this.release = this.$localStorage.release[this.gameId];
 			this.releaseVersion = this.release.versions[0];
+			this.releaseVersion.released_at = new Date(this.releaseVersion.released_at);
 			this.meta = this.$localStorage.release_meta[this.gameId];
 
 			// update references
@@ -138,7 +139,6 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		if (currentUser) {
 			this.meta.users[currentUser.id] = currentUser;
 		}
-		this.meta.releaseDate = new Date();
 		this.newLink = {};
 		this.meta.idMap = {};
 
@@ -156,6 +156,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 			description: '',
 			versions: [ {
 				version: '',
+				released_at: new Date(),
 				changes: '*Initial release.*',
 				files: [ ]
 			} ],
@@ -277,14 +278,6 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 	 * Posts the release add form to the server.
 	 */
 	submit() {
-
-		// get release date
-		const releaseDate = this.getReleaseDate();
-		if (releaseDate) {
-			this.release.versions[0].released_at = releaseDate;
-		} else {
-			delete this.release.versions[0].released_at;
-		}
 
 		// add link if user has started typing something.
 		if (this.newLink && (this.newLink.label || this.newLink.url)) {

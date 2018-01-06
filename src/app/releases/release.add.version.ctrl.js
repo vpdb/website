@@ -85,6 +85,8 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 			// init data: either copy from local storage or reset.
 			if (this.$localStorage.release_version && this.$localStorage.release_version[this.releaseId]) {
 				this.releaseVersion = this.$localStorage.release_version[this.releaseId];
+				this.releaseVersion.released_at = new Date(this.releaseVersion.released_at);
+
 				this.meta = this.$localStorage.release_version_meta[this.releaseId];
 				AuthService.collectUrlProps(this.meta, true);
 			} else {
@@ -149,6 +151,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 		}
 		this.releaseVersion = this.$localStorage.release_version[this.releaseId] = {
 			version: '',
+			released_at: new Date(),
 			changes: '*New update!*\n\nChanges:\n\n- Added 3D objects\n- Table now talks.',
 			files: [ ]
 		};
@@ -208,14 +211,6 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 
 		// post whole version
 		} else {
-
-			// get release date
-			const releaseDate = this.getReleaseDate();
-			if (releaseDate) {
-				this.releaseVersion.released_at = releaseDate;
-			} else {
-				delete this.releaseVersion.released_at;
-			}
 
 			this.submitting = true;
 			this.ReleaseVersionResource.save({ releaseId: this.releaseId, rotate: rotationParams.join(',') }, this.releaseVersion, () => {
