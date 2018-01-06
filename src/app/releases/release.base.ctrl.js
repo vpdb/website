@@ -35,6 +35,7 @@ export default class ReleaseBaseCtrl {
 	constructor($uibModal, ApiHelper, AuthService, ReleaseMeta, BootstrapPatcher, BuildResource, FileResource) {
 
 		BootstrapPatcher.patchCalendar();
+		BootstrapPatcher.patchTimePicker();
 
 		this.$uibModal = $uibModal;
 		this.ApiHelper = ApiHelper;

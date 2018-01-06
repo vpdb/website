@@ -19,16 +19,16 @@ include ../template/_mixins
 		.form-group.padder-bottom-2x(ng-class="{ error: vm.errors.released_at }")
 			.row
 				.col-sm-3: .input-group
-					input.form-control.datepicker(
+					input.form-control(
 						type="text",
 						ng-model="vm.version.released_at",
 						uib-datepicker-popup="yyyy-MM-dd",
 						format-day-header="EE"
-						is-open="calendarOpened",
+						is-open="vm.calendarOpened",
 						close-text="Close",
 						show-weeks="false",
 						starting-day="1",
-						ng-required
+						ng-required="true"
 					)
 					span.input-group-addon: +icon('calendar').a(ng-click='vm.openCalendar($event)')
 				.col-sm-2
@@ -168,5 +168,3 @@ include ../template/_mixins
 		button#version-submit-btn.btn.btn--secondary(ng-click="vm.save()", ng-disabled="!vm.AuthService.isAuthenticated || vm.pageLoading")
 			+icon('check-circle').space-right
 			| Save Changes
-
-include ../template/timepicker

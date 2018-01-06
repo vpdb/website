@@ -78,7 +78,7 @@ export class Releases {
 			playfieldImage = file;
 
 			const defaultRelease:Release = {
-				name: company.catchPhraseAdjective() + 'Edition',
+				name: company.catchPhraseAdjective() + ' Edition',
 				license: 'by-sa',
 				_game: game.id,
 				versions: [

@@ -30,23 +30,33 @@ export default class BootstrapPatcher {
 	patchCalendar() {
 		// monkey patch template so it takes svgs instead of glyphicons.
 		let dayTpl = this.$templateCache.get('uib/template/datepicker/day.html');
-		if (/<i class="glyphicon/.test(dayTpl)) {
+		if (/class="glyphicon/.test(dayTpl)) {
 
 			let monthTpl = this.$templateCache.get('uib/template/datepicker/month.html');
 			let yearTpl = this.$templateCache.get('uib/template/datepicker/year.html');
 
-			dayTpl = dayTpl.replace(/<i class="glyphicon glyphicon-chevron-left">/, this.svg('arrow-left'));
-			dayTpl = dayTpl.replace(/<i class="glyphicon glyphicon-chevron-right">/, this.svg('arrow-right'));
+			dayTpl = dayTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-left"[^>]*><\/i>/, this.svg('arrow-left'));
+			dayTpl = dayTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-right"[^>]*><\/i>/, this.svg('arrow-right'));
 
-			monthTpl = monthTpl.replace(/<i class="glyphicon glyphicon-chevron-right">/, this.svg('arrow-right'));
-			monthTpl = monthTpl.replace(/<i class="glyphicon glyphicon-chevron-left">/, this.svg('arrow-left'));
+			monthTpl = monthTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-right"[^>]*><\/i>/, this.svg('arrow-right'));
+			monthTpl = monthTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-left"[^>]*><\/i>/, this.svg('arrow-left'));
 
-			yearTpl = yearTpl.replace(/<i class="glyphicon glyphicon-chevron-right">/, this.svg('arrow-right'));
-			yearTpl = yearTpl.replace(/<i class="glyphicon glyphicon-chevron-left">/, this.svg('arrow-left'));
+			yearTpl = yearTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-right"[^>]*><\/i>/, this.svg('arrow-right'));
+			yearTpl = yearTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-left"[^>]*><\/i>/, this.svg('arrow-left'));
 
 			this.$templateCache.put('uib/template/datepicker/day.html', dayTpl);
 			this.$templateCache.put('uib/template/datepicker/month.html', monthTpl);
 			this.$templateCache.put('uib/template/datepicker/year.html', yearTpl);
+		}
+	}
+
+	patchTimePicker() {
+		const tplId = 'uib/template/timepicker/timepicker.html';
+		let tpl = this.$templateCache.get(tplId);
+		if (/<span class="glyphicon/.test(tpl)) {
+			tpl = tpl.replace(/<span.*?class="glyphicon glyphicon-chevron-up"[^>]*><\/span>/, this.svg('angle-up'));
+			tpl = tpl.replace(/<span.*?class="glyphicon glyphicon-chevron-down"[^>]*><\/span>/, this.svg('angle-down'));
+			this.$templateCache.put(tplId, tpl);
 		}
 	}
 

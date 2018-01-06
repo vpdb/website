@@ -42,8 +42,6 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 				game, release, version, FileResource, ReleaseVersionResource, BuildResource) {
 		super($uibModal, ApiHelper, AuthService, ReleaseMeta, BootstrapPatcher, BuildResource, FileResource);
 
-		BootstrapPatcher.patchCalendar();
-
 		this.$uibModalInstance = $uibModalInstance;
 		this.ApiHelper = ApiHelper;
 		this.AuthService = AuthService;
