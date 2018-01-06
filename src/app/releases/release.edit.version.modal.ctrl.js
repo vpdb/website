@@ -48,11 +48,15 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 		this.ModalService = ModalService;
 		this.ReleaseVersionResource = ReleaseVersionResource;
 
+		version.released_at = new Date(version.released_at);
+
+		this.pageLoading = false;
 		this.game = game;
 		this.release = release;
 		this.releaseVersion = version;
+
+		/** The object posted to the server. **/
 		this.version = pick(version, 'released_at', 'changes');
-		this.pageLoading = false;
 
 		this.meta.files = version.files.map(file => {
 			file._randomId = file.file.id;
@@ -101,14 +105,6 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 
 	save() {
 
-		// get release date
-		const releaseDate = this.getReleaseDate();
-		if (releaseDate) {
-			this.releaseVersion.released_at = releaseDate;
-		} else {
-			delete this.releaseVersion.released_at;
-		}
-
 		// retrieve rotation parameters
 		const rotationParams = [];
 		this.releaseVersion.files.forEach(file => {
@@ -139,7 +135,11 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 		});
 
 		this.pageLoading = true;
-		this.ReleaseVersionResource.update({ releaseId: this.release.id, version: this.releaseVersion.version, rotate: rotationParams.join(',') }, this.version, updatedVersion => {
+		this.ReleaseVersionResource.update({
+			releaseId: this.release.id,
+			version: this.releaseVersion.version,
+			rotate: rotationParams.join(',')
+		}, this.version, updatedVersion => {
 
 			this.pageLoading = false;
 			this.$uibModalInstance.close(updatedVersion);

@@ -32,7 +32,7 @@ include ../template/_mixins
 					)
 					span.input-group-addon: +icon('calendar').a(ng-click='vm.openCalendar($event)')
 				.col-sm-2
-					uib-timepicker(ng-model="vm.meta.releaseTime", hour-step="1", minute-step="5", show-meridian="false")
+					div(uib-timepicker, ng-model="vm.version.released_at", hour-step="1", minute-step="5", show-meridian="false")
 
 		//- FILES
 		//-----------------------------------------

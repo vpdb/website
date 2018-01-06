@@ -35,14 +35,14 @@ export default class BootstrapPatcher {
 			let monthTpl = this.$templateCache.get('uib/template/datepicker/month.html');
 			let yearTpl = this.$templateCache.get('uib/template/datepicker/year.html');
 
-			dayTpl = dayTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-left"[^>]*><\/i>/, this.svg('arrow-left'));
-			dayTpl = dayTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-right"[^>]*><\/i>/, this.svg('arrow-right'));
+			dayTpl = dayTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-left"[^>]*><\/i>/gi, this.svg('arrow-left'));
+			dayTpl = dayTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-right"[^>]*><\/i>/gi, this.svg('arrow-right'));
 
-			monthTpl = monthTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-right"[^>]*><\/i>/, this.svg('arrow-right'));
+			monthTpl = monthTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-right"[^>]*><\/i>/gi, this.svg('arrow-right'));
 			monthTpl = monthTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-left"[^>]*><\/i>/, this.svg('arrow-left'));
 
-			yearTpl = yearTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-right"[^>]*><\/i>/, this.svg('arrow-right'));
-			yearTpl = yearTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-left"[^>]*><\/i>/, this.svg('arrow-left'));
+			yearTpl = yearTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-right"[^>]*><\/i>/gi, this.svg('arrow-right'));
+			yearTpl = yearTpl.replace(/<i.*?class="glyphicon glyphicon-chevron-left"[^>]*><\/i>/gi, this.svg('arrow-left'));
 
 			this.$templateCache.put('uib/template/datepicker/day.html', dayTpl);
 			this.$templateCache.put('uib/template/datepicker/month.html', monthTpl);
@@ -53,9 +53,9 @@ export default class BootstrapPatcher {
 	patchTimePicker() {
 		const tplId = 'uib/template/timepicker/timepicker.html';
 		let tpl = this.$templateCache.get(tplId);
-		if (/<span class="glyphicon/.test(tpl)) {
-			tpl = tpl.replace(/<span.*?class="glyphicon glyphicon-chevron-up"[^>]*><\/span>/, this.svg('angle-up'));
-			tpl = tpl.replace(/<span.*?class="glyphicon glyphicon-chevron-down"[^>]*><\/span>/, this.svg('angle-down'));
+		if (/class="glyphicon/.test(tpl)) {
+			tpl = tpl.replace(/<span.*?class="glyphicon glyphicon-chevron-up"[^>]*><\/span>/gi, this.svg('angle-up', 'small'));
+			tpl = tpl.replace(/<span.*?class="glyphicon glyphicon-chevron-down"[^>]*><\/span>/gi, this.svg('angle-down', 'small'));
 			this.$templateCache.put(tplId, tpl);
 		}
 	}
@@ -68,7 +68,12 @@ export default class BootstrapPatcher {
 		this.$templateCache.put(tplId, tpl);
 	}
 
-	svg(name) {
-		return '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#' + name + '"></use></svg>';
+	svg(name, cssClass) {
+		if (cssClass) {
+			cssClass = ' ' + cssClass;
+		} else {
+			cssClass = '';
+		}
+		return '<svg class="svg-icon' + cssClass + '"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#' + name + '"></use></svg>';
 	}
 }
