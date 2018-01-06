@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { resolve } = require('path');
 
 const webpack = require('webpack');
@@ -15,7 +16,7 @@ module.exports  = function(options) {
 	return {
 		entry: {
 			app: './src/app/index.js'
-		} ,
+		},
 		module: {
 			rules: [
 				{ test: /\.js$/, use: [
@@ -32,7 +33,7 @@ module.exports  = function(options) {
 				{ test: /\.html$/, loader: 'raw-loader' },
 				{ test: /\.(eot|woff|woff2|ttf|png|svg|jpg|swf)$/, loader: { loader: 'file-loader', options: { name: '[path][name]-[sha256:hash:base58:8].[ext]', context: staticContext } }, exclude: iconsContext },
 				{ test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: cssLoader}) },
-				{ test: /\.styl$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ cssLoader, 'stylus-loader?sourceMap'] }) },
+				{ test: /\.styl$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ cssLoader, 'stylus-loader?sourceMap=true'] }) },
 				{ test: /\.svg$/, use: [
 					{ loader: 'svg-sprite-loader', options: { extract: true } },
 					{ loader: 'svgo-loader', options: { plugins: [ { removeDoctype: true }, { removeXMLProcInst: true }, { removeComments: true }, { removeMetadata: true }, { removeEditorsNSData: true }, { cleanupAttrs: true }, { convertStyleToAttrs: true }, { removeRasterImages: true }, { cleanupNumericValues: true }, { convertColors: true }, { removeUnknownsAndDefaults: true }, { removeNonInheritableGroupAttrs: true }, { removeUselessStrokeAndFill: true }, { removeViewBox: true }, { cleanupEnableBackground: true }, { removeHiddenElems: true }, { removeEmptyText: true }, { convertShapeToPath: true }, { moveElemsAttrsToGroup: true }, { moveGroupAttrsToElems: true }, { collapseGroups: true }, { convertPathData: true }, { convertTransform: true }, { removeEmptyAttrs: true }, { removeEmptyContainers: true }, { mergePaths: true }, { cleanupIDs: true }, { removeUnusedNS: true }, { transformsWithOnePath: false }, { sortAttrs: true }, { removeTitle: true } ] } }
@@ -47,13 +48,13 @@ module.exports  = function(options) {
 				filename: '[name]-[sha256:contenthash:base58:8].css',
 				allChunks: true
 			}),
-
-			new webpack.SourceMapDevToolPlugin({
-				filename: "[file].map",
-				append: "//# sourceMappingURL=[url]",
-				moduleFilenameTemplate: '[resource-path]',
-				fallbackModuleFilenameTemplate: '[resource-path]'
-			}),
+			//
+			// new webpack.SourceMapDevToolPlugin({
+			// 	filename: "[file].map",
+			// 	append: "//# sourceMappingURL=webpack://[url]",
+			// 	moduleFilenameTemplate: '[resource-path]',
+			// 	fallbackModuleFilenameTemplate: '[resource-path]'
+			// }),
 
 			new HtmlWebpackPlugin({
 				template: './src/index.pug'
@@ -82,6 +83,7 @@ module.exports  = function(options) {
 			hashFunction: 'sha256',
 			hashDigest: 'hex',
 			hashDigestLength: 12
-		}
+		},
+		devtool: 'source-map'
 	}
 };
