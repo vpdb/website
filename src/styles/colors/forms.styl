@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+@import '../variables';
+
 $input-background-darker = rgba(white, 0.04)
 $input-background-dark = rgba(white, 0.08)
 $input-background-dark-focus = rgba(white, 0.11)
@@ -55,7 +57,9 @@ $input-background-light-focus = rgba(white, 0.75)
 				background-color #3a3837
 
 	.h--primary .form-control
-		@extend .theme-dark .h--primary
+		color $color-primary
+		small
+			color $color-primary
 
 	// On error:
 	.form-group

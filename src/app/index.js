@@ -42,10 +42,6 @@ import 'angular-dragdrop';
 import 'ment.io';
 import 'ngclipboard';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'magnific-popup/dist/magnific-popup.css';
-import '../styles/vpdb.styl';
-
 import core from './core';
 import auth from './auth';
 import backend from './backend';
@@ -70,6 +66,7 @@ import controller from './app.ctrl';
 import service from './app.service';
 import { msdElasticConfig } from './app.config';
 
+import './app.styles';
 import AppTpl from './app.pug';
 
 const app = () => {

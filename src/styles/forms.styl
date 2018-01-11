@@ -17,6 +17,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+@import 'variables';
+@import 'mixins';
+
 // Forms
 //
 // Styleguide 5
@@ -62,8 +65,15 @@ select.form-control
 
 // Input box within a header (for inline editing)
 h2 .form-control
-	@extend h2
 	height 50px
+	font-family $font-content
+	font-weight $font-weight-bold
+	font-size $font-size-largest
+	text-transform none
+	small
+		font-size $font-size-largest
+		font-weight $font-weight-normal
+
 
 // Search Box
 //
