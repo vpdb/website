@@ -11,7 +11,7 @@ include ../template/_mixins
 		//-----------------------------------------
 		h4.h--primary Changelog
 		.form-group
-			editor.tabset--light(ng-model="vm.version.changes", placeholder="Release Information", markdown-text="Markdown enabled.")
+			editor#changelog.tabset--light(ng-model="vm.version.changes", placeholder="Release Information", markdown-text="Markdown enabled.")
 
 		//- RELEASE DATE
 		//-----------------------------------------
@@ -19,7 +19,7 @@ include ../template/_mixins
 		.form-group.padder-bottom-2x(ng-class="{ error: vm.errors.released_at }")
 			.row
 				.col-sm-3: .input-group
-					input.form-control(
+					input#version-release-date.form-control(
 						type="text",
 						ng-model="vm.version.released_at",
 						uib-datepicker-popup="yyyy-MM-dd",
@@ -32,7 +32,7 @@ include ../template/_mixins
 					)
 					span.input-group-addon: +icon('calendar').a(ng-click='vm.openCalendar($event)')
 				.col-sm-2
-					div(uib-timepicker, ng-model="vm.version.released_at", hour-step="1", minute-step="5", show-meridian="false")
+					div#version-release-time(uib-timepicker, ng-model="vm.version.released_at", hour-step="1", minute-step="5", show-meridian="false")
 
 		//- FILES
 		//-----------------------------------------

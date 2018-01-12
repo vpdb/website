@@ -23,11 +23,36 @@ import { promise } from 'selenium-webdriver';
 
 export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 
+	private changelog = element(by.id('changelog'));
+	private releaseDate = element(by.id('version-release-date'));
+	private releaseTime = element(by.id('version-release-time'));
 	private submitButton = element(by.id('version-submit-btn'));
 	private closeButton = element(by.id('version-close-btn'));
 
+	setChangelog(text: string) {
+		this.changelog.clear();
+		this.changelog.sendKeys(text);
+	}
+
+	setReleaseDate(date: string, hours: number, minutes: number) {
+		this.releaseDate.clear();
+		this.releaseDate.sendKeys(date);
+		const hoursFinder = this.releaseTime.element(by.model('hours'));
+		const minutesFinder = this.releaseTime.element(by.model('minutes'));
+
+		hoursFinder.clear();
+		hoursFinder.sendKeys(hours);
+
+		minutesFinder.clear();
+		minutesFinder.sendKeys(minutes);
+	}
+
 	clearCompatibility(fileName: string) {
 		this.getCompatibilityPanel(fileName).all(by.css('input[checked="checked"]')).each(el => el.click());
+	}
+
+	setCompatibility(fileName:string, type:number, value:number) {
+		// todo
 	}
 
 	rotatePlayfieldImage(fileName: string, clockwise = true) {
@@ -60,4 +85,5 @@ export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 			.filter(el => el.element(by.css('h2')).getText().then(text => text.includes(fileName)))
 			.first();
 	}
+
 }

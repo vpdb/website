@@ -60,4 +60,11 @@ describe('Edit an existing version of a release', () => {
 		expect(versionEditModal.hasPlayfieldImageValidationError('blank.vpt')).toBeTruthy();
 		versionEditModal.close();
 	});
+
+	xit('should edit an existing version', () => {
+		versionEditModal.setChangelog('- Edited data');
+		versionEditModal.setReleaseDate('1978-05-07', 14, 20);
+		versionEditModal.clearCompatibility('blank.vpt');
+		versionEditModal.setCompatibility('blank.vpt', 0, 0);
+	});
 });
