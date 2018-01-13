@@ -21,19 +21,22 @@ import { browser } from 'protractor';
 import { AppPage } from '../app.page';
 import { Release } from '../../test/models/Release';
 import { Releases } from '../../test/backend/Releases';
+import { ReleaseDetailsPage } from './release.details.page';
 import { ReleaseEditPage } from './release.edit.page';
 import { ReleaseEditVersionModalPage } from './release.edit.version.modal.page';
 
 describe('Edit an existing version of a release', () => {
 
+	const tableFilename = 'Wrongfully Uploaded Version';
 	const appPage = new AppPage();
+	const releasePage = new ReleaseDetailsPage();
 	const releaseEditPage = new ReleaseEditPage();
 	const versionEditModal = new ReleaseEditVersionModalPage();
 	const releases: Releases = new Releases(browser.params.vpdb);
 	let release: Release;
 
 	beforeAll(() => {
-		return releases.createRelease('member', { versions: [ { version: '1.0.0' } ] })
+		return releases.createRelease('member', { versions: [ { version: '1.0.0' } ] }, null, tableFilename)
 			.then((createdRelease:Release) => {
 				release = createdRelease;
 				releaseEditPage.get(release);
@@ -53,18 +56,29 @@ describe('Edit an existing version of a release', () => {
 	});
 
 	it('should display validation errors', () => {
-		versionEditModal.clearCompatibility('blank.vpt');
-		versionEditModal.rotatePlayfieldImage('blank.vpt');
+		versionEditModal.clearCompatibility(tableFilename);
+		versionEditModal.rotatePlayfieldImage(tableFilename);
 		versionEditModal.submit();
-		expect(versionEditModal.hasCompatibilityValidationError('blank.vpt')).toBeTruthy();
-		expect(versionEditModal.hasPlayfieldImageValidationError('blank.vpt')).toBeTruthy();
+		expect(versionEditModal.hasCompatibilityValidationError(tableFilename)).toBeTruthy();
+		expect(versionEditModal.hasPlayfieldImageValidationError(tableFilename)).toBeTruthy();
 		versionEditModal.close();
 	});
 
-	xit('should edit an existing version', () => {
+	it('should edit an existing version', () => {
 		versionEditModal.setChangelog('- Edited data');
 		versionEditModal.setReleaseDate('1978-05-07', 14, 20);
-		versionEditModal.clearCompatibility('blank.vpt');
-		versionEditModal.setCompatibility('blank.vpt', 0, 0);
+		versionEditModal.clearCompatibility(tableFilename);
+		versionEditModal.setCompatibilityByName(tableFilename, 'physmod5');
+		versionEditModal.uploadPlayfield(tableFilename, 'playfield-1080x1920.png');
+		versionEditModal.submit();
+
+		const modal = appPage.getErrorInfoModal();
+		expect(modal.title.getText()).toEqual('VERSION UPDATED');
+		expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
+		expect(modal.message.getText()).toContain('You have successfully updated version');
+		modal.close();
+
+		releaseEditPage.cancel();
+		releasePage.editRelease();
 	});
 });

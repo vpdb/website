@@ -73,10 +73,10 @@ p.padder-top(ng-show="vm.pageLoading")
 
 			.center
 				ul.ul--no-list
-					li: a.text-center(ui-sref="addReleaseVersion({ id: vm.game.id, releaseId: vm.release.id })")
+					li: a#release-add-version-btn.text-center(ui-sref="addReleaseVersion({ id: vm.game.id, releaseId: vm.release.id })")
 						+icon('plus-circle').space-right.shift-up
 						| Upload File
-					li: a.text-center(ui-sref="editRelease({ id: vm.game.id, releaseId: vm.release.id })")
+					li: a#release-edit-btn.text-center(ui-sref="editRelease({ id: vm.game.id, releaseId: vm.release.id })")
 						+icon('pencil-circle').space-right.shift-up
 						| Edit Release
 					li(ng-hide="vm.release.moderation && !vm.release.moderation.is_approved")

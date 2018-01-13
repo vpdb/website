@@ -24,6 +24,8 @@ export class ReleaseDetailsPage extends BasePage {
 
 	private title = element(by.id('title'));
 	private description = element(by.id('description'));
+	private addVersionButton = element(by.id('release-add-version-btn'));
+	private editReleaseButton = element(by.id('release-edit-btn'));
 
 	getDescription() {
 		return this.description.getText();
@@ -31,5 +33,13 @@ export class ReleaseDetailsPage extends BasePage {
 
 	getTitle() {
 		return this.title.getText();
+	}
+
+	editRelease() {
+		this.editReleaseButton.click();
+	}
+
+	addVersion() {
+		this.addVersionButton.click();
 	}
 }

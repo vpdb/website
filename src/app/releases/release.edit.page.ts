@@ -24,6 +24,7 @@ import { Release } from '../../test/models/Release';
 export class ReleaseEditPage extends ReleaseAddBasePage {
 
 	private versions = element(by.id('versions'));
+	private cancelButton = element(by.id('release-cancel-btn'));
 	private resetButton = element(by.id('release-reset-btn'));
 	private submitButton = element(by.id('release-submit-btn'));
 
@@ -45,6 +46,10 @@ export class ReleaseEditPage extends ReleaseAddBasePage {
 	setReleaseName(name:string) {
 		this.name.clear();
 		this.name.sendKeys(name);
+	}
+
+	cancel() {
+		this.submitButton.click();
 	}
 
 	reset() {

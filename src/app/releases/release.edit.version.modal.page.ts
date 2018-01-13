@@ -20,6 +20,7 @@
 import { by, element, ElementFinder } from 'protractor';
 import { ReleaseAddBasePage } from './release.add.base.page';
 import { promise } from 'selenium-webdriver';
+import { resolve } from "path";
 
 export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 
@@ -51,9 +52,22 @@ export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 		this.getCompatibilityPanel(fileName).all(by.css('input[checked="checked"]')).each(el => el.click());
 	}
 
-	setCompatibility(fileName:string, type:number, value:number) {
-		// todo
+	setCompatibilityByName(fileName:string, buildName:string) {
+		this.getCompatibilityPanel(fileName)
+			.all(by.css('label.ng-binding'))
+			.filter(el => el.getText().then(text => text === buildName))
+			.first()
+			.click();
 	}
+
+	uploadPlayfield(tableFileName:string, imageFileName:string) {
+		const uploadPanel = this.getFilePanel(tableFileName)
+			.all(by.className('playfield--image'))
+			.filter(el => el.getAttribute('id').then(id => id.startsWith('playfield-image')))
+			.first();
+		return this.uploadMedia(uploadPanel, imageFileName);
+	}
+
 
 	rotatePlayfieldImage(fileName: string, clockwise = true) {
 		const index = clockwise ? 1 : 0;
@@ -77,7 +91,7 @@ export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 	}
 
 	private getCompatibilityPanel(fileName:string) {
-		return this.getFilePanel(fileName).element(by.className('compatibility'));
+		return this.getFilePanel(fileName).element(by.css('.compatibility.row'));
 	}
 
 	private getFilePanel(fileName:string): ElementFinder {
@@ -85,5 +99,13 @@ export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 			.filter(el => el.element(by.css('h2')).getText().then(text => text.includes(fileName)))
 			.first();
 	}
+
+	protected uploadMedia(dropPanel:ElementFinder, fileName:string) {
+		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
+		return dropPanel.getAttribute('id').then(id => {
+			return dropPanel.click().then(() => element(by.id('ngf-' + id)).sendKeys(path));
+		});
+	}
+
 
 }

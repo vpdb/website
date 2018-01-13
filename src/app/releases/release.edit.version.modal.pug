@@ -89,6 +89,7 @@ include ../template/_mixins
 
 					//- drop zone
 					.panel.panel--blank.playfield--image(
+						id="playfield-image-{{ file.storage.id }}-upload",
 						file-upload="{ controller: vm, type: 'playfield', key: vm.getMediaKey(file, 'playfield_image'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }",
 						ngf-drag-over-class="'panel--dragging'",
 						ng-class="{ error: vm.errors.files[vm.meta.files.indexOf(file)]._playfield_image }"
@@ -119,7 +120,8 @@ include ../template/_mixins
 					h4 Video
 
 					.panel.panel--blank.playfield--video(
-					file-upload="{ controller: vm, type: vm.getPlayfieldType(file), key: vm.getMediaKey(file, 'playfield_video'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['flv', 'f4v', 'mp4', 'avi'], allowMultipleFiles: false, disableSelect: true }",
+						id="playfield-video-{{ file.storage.id }}-upload",
+						file-upload="{ controller: vm, type: vm.getPlayfieldType(file), key: vm.getMediaKey(file, 'playfield_video'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['flv', 'f4v', 'mp4', 'avi'], allowMultipleFiles: false, disableSelect: true }",
 						ngf-drag-over-class="'panel--dragging'",
 						ng-class="{ error: vm.errors.files[vm.meta.files.indexOf(file)]._playfield_video }",
 						ng-show="loadingFinished"
