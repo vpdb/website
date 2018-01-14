@@ -51,9 +51,10 @@ export class Releases {
 	 * @param {string} creator Username of the user creating the release
 	 * @param {Release} release Release data to override default values with
 	 * @param {Game} g Game of the release. If null or not provided, a new game will be created.
+	 * @param {string} tableFilename If set, name the file differently than `blank.vpt`.
 	 * @return {Promise<Release>} Created release
 	 */
-	createRelease(creator:string, release:Release = null, g:Game = null): Promise<Release> {
+	createRelease(creator:string, release:Release = null, g:Game = null, tableFilename:string = null): Promise<Release> {
 		let user:User;
 		let game:Game;
 		let tableFile:File;
@@ -68,7 +69,7 @@ export class Releases {
 			}
 		}).then((g:Game) => {
 			game = g;
-			return this.files.uploadTableFile('blank.vpt', user);
+			return this.files.uploadTableFile('blank.vpt', user, tableFilename);
 
 		}).then((file:File) => {
 			tableFile = file;

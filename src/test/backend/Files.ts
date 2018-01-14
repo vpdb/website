@@ -86,14 +86,17 @@ export class Files {
 	 *
 	 * @param {string} fileName File name without path
 	 * @param {User} user Authenticated user
+	 * @param {string} overrideFileName Filename without extension to override when uploading
 	 * @returns {Promise<File>} Uploaded file
 	 */
-	uploadTableFile(fileName:string, user:User): Promise<File> {
-		const mimeType = extname(fileName) === '.vpx' ? 'application/x-visual-pinball-table-x' : 'application/x-visual-pinball-table';
+	uploadTableFile(fileName:string, user:User, overrideFileName:string = null): Promise<File> {
+		const ext = extname(fileName);
+		const mimeType = ext === '.vpx' ? 'application/x-visual-pinball-table-x' : 'application/x-visual-pinball-table';
+		overrideFileName = overrideFileName ? overrideFileName + ext : fileName;
 		return this.storage.post<File>('/v1/files', this.readAsset(fileName), {
 			headers: {
 				'Content-Type': mimeType,
-				'Content-Disposition': 'attachment; filename="' + fileName + '"',
+				'Content-Disposition': 'attachment; filename="' + overrideFileName + '"',
 				[ this.vpdb.authHeader ]: 'Bearer ' + user.token,
 			},
 			params: { type: 'release' }
