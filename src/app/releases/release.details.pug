@@ -66,7 +66,7 @@ p.padder-top(ng-show="vm.pageLoading")
 
 		//-- AUTHOR ZONE
 		//---------------------------------------------------------------------
-		.panel--rect-block.padder-top(ng-show="(vm.AuthService.hasPermission('releases/update-own') && vm.AuthService.isAuthor(vm.release)) || vm.AuthService.hasPermission('releases/update')")
+		#admin-zone.panel--rect-block.padder-top(ng-show="(vm.AuthService.hasPermission('releases/update-own') && vm.AuthService.isAuthor(vm.release)) || vm.AuthService.hasPermission('releases/update')")
 			h1.text-center
 				+icon('gear').space-right
 				| {{ vm.zoneName }} Zone
@@ -97,7 +97,7 @@ p.padder-top(ng-show="vm.pageLoading")
 
 		//-- MODERATION ZONE
 		//---------------------------------------------------------------------
-		.panel--rect-block.padder-top.shift-up-1px(ng-show="vm.showModeration")
+		#moderation-zone.panel--rect-block.padder-top.shift-up-1px(ng-if="vm.showModeration")
 			h1.text-center(uib-tooltip="Only visible by moderators and the uploader. Will disappear when the release is approved.", tooltip-placement="bottom", tooltip-append-to-body="true", tooltip-popup-delay="200")
 				+icon('forum').space-right
 				| Moderation Zone

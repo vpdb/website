@@ -13,6 +13,11 @@ export const users: User[] = [
 		roles: [ 'member', 'admin' ],
 		email: 'admin@vpdb.io'
 	}, {
+		username: 'moderator',
+		password: 'dHt5sI9YqVBF32AM',
+		roles: [ 'member', 'moderator' ],
+		email: 'moderator@vpdb.io'
+	}, {
 		username: 'contributor',
 		password: 'qm5LKQjZEQMrjhmp',
 		roles: [ 'member', 'contributor' ],

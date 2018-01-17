@@ -28,6 +28,7 @@ import { Game } from '../models/Game';
 import { Release } from '../models/Release';
 import { User } from '../models/User';
 import { VpdbConfig } from '../models/VpdbConfig';
+import { ReleaseModeration } from '../models/ReleaseModeration';
 
 export class Releases {
 
@@ -35,6 +36,11 @@ export class Releases {
 	private games: Games;
 	private files: Files;
 	private users: Users;
+
+	/**
+	 * A map of re-usable releases for more speed
+	 */
+	private static readonlyReleases:Map<string, Release>;
 
 	constructor(private vpdb: VpdbConfig) {
 		this.api = axios.create({
@@ -103,4 +109,35 @@ export class Releases {
 
 		}).then((response: AxiosResponse) => response.data);
 	}
+
+	/**
+	 * Approves a release.
+	 *
+	 * @param {string} moderator User with moderator permission
+	 * @param {Release} release Release to approve
+	 * @returns {Promise<ReleaseModeration>} Moderation result
+	 */
+	approveRelease(moderator:string, release:Release): Promise<ReleaseModeration> {
+		return this.moderateRelease(moderator, release, 'approve');
+	}
+
+	/**
+	 * Updates moderation status.
+	 *
+	 * @param {string} moderator User with moderator permission
+	 * @param {Release} release Release to moderate
+	 * @param {string} action Moderation action
+	 * @returns {Promise<ReleaseModeration>} Moderation result
+	 */
+	private moderateRelease(moderator:string, release:Release, action:string): Promise<ReleaseModeration> {
+		return this.users.authenticateOrCreateUser(moderator).then((user: User) => {
+
+			return this.api.post<ReleaseModeration>('/v1/releases/' + release.id + '/moderate', { action: action }, {
+				headers: { [ this.vpdb.authHeader ]: 'Bearer ' + user.token }
+			});
+
+		}).then((response: AxiosResponse) => response.data);
+	}
+
+
 }

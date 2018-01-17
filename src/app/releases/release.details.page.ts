@@ -18,14 +18,33 @@
  */
 
 import { BasePage } from '../../test/BasePage';
-import { by, element } from "protractor";
+import { browser, by, element } from 'protractor';
+import { Game } from '../../test/models/Game';
+import { Release } from '../../test/models/Release';
+import { AppPage } from '../app.page';
 
 export class ReleaseDetailsPage extends BasePage {
+
+	private appPage = new AppPage();
 
 	private title = element(by.id('title'));
 	private description = element(by.id('description'));
 	private addVersionButton = element(by.id('release-add-version-btn'));
 	private editReleaseButton = element(by.id('release-edit-btn'));
+	private adminZone = element(by.id('admin-zone'));
+	private moderationZone = element(by.id('moderation-zone'));
+
+	get(release:Release, username:string = null) {
+		if (username) {
+			this.appPage.get();
+			this.appPage.loginAs('member');
+		}
+		this.navigate(release);
+	}
+
+	navigate(release:Release) {
+		browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+	}
 
 	getDescription() {
 		return this.description.getText();
@@ -41,5 +60,13 @@ export class ReleaseDetailsPage extends BasePage {
 
 	addVersion() {
 		this.addVersionButton.click();
+	}
+
+	hasAdminZone() {
+		return browser.isElementPresent(this.adminZone);
+	}
+
+	hasModerationZone() {
+		return browser.isElementPresent(this.moderationZone);
 	}
 }
