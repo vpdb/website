@@ -19,6 +19,7 @@
 
 import { by, element, ElementFinder } from 'protractor';
 import { promise } from 'selenium-webdriver';
+import { resolve } from "path";
 
 export class BasePage {
 
@@ -61,5 +62,18 @@ export class BasePage {
 	 */
 	protected parentWithText(parentId:string, text:string, nodeElement:string='li', nodeClass:string='panel'): ElementFinder {
 		return element(by.xpath(`//*[@id='${parentId}']//*[contains(text(),'${text}')]/ancestor::${nodeElement}[contains(concat(" ", @class, " "), " ${nodeClass} ")][1]`));
+	}
+
+	/**
+	 * Uploads a file to a given file-upload component
+	 *
+	 * @param {ElementFinder} dropPanel File-upload panel
+	 * @param {string} fileName File to upload
+	 */
+	protected upload(dropPanel:ElementFinder, fileName:string) {
+		const path = resolve(__dirname, '../../../src/test/assets/', fileName);
+		return dropPanel.getAttribute('id').then(id => {
+			return dropPanel.click().then(() => element(by.id('ngf-' + id)).sendKeys(path));
+		});
 	}
 }

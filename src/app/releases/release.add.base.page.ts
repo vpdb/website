@@ -31,7 +31,6 @@ export class ReleaseAddBasePage extends BasePage {
 
 	protected name = element(by.id('name'));
 	protected description = element(by.id('description'));
-	private filesUpload = element(by.id('ngf-files-upload'));
 	private filesUploadPanel = element(by.id('files-upload'));
 	private addAuthorButton = element(by.id('add-author-btn'));
 	private availableTags = element(by.id('available-tags'));
@@ -47,22 +46,16 @@ export class ReleaseAddBasePage extends BasePage {
 	protected authors:ElementArrayFinder;
 
 	uploadFile(fileName:string) {
-		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
-		this.filesUploadPanel.click();
-		this.filesUpload.sendKeys(path);
+		return this.upload(this.filesUploadPanel, fileName);
 	}
 
 	uploadPlayfield(tableFileName:string, imageFileName:string) {
-		const path = resolve(__dirname, '../../../../src/test/assets/', imageFileName);
 		const panel = this.parentWithText('media', tableFileName, 'span', 'ng-scope');
 		const uploadPanel = panel
 			.all(by.className('playfield--image'))
 			.filter(el => el.getAttribute('id').then(id => id.startsWith('playfield-image')))
 			.first();
-		return uploadPanel.getAttribute('id').then(id => {
-			panel.click();
-			element(by.id('ngf-' + id)).sendKeys(path);
-		});
+		return this.upload(uploadPanel, imageFileName);
 	}
 
 	setDescription(description:string) {

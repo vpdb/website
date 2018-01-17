@@ -65,9 +65,8 @@ export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 			.all(by.className('playfield--image'))
 			.filter(el => el.getAttribute('id').then(id => id.startsWith('playfield-image')))
 			.first();
-		return this.uploadMedia(uploadPanel, imageFileName);
+		return this.upload(uploadPanel, imageFileName);
 	}
-
 
 	rotatePlayfieldImage(fileName: string, clockwise = true) {
 		const index = clockwise ? 1 : 0;
@@ -99,13 +98,5 @@ export class ReleaseEditVersionModalPage extends ReleaseAddBasePage {
 			.filter(el => el.element(by.css('h2')).getText().then(text => text.includes(fileName)))
 			.first();
 	}
-
-	protected uploadMedia(dropPanel:ElementFinder, fileName:string) {
-		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
-		return dropPanel.getAttribute('id').then(id => {
-			return dropPanel.click().then(() => element(by.id('ngf-' + id)).sendKeys(path));
-		});
-	}
-
 
 }

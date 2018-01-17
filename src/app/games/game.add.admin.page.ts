@@ -36,12 +36,10 @@ export class GameAddAdminPage extends BasePage {
 	gameInfoPanel = element(by.id('game-info-panel'));
 	gameInfoTitle = this.gameInfoPanel.element(by.css('h2'));
 
-	backglassUpload = element(by.id('ngf-backglass-upload'));
 	backglassUploadPanel = element(by.id('backglass-upload'));
 	backglassImage = this.backglassUploadPanel.element(by.css('.img--ar-bg'));
 	backglassProgress = this.backglassUploadPanel.element(by.css('.progress'));
 
-	logoUpload = element(by.id('ngf-logo-upload'));
 	logoUploadPanel = element(by.id('logo-upload'));
 	logoImage = this.logoUploadPanel.element(by.css('.img--ar-logo'));
 	logoProgress = this.logoUploadPanel.element(by.css('.progress'));
@@ -71,16 +69,12 @@ export class GameAddAdminPage extends BasePage {
 	}
 
 	uploadBackglass(fileName:string) {
-		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
-		this.backglassUploadPanel.click();
-		this.backglassUpload.sendKeys(path);
+		this.upload(this.backglassUploadPanel, fileName);
 		browser.wait(() => this.backglassProgress.isDisplayed().then(result => !result), 5000);
 	}
 
 	uploadLogo(fileName:string) {
-		const path = resolve(__dirname, '../../../../src/test/assets/', fileName);
-		this.logoUploadPanel.click();
-		this.logoUpload.sendKeys(path);
+		this.upload(this.logoUploadPanel, fileName);
 		browser.wait(() => this.logoProgress.isDisplayed().then(result => !result), 5000);
 	}
 
