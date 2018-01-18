@@ -260,7 +260,7 @@ p.padder-top(ng-show="vm.pageLoading")
 		.clearfix
 		p.padder-bottom-2x
 
-	.padder-top.space-left-2x.text-center(ng-show="!vm.found && !vm.pageLoading")
+	.padder-top.space-left-2x.text-center(ng-if="!vm.found && !vm.pageLoading")
 		img.pinball-destruct(ng-src="{{ vm.imgPinDestruct }}")
 		p Whoops, that release doesn't exist!
 		p.padder-bottom-2x(ng-show="!vm.AuthService.isAuthenticated") If you're looking for a moderated release, try logging in.

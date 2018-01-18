@@ -19,7 +19,6 @@
 
 import { browser } from 'protractor';
 import { AppPage } from '../app.page';
-import { Game } from '../../test/models/Game';
 import { Release } from '../../test/models/Release';
 import { Games } from '../../test/backend/Games';
 import { Releases } from '../../test/backend/Releases';
@@ -27,53 +26,78 @@ import { ReleaseDetailsPage } from './release.details.page';
 
 describe('View details of a release', () => {
 
+	const user = 'member';
+	let pendingRelease:Release;
+	let approvedRelease:Release;
+
 	const appPage = new AppPage();
 	const releaseDetailsPage = new ReleaseDetailsPage();
 	const games: Games = new Games(browser.params.vpdb);
 	const releases: Releases = new Releases(browser.params.vpdb);
-	let game: Game;
 
 	beforeAll(() => {
-		console.log('creating game...');
-		return games.createGame().then(g => game = g);
+		return games.createGame().then(game => {
+			return releases.createRelease(user, null, game);
+
+		}).then((release:Release) => {
+			pendingRelease = release;
+			return releases.createRelease(user, null, release.game)
+
+		}).then((release:Release) => {
+			approvedRelease = release;
+			return releases.approveRelease('moderator', approvedRelease);
+		});
 	});
 
 	afterEach(() => {
 		browser.executeScript('window.scrollTo(0,0);');
 	});
 
-	describe('as an owner', () => {
+	describe('as anonymous', () => {
 
-		const user = 'member';
-		let pendingRelease:Release;
-		let approvedRelease:Release;
+		it('should show a 404 page for a pending release', () => {
+			releaseDetailsPage.get(pendingRelease);
+			expect(releaseDetailsPage.doesExist()).toBeFalsy();
+		});
+
+		it('should show an approved release', () => {
+			releaseDetailsPage.get(approvedRelease);
+			expect(releaseDetailsPage.doesExist()).toBeTruthy();
+		});
+	});
+
+	describe('as an author', () => {
 
 		beforeAll(() => {
-			return releases.createRelease(user, null, game)
-				.then((release:Release) => {
-					pendingRelease = release;
-					return releases.createRelease(user, null, game)
-				}).then((release:Release) => {
-					approvedRelease = release;
-					return releases.approveRelease('moderator', approvedRelease);
-				}).then(() => {
-					appPage.get();
-					appPage.loginAs(user);
-				})
+			appPage.get();
+			appPage.loginAs(user);
 		});
 
 		afterAll(() => {
 			appPage.logout();
 		});
 
-		fit('should show the author zone but not the moderation zone', () => {
+		it('should show the author zone but not the moderation zone', () => {
 			releaseDetailsPage.get(approvedRelease);
 			expect(releaseDetailsPage.hasAdminZone()).toBeTruthy();
 			expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
 		});
 
-		//it('should show the moderation zone');
-		//it('should toggle the moderation zone')
+		it('should show the moderation zone', () => {
+			releaseDetailsPage.get(pendingRelease);
+			expect(releaseDetailsPage.hasAdminZone()).toBeTruthy();
+			expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
+			expect(releaseDetailsPage.hasModerationZoneToggle()).toBeFalsy();
+		});
+
+		it('should toggle the moderation zone', () => {
+			releaseDetailsPage.get(approvedRelease);
+			expect(releaseDetailsPage.hasModerationZoneToggle()).toBeTruthy();
+			releaseDetailsPage.toggleModerationZone();
+			expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
+			releaseDetailsPage.toggleModerationZone();
+			expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
+		});
 	});
 
 });

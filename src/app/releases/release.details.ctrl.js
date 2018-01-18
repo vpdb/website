@@ -22,6 +22,7 @@ import $ from 'jquery';
 
 import ReleaseDownloadModalTpl from './release.download.modal.pug';
 import ReleaseFileValidationTpl from './release.file.validation.modal.pug';
+import imgPinDestruct from '../../static/images/pindestruction.png';
 
 /**
  * The release's detail view
@@ -59,6 +60,7 @@ export default class ReleaseDetailsCtrl {
 		App.setMenu('releases');
 		BootstrapPatcher.patchCarousel();
 
+		this.imgPinDestruct = imgPinDestruct;
 		this.$timeout = $timeout;
 		this.$location = $location;
 		this.$localStorage = $localStorage;

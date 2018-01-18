@@ -33,6 +33,8 @@ export class ReleaseDetailsPage extends BasePage {
 	private editReleaseButton = element(by.id('release-edit-btn'));
 	private adminZone = element(by.id('admin-zone'));
 	private moderationZone = element(by.id('moderation-zone'));
+	private destructionPic = element(by.className('pinball-destruct'));
+	private moderationToggleModeration = element(by.css('#show-moderation + label'));
 
 	get(release:Release, username:string = null) {
 		if (username) {
@@ -68,5 +70,17 @@ export class ReleaseDetailsPage extends BasePage {
 
 	hasModerationZone() {
 		return browser.isElementPresent(this.moderationZone);
+	}
+
+	hasModerationZoneToggle() {
+		return this.moderationToggleModeration.isDisplayed();
+	}
+
+	toggleModerationZone() {
+		this.moderationToggleModeration.click();
+	}
+
+	doesExist() {
+		return browser.isElementPresent(this.destructionPic).then(present => !present);
 	}
 }
