@@ -37,7 +37,7 @@ describe('View details of a release', () => {
 
 	beforeAll(() => {
 		return games.createGame().then(game => {
-			return releases.createRelease(user, null, game);
+			return releases.createRelease(user, null, game, 'release-details');
 
 		}).then((release:Release) => {
 			pendingRelease = release;
@@ -64,6 +64,15 @@ describe('View details of a release', () => {
 			releaseDetailsPage.get(approvedRelease);
 			expect(releaseDetailsPage.doesExist()).toBeTruthy();
 		});
+
+		it('should toggle between file names and flavors', () => {
+			releaseDetailsPage.get(approvedRelease);
+			expect(releaseDetailsPage.hasFilenamesToggled()).toBeFalsy();
+			releaseDetailsPage.toggleFilenames();
+			expect(releaseDetailsPage.hasFilenamesToggled()).toBeTruthy();
+			releaseDetailsPage.toggleFilenames();
+		});
+
 	});
 
 	describe('as an author', () => {

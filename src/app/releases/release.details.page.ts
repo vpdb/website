@@ -29,6 +29,7 @@ export class ReleaseDetailsPage extends BasePage {
 
 	private title = element(by.id('title'));
 	private description = element(by.id('description'));
+	private showFilenames = element(by.css('#show-filenames + label'));
 	private addVersionButton = element(by.id('release-add-version-btn'));
 	private editReleaseButton = element(by.id('release-edit-btn'));
 	private adminZone = element(by.id('admin-zone'));
@@ -56,6 +57,14 @@ export class ReleaseDetailsPage extends BasePage {
 		return this.title.getText();
 	}
 
+	toggleFilenames() {
+		this.showFilenames.click();
+	}
+
+	toggleModerationZone() {
+		this.moderationToggleModeration.click();
+	}
+
 	editRelease() {
 		this.editReleaseButton.click();
 	}
@@ -76,8 +85,11 @@ export class ReleaseDetailsPage extends BasePage {
 		return this.moderationToggleModeration.isDisplayed();
 	}
 
-	toggleModerationZone() {
-		this.moderationToggleModeration.click();
+	hasFilenamesToggled() {
+		return element(by.id('flavors'))
+			.all(by.css('thead > tr > th'))
+			.filter(el => el.getText().then(str => str === 'File Name'))
+			.then(els => els.length === 1);
 	}
 
 	doesExist() {

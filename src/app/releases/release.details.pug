@@ -196,11 +196,11 @@ p.padder-top(ng-show="vm.pageLoading")
 		h1.h--small
 			| Available Flavors
 			.pull-right
-				input#showFilenames.checkbox--toggle(type='checkbox', ng-model="vm.$localStorage.showFilenames")
-				label.shift-down(for="showFilenames")
-				label.a.a--light.font-content(for="showFilenames") Show file names
+				input#show-filenames.checkbox--toggle(type='checkbox', ng-model="vm.$localStorage.showFilenames")
+				label.shift-down(for="show-filenames")
+				label.a.a--light.font-content(for="show-filenames") Show file names
 		hr
-		table.table.table-striped
+		table#flavors.table.table-striped
 			thead
 				tr
 					th(width="25px")
