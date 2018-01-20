@@ -17,8 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { resolve } from 'path'
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { AppPage } from '../app.page';
 import { BasePage } from '../../test/BasePage';
 import { promise } from 'selenium-webdriver';

@@ -39,7 +39,7 @@ export default function() {
 		link: (scope, elem, attrs) => {
 			if (attrs.id) {
 				scope.textareaId = attrs.id;
-				elem.removeAttr('id');
+				elem.attr('id', attrs.id + '-editor');
 			}
 		}
 	};

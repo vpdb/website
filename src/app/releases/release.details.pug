@@ -254,7 +254,7 @@ p.padder-top(ng-show="vm.pageLoading")
 		//---------------------------------------------------------------------
 		div(ng-show="vm.AuthService.hasPermission('comments/add')")
 			h3.h--smaller.h--primary Add a Comment:
-			editor(ng-model="vm.newComment", user="vm.AuthService.user", placeholder="Your comment", markdown-text="Comments are parsed with Markdown.")
+			editor#new-comment(ng-model="vm.newComment", user="vm.AuthService.user", placeholder="Your comment", markdown-text="Comments are parsed with Markdown.")
 			button.btn.btn-default.padder-top.pull-right(ng-click="vm.addComment(vm.release.id)") Comment
 
 		.clearfix

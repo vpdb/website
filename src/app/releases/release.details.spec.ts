@@ -73,6 +73,8 @@ describe('View details of a release', () => {
 			releaseDetailsPage.toggleFilenames();
 		});
 
+		//xit('should not show the new comment form');
+
 	});
 
 	describe('as an author', () => {
@@ -107,6 +109,8 @@ describe('View details of a release', () => {
 			releaseDetailsPage.toggleModerationZone();
 			expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
 		});
+
+		//xit('should show the new comment form');
 	});
 
 });
