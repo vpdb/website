@@ -33,6 +33,7 @@ import { makeLoaded, imgBg, imgSrc } from './image.directives';
 import { fallbackIcon, focusOn, onEnter, jsonLd, markdown, sort, filterArray } from './util.directives';
 import { bytesFilter, escapeFilter, fileExtFilter, hexFilter, hashPrefixFilter, authorsFilter } from './util.filters';
 import EditorDirectiveCtrl from './editor.directive.ctrl';
+import CommentCtrl from './comment.ctrl';
 import heightAnimation from './height.animation';
 import collapseInAnimation from './collapse-in.animation';
 import videoJs from './videojs.directive';
@@ -45,6 +46,7 @@ export default angular.module('vpdb.core', [])
 	.service('TrackerService', TrackerService)
 	.service('FileUploadHelperService', FileUploadHelperService)
 	.controller('EditorDirectiveCtrl', EditorDirectiveCtrl)
+	.controller('CommentCtrl', CommentCtrl)
 	.controller('RatingDirectiveCtrl', RatingDirectiveCtrl)
 	.controller('TopBadgeDirectiveCtrl', TopBadgeDirectiveCtrl)
 	.directive('editor', editor)
