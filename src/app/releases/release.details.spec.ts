@@ -26,6 +26,8 @@ import { ReleaseDetailsPage } from './release.details.page';
 
 describe('View details of a release', () => {
 
+	// todo: starring, rating, commenting, downloading. fix empty version history.
+
 	const user = 'member';
 	let pendingRelease:Release;
 	let approvedRelease:Release;
@@ -117,14 +119,12 @@ describe('View details of a release', () => {
 
 
 			it('should show the moderation zone', () => {
-				releaseDetailsPage.get(pendingRelease);
 				expect(releaseDetailsPage.hasAdminZone()).toBeTruthy();
 				expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
 				expect(releaseDetailsPage.hasModerationZoneToggle()).toBeFalsy();
 			});
 
 			it('should toggle the moderation zone', () => {
-				releaseDetailsPage.get(approvedRelease);
 				expect(releaseDetailsPage.hasModerationZoneToggle()).toBeTruthy();
 				releaseDetailsPage.toggleModerationZone();
 				expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
