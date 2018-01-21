@@ -36,6 +36,7 @@ export class ReleaseDetailsPage extends BasePage {
 	private moderationZone = element(by.id('moderation-zone'));
 	private destructionPic = element(by.className('pinball-destruct'));
 	private moderationToggleModeration = element(by.css('#show-moderation + label'));
+	private newCommentElement = element(by.id('new-comment-editor'));
 
 	get(release:Release, username:string = null) {
 		if (username) {
@@ -90,6 +91,10 @@ export class ReleaseDetailsPage extends BasePage {
 			.all(by.css('thead > tr > th'))
 			.filter(el => el.getText().then(str => str === 'File Name'))
 			.then(els => els.length === 1);
+	}
+
+	hasNewCommentForm() {
+		return this.newCommentElement.isDisplayed();
 	}
 
 	doesExist() {

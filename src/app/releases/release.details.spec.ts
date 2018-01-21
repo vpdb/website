@@ -63,6 +63,7 @@ describe('View details of a release', () => {
 		it('should show an approved release', () => {
 			releaseDetailsPage.get(approvedRelease);
 			expect(releaseDetailsPage.doesExist()).toBeTruthy();
+			expect(releaseDetailsPage.hasNewCommentForm()).toBeFalsy();
 		});
 
 		it('should toggle between file names and flavors', () => {
@@ -72,8 +73,6 @@ describe('View details of a release', () => {
 			expect(releaseDetailsPage.hasFilenamesToggled()).toBeTruthy();
 			releaseDetailsPage.toggleFilenames();
 		});
-
-		//xit('should not show the new comment form');
 
 	});
 
@@ -88,29 +87,52 @@ describe('View details of a release', () => {
 			appPage.logout();
 		});
 
-		it('should show the author zone but not the moderation zone', () => {
-			releaseDetailsPage.get(approvedRelease);
-			expect(releaseDetailsPage.hasAdminZone()).toBeTruthy();
-			expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
+		describe('for an approved release', () => {
+
+			beforeAll(() => {
+				releaseDetailsPage.get(approvedRelease);
+			});
+
+			it('should show the new comment form', () => {
+				expect(releaseDetailsPage.hasNewCommentForm()).toBeTruthy();
+			});
+
+			it('should show the author zone but not the moderation zone', () => {
+				expect(releaseDetailsPage.hasAdminZone()).toBeTruthy();
+				expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
+			});
+
 		});
 
-		it('should show the moderation zone', () => {
-			releaseDetailsPage.get(pendingRelease);
-			expect(releaseDetailsPage.hasAdminZone()).toBeTruthy();
-			expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
-			expect(releaseDetailsPage.hasModerationZoneToggle()).toBeFalsy();
+		describe('for a pending release', () => {
+
+			beforeAll(() => {
+				releaseDetailsPage.get(pendingRelease);
+			});
+
+			it('should not show the new comment form', () => {
+				browser.sleep(5000);
+				expect(releaseDetailsPage.hasNewCommentForm()).toBeFalsy();
+			});
+
+
+			it('should show the moderation zone', () => {
+				releaseDetailsPage.get(pendingRelease);
+				expect(releaseDetailsPage.hasAdminZone()).toBeTruthy();
+				expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
+				expect(releaseDetailsPage.hasModerationZoneToggle()).toBeFalsy();
+			});
+
+			it('should toggle the moderation zone', () => {
+				releaseDetailsPage.get(approvedRelease);
+				expect(releaseDetailsPage.hasModerationZoneToggle()).toBeTruthy();
+				releaseDetailsPage.toggleModerationZone();
+				expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
+				releaseDetailsPage.toggleModerationZone();
+				expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
+			});
 		});
 
-		it('should toggle the moderation zone', () => {
-			releaseDetailsPage.get(approvedRelease);
-			expect(releaseDetailsPage.hasModerationZoneToggle()).toBeTruthy();
-			releaseDetailsPage.toggleModerationZone();
-			expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
-			releaseDetailsPage.toggleModerationZone();
-			expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
-		});
-
-		//xit('should show the new comment form');
 	});
 
 });
