@@ -113,7 +113,6 @@ describe('View details of a release', () => {
 			});
 
 			it('should not show the new comment form', () => {
-				browser.sleep(5000);
 				expect(releaseDetailsPage.hasNewCommentForm()).toBeFalsy();
 			});
 
