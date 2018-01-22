@@ -20,11 +20,13 @@
 import { browser, by, element } from 'protractor';
 import { Releases } from '../../test/backend/Releases';
 import { Release } from '../../test/models/Release';
+import { AppPage } from '../app.page';
 import { ReleaseDetailsPage } from '../releases/release.details.page';
 import { EditorDirectivePage } from './editor.directive.page';
 
 describe('Editor', () => {
 
+	const appPage = new AppPage();
 	const releaseDetailsPage = new ReleaseDetailsPage();
 	const releases: Releases = new Releases(browser.params.vpdb);
 
@@ -42,6 +44,10 @@ describe('Editor', () => {
 	afterEach(() => {
 		editor.toggleEdit();
 		editor.clear();
+	});
+
+	afterAll(() => {
+		appPage.logout();
 	});
 
 	it('should render text in the preview pane', () => {
