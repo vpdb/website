@@ -21,6 +21,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { User } from '../models/User';
 import { VpdbConfig } from '../models/VpdbConfig';
 import { root, users } from '../../../config/users';
+import { AxiosHelper } from '../AxiosHelper';
 
 export class Users {
 
@@ -31,6 +32,7 @@ export class Users {
 		this.api = axios.create({
 			baseURL: vpdb.apiUri.protocol + '://' + vpdb.apiUri.hostname + ':' + vpdb.apiUri.port + vpdb.apiUri.pathname
 		});
+		AxiosHelper.addErrorHandler(this.api);
 	}
 
 	/**

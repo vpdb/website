@@ -2,8 +2,7 @@ import { browser, Config } from 'protractor';
 import { Users } from '../src/test/backend/Users';
 import { root, users } from './users';
 import { User } from '../src/test/models/User';
-import { VpdbConfig } from "../src/test/models/VpdbConfig";
-import { Bootstrap } from "../src/test/Bootstrap";
+import { VpdbConfig } from '../src/test/models/VpdbConfig';
 
 const JasmineConsoleReporter = require('jasmine-console-reporter');
 const HtmlReporter = require('protractor-beautiful-reporter');
@@ -21,7 +20,6 @@ export let config: Config = {
 	baseUrl: webBaseUrl,
 	params: { vpdb: vpdbConfig },
 	onPrepare: () => {
-		Bootstrap.bootstrap();
 		setupReporter();
 		return setupUsers();
 	}

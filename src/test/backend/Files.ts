@@ -28,6 +28,7 @@ import { VpdbConfig } from '../models/VpdbConfig';
 import Please = require('pleasejs/src/Please.js');
 import toArray = require('stream-to-array');
 import { User } from "../models/User";
+import { AxiosHelper } from '../AxiosHelper';
 
 export class Files {
 
@@ -38,6 +39,7 @@ export class Files {
 		this.storage = axios.create({
 			baseURL: vpdb.storageUri.protocol + '://' + vpdb.storageUri.hostname + ':' + vpdb.storageUri.port + vpdb.storageUri.pathname
 		});
+		AxiosHelper.addErrorHandler(this.storage);
 		this.users = new Users(vpdb);
 	}
 

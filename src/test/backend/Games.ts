@@ -18,7 +18,7 @@
  */
 
 import { resolve } from 'path';
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { assign } from 'lodash';
 import { Files } from './Files';
 import { Users } from './Users';
@@ -27,6 +27,7 @@ import { Game } from '../models/Game';
 import { User } from '../models/User';
 import { IpdbGame } from '../models/IpdbGame';
 import { VpdbConfig } from '../models/VpdbConfig';
+import { AxiosHelper } from '../AxiosHelper';
 
 /**
  * Provides easy access to the server's game API.
@@ -44,6 +45,7 @@ export class Games {
 		this.api = axios.create({
 			baseURL: vpdb.apiUri.protocol + '://' + vpdb.apiUri.hostname + ':' + vpdb.apiUri.port + vpdb.apiUri.pathname
 		});
+		AxiosHelper.addErrorHandler(this.api);
 		this.files = new Files(vpdb);
 		this.users = new Users(vpdb);
 	}

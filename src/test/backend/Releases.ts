@@ -29,6 +29,7 @@ import { Release } from '../models/Release';
 import { User } from '../models/User';
 import { VpdbConfig } from '../models/VpdbConfig';
 import { ReleaseModeration } from '../models/ReleaseModeration';
+import { AxiosHelper } from '../AxiosHelper';
 
 export class Releases {
 
@@ -46,6 +47,7 @@ export class Releases {
 		this.api = axios.create({
 			baseURL: vpdb.apiUri.protocol + '://' + vpdb.apiUri.hostname + ':' + vpdb.apiUri.port + vpdb.apiUri.pathname
 		});
+		AxiosHelper.addErrorHandler(this.api);
 		this.games = new Games(vpdb);
 		this.files = new Files(vpdb);
 		this.users = new Users(vpdb);
