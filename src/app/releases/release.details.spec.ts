@@ -104,6 +104,14 @@ describe('View details of a release', () => {
 				expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
 			});
 
+			it('should toggle the moderation zone', () => {
+				expect(releaseDetailsPage.hasModerationZoneToggle()).toBeTruthy();
+				releaseDetailsPage.toggleModerationZone();
+				expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
+				releaseDetailsPage.toggleModerationZone();
+				expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
+			});
+
 		});
 
 		describe('for a pending release', () => {
@@ -123,13 +131,6 @@ describe('View details of a release', () => {
 				expect(releaseDetailsPage.hasModerationZoneToggle()).toBeFalsy();
 			});
 
-			it('should toggle the moderation zone', () => {
-				expect(releaseDetailsPage.hasModerationZoneToggle()).toBeTruthy();
-				releaseDetailsPage.toggleModerationZone();
-				expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
-				releaseDetailsPage.toggleModerationZone();
-				expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
-			});
 		});
 
 	});
