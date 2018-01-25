@@ -87,7 +87,7 @@
 		"npm-run-all": "4.1.2",
 		"pleasejs": "0.4.2",
 		"pngjs": "3.3.1",
-		"protractor": "5.2.2",
+		"protractor": "5.3.0",
 		"protractor-beautiful-reporter": "0.5.8",
 		"pug": "2.0.0-rc.4",
 		"pug-html-loader": "1.1.5",
