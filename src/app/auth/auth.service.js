@@ -127,7 +127,7 @@ export default class AuthService {
 	 * Retrieves a login token for future auto-login.
 	 */
 	rememberMe() {
-		this.TokenResource.save({ type: 'login' }, token => {
+		this.TokenResource.save({ type: 'personal', scopes: [ 'login' ] }, token => {
 			this.$localStorage.loginToken = token;
 		}, this.ApiHelper.handleErrorsInDialog('Error creating login token.'));
 	}
@@ -288,13 +288,17 @@ export default class AuthService {
 
 	/**
 	 * Checks if there is a valid login token.
+	 * @param {object} [token] If set, only return true if the given token is the same
 	 * @return {boolean} True if login token exists, "remember me" is disabled and the token is not expired.
 	 */
-	hasLoginToken() {
+	hasLoginToken(token) {
 		if (!this.$localStorage.loginToken || !this.$localStorage.rememberMe) {
 			return false;
 		}
 		if (!this.$localStorage.loginToken.is_active) {
+			return false;
+		}
+		if (token && this.$localStorage.loginToken.id !== token.id) {
 			return false;
 		}
 		return new Date(this.$localStorage.loginToken.expires_at).getTime() > new Date().getTime();
@@ -503,13 +507,11 @@ export default class AuthService {
 			});
 		}
 		if (isArray(this.Config.authProviders.ipboard)) {
-			providers = providers.concat(this.Config.authProviders.ipboard);
+			providers = [ ...providers, this.Config.authProviders.ipboard ];
 		}
 
 		if (user) {
-			return filter(providers, provider => {
-				return user[provider.id] && !isEmpty(user[provider.id]);
-			});
+			return filter(providers, provider => user[provider.id] && !isEmpty(user[provider.id]));
 		} else {
 			return providers;
 		}

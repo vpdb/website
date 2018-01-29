@@ -68,14 +68,18 @@ export default class ProfileSettingsCtrl {
 				return console.error(err);
 			}
 
+			// personal tokens
+			this.TokenResource.query({ type: 'personal', scopes: [ 'all' ] }, tokens => {
+				this.tokens = tokens.map(token => this.addTokenIcon(token));
+				this.hasAppTokens = tokens.filter(token => token.scopes.includes('all')).length > 0;
+				this.hasLoginTokens = tokens.filter(token => token.scopes.includes('login')).length > 0;
+			});
+			this.showTokenAlert = false;
+
+
+			// linked accounts
 			this.providers = this.AuthService.getProviders(this.AuthService.user);
 			const allProviders = this.AuthService.getProviders();
-
-			if (this.AuthService.user.plan.app_tokens_enabled) {
-				this.tokens = this.TokenResource.query({ type: 'access' });
-			}
-
-			this.showTokenAlert = false;
 
 			// pre-fill (local) username from first provider we find.
 			let i, provider;
@@ -183,6 +187,7 @@ export default class ProfileSettingsCtrl {
 
 		}).result.then(token => {
 			this.tokens.unshift(token);
+			this.hasAppTokens = true;
 			this.showTokenAlert = true;
 		});
 	}
@@ -193,15 +198,35 @@ export default class ProfileSettingsCtrl {
 		}, this.ApiHelper.handleErrorsInDialog('Error toggling token.'));
 	}
 
-	deleteToken(token) {
+	deleteAppToken(token) {
 		return this.ModalService.question({
-			title: 'Delete application access token',
+			title: 'Delete application token',
 			message: 'Any application or script using this token will no longer be able to access the VPDB API. You cannot undo this action.',
 			question: 'Are you sure you want to delete this token?'
 		}).result.then(() => {
 			this.TokenResource.delete({ id: token.id }, () => {
 				this.tokens.splice(this.tokens.indexOf(token), 1);
+				this.hasAppTokens = this.tokens.filter(token => token.scopes.includes('all')).length > 0;
 				this.App.showNotification('Token successfully deleted.');
+
+			}, this.ApiHelper.handleErrorsInDialog('Error deleting token.'));
+		}, console.error);
+	}
+
+	deleteLoginToken(token) {
+		return this.ModalService.question({
+			title: 'Remove browser access',
+			message: 'You will need to re-login the next time you\'re using that browser. Are you sure?'
+		}).result.then(() => {
+			this.TokenResource.delete({ id: token.id }, () => {
+				this.tokens.splice(this.tokens.indexOf(token), 1);
+				this.hasLoginTokens = this.tokens.filter(token => token.scopes.includes('login')).length > 0;
+				this.App.showNotification('Browser access successfully deleted.');
+
+				// clear own login token if it's the deleted one
+				if (this.AuthService.hasLoginToken(token)) {
+					this.AuthService.clearLoginToken();
+				}
 
 			}, this.ApiHelper.handleErrorsInDialog('Error deleting token.'));
 		}, console.error);
@@ -232,5 +257,24 @@ export default class ProfileSettingsCtrl {
 			return false;
 		}
 		return true;
+	}
+
+	addTokenIcon(token) {
+		const ua = token.browser;
+		if (!ua) {
+			return token;
+		}
+		const browserIcons = {
+			'Chrome': 'chrome',
+			'Firefox': 'firefox',
+			'IE': 'internet-explorer',
+			'Edge': 'edge',
+			'Safari': 'safari',
+			'Opera': 'opera'
+		};
+		if (ua.browser.name && browserIcons[ua.browser.name]) {
+			ua.browser.icon = browserIcons[ua.browser.name];
+		}
+		return token;
 	}
 }

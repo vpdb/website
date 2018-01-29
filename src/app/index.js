@@ -64,7 +64,7 @@ import errors from './errors';
 import routes from './app.routes';
 import controller from './app.ctrl';
 import service from './app.service';
-import { msdElasticConfig } from './app.config';
+import { msdElasticConfig, timeAgoConfig } from './app.config';
 
 import './app.styles';
 import AppTpl from './app.pug';
@@ -125,6 +125,7 @@ angular.module('vpdb', [
 ])
 	.config(routes)
 	.config(msdElasticConfig)
+	.config(timeAgoConfig)
 	.service('App', service)
 	.controller('AppCtrl', controller)
 	.directive('vpdb', app);

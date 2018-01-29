@@ -31,7 +31,7 @@ export default class TokenCreateModalCtrl {
 		this.ApiHelper = ApiHelper;
 		this.TokenResource = TokenResource;
 
-		this.token = { type: 'access' };
+		this.token = { type: 'personal', scopes: [ 'all' ] };
 	}
 
 	create() {

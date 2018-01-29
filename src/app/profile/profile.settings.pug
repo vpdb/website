@@ -145,7 +145,7 @@ include ../template/_mixins
 		.clearfix
 
 
-//- APPLICATION ACCESS TOKENS
+//- APPLICATION TOKENS
 //-----------------------------------------------------------------------------
 .span(ng-show="vm.AuthService.user.provider === 'local'")
 	h1 Application Access Tokens
@@ -157,7 +157,7 @@ include ../template/_mixins
 		+icon('warning').shift-up.space-right
 		| Make sure to copy your new application access token now. You won't be able to see it again!
 
-	table.table.table-striped(ng-show="vm.tokens.length")
+	table.table.table-striped(ng-show="vm.hasAppTokens")
 		thead
 			tr
 				th Application Name
@@ -166,7 +166,7 @@ include ../template/_mixins
 				th Last used
 				th(colspan="2") Actions
 		tbody
-			tr(ng-repeat="token in vm.tokens")
+			tr(ng-repeat="token in vm.tokens | filter: { scopes: 'all' }")
 				td(ng-show="token.token", colspan="2")
 					tt {{ token.token }}
 					span(uib-tooltip="Copy to clipboard", tooltip-placement="right", ngclipboard, data-clipboard-text="{{ token.token }}", ngclipboard-success="vm.onTokenCopied()"): +icon('clipboard').a.a--lighter.shift-up.space-left
@@ -177,12 +177,43 @@ include ../template/_mixins
 				td
 					span(ng-show="token.last_used_at") {{ token.last_used_at | timeAgo }}
 					span(ng-hide="token.last_used_at") never
-				td.td--icon: +icon("{{ token.is_active ? 'times' : 'check' }}")(ng-click="vm.toggleToken(token)").a.shift-up
-				td.td--icon: +icon('trash')(ng-click="vm.deleteToken(token)").a.shift-up
+				td.td--icon: +icon("{{ token.is_active ? 'times' : 'check' }}")(ng-click="vm.toggleToken(token)").a.shift-up-less
+				td.td--icon: +icon('trash')(ng-click="vm.deleteAppToken(token)").a.shift-up-less
 
 	button.btn.btn-default.pull-right(ng-click="vm.createToken()", ng-show="vm.AuthService.user.plan.app_tokens_enabled")
 		+icon('plus-circle').space-right
 		| New Token
+	.clearfix
+
+
+//- LOGIN TOKENS
+//-----------------------------------------------------------------------------
+.span(ng-show="vm.hasLoginTokens")
+	h1 Authenticated Browsers
+	hr
+	p These are browsers where you are automatically logged.
+
+	table.table.table-striped(ng-show="vm.hasLoginTokens")
+		thead
+			tr
+				th Browser
+				th Expires
+				th Last used
+				th.right Actions
+		tbody
+			tr(ng-repeat="token in vm.tokens | filter: { scopes: 'login' }")
+				td
+					span(ng-if="!token.browser") {{ token.label }}
+					span(ng-if="token.browser")
+						span(ng-if="token.browser.browser.icon"): +icon('{{ token.browser.browser.icon }}').shift-up-less.space-right
+						| {{ token.browser.browser.name }} {{ token.browser.browser.major || token.browser.browser.version }}
+						| on
+						| {{ token.browser.os.name }} {{ token.browser.os.major || token.browser.os.version }}
+				td {{ token.expires_at | timeAgo }}
+				td
+					span(ng-show="token.last_used_at") {{ token.last_used_at | timeAgo }}
+					span(ng-hide="token.last_used_at") never
+				td.right: +icon('trash')(ng-click="vm.deleteLoginToken(token)").a.shift-up-less
 	.clearfix
 
 
@@ -191,7 +222,7 @@ include ../template/_mixins
 h1 Linked Accounts
 hr
 
-table.table.table-striped(ng-show="vm.providers.length")
+table.table.table-striped(ng-if="vm.providers.length")
 	thead
 		tr
 			th(colspan="2") Provider
@@ -208,5 +239,5 @@ table.table.table-striped(ng-show="vm.providers.length")
 			td {{ vm.AuthService.user[provider.id].id }}
 			td -
 
-p(ng-hide="vm.providers.length")
+p(ng-if="!vm.providers.length")
 	i No linked accounts. Linked accounts appear when you choose to login with one of the supported third party providers. In order to link a third party account to this account, simply login using a third party account where you registered with the same email address.
