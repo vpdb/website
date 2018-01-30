@@ -10,14 +10,14 @@ include ../template/_mixins
 			.form-group(ng-class="{ error: vm.errors.label }")
 				label.col-sm-3.control-label Label
 				.col-sm-7
-					input.form-control(ng-model="vm.token.label", ng-required)
+					input.form-control(ng-model="vm.token.label", ng-required, autocomplete="off")
 			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.label")
 				+icon('warning').shift-up.space-right
 				| {{ vm.errors.label }}
 			.form-group(ng-class="{ error: vm.errors.password }")
 				label.col-sm-3.control-label Password
 				.col-sm-7
-					input.form-control(ng-model="vm.token.password", type="password", ng-required)
+					input.form-control(ng-model="vm.token.password", type="password", ng-required, autocomplete="current-password")
 			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.password")
 				+icon('warning').shift-up.space-right
 				| {{ vm.errors.password }}

@@ -6,7 +6,7 @@ include ../template/_mixins
 	label.col-sm-3.control-label Display Name
 	.col-sm-7
 		.input-group
-			input.form-control(type="text", ng-model="vm.updatedUser.name")
+			input.form-control(type="text", ng-model="vm.updatedUser.name", autocomplete="nickname")
 			span.input-group-addon(uib-tooltip="Name is publicly visible.", tooltip-placement="right", tooltip-append-to-body="true")
 				+icon('public').small
 
@@ -19,7 +19,7 @@ include ../template/_mixins
 	label.col-sm-3.control-label Location
 	.col-sm-7
 		.input-group
-			input.form-control(type="text", ng-model="vm.updatedUser.location")
+			input.form-control(type="text", ng-model="vm.updatedUser.location", autocomplete="country-name")
 			span.input-group-addon(uib-tooltip="Location is publicly visible.", tooltip-placement="right", tooltip-append-to-body="true")
 				+icon('public').small
 	.clearfix
@@ -30,7 +30,7 @@ include ../template/_mixins
 .form-group(ng-class="{ error: vm.errors.email }")
 	label.col-sm-3.control-label Email
 	.col-sm-7
-		input.form-control(type="text", ng-model="vm.updatedUser.email", ng-disabled="vm.AuthService.user.email_status.code === 'pending_update'")
+		input.form-control(type="text", ng-model="vm.updatedUser.email", ng-disabled="vm.AuthService.user.email_status.code === 'pending_update'", autocomplete="email")
 	.clearfix
 	.col-sm-offset-3.col-sm-7(ng-show="vm.AuthService.user.email_status.code === 'pending_update'")
 		+icon('arrow-right').shift-up
@@ -64,7 +64,7 @@ include ../template/_mixins
 		.form-group(ng-class="{ error: vm.errors.username }")
 			label.col-sm-3.control-label Username
 			.col-sm-7
-				input.form-control(type="text", ng-model="vm.localCredentials.username")
+				input.form-control(type="text", ng-model="vm.localCredentials.username", autocomplete="username")
 			.clearfix
 			div.alert.alert-danger(ng-show="vm.errors.username")
 				+icon('warning').shift-up.space-right
@@ -73,7 +73,7 @@ include ../template/_mixins
 		.form-group(ng-class="{ error: vm.errors.password }")
 			label.col-sm-3.control-label Password
 			.col-sm-7
-				input.form-control(type="password", ng-model="vm.localCredentials.password1")
+				input.form-control(type="password", ng-model="vm.localCredentials.password1", autocomplete="new-password")
 			.clearfix
 			div.alert.alert-danger(ng-show="vm.errors.password")
 				+icon('warning').shift-up.space-right
@@ -82,7 +82,7 @@ include ../template/_mixins
 		.form-group(ng-class="{ error: vm.errors.password2 }")
 			label.col-sm-3.control-label Confirm Password
 			.col-sm-7
-				input.form-control(type="password", ng-model="vm.localCredentials.password2")
+				input.form-control(type="password", ng-model="vm.localCredentials.password2", autocomplete="new-password")
 			.clearfix
 			div.alert.alert-danger(ng-show="vm.errors.password2")
 				+icon('warning').shift-up.space-right
@@ -108,12 +108,12 @@ include ../template/_mixins
 		.form-group
 			label.col-sm-3.control-label Username
 			.col-sm-7
-				input.form-control(ng-model="vm.AuthService.user.username", disabled)
+				input.form-control(ng-model="vm.AuthService.user.username", disabled, autocomplete="username")
 
 		.form-group(ng-class="{ error: vm.errors.current_password }")
 			label.col-sm-3.control-label Current Password
 			.col-sm-7
-				input.form-control(type="password", ng-model="vm.localUser.currentPassword")
+				input.form-control(type="password", ng-model="vm.localUser.currentPassword", autocomplete="current-password")
 			.clearfix
 			div.alert.alert-danger(ng-show="vm.errors.current_password")
 				+icon('warning').shift-up.space-right
@@ -122,7 +122,7 @@ include ../template/_mixins
 		.form-group(ng-class="{ error: vm.errors.password }")
 			label.col-sm-3.control-label New Password
 			.col-sm-7
-				input.form-control(type="password", ng-model="vm.localUser.password1")
+				input.form-control(type="password", ng-model="vm.localUser.password1", autocomplete="new-password")
 			.clearfix
 			div.alert.alert-danger(ng-show="vm.errors.password")
 				+icon('warning').shift-up.space-right
@@ -131,7 +131,7 @@ include ../template/_mixins
 		.form-group(ng-class="{ error: vm.errors.password2 }")
 			label.col-sm-3.control-label Confirm Password
 			.col-sm-7
-				input.form-control(type="password", ng-model="vm.localUser.password2")
+				input.form-control(type="password", ng-model="vm.localUser.password2", autocomplete="new-password")
 			.clearfix
 			div.alert.alert-danger(ng-show="vm.errors.password2")
 				+icon('warning').shift-up.space-right

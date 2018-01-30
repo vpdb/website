@@ -37,11 +37,11 @@ include ../template/_mixins
 				.form-group
 					label.col-sm-4.control-label Username
 					.col-sm-6
-						input#login-username.form-control(ng-model="vm.userPass.username", ng-required)
+						input#login-username.form-control(ng-model="vm.userPass.username", ng-required, autocomplete="username")
 				.form-group
 					label.col-sm-4.control-label Password
 					.col-sm-6
-						input#login-password.form-control(ng-model="vm.userPass.password", type="password", ng-keyup="$event.keyCode === 13 && vm.login()")
+						input#login-password.form-control(ng-model="vm.userPass.password", type="password", ng-keyup="$event.keyCode === 13 && vm.login()", autocomplete="current-password")
 
 		//- REGISTER
 		div(ng-show="vm.registering")
@@ -51,15 +51,15 @@ include ../template/_mixins
 				.form-group(ng-class="{ error: vm.errors.email }")
 					label.col-sm-4.control-label Email
 					.col-sm-6
-						input#register-email.form-control(ng-model="vm.email", ng-required)
+						input#register-email.form-control(ng-model="vm.email", ng-required, autocomplete="email")
 				.form-group(ng-class="{ error: vm.errors.username }")
 					label.col-sm-4.control-label Username
 					.col-sm-6
-						input#register-username.form-control(ng-model="vm.userPass.username", ng-required)
+						input#register-username.form-control(ng-model="vm.userPass.username", ng-required, autocomplete="username")
 				.form-group(ng-class="{ error: vm.errors.password }")
 					label.col-sm-4.control-label Password
 					.col-sm-6
-						input#register-password.form-control(ng-model="vm.userPass.password", type="password")
+						input#register-password.form-control(ng-model="vm.userPass.password", type="password", autocomplete="new-password")
 
 		//- ERRORS
 		div.alert.alert-danger(ng-show="vm.errors.email")
