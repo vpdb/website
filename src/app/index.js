@@ -60,6 +60,7 @@ import uploads from './uploads';
 import content from './content';
 import tag from './tag';
 import errors from './errors';
+import tokens from './tokens';
 
 import routes from './app.routes';
 import controller from './app.ctrl';
@@ -121,7 +122,8 @@ angular.module('vpdb', [
 	uploads,
 	content,
 	tag,
-	errors
+	errors,
+	tokens
 ])
 	.config(routes)
 	.config(msdElasticConfig)

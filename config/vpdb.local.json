@@ -26,10 +26,10 @@
 		"github": true,
 		"ipboard": [
 			{
-				"id": "gameex",
-				"name": "GameEx",
+				"id": "ips",
+				"name": "IPS Test",
 				"icon": "gameex",
-				"url": "/auth/gameex"
+				"url": "/auth/ips"
 			}
 		]
 	},

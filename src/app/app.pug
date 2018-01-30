@@ -37,6 +37,10 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 							a(ui-sref="adminUsers", ng-click="navCollapsed = true")
 								+icon('users').space-right.shift-up
 								span Users
+						li(ng-show="vm.AuthService.hasPermission('tokens/application-token')")
+							a(ui-sref="adminTokens", ng-click="navCollapsed = true")
+								+icon('key').space-right.shift-up
+								span Tokens
 						li(ng-show="vm.AuthService.hasPermission('builds/update')")
 							a(ui-sref="adminBuilds", ng-click="navCollapsed = true")
 								+icon('package').space-right.shift-up

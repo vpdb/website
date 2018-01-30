@@ -1,0 +1,44 @@
+include ../template/_mixins
+
+.row.row--fullheight(ng-controller="TokenListAdminCtrl as vm")
+	.col-sm-3.col--menu
+		h1 Filter
+		hr
+		p Don't need to filter yet.
+
+	.col-sm-9.col--main
+		h1.h--primary Application Tokens
+		hr.hr--primary
+
+		table.table.table-striped(ng-show="vm.tokens.length > 0")
+			thead
+				tr
+					th(colspan="2") Name
+					th Active
+					th Expires
+					th Scopes
+					th(colspan="3").right Actions
+			tbody
+				tr(ng-repeat="token in vm.tokens")
+					td.td--big-icon(ng-attr-title="{{ token.providerName }}")
+						+icon('{{ token.icon }}')
+					td(ng-if="token.token", colspan="2")
+						tt {{ token.token }}
+						span(uib-tooltip="Copy to clipboard", tooltip-placement="right", ngclipboard, data-clipboard-text="{{ token.token }}", ngclipboard-success="vm.onTokenCopied()"): +icon('clipboard').a.a--lighter.shift-up.space-left
+					td(nowrap, ng-if="!token.token"): b {{ token.label }}
+					td(ng-if="!token.token")
+						+icon("{{ token.is_active ? 'check' : 'times' }}")
+					td {{ token.expires_at | timeAgo }}
+					td {{ token.scopeNames }}
+					td.td--icon(title="Edit"): +icon('edit')(ng-click="vm.editToken(token)").a.shift-up-less
+					td.td--icon(title="Deactivate"): +icon("{{ token.is_active ? 'times' : 'check' }}")(ng-click="vm.toggleToken(token)").a.shift-up-less
+					td.td--icon(title="Delete"): +icon('trash')(ng-click="vm.deleteToken(token)").a.shift-up-less
+
+		span(ng-hide="vm.tokens.length > 0") There are no application tokens yet.
+
+		.clearfix
+		button.btn.btn-default.pull-right(ng-click="vm.createToken()")
+			+icon('plus-circle').space-right
+			| New Token
+		.clearfix
+		p.padder-top

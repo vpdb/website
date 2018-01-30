@@ -51,7 +51,7 @@ include ../template/_mixins
 		| Save
 .clearfix
 
-//- LOCAL REGISTRATUION
+//- LOCAL REGISTRATION
 //-----------------------------------------------------------------------------
 .span(ng-hide="vm.AuthService.user.provider === 'local'")
 
@@ -177,8 +177,8 @@ include ../template/_mixins
 				td
 					span(ng-show="token.last_used_at") {{ token.last_used_at | timeAgo }}
 					span(ng-hide="token.last_used_at") never
-				td.td--icon: +icon("{{ token.is_active ? 'times' : 'check' }}")(ng-click="vm.toggleToken(token)").a.shift-up-less
-				td.td--icon: +icon('trash')(ng-click="vm.deleteAppToken(token)").a.shift-up-less
+				td.td--icon(title="Deactivate"): +icon("{{ token.is_active ? 'times' : 'check' }}")(ng-click="vm.toggleToken(token)").a.shift-up-less
+				td.td--icon(title="Delete"): +icon('trash')(ng-click="vm.deleteAppToken(token)").a.shift-up-less
 
 	button.btn.btn-default.pull-right(ng-click="vm.createToken()", ng-show="vm.AuthService.user.plan.app_tokens_enabled")
 		+icon('plus-circle').space-right

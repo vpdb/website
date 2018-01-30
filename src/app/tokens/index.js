@@ -18,22 +18,13 @@
  */
 
 import angular from 'angular';
-import AuthService from './auth.service';
-import AuthInterceptorService from './auth.interceptor.service';
-import AuthInterceptorConfig from './auth.interceptor.config';
-import AuthCallbackCtrl from './auth.callback.ctrl';
-import LoginService from './login.service';
-import LoginModalCtrl from './login.modal.ctrl';
-import EmailConfirmationCtrl from './email.confirmation.ctrl';
+import TokenCreateModalCtrl from './token.create.modal.ctrl';
+import TokenCreateAdminModalCtrl from './token.create.admin.modal.ctrl';
+import TokenListAdminCtrl from './token.list.admin.ctrl';
 
 export default angular
-	.module('vpdb.auth', [])
-	.service('AuthService', AuthService)
-	.service('AuthInterceptorService', AuthInterceptorService)
-	.service('LoginService', LoginService)
-	.controller('AuthCallbackCtrl', AuthCallbackCtrl)
-	.controller('LoginModalCtrl', LoginModalCtrl)
-
-	.controller('EmailConfirmationCtrl', EmailConfirmationCtrl)
-	.config(AuthInterceptorConfig)
+	.module('vpdb.token', [])
+	.controller('TokenCreateModalCtrl', TokenCreateModalCtrl)
+	.controller('TokenCreateAdminModalCtrl', TokenCreateAdminModalCtrl)
+	.controller('TokenListAdminCtrl', TokenListAdminCtrl)
 	.name;

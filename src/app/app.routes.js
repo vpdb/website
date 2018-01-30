@@ -37,6 +37,7 @@ import ProfileStatsTpl from './profile/profile.stats.pug';
 import UserListAdminTpl from './users/user.list.admin.pug';
 import BuildListAdminTpl from './builds/build.list.admin.pug';
 import UploadsListAdminTpl from './uploads/uploads.list.admin.pug';
+import TokenListAdminTpl from './tokens/token.list.admin.pug';
 import AboutTpl from './content/about.pug';
 import RulesTpl from './content/rules.pug';
 import FaqTpl from './content/faq.pug';
@@ -88,6 +89,7 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state('adminUsers',        { url: '/admin/users', templateUrl: UserListAdminTpl });
 	$stateProvider.state('adminBuilds',       { url: '/admin/builds', templateUrl: BuildListAdminTpl });
 	$stateProvider.state('adminUploads',      { url: '/admin/uploads', templateUrl: UploadsListAdminTpl });
+	$stateProvider.state('adminTokens',       { url: '/admin/tokens', templateUrl: TokenListAdminTpl });
 
 	// content
 	$stateProvider.state('about',             { url: '/about', templateUrl: AboutTpl });

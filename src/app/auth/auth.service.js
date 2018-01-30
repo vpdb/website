@@ -507,7 +507,7 @@ export default class AuthService {
 			});
 		}
 		if (isArray(this.Config.authProviders.ipboard)) {
-			providers = [ ...providers, this.Config.authProviders.ipboard ];
+			providers = [ ...providers, ...this.Config.authProviders.ipboard ];
 		}
 
 		if (user) {

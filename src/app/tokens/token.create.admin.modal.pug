@@ -1,0 +1,49 @@
+include ../template/_mixins
+.theme-light
+	.modal-header
+		h1.h--no-margin.h--small
+			+icon('key').svg-3x.space-right
+			| &nbsp;{{ vm.token.id ? 'Edit' : 'Create' }} application access token
+	.modal-body
+		p(ng-if="!vm.token.id") This creates token that permits a service to authenticate as any user of the given provider.
+		form.form-horizontal(role="form")
+			.form-group(ng-class="{ error: vm.errors.label }")
+				label.col-sm-3.control-label Label
+				.col-sm-7
+					input.form-control(ng-model="vm.token.label", ng-required)
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.label")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.label }}
+
+			.form-group(ng-class="{ error: vm.errors.provider }", ng-if="!vm.token.id")
+				label.col-sm-3.control-label Provider
+				.col-sm-7
+					select.form-control(ng-options="item.id as item.name for item in vm.providers", ng-model="vm.token.provider")
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.provider")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.provider }}
+
+			.form-group(ng-class="{ error: vm.errors.scopes }")
+				label.col-sm-3.control-label Scopes
+				.col-sm-8
+					ul.list--checkboxes
+						li(ng-repeat="scope in vm.scopes")
+							input.checkbox--check.nested(ng-attr-id="checked-{{ scope.id }}", type="checkbox", name="selectedScopes[]", value="{{ scope.id }}", ng-checked="vm.token.scopes.indexOf(scope.id) > -1", ng-click="vm.toggleScope(scope.id)")
+							label.checkbox(ng-attr-for="checked-{{ scope.id }}")
+								h4.h--no-margin.h--lighter {{ scope.name }}
+								div {{ scope.description }}
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.scopes")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.scopes }}
+
+			.form-group(ng-if="!vm.token.id", ng-class="{ error: vm.errors.password }")
+				label.col-sm-3.control-label Password
+				.col-sm-7
+					input.form-control(ng-model="vm.token.password", type="password", ng-required)
+			div.alert.alert-danger.padder-bottom(ng-show="vm.errors.password")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.password }}
+	.modal-footer
+		button.btn.btn-default(ng-click="$dismiss()") Cancel
+		button.btn.btn--secondary(ng-if="vm.token.id", ng-click="vm.save()") Save
+		button.btn.btn--secondary(ng-if="!vm.token.id", ng-click="vm.create()") Create
