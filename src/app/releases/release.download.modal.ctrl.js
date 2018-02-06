@@ -46,7 +46,7 @@ export default class ReleaseDownloadModalCtrl {
 		this.latestVersion = params.latestVersion;
 		this.includeGameMedia = false;
 
-		this.gameMedia = $scope.game.media;
+		this.gameMedia = this.game.media;
 		this.roms = RomResource.query({ id: this.game.id });
 
 		this.downloadFiles = {};
@@ -74,11 +74,11 @@ export default class ReleaseDownloadModalCtrl {
 			}
 		});
 
-		if (!isEmpty($scope.gameMedia)) {
+		if (!isEmpty(this.gameMedia)) {
 			this.includeGameMedia = true;
 		}
 
-		const tableFiles = filter($scope.latestVersion.files, this.tableFile);
+		const tableFiles = filter(this.latestVersion.files, this.tableFile);
 		if (tableFiles.length === 1) {
 			this.toggleFile(tableFiles[0]);
 		}
