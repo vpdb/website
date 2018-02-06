@@ -37,10 +37,10 @@ html#app(ng-app="vpdb", lang="en")
 
 		growl-notifications
 
-		form#downloadForm(method="GET", target="_self", action="{{ app.downloadLink }}")
-			input(type="hidden", name="body", value="{{ app.downloadBody }}")
-			input(type="hidden", name="save_as", value="1")
-			input(type="hidden", name="token", value="{{ app.downloadToken }}")
+		form#downloadForm(method="GET", target="_self", ng-attr-action="{{ downloadLink }}")
+			input(type="hidden", ng-attr-name="body", value="{{ downloadBody }}")
+			input(type="hidden", ng-attr-name="save_as", value="1")
+			input(type="hidden", ng-attr-name="token", value="{{ downloadToken }}")
 
 		each spriteFileName in htmlWebpackPlugin.files.sprites
 			| !{spriteFileName}
