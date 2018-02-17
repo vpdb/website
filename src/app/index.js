@@ -78,6 +78,9 @@ const app = () => {
 	};
 };
 
+// require favicons
+import '../static/favicon';
+
 // require all icons
 // eslint-disable-next-line no-undef
 const files = require.context('../icons', false, /\.svg$/);
