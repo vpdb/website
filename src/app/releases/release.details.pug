@@ -114,7 +114,7 @@ p.padder-top(ng-show="vm.pageLoading")
 								.panel-heading
 									label
 									strong {{ comment.from.name }}
-									| commented {{ comment.created_at | timeAgo }}
+									| &nbsp;commented {{ comment.created_at | timeAgo }}
 								.panel-body
 									div.markdown(markdown="comment.message")
 

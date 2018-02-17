@@ -17,7 +17,7 @@ include ../template/_mixins
 			h3.hr--margin-smaller Moderation Zone
 			p
 				| As a moderator, you can update the validation status of the file.<br>
-				| File name: <code>{{ file.file.name }}</code>
+				| File name: <code>{{ vm.file.file.name }}</code>
 			form.form-horizontal(role="form")
 
 				.form-group
@@ -27,7 +27,7 @@ include ../template/_mixins
 							li(ng-repeat="status in vm.statuses")
 								.radio--lg.radio--lg-twoliner.radio--lg-lighter
 									label
-										input(type="radio", name="statuses", value="{{ status.name }}", ng-model="validation.status")
+										input(type="radio", name="statuses", value="{{ status.name }}", ng-model="vm.validation.status")
 										span: h4.h--no-margin.h--lighter {{ status.name }}
 										span
 											span {{ status.description }}
