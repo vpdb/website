@@ -88,10 +88,10 @@ export function imgBg($parse, AuthService) {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
 
-			scope.img = { url: false, pageLoading: false };
+			scope.img = { url: false, loading: false };
 
 			const setImgUrl = function(url) {
-				scope.img = { url: url, pageLoading: true };
+				scope.img = { url: url, loading: true };
 				// eslint-disable-next-line
 				element.css('background-image', "url('" + url + "')");
 				$(element).waitForImages(
@@ -121,7 +121,7 @@ export function imgBg($parse, AuthService) {
 
 				// check for empty
 				if (url === false) {
-					scope.img = { url: false, pageLoading: false };
+					scope.img = { url: false, loading: false };
 					element.css('background-image', 'none');
 					//element.removeClass('loaded');
 					scope.$emit('imageUnloaded');
