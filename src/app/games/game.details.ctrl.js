@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { isEmpty, isObject, indexOf, find, filter, mapValues, map } from 'lodash';
+import { isEmpty, isObject, indexOf, find, filter, mapValues, map, forEach } from 'lodash';
 
 import BackglassDetailsModalTpl from '../backglasses/backglass.details.modal.pug';
 import MediumInfoModalTpl from '../media/medium.info.modal.pug';
@@ -100,7 +100,8 @@ export default class GameDetailsCtrl {
 			}
 		};
 
-		$localStorage.game_meta = map(mapValues($localStorage.game_meta, obj => map(obj, GameDetailsCtrl.isSetObject)), GameDetailsCtrl.isSetObject);
+		// no clue what this is supposed to do
+		// $localStorage.game_meta = map(mapValues($localStorage.game_meta, obj => map(obj, GameDetailsCtrl.isSetObject)), GameDetailsCtrl.isSetObject);
 
 		// setup meta data
 		if (!$localStorage.game_meta) {
@@ -238,7 +239,7 @@ export default class GameDetailsCtrl {
 	 * Posts all uploaded ROM files to the API
 	 */
 	saveRoms() {
-		this.data().roms.forEach(rom => {
+		forEach(this.data().roms, rom => {
 			if (isObject(rom.language)) {
 				rom.language = rom.language.value;
 			}
