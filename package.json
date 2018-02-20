@@ -102,7 +102,7 @@
 		"svgo-loader": "2.1.0",
 		"ts-node": "4.1.0",
 		"typescript": "2.7.2",
-		"uglifyjs-webpack-plugin": "1.1.8",
+		"uglifyjs-webpack-plugin": "1.2.0",
 		"url-loader": "0.6.2",
 		"webpack": "3.10.0",
 		"webpack-bundle-analyzer": "2.10.0",
