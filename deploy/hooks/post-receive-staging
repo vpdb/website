@@ -1,0 +1,36 @@
+#!/bin/bash
+
+DEPLOY_ENV='staging'
+ROLLBACK=1
+
+# Re-launch as deployer if root
+if [ "$(id -u)" == "0" ]; then
+	sudo -i -H  -u deployer SPWD="$PWD" SCRIPT="$0" BRANCH="$1" COMMIT="$2" bash -c 'cd $SPWD; "$SCRIPT" $BRANCH $COMMIT'
+	exit $?
+fi
+
+. ./hooks/common
+
+BRANCH=`repo_get_branch $1`
+HEAD_REV=`git rev-parse ${BRANCH}`
+HEAD_REV=${HEAD_REV:0:10}
+
+DIRNAME=${BRANCH}-${HEAD_REV}
+
+# 1. clone into new folder
+repo_clone ${DIRNAME}
+repo_checkout_branch ${DIRNAME} ${BRANCH}
+
+# 2. install node packages
+npm_install_copy ${DIRNAME}
+npm_build ${DIRNAME} prod /var/www/website/staging/config.json
+
+# 3. change symlink
+repo_link ${DIRNAME}
+
+# 4. cleanup old deployment
+repo_cleanup "[a-z0-9_\\\\-]-[a-f0-9]{10}"
+
+echo ==================================================================
+echo Staging deployment of website successful!
+echo ==================================================================

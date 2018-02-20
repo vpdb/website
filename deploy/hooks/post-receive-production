@@ -1,0 +1,37 @@
+#!/bin/bash
+
+DEPLOY_ENV='production'
+ROLLBACK=0
+
+# Re-launch as deployer if root
+if [ "$(id -u)" == "0" ]; then
+	sudo -i -H  -u deployer SPWD="$PWD" SCRIPT="$0" BRANCH="$1" COMMIT="$2" bash -c 'cd $SPWD; "$SCRIPT" $BRANCH $COMMIT'
+	exit $?
+fi
+
+. ./hooks/common
+
+LAST_TAG=`repo_last_tag`
+if [ -z "$LAST_TAG" ]; then
+	abort No tag found.
+fi
+
+echo Deploying version ${LAST_TAG}...
+
+# 1. clone into new folder
+repo_clone ${LAST_TAG}
+repo_checkout_tag ${LAST_TAG}
+
+# 2. install node packages
+npm_install ${LAST_TAG}
+npm_build ${LAST_TAG} prod /var/www/website/production/config.json
+
+# 3. change symlink
+repo_link ${LAST_TAG}
+
+# 4. cleanup old deployment
+repo_cleanup "v[0-9]+\.[0-9]+\.[0-9]+"
+
+echo ==================================================================
+echo Production deployment of website successful!
+echo ==================================================================

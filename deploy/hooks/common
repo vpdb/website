@@ -1,0 +1,122 @@
+#!/bin/bash
+
+################ config start ################
+
+KEEP_DEPLOYMENTS=5
+DEPLOY_ROOT=/var/www/website
+
+################  config end  ################
+
+abort() {
+	echo
+	echo "  $@" 1>&2
+	echo
+	exit 1
+}
+
+rollback_abort() {
+
+	echo
+	echo "  $@" 1>&2
+	echo
+
+	if [ ${ROLLBACK} -eq 1 ]; then
+		local path=${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
+		echo Removing ${path}
+		rm -rf ${path}
+	fi
+	exit 1
+}
+
+repo_get_branch() {
+	if (( $# == 1 )); then
+		# if first argument is set, use it as branch name
+		branch=$1
+	else
+		# determine the branch that was pushed
+		if ! [ -t 0 ]; then
+		  read -a ref
+		fi
+		IFS='/' read -ra REF <<< "${ref[2]}"
+		branch="${REF[2]}"
+
+		# if executed manually and no argument is provided, fall back to master.
+		if [ -z "$branch" ]; then
+			branch="master"
+		fi
+	fi
+	echo ${branch}
+}
+
+repo_clone() {
+	local dest=${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
+	if [ -d "$dest" ]; then
+		abort "$1 is already deployed, aborting".
+	fi
+	git clone ${PWD} ${dest}
+	test $? -eq 0 || abort "Failed to clone ${PWD} into ${dest}"
+}
+
+repo_checkout_tag() {
+	local dest=${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
+	cd ${dest}
+	# git looks at $GIT_DIR first before checking $PWD, so let's fix that.
+	unset GIT_DIR
+	git checkout $1
+	test $? -eq 0 || rollback_abort $1 "Failed to checkout $1, aborting."
+}
+
+repo_checkout_branch() {
+	local dest=${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
+	cd ${dest}
+	echo "Checking out branch branch ${2} at ${PWD}..."
+	# git looks at $GIT_DIR first before checking $PWD, so let's fix that.
+	unset GIT_DIR
+	git checkout $2
+	test $? -eq 0 || rollback_abort $1 "Failed to checkout branch ${2} at ${PWD}, aborting."
+}
+
+npm_install() {
+	echo "Installing Node.js dependencies..."
+	cd ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
+	npm install --no-optional
+	test $? -eq 0 || rollback_abort $1 "Failed to run npm install. Manually fix and relaunch deployment.".
+}
+
+npm_install_copy() {
+	if [ -d "${DEPLOY_ROOT}/${DEPLOY_ENV}/current/node_modules" ]; then
+		echo "Copying node_modules from current deployment..."
+		cp -ar ${DEPLOY_ROOT}/${DEPLOY_ENV}/current/node_modules ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1/
+	fi
+	echo "Installing remaining dependencies..."
+	cd ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
+	npm install --no-optional
+	test $? -eq 0 || rollback_abort $1 "Failed to run npm install. Manually fix and relaunch deployment.".
+}
+
+npm_build() {
+	echo Building...
+	cd ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
+	WEBSITE_CONFIG=$3 npm run build:$2
+}
+
+repo_link() {
+
+	echo Swapping code...
+	ln -sfn ${dest} ${DEPLOY_ROOT}/${DEPLOY_ENV}/current
+	test $? -eq 0 || abort $1 "Failed to symlink current repo."
+}
+
+repo_cleanup() {
+	local regex=$1
+	local dir=${DEPLOY_ROOT}/${DEPLOY_ENV}
+	echo Deleting old deployments:
+	(ls -t ${dir}|egrep ${regex}|head -n ${KEEP_DEPLOYMENTS};ls ${dir}|egrep ${regex})|sort|uniq -u|xargs -I {} echo "   * ${dir}/{}"
+	(ls -t ${dir}|egrep ${regex}|head -n ${KEEP_DEPLOYMENTS};ls ${dir}|egrep ${regex})|sort|uniq -u|xargs -I {} rm ${dir}/{} -r
+}
+
+repo_last_tag() {
+	ref=`git for-each-ref refs/tags --sort=-*authordate --format='%(refname)' --count=1 | cut -d '/' -f 3`
+	test $? -eq 0 || abort "Failed to determine latest tag"
+	echo ${ref}
+}
