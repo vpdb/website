@@ -25,6 +25,10 @@ export function msdElasticConfig(msdElasticConfig) {
 	msdElasticConfig.append = '\n\n';
 }
 
+/**
+ * @param timeAgoSettings
+ * @ngInject
+ */
 export function timeAgoConfig(timeAgoSettings) {
 	timeAgoSettings.allowFuture = true;
 	timeAgoSettings.overrideLang = 'en_US';
