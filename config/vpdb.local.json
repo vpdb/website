@@ -15,7 +15,7 @@
 	"webUri": {
 		"protocol": "http",
 		"hostname": "localhost",
-		"port": 8080
+		"port": 3333
 	},
 	"ga": {
 		"enabled": false

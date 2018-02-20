@@ -1,6 +1,5 @@
 /* eslint-disable */
 const { resolve } = require('path');
-const { existsSync } = require('fs');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -10,9 +9,6 @@ const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const appContext = resolve(__dirname, '../src/app');
 const staticContext = resolve(__dirname, '../src/static');
 const iconsContext = resolve(__dirname, '../src/icons');
-const websiteConfig = process.env.WEBSITE_CONFIG && existsSync(process.env.WEBSITE_CONFIG)
-	? process.env.WEBSITE_CONFIG
-	: './vpdb.' + process.env.CONFIG + '.json';
 
 module.exports  = function(options) {
 	const isProd = options.env === 'prod';
@@ -78,8 +74,9 @@ module.exports  = function(options) {
 			}),
 
 			new webpack.DefinePlugin({
-				WEBSITE_CONFIG: JSON.stringify(require(websiteConfig))
-			})
+				WEBSITE_CONFIG: JSON.stringify(options.websiteConfig)
+			}),
+
 		],
 		output: {
 			path: resolve(__dirname, '../dist'),
