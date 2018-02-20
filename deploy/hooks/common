@@ -101,7 +101,7 @@ npm_build() {
 }
 
 repo_link() {
-
+	local dest=${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
 	echo Swapping code...
 	ln -sfn ${dest} ${DEPLOY_ROOT}/${DEPLOY_ENV}/current
 	test $? -eq 0 || abort $1 "Failed to symlink current repo."
