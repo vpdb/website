@@ -103,7 +103,7 @@ export default class AppCtrl {
 
 	installServiceWorker() {
 		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
+			navigator.serviceWorker.register('/sw.js').then(function(reg) {
 				// updatefound is fired if service-worker.js changes.
 				reg.onupdatefound = function() {
 					// The updatefound event implies that reg.installing is set; see

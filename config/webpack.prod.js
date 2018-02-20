@@ -1,32 +1,16 @@
 /* eslint-disable */
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
+const join = require('path').join;
 
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = function(options) {
 
 	return webpackMerge(commonConfig(options), {
 
 		plugins: [
-
-			// see also: https://github.com/morris/typekit-cache
-			new SWPrecacheWebpackPlugin({
-				cacheId: 'vpdb',
-				dontCacheBustUrlsMatching: /-([0-9a-f]{12}|[0-9A-Za-z]{8})\./,
-				filename: 'service-worker.js',
-				minify: true,
-				navigateFallback: options.websiteUrl + 'index.html',
-				staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-				runtimeCaching: [{
-					urlPattern: /^http:\/\/localhost:3000\/api/,
-					handler: 'networkFirst'
-				}, {
-					urlPattern: /^http:\/\/localhost:3000\/public/,
-					handler: 'cacheFirst'
-				}]
-			}),
 
 			new UglifyJSPlugin({
 				sourceMap: true,
@@ -39,6 +23,26 @@ module.exports = function(options) {
 					}
 				}
 			}),
+
+			new WorkboxPlugin({
+				cacheId: 'vpdb',
+				globDirectory: options.outputPath,
+				globPatterns: ['**/*.{html,js,css,jpg,png,eot,svg,ttf,woff}'],
+				globIgnores: [ 'sprite.svg', '**/glyphicons-*' ],
+				swDest: join(options.outputPath, 'sw.js'),
+				clientsClaim: true,
+				skipWaiting: true,
+				dontCacheBustUrlsMatching: /-([0-9a-f]{12}|[0-9A-Za-z]{8})\./,
+				navigateFallback: options.websiteUrl + 'index.html',
+				runtimeCaching: [{
+					urlPattern: options.apiUrl,
+					handler: 'networkFirst'
+				}, {
+					urlPattern: options.storageUrl,
+					handler: 'cacheFirst'
+				}]
+			})
+
 		],
 
 		output: {

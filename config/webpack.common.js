@@ -79,7 +79,7 @@ module.exports  = function(options) {
 
 		],
 		output: {
-			path: resolve(__dirname, '../dist'),
+			path: options.outputPath,
 			filename: '[name].bundle-[hash].js',
 			hashFunction: 'sha256',
 			hashDigest: 'hex',
