@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "The Virtual Pinball Database",
+    "short_name": "VPDB",
     "icons": [
         {
             "src": "/favicon/android-chrome-192x192.png",
@@ -11,9 +11,15 @@
             "src": "/favicon/android-chrome-256x256.png",
             "sizes": "256x256",
             "type": "image/png"
+        },
+        {
+             "src": "/favicon/splash-v1.png",
+             "sizes": "512x512",
+             "type": "image/png"
         }
     ],
-    "theme_color": "#2c190b",
+    "theme_color": "#ec843d",
     "background_color": "#2c190b",
-    "display": "standalone"
+    "display": "standalone",
+    "orientation": "portrait"
 }

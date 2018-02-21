@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+// require all icons
 // eslint-disable-next-line no-undef
-const faviconsContext = require.context('!!file-loader?name=favicon/[name].[ext]!.', true, /\.(svg|png|xml|json)$/);
-faviconsContext.keys().forEach(faviconsContext);
+const files = require.context('.', false, /\.svg$/);
+files.keys().forEach(files);

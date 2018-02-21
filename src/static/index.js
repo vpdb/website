@@ -18,5 +18,5 @@
  */
 
 // eslint-disable-next-line no-undef
-const faviconsContext = require.context('!!file-loader?name=favicon/[name].[ext]!.', true, /\.(svg|png|xml|json)$/);
-faviconsContext.keys().forEach(faviconsContext);
+const filesContext = require.context('!!file-loader?name=/[name].[ext]!.', true, /\.(txt|ico|webmanifest)$/);
+filesContext.keys().forEach(filesContext);

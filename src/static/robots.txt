@@ -4,8 +4,3 @@ Disallow: /profile
 Disallow: /auth
 Disallow: /confirm
 Disallow: /add-game
-Disallow: /games/*/edit
-Disallow: /games/*/add-release
-Disallow: /games/*/add-backglass
-Disallow: /games/*/releases/*/add
-Disallow: /games/*/releases/*/edit

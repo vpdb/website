@@ -24,6 +24,7 @@ module.exports = function(options) {
 				}
 			}),
 
+			// see also: https://github.com/morris/typekit-cache
 			new WorkboxPlugin({
 				cacheId: 'vpdb',
 				globDirectory: options.outputPath,

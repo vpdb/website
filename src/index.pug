@@ -14,9 +14,9 @@ html#app(ng-app="vpdb", lang="en")
 		link(rel="apple-touch-icon", sizes="180x180", href="/favicon/apple-touch-icon.png")
 		link(rel="icon", type="image/png", sizes="32x32", href="/favicon/favicon-32x32.png")
 		link(rel="icon", type="image/png", sizes="16x16", href="/favicon/favicon-16x16.png")
-		link(rel="manifest", href="/favicon/site.webmanifest")
+		link(rel="manifest", href="/site.webmanifest")
 		link(rel="mask-icon", href="/favicon/safari-pinned-tab.svg", color="#5bbad5")
-		link(rel="shortcut icon", href="/favicon/favicon.ico")
+		link(rel="shortcut icon", href="/favicon.ico")
 		meta(name="msapplication-TileColor", content="#ec843d")
 		meta(name="msapplication-config", content="/favicon/browserconfig.xml")
 		meta(http-equiv="X-UA-Compatible", content="IE=Edge")
@@ -25,16 +25,27 @@ html#app(ng-app="vpdb", lang="en")
 
 		base(href="/")
 
-	body#top(ng-class="themeName")
+	body.theme-dark#top(ng-class="themeName")
 
+		//- the app
 		vpdb
 
+		//- notifications
 		growl-notifications
 
+		//- download from anywhere
 		form#downloadForm(method="GET", target="_self", ng-attr-action="{{ downloadLink }}")
 			input(type="hidden", ng-attr-name="body", value="{{ downloadBody }}")
 			input(type="hidden", ng-attr-name="save_as", value="1")
 			input(type="hidden", ng-attr-name="token", value="{{ downloadToken }}")
+
+		//- just let them know..
+		noscript
+			.container.container--topmost
+				.text-center
+					img(src="favicon/splash-v1.png", width="200", height="200")
+					p Dude, you need to enable Javascript if you want to hang out here.
+					p.padder-bottom-2x &nbsp;
 
 		each spriteFileName in htmlWebpackPlugin.files.sprites
 			| !{spriteFileName}

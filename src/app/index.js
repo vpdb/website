@@ -78,13 +78,10 @@ const app = () => {
 	};
 };
 
-// require favicons
+// require static assets
+import '../icons';
+import '../static';
 import '../static/favicon';
-
-// require all icons
-// eslint-disable-next-line no-undef
-const files = require.context('../icons', false, /\.svg$/);
-files.keys().forEach(files);
 
 angular.module('vpdb', [
 
