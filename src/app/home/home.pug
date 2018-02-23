@@ -19,15 +19,16 @@ include ../template/paginator
 					.paginator(ng-show="vm.pagination.count > 12")
 						+paginator('vm.pagination', 'vm.paginate')
 
-					.col-md-3.col-sm-4.col-xs-6(ng-repeat="game in vm.games", ui-sref="gameDetails({ id: game.id})")
+					.col-md-3.col-sm-4.col-xs-6(ng-repeat="game in vm.gameResult", ui-sref="gameDetails({ id: game.id})")
 						.panel.panel--animated.ng-cloak
 							.img.img--ar-bg.img--rounded-top(img-bg="vm.App.img(game.backglass, 'small')")
 							.text-center.padder-horizontal
 								h1.h--small {{ game.title }}
 								label.label--subtitle {{ game.manufacturer }} &middot; {{ game.year }}
 
-				p#no-result.padder-bottom-2x(ng-show="!vm.games.length && !vm.searching"): i No games found containing "{{ vm.q }}".
-				p#searching.padder-bottom-2x(ng-show="!vm.games.length && vm.searching"): i Searching...
+				p#no-result.padder-bottom-2x(ng-show="!vm.gameResult.length && !vm.status.gameResult.loading && !vm.status.gameResult.offline"): i No games found containing "{{ vm.q }}".
+				p.padder-bottom-2x(ng-show="vm.status.gameResult.offline"): i Looks like you're offline!
+				p#searching.padder-bottom-2x(ng-show="!vm.gameResult.length && vm.status.gameResult.loading"): i Searching...
 
 		.searchbox.abs-center
 			form.form-inline
@@ -68,7 +69,7 @@ include ../template/paginator
 
 		.abs-center
 			a#toggle.a--lighter(ng-click="whatsThis = !whatsThis")
-				+icon('{{ vm.searching ? "circle-o-notch" : "vpdb-o" }}')(ng-class="{ 'svg-spin': vm.searching }").svg-3x
+				+icon('{{ vm.status.gameResult.loading ? "circle-o-notch" : "vpdb-o" }}')(ng-class="{ 'svg-spin': vm.status.gameResult.loading }").svg-3x
 
 .row.row--padded
 
@@ -102,7 +103,14 @@ include ../template/paginator
 						div.small.oneliner by {{ release.authors[0].user.name }}
 					.clearfix
 		.clearfix
-		p(ng-show="vm.releases.length === 0") No releases in database yet.
+		p(ng-if="vm.releases.length === 0 && !vm.status.releases.offline && !vm.status.releases.loading") No releases in database yet.
+		p(ng-if="vm.status.releases.offline")
+			+icon('times').small.space-right.shift-up
+			| Offline.
+			a.space-left(ng-click="vm.loadReleases()") Retry
+		p(ng-if="vm.status.releases.loading")
+			+icon('circle-o-notch').small.svg-spin.space-right.shift-up
+			| Loading...
 
 	//- games
 	//-------------------------------------------------------------------------
@@ -114,11 +122,18 @@ include ../template/paginator
 				+icon('angle-right').smaller.space-left
 		hr
 
-		.row.fade2-animation(ng-show="vm.popularGames.length > 0")
-			.col-md-3.col-sm-4.col-xs-6(ng-repeat="game in vm.popularGames", ui-sref="gameDetails({ id: game.id})")
+		.row.fade2-animation(ng-show="vm.games.length > 0")
+			.col-md-3.col-sm-4.col-xs-6(ng-repeat="game in vm.games", ui-sref="gameDetails({ id: game.id})")
 				.panel.panel--animated.ng-cloak
 					.img.img--ar-bg.img--rounded-top(img-bg="vm.App.img(game.backglass, 'small')")
 					.text-center.padder-horizontal
 						h1.h--small {{ game.title }}
 						label.label--subtitle {{ game.manufacturer }} &middot; {{ game.year }}
-		p(ng-show="vm.popularGames.length === 0") No games in database yet.
+		p(ng-if="vm.games.length === 0 && !vm.status.games.offline && !vm.status.games.loading") No games in database yet.
+			p(ng-if="vm.status.games.offline")
+				+icon('times').small.space-right.shift-up
+				| Offline.
+				a.space-left(ng-click="vm.loadGames()") Retry
+			p(ng-if="vm.status.games.loading")
+				+icon('circle-o-notch').small.svg-spin.space-right.shift-up
+				| Loading...

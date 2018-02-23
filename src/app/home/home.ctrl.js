@@ -55,6 +55,7 @@ export default class HomeCtrl {
 		this.AuthService = AuthService;
 		this.ReleaseService = ReleaseService;
 		this.GameResource = GameResource;
+		this.ReleaseResource = ReleaseResource;
 
 		// internal params
 		this.q = '';
@@ -62,6 +63,9 @@ export default class HomeCtrl {
 
 		this.searchResult = false;
 		this.whatsThis = false;
+
+		// statuses
+		this.status = { gameResult: { loading: false, offline: false, error: null } };
 
 		// watch query
 		$scope.$watch(() => this.q, (newVal) => this.refresh({ q: newVal }));
@@ -72,16 +76,43 @@ export default class HomeCtrl {
 			App.login();
 		}
 
-		// fetch latest releases
-		this.releases = ReleaseResource.query({
-			thumb_format: App.pixelSuffix('square'),
-			per_page: 6,
-			sort: 'released_at' });
+		// load data
+		this.loadReleases();
+		this.loadGames();
+	}
 
-		// fetch popular games
-		this.popularGames = GameResource.query({
-			per_page: 8,
-			sort: 'popularity' });
+	/**
+	 * Fetches latest releases from the API.
+	 */
+	loadReleases() {
+		this.status.releases = { loading: true, offline: false, error: null };
+		this.ReleaseResource.query({ thumb_format: this.App.pixelSuffix('square'), per_page: 6, sort: 'released_at' }).$promise.then(releases => {
+			this.status.releases = { loading: false, offline: false, error: null };
+			this.releases = releases;
+		}).catch(err => {
+			if (err.status === -1) {
+				this.status.releases = { loading: false, offline: true, error: null };
+			} else {
+				this.status.releases = { loading: false, offline: false, error: err };
+			}
+		});
+	}
+
+	/**
+	 * Fetches most popular games from the API.
+	 */
+	loadGames() {
+		this.status.games = { loading: true, offline: false, error: null };
+		this.GameResource.query({ per_page: 8, sort: 'popularity' }).$promise.then(games => {
+			this.status.games = { loading: false, offline: false, error: null };
+			this.games = games;
+		}).catch(err => {
+			if (err.status === -1) {
+				this.status.games = { loading: false, offline: true, error: null };
+			} else {
+				this.status.games = { loading: false, offline: false, error: err };
+			}
+		});
 	}
 
 	/**
@@ -112,18 +143,28 @@ export default class HomeCtrl {
 
 		// refresh if changes
 		if (!isEqual(this.lastReqParams, query)) {
-			this.searching = true;
 
-			// noinspection JSUnresolvedFunction
-			this.GameResource.query(query, this.ApiHelper.handlePagination(this, games => {
+			this.status.gameResult = { loading: true, offline: false, error: null };
+			this.GameResource.query(query).$promise.then((games, headers) => {
+				this.ApiHelper.handlePagination(this, headers);
 
 				// only update results if result is different to avoid flicker.
 				if (!isEqual(map(this.games, 'id'), map(games, 'id'))) {
-					this.games = games;
+					this.gameResult = games;
 				}
+				this.status.gameResult = { loading: false, offline: false, error: null };
+
+			}).catch(err => {
+				this.gameResult = [];
+				if (err.status === -1) {
+					this.status.gameResult = { loading: false, offline: true, error: null };
+				} else {
+					this.status.gameResult = { loading: false, offline: false, error: err };
+				}
+			}).finally(() => {
 				this.searchResult = true;
-				this.searching = false;
-			}));
+			});
+
 			this.lastReqParams = query;
 		} else {
 			this.searchResult = true;
