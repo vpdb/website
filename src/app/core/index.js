@@ -41,6 +41,8 @@ import videoJs from './videojs.directive';
 export default angular.module('vpdb.core', [])
 	// eslint-disable-next-line no-undef
 	.constant('Config', WEBSITE_CONFIG)
+	// eslint-disable-next-line no-undef
+	.constant('BuildConfig', BUILD_CONFIG)
 	.constant('Flavors', Flavors)
 	.service('ConfigService', ConfigService)
 	.service('TrackerService', TrackerService)

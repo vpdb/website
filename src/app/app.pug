@@ -7,7 +7,7 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 				+icon('bars').space-right
 				| Menu
 			span.navbar-brand
-				a(href="/", ng-click="navCollapsed = true")
+				a(href="/", ng-click="navCollapsed = true", ng-attr-title="VPDB {{ vm.BuildConfig.revision.hash.substr(0, 7) }}, released {{ vm.BuildConfig.revision.date | timeAgo }}")
 					+icon('vpdb-o').logo
 					+icon('logo-vp').logo-vp
 					+icon('logo-db').logo-db

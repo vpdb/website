@@ -74,7 +74,8 @@ module.exports  = function(options) {
 			}),
 
 			new webpack.DefinePlugin({
-				WEBSITE_CONFIG: JSON.stringify(options.websiteConfig)
+				WEBSITE_CONFIG: JSON.stringify(options.websiteConfig),
+				BUILD_CONFIG: JSON.stringify({ revision: options.revision, production: isProd })
 			}),
 
 		],

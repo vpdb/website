@@ -35,15 +35,17 @@ export default class AppCtrl {
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {Config} Config
+	 * @param {BuildConfig} BuildConfig
 	 * @ngInject
 	 */
-	constructor($rootScope, $state, $localStorage, $uibModal, App, AuthService, Config) {
+	constructor($rootScope, $state, $localStorage, $uibModal, App, AuthService, Config, BuildConfig) {
 		console.log('Application controller loaded.');
 
 		this.$state = $state;
 		this.$uibModal = $uibModal;
 		this.App = App;
 		this.AuthService = AuthService;
+		this.BuildConfig = BuildConfig;
 
 		// scroll top top when navigating
 		$rootScope.$on('$stateChangeSuccess', () => document.body.scrollTop = document.documentElement.scrollTop = 0);
@@ -102,7 +104,7 @@ export default class AppCtrl {
 	}
 
 	installServiceWorker() {
-		if ('serviceWorker' in navigator) {
+		if (this.BuildConfig.production && 'serviceWorker' in navigator) {
 			navigator.serviceWorker.register('/sw.js').then(function(reg) {
 				// updatefound is fired if service-worker.js changes.
 				reg.onupdatefound = function() {
