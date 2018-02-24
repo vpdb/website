@@ -38,7 +38,7 @@ to run with. Basically, when running the website, there are two factors:
 
 There are two compilation options, `prod` and `dev`. The only difference is that
 `prod` minimizes and tree-shakes the code, resulting in a smaller bundle but 
-longer compilation time.
+longer compilation time. It also installs a service worker for pre-caching.
 
 The most common ways to build are:
 
