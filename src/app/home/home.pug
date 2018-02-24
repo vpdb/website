@@ -15,7 +15,7 @@ include ../template/paginator
 			.container(ng-class="{ 'paging-padder': vm.pagination.count > 12 }")
 				.row.fade2-animation(ng-show="vm.games.length > 0")
 					.clear
-						+icon('offline')(ng-click="vm.q = ''").a
+						+icon('times')(ng-click="vm.q = ''").a
 					.paginator(ng-show="vm.pagination.count > 12")
 						+paginator('vm.pagination', 'vm.paginate')
 
