@@ -33,8 +33,8 @@ import { RolesResource } from './roles.resource';
 import { PlanResource } from './plan.resource';
 import { BackglassResource, BackglassModerationResource } from './backglass.resource';
 import { IpdbResource } from './ipdb.resource';
-import updateInterceptor from './update.interceptor';
-import updateInterceptorConfig from './update.interceptor.config';
+import globalInterceptor from './global.interceptor';
+import globalInterceptorConfig from './global.interceptor.config';
 
 export default angular
 	.module('vpdb.backend', [])
@@ -70,6 +70,6 @@ export default angular
 	.service('UserResource', UserResource)
 	.service('UserConfirmationResource', UserConfirmationResource)
 	.service('UserStarResource', UserStarResource)
-	.factory('UpdateInterceptor', updateInterceptor)
-	.config(updateInterceptorConfig)
+	.factory('GlobalInterceptor', globalInterceptor)
+	.config(globalInterceptorConfig)
 	.name;

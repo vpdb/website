@@ -20,6 +20,9 @@ include ../template/_mixins
 				typeahead-wait-ms="250",
 				focus-on
 			)
+		div.alert.alert-warning(ng-show="vm.status.offline")
+			+icon('warning').space-right.shift-up
+			| You seem to be offline. Try again by typing.
 
 		//-- DESCRIPTION
 		//---------------------------------------------------------------------
@@ -45,6 +48,6 @@ include ../template/_mixins
 script#gameListItem(type="text/ng-template")
 	div.media.media--game-item
 		.media-left
-			.img.img--ar-bg(img-bg="vm.App.img(match.model.backglass, 'small')")
+			.img.img--ar-bg(img-bg="$parent.$parent.$parent.$parent.vm.App.img(match.model.backglass, 'small')")
 		.media-body
 			h3.h--no-margin.h--lighter {{ match.model.title }}

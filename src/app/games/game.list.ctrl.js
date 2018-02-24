@@ -49,8 +49,9 @@ export default class GameListCtrl {
 		this.ApiHelper = ApiHelper;
 		this.GameResource = GameResource;
 
-		this.pageLoading = false;
 		this.lastReqParams = null;
+		this.status = { loading: false, offline: false };
+		this.pagination = {};
 
 		this.params = new Params([
 			new Param({ name: 'q', defaultValue: '' }),
@@ -92,11 +93,14 @@ export default class GameListCtrl {
 	 */
 	refresh() {
 		const reqParams = this.params.toRequest();
-		// only refresh if query object changed
 		if (!isEqual(this.lastReqParams, reqParams)) {
-			this.lastReqParams = reqParams;
-			this.pageLoading = true;
-			this.games = this.GameResource.query(reqParams, this.ApiHelper.handlePagination(this, { loader: true }), this.ApiHelper.handleErrors(this));
+			this.ApiHelper.paginatedRequest(() => this.GameResource.query(reqParams), this.status, this.pagination).then(games => {
+				this.games = games;
+				this.lastReqParams = reqParams;
+
+			}).catch(() => {
+				this.games = [];
+			});
 		}
 
 	}

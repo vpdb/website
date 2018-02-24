@@ -25,6 +25,8 @@ export class GameResource {
 	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/v1/games/:id'), {}, {
+			get: { method: 'GET' },
+			query: { method: 'GET', isArray:true, interceptor: { response: res => res } },
 			head: { method: 'HEAD' },
 			update: { method: 'PATCH' }
 		});
@@ -51,8 +53,7 @@ export class GameStarResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/v1/games/:gameId/star'), {}, {
-		});
+		return $resource(ConfigService.apiUri('/v1/games/:gameId/star'), {}, {});
 	}
 }
 

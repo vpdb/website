@@ -63,9 +63,14 @@ export default class HomeCtrl {
 
 		this.searchResult = false;
 		this.whatsThis = false;
+		this.pagination = {};
 
 		// statuses
-		this.status = { gameResult: { loading: false, offline: false, error: null } };
+		this.status = {
+			releases: { loading: false, offline: false },
+			games: { loading: false, offline: false },
+			gameResult: { loading: false, offline: false }
+		};
 
 		// watch query
 		$scope.$watch(() => this.q, (newVal) => this.refresh({ q: newVal }));
@@ -102,17 +107,9 @@ export default class HomeCtrl {
 	 * Fetches most popular games from the API.
 	 */
 	loadGames() {
-		this.status.games = { loading: true, offline: false, error: null };
-		this.GameResource.query({ per_page: 8, sort: 'popularity' }).$promise.then(games => {
-			this.status.games = { loading: false, offline: false, error: null };
-			this.games = games;
-		}).catch(err => {
-			if (err.status === -1) {
-				this.status.games = { loading: false, offline: true, error: null };
-			} else {
-				this.status.games = { loading: false, offline: false, error: err };
-			}
-		});
+		this.ApiHelper.request(() => this.GameResource.query({ per_page: 8, sort: 'popularity' }), this.status.games)
+			.then(games => this.games = games)
+			.catch(() => this.games = []);
 	}
 
 	/**
@@ -144,26 +141,15 @@ export default class HomeCtrl {
 		// refresh if changes
 		if (!isEqual(this.lastReqParams, query)) {
 
-			this.status.gameResult = { loading: true, offline: false, error: null };
-			this.GameResource.query(query).$promise.then((games, headers) => {
-				this.ApiHelper.handlePagination(this, headers);
-
-				// only update results if result is different to avoid flicker.
-				if (!isEqual(map(this.games, 'id'), map(games, 'id'))) {
-					this.gameResult = games;
-				}
-				this.status.gameResult = { loading: false, offline: false, error: null };
-
-			}).catch(err => {
-				this.gameResult = [];
-				if (err.status === -1) {
-					this.status.gameResult = { loading: false, offline: true, error: null };
-				} else {
-					this.status.gameResult = { loading: false, offline: false, error: err };
-				}
-			}).finally(() => {
-				this.searchResult = true;
-			});
+			this.ApiHelper.paginatedRequest(() => this.GameResource.query(query), this.status.gameResult, this.pagination)
+				.then(games => {
+					// only update results if result is different to avoid flicker.
+					if (!isEqual(map(this.games, 'id'), map(games, 'id'))) {
+						this.gameResult = games;
+					}
+				})
+				.catch(() => this.gameResult = [])
+				.finally(() => this.searchResult = true);
 
 			this.lastReqParams = query;
 		} else {

@@ -46,12 +46,13 @@ export default class BackglassEditModalCtrl {
 		this.params = params;
 		this.backglass = params.backglass;
 		this.game = params.game;
+		this.status = { loading: false, offline: false };
 
 		this.reset();
 	}
 
 	findGame(val) {
-		return this.GameResource.query({ q: val }).$promise;
+		return this.ApiHelper.request(() => this.GameResource.query({ q: val }), this.status);
 	}
 
 	gameSelected(item, model) {

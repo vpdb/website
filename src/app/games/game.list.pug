@@ -9,8 +9,19 @@ include ../template/paginator
 		hr
 
 		//- number of games counter
-		.pull-left(ng-show="vm.games.length > 0")
+		.pull-left(ng-show="vm.games.length > 0 && !vm.status.loading && !vm.status.offline")
 			span.small {{ vm.pagination.count }} GAME{{ vm.pagination.count == 1 ? '' : 'S' }}
+
+		//- loading
+		.pull-left(ng-show="vm.status.loading")
+			+icon('circle-o-notch').small.svg-spin.space-right.shift-up
+			| Loading...
+
+		//- offline
+		.pull-left(ng-show="vm.status.offline")
+			+icon('times').small.space-right
+			| You seem to be offline.
+			a.space-left(ng-click="vm.refresh()") Retry
 
 		//- pagination
 		.pull-right(ng-show="vm.games.length > 0")
@@ -19,12 +30,8 @@ include ../template/paginator
 		.clearfix.padder-bottom(ng-show="vm.games.length > 0")
 
 		//- no games
-		p(ng-show="!vm.games.length && !vm.pageLoading") No games found.
+		p(ng-show="!vm.games.length && !vm.status.loading && !vm.status.offline") No games found.
 
-		//- loading
-		p(ng-show="vm.pageLoading")
-			+icon('circle-o-notch').small.svg-spin.space-right.shift-up
-			| Loading...
 
 		//- content
 		.row.ng-cloak

@@ -25,21 +25,24 @@ export default class GameSelectModalCtrl {
 	 * @param $uibModal
 	 * @param $uibModalInstance
 	 * @param {App} App
+	 * @param {ApiHelper} ApiHelper
 	 * @param GameResource
 	 * @param {{ title:string, text:string }} params
 	 * @ngInject
 	 */
-	constructor($uibModal, $uibModalInstance, App, GameResource, params) {
+	constructor($uibModal, $uibModalInstance, App, ApiHelper, GameResource, params) {
 
 		this.$uibModal = $uibModal;
 		this.$uibModalInstance = $uibModalInstance;
 		this.App = App;
+		this.ApiHelper = ApiHelper;
 		this.GameResource = GameResource;
 		this.params = params;
+		this.status = { loading: false, offline: false };
 	}
 
 	findGame(val) {
-		return this.GameResource.query({ q: val }).$promise;
+		return this.ApiHelper.request(() => this.GameResource.query({ q: val }), this.status);
 	}
 
 	gameSelected(item, model) {

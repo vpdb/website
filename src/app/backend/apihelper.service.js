@@ -31,25 +31,147 @@ export default class ApiHelper {
 	/**
 	 * @param $state
 	 * @param $log
+	 * @param $q
 	 * @param {App} App
 	 * @param {ModalService} ModalService
 	 * @param {ModalFlashService} ModalFlashService
 	 * @ngInject
 	 */
-	constructor($state, $log, App, ModalService, ModalFlashService) {
+	constructor($state, $log, $q, App, ModalService, ModalFlashService) {
 		this.$state = $state;
 		this.$log = $log;
+		this.$q = $q;
 		this.App = App;
 		this.ModalService = ModalService;
 		this.ModalFlashService = ModalFlashService;
 	}
 
 	/**
+	 * Creates a request.
+	 *
+	 * @param {function} query Function returning a query object
+	 * @param {Object}  status Object the status is written to
+	 * @param {boolean} status.loading If request is still active
+	 * @param {boolean} status.offline When connection broke
+	 * @param {string}  [status.error] Returned error message
+	 * @param {boolean} [status.errors] Returned validation errors
+	 * @param {Object}   [opts] Options
+	 * @param {function} [opts.preFct] Executed if provided with given scope as argument, before the errors object has been set.<br>
+	 * @param {string}   [opts.fieldPrefix] Added to field name of validation errors
+	 * @returns {Promise}
+	 */
+	request(query, status, opts) {
+		return this.paginatedRequest(query, status, null, opts);
+	}
+
+	/**
+	 * Creates a paginated request.
+	 *
+	 * @param {function} query Function returning a query object
+	 * @param {Object}  status Object the status is written to
+	 * @param {boolean} status.loading If request is still active
+	 * @param {boolean} status.offline When connection broke
+	 * @param {string}  [status.error] Returned error message
+	 * @param {boolean} [status.errors] Returned validation errors
+	 * @param {Object|null}  pagination Object to update
+	 * @param {number}  pagination.count Total number of results
+	 * @param {number}  pagination.page Current page
+	 * @param {number}  pagination.pageCount Total number of pages
+	 * @param {Object}  pagination.links Pagination links, with props "url" and "query".
+	 * @param {Object}  pagination.links.next Next page
+	 * @param {Object}  pagination.links.prev Previous page
+	 * @param {Object}  pagination.links.first First page
+	 * @param {Object}  pagination.links.last Last page
+	 * @param {Object}   [opts] Options
+	 * @param {function} [opts.preFct] Executed if provided with given scope as argument, before the errors object has been set.<br>
+	 * @param {string}   [opts.fieldPrefix] Added to field name of validation errors
+	 * @returns {Promise}
+	 */
+	paginatedRequest(query, status, pagination, opts) {
+		return this.$q((resolve, reject) => {
+			status.loading = true;
+			status.offline = false;
+			status.error = undefined;
+			return query().$promise.then(response => {
+				status.loading = false;
+				if (pagination) {
+					this._handlePagination(response.headers, pagination);
+				}
+				resolve(response.data);
+
+			}).catch(response => {
+				status.loading = false;
+				if (response.status === -1) {
+					status.offline = true;
+				} else {
+					this._handleErrors(response, status, opts);
+				}
+				reject(response);
+			});
+		});
+	}
+
+	/**
+	 * Reads pagination parameters from provided headers and updates the given object.
+	 * @param headers Response headers
+	 * @param {{ count:number, page:number, size:number, pageCount:number, links:{next:{url:string, query:object}, prev:{url:string, query:object}, first:{url:string, query:object}, last:{url:string, query:object}} }} pagination Object to update
+	 * @private
+	 */
+	_handlePagination(headers, pagination) {
+		if (headers('x-list-count')) {
+			pagination.count = parseInt(headers('x-list-count'));
+			pagination.page = parseInt(headers('x-list-page'));
+			pagination.size = parseInt(headers('x-list-size'));
+			pagination.pageCount = Math.ceil(pagination.count / pagination.size);
+		}
+		if (headers('link')) {
+			const links = {};
+			map(headers('link').split(','), link => {
+				const m = link.match(/<([^>]+)>\s*;\s*rel="([^"]+)"/);
+				const url = m[1];
+				links[m[2]] = {
+					url: url.replace(/%2C/gi, ','),
+					query: parseUri(decodeURIComponent(url)).queryKey
+				};
+			});
+			pagination.links = links;
+		}
+	}
+
+	_handleErrors(response, status, opts) {
+		if (response.status === 401 && response.data.error === 'Token has expired') {
+			this.ModalService.error({
+				subtitle: 'Session timed out',
+				message: 'Looks like your session has expired. Try logging in again.'
+			});
+			this.logError('Session timed out', response);
+			return;
+		}
+		this.logError('Request error:', response);
+		status.errors = { __count: 0 };
+		status.error = null;
+		if (response.data.errors) {
+			if (opts.preFct) {
+				opts.preFct(response, status);
+			}
+			response.data.errors.forEach(err => {
+				const path = (opts.fieldPrefix || '') + err.field;
+				set(status.errors, path, err.message);
+				status.errors.__count++;
+			});
+		}
+		if (response.data.error) {
+			status.error = response.data.error;
+		}
+	}
+
+	/**
 	 * Reads pagination parameters from provided headers and updates the scope.
 	 * @param {object} scope Controller instance to which the pagination parameters are applied to.
-	 * @param {{ loader:boolean}|function(items:object[], headers:object)} opts Options or callback
+	 * @param {{ loader:boolean}|function(items:object[], headers:object)} [opts] Options or callback
 	 * @param {function(items:object[], headers:object)=undefined} callback Callback
 	 * @return {Function}
+	 * @deprecated Use {@link paginatedRequest}
 	 */
 	handlePagination(scope, opts, callback) {
 		if (isFunction(opts)) {
@@ -104,6 +226,7 @@ export default class ApiHelper {
 	 * @param {function(scope:object, response:object)} [postFct] Executed if provided with given scope as argument, after the errors object has been set
 	 * @param {function(scope:object, response:object)} [preFct] Executed if provided with given scope as argument, before the errors object has been set.
 	 * @return {function(response:object)}
+	 * @deprecated Use {@link request} or {@link paginatedRequest}
 	 */
 	handleErrors(scope, opt, postFct, preFct) {
 		if (!preFct && isFunction(opt)) {
