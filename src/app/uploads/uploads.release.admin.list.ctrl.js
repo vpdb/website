@@ -37,6 +37,13 @@ export default class UploadsReleaseListAdminCtrl {
 		this.UploadHelper = UploadHelper;
 		this.ReleaseResource = ReleaseResource;
 
+		this.status = {
+			releases: { loading: false, offline: false }
+		};
+		this.pagination = {
+			releases: {}
+		};
+
 		$scope.$on('refresh', this.refresh.bind(this));
 		this.refresh();
 	}
@@ -48,9 +55,9 @@ export default class UploadsReleaseListAdminCtrl {
 			sort: 'modified_at',
 			per_page: this.$scope.numItems
 		};
-		this.releases = this.ReleaseResource.query(query, this.ApiHelper.handlePagination(this, { loader: true }, releases => {
-			releases.forEach(this.UploadHelper.addIcons);
-		}));
+		this.ApiHelper.paginatedRequest(() => this.ReleaseResource.query(query), this.status.releases, this.pagination.releases)
+			.then(releases => this.releases = releases.map(this.UploadHelper.addIcons))
+			.catch(() => this.releases = []);
 	}
 
 	moderateRelease(release) {

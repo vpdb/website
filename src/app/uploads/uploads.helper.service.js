@@ -33,6 +33,7 @@ export default class UploadHelper {
 		} else {
 			entity.icon = 'thumbs-up-down';
 		}
+		return entity;
 	}
 
 	mapHistory(item) {

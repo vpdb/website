@@ -15,9 +15,20 @@ include ../template/paginator
 				+icon('th-extended')(ng-click="vm.switchView('extended')")
 		hr
 
-		//- number of games counter
-		.pull-left(ng-show="vm.releases.length > 0")
+		//- number of releases counter
+		.pull-left(ng-show="vm.releases.length > 0 && !vm.status.loading && !vm.status.offline")
 			span.small {{ vm.pagination.count }} RELEASE{{ vm.pagination.count == 1 ? '' : 'S' }}
+
+		//- loading
+		.pull-left(ng-show="vm.status.loading")
+			+icon('circle-o-notch').small.svg-spin.space-right.shift-up
+			| Loading...
+
+		//- offline
+		.pull-left(ng-show="vm.status.offline")
+			+icon('offline').small.space-right
+			| You seem to be offline.
+			a.space-left(ng-click="vm.refresh()") Retry
 
 		//- pagination
 		.pull-right(ng-show="vm.releases.length > 0")
@@ -26,15 +37,7 @@ include ../template/paginator
 		.clearfix.padder-bottom(ng-show="vm.releases.length > 0")
 
 		//- no releases
-		p(ng-show="!vm.releases.length && !vm.pageLoading") No releases found.
-
-		//- loading
-		p(ng-show="vm.pageLoading && !vm.error")
-			+icon('circle-o-notch').small.svg-spin.space-right.shift-up
-			| Loading...
-
-		//- error
-		p(ng-show="error") Error: {{ vm.error }}
+		p(ng-show="!vm.releases.length && !vm.status.loading && !vm.status.offline") No releases found.
 
 		//- content
 		.row.ng-cloak

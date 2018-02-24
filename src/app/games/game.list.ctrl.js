@@ -98,9 +98,7 @@ export default class GameListCtrl {
 				this.games = games;
 				this.lastReqParams = reqParams;
 
-			}).catch(() => {
-				this.games = [];
-			});
+			}).catch(() => this.games = []);
 		}
 
 	}

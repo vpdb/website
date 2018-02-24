@@ -63,8 +63,9 @@ export default class ReleaseListCtrl {
 		const viewTypes = ['extended', 'table'];
 		const defaultViewType = 'compact';
 
-		this.pageLoading = false;
 		this.lastReqParams = null;
+		this.status = { loading: false, offline: false };
+		this.pagination = {};
 
 		// stuff we need in the view
 		this.flavors = values(Flavors);
@@ -122,9 +123,12 @@ export default class ReleaseListCtrl {
 		const reqParams = assign(this.params.toRequest(), { thumb_format: this.thumbFormat });
 		// only refresh if query object changed
 		if (!isEqual(this.lastReqParams, reqParams)) {
-			this.lastReqParams = reqParams;
-			this.pageLoading = true;
-			this.releases = this.ReleaseResource.query(reqParams, this.ApiHelper.handlePagination(this, { loader: true }), this.ApiHelper.handleErrors(this));
+			this.ApiHelper.paginatedRequest(() => this.ReleaseResource.query(reqParams), this.status, this.pagination)
+				.then(releases => {
+					this.releases = releases;
+					this.lastReqParams = reqParams;
+				})
+				.catch(() => this.releases = []);
 		}
 	}
 

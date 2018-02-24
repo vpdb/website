@@ -25,6 +25,7 @@ export class ReleaseResource {
 	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/v1/releases/:release'), {}, {
+			query: { method: 'GET', isArray:true, interceptor: { response: res => res } },
 			update: { method: 'PATCH' }
 		});
 	}

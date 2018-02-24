@@ -36,9 +36,23 @@ include ../template/paginator
 				| Releases
 
 				//- pagination
-				.h--no-header.pull-right(ng-show="vm.releases.length > 0")
-					+paginator('vm.pagination', 'vm.paginate')
+				.h--no-header.pull-right.space-left(ng-show="vm.releases.length > 0")
+					+paginator('vm.pagination.releases', 'vm.paginate')
+
+				//- loading
+				.h--no-header.pull-right(ng-show="vm.status.releases.loading")
+					+icon('circle-o-notch').small.svg-spin
 			hr.hr--primary
+
+
+			//- offline
+			.pull-left(ng-show="vm.status.releases.offline")
+				+icon('offline').small.space-right
+				| You seem to be offline.
+				a.space-left(ng-click="vm.refresh()") Retry
+
+			// no results
+			span(ng-show="vm.releases.length == 0 && !vm.status.releases.loading && !vm.status.releases.offline") No releases found.
 
 			//- release list
 			table.table.table-striped.table--selectable(ng-show="vm.releases.length > 0")
@@ -52,7 +66,7 @@ include ../template/paginator
 					td {{ release.game.title }} <br/><b>{{ release.name }}</b>
 					td(ng-bind-html="release.authors | authors")
 					td.right {{ release.created_at | timeAgo }}
-			span(ng-hide="vm.releases.length > 0") No releases found.
+
 			.clearfix
 
 		//-- BACKGLASSES

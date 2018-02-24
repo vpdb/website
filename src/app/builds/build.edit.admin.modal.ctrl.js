@@ -50,15 +50,21 @@ export default class BuildEditAdminModalCtrl {
 			{ id: 'experimental', label: 'Experimental Build' },
 			{ id: 'nightly', label: 'Nightly Build' }
 		];
+		this.status = {
+			releases: { loading: false, offline: false }
+		};
+		this.pagination = {};
 
 		this.BuildResource.get({ id: build.id }, b => {
 			build = b;
 			this.build = cloneDeep(build);
-			this.releases = ReleaseResource.query({
+			this.ApiHelper.paginatedRequest(() => ReleaseResource.query({
 				moderation: 'all',
 				builds: build.id,
 				thumb_format: 'square'
-			}, ApiHelper.handlePagination(this));
+			}), this.status.releases, this.pagination)
+				.then(releases => this.releases = releases)
+				.catch(() => this.releases = []);
 		});
 	}
 

@@ -90,17 +90,9 @@ export default class HomeCtrl {
 	 * Fetches latest releases from the API.
 	 */
 	loadReleases() {
-		this.status.releases = { loading: true, offline: false, error: null };
-		this.ReleaseResource.query({ thumb_format: this.App.pixelSuffix('square'), per_page: 6, sort: 'released_at' }).$promise.then(releases => {
-			this.status.releases = { loading: false, offline: false, error: null };
-			this.releases = releases;
-		}).catch(err => {
-			if (err.status === -1) {
-				this.status.releases = { loading: false, offline: true, error: null };
-			} else {
-				this.status.releases = { loading: false, offline: false, error: err };
-			}
-		});
+		this.ApiHelper.request(() => this.ReleaseResource.query({ thumb_format: this.App.pixelSuffix('square'), per_page: 6, sort: 'released_at' }), this.status.releases)
+			.then(releases => this.releases = releases)
+			.catch(() => this.releases = []);
 	}
 
 	/**
