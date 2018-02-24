@@ -19,7 +19,7 @@ include ../template/paginator
 
 		//- offline
 		.pull-left(ng-show="vm.status.offline")
-			+icon('times').small.space-right
+			+icon('offline').small.space-right
 			| You seem to be offline.
 			a.space-left(ng-click="vm.refresh()") Retry
 

@@ -15,7 +15,7 @@ include ../template/paginator
 			.container(ng-class="{ 'paging-padder': vm.pagination.count > 12 }")
 				.row.fade2-animation(ng-show="vm.games.length > 0")
 					.clear
-						+icon('times')(ng-click="vm.q = ''").a
+						+icon('offline')(ng-click="vm.q = ''").a
 					.paginator(ng-show="vm.pagination.count > 12")
 						+paginator('vm.pagination', 'vm.paginate')
 
@@ -45,7 +45,7 @@ include ../template/paginator
 		.panel(uib-collapse="!whatsThis")
 
 			.clear
-				+icon('times')(ng-click="whatsThis = false").a
+				+icon('offline')(ng-click="whatsThis = false").a
 
 			h3.h--large.h--primary What's this?
 			p.center-block
@@ -105,7 +105,7 @@ include ../template/paginator
 		.clearfix
 		p(ng-if="vm.releases.length === 0 && !vm.status.releases.offline && !vm.status.releases.loading") No releases in database yet.
 		p(ng-if="vm.status.releases.offline")
-			+icon('times').small.space-right.shift-up
+			+icon('offline').small.space-right.shift-up
 			| Offline.
 			a.space-left(ng-click="vm.loadReleases()") Retry
 		p(ng-if="vm.status.releases.loading")
@@ -131,7 +131,7 @@ include ../template/paginator
 						label.label--subtitle {{ game.manufacturer }} &middot; {{ game.year }}
 		p(ng-if="vm.games.length === 0 && !vm.status.games.offline && !vm.status.games.loading") No games in database yet.
 			p(ng-if="vm.status.games.offline")
-				+icon('times').small.space-right.shift-up
+				+icon('offline').small.space-right.shift-up
 				| Offline.
 				a.space-left(ng-click="vm.loadGames()") Retry
 			p(ng-if="vm.status.games.loading")
