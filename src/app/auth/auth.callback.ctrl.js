@@ -36,6 +36,12 @@ export default class AuthCallbackCtrl {
 	constructor($stateParams, $location, $localStorage, AuthService, ModalService, AuthResource) {
 
 		if ($location.search().code) {
+
+			if (AuthService.isAuthenticated) {
+				console.log('Already authenticated with user.', $stateParams, $location, AuthService.user);
+				//return;
+			}
+
 			// noinspection JSUnresolvedFunction
 			AuthResource.authenticateCallback($stateParams, result => {
 				AuthService.authenticated(result);

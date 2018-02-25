@@ -486,8 +486,9 @@ export default class AuthService {
 	 * the providers of the user are returned.
 	 *
 	 * @param {object} [user] If set, only return providers of the user
+	 * @param {boolean} [returnOthers] If true, return providers the user is NOT registered with
 	 */
-	getProviders(user) {
+	getProviders(user, returnOthers) {
 		let providers = [];
 
 		if (this.Config.authProviders.google) {
@@ -511,7 +512,9 @@ export default class AuthService {
 		}
 
 		if (user) {
-			return filter(providers, provider => user[provider.id] && !isEmpty(user[provider.id]));
+			return filter(providers, provider => returnOthers
+				? (!user[provider.id] || isEmpty(user[provider.id]))
+				: (user[provider.id] && !isEmpty(user[provider.id])));
 		} else {
 			return providers;
 		}

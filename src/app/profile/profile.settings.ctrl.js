@@ -26,16 +26,18 @@ export default class ProfileSettingsCtrl {
 	/**
 	 * @param $scope
 	 * @param $uibModal
+	 * @param $window
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
+	 * @param {ConfigService} ConfigService
 	 * @param {ModalService} ModalService
 	 * @param {TrackerService} TrackerService
 	 * @param ProfileResource
 	 * @param TokenResource
 	 * @ngInject
 	 */
-	constructor($scope, $uibModal, App, AuthService, ApiHelper, ModalService, TrackerService,
+	constructor($scope, $uibModal, $window, App, AuthService, ApiHelper, ConfigService, ModalService, TrackerService,
 				ProfileResource, TokenResource) {
 
 		App.theme('dark');
@@ -43,9 +45,11 @@ export default class ProfileSettingsCtrl {
 		TrackerService.trackPage();
 
 		this.$uibModal = $uibModal;
+		this.$window = $window;
 		this.App = App;
 		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
+		this.ConfigService = ConfigService;
 		this.ModalService = ModalService;
 		this.ProfileResource = ProfileResource;
 		this.TokenResource = TokenResource;
@@ -276,5 +280,10 @@ export default class ProfileSettingsCtrl {
 			ua.browser.icon = browserIcons[ua.browser.name];
 		}
 		return token;
+	}
+
+	linkAccount(provider) {
+		this.AuthService.setPostLoginRedirect();
+		this.$window.location.href = this.ConfigService.apiUri('/v1/redirect/' + provider.id);
 	}
 }
