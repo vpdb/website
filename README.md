@@ -78,9 +78,13 @@ Before tests, code is linted using [ESLint](https://eslint.org/).
 
 Thanks to JetBrains for their awesome IDE and support of the Open Source Community!
 
+<a title="Realtime application protection" href="https://www.sqreen.io/?utm_source=badge"><img width="150" src="https://s3-eu-west-1.amazonaws.com/sqreen-assets/badges/20171107/sqreen-light-badge.svg" alt="Sqreen | Runtime Application Protection" /></a>
+
+Then cheers to Sqreen for their excellent security services protecting our host at vpdb.io!
+
 <a href="https://www.browserstack.com"><img width="300" src="https://raw.githubusercontent.com/vpdb/website/master/src/test/browserstack-logo.png"></a>
 
-Also huge thanks to BrowserStack for offering free end-to-end testing for this project.
+Finally, huge thanks to BrowserStack for offering free end-to-end testing for this project.
 
 ## License
 
