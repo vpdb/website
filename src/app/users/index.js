@@ -20,6 +20,7 @@
 import angular from 'angular';
 import UserInfoModalCtrl from './user.info.modal.ctrl';
 import UserListAdminCtrl from './user.list.admin.ctrl';
+import UserMergeModalCtrl from './user.merge.modal.ctrl';
 import UserEditAdminModalCtrl from './user.edit.admin.modal.ctrl';
 import AuthorSelectModalCtrl from './author.select.modal.ctrl';
 import userInfo from './user.info.directive';
@@ -30,6 +31,7 @@ export default angular
 	.controller('UserInfoModalCtrl', UserInfoModalCtrl)
 	.controller('UserListAdminCtrl', UserListAdminCtrl)
 	.controller('UserEditAdminModalCtrl', UserEditAdminModalCtrl)
+	.controller('UserMergeModalCtrl', UserMergeModalCtrl)
 	.controller('AuthorSelectModalCtrl', AuthorSelectModalCtrl)
 	.directive('user', userInfo)
 	.directive('filterRole', filterRole)

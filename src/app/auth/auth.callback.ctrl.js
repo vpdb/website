@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+import UserMergeModalTpl from '../users/user.merge.modal.pug';
 
 /**
  * The page where the OAuth provider redirects to.
@@ -27,13 +28,14 @@ export default class AuthCallbackCtrl {
 	/**
 	 * @param $stateParams
 	 * @param $location
-	 * @param {*} $localStorage
+	 * @param $localStorage
+	 * @param $uibModal
 	 * @param {AuthService} AuthService
 	 * @param {ModalService} ModalService
 	 * @param AuthResource
 	 * @ngInject
 	 */
-	constructor($stateParams, $location, $localStorage, AuthService, ModalService, AuthResource) {
+	constructor($stateParams, $location, $localStorage, $uibModal, AuthService, ModalService, AuthResource) {
 
 		if ($location.search().code) {
 
@@ -42,18 +44,38 @@ export default class AuthCallbackCtrl {
 				//return;
 			}
 
-			// noinspection JSUnresolvedFunction
-			AuthResource.authenticateCallback($stateParams, result => {
+			let query;
+			if ($localStorage.mergeUserId) {
+				query = { code: $stateParams.code, strategy: $stateParams.strategy, merged_user_id: $localStorage.mergeUserId };
+				delete $localStorage.mergeUserId;
+			} else {
+				query = $stateParams;
+			}
+			AuthResource.authenticateCallback(query, result => {
 				AuthService.authenticated(result);
 				AuthService.runPostLoginActions();
 				if ($localStorage.rememberMe) {
 					AuthService.rememberMe();
 				}
 			}, err => {
-				ModalService.error({
-					subtitle: 'Could not login.',
-					message: err.data.error
-				});
+				if (err.status === 409) {
+					$uibModal.open({
+						templateUrl: UserMergeModalTpl,
+						controller: 'UserMergeModalCtrl',
+						controllerAs: 'vm',
+						size: 'lg',
+						keyboard: false,
+						backdrop: 'static',
+						windowClass: 'theme-light',
+						resolve: { data: () => err.data.data }
+					});
+
+				} else {
+					ModalService.error({
+						subtitle: 'Could not login.',
+						message: err.data.error
+					});
+				}
 			});
 		} else {
 			/** @type {{ error_uri:string, error_description:string}} */

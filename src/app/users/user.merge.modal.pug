@@ -1,0 +1,32 @@
+include ../template/_mixins
+
+.theme-light
+	.modal-header
+		h1.h--small.h--no-margin
+			+icon('user').space-right
+			| Merge Users
+	.modal-body
+		p There seems to be a conflict with the account you're trying to login with.
+		p {{ vm.data.explanation }}
+		p In order to continue, you're going to need to merge both accounts into one. You can do that by clicking on <strong>the account you want to keep</strong> below. Everything you did at VPDB with the other account will be attributed to the new one.
+
+		.row
+			.col-md-6.padder-top(ng-repeat="user in vm.users")
+				.media.flavor-item(ng-class="{ active: vm.selectedUser.id === user.id }", ng-click="vm.selectUser(user)")
+					.media-left.media-top
+						img.img-avatar.img-avatar--lg(gravatar-src="user.gravatar_id", gravatar-default="retro", fallback-icon="user")
+					.media-body
+						h3.h--no-margin {{ user.name || user.username }}
+						.text--large
+							| &lt;{{ user.email }}&gt;
+
+						label Registered {{ user.created_at | timeAgo }}
+						div(ng-repeat="provider in user.providerData")
+							+icon('{{ provider.icon }}').svg-2x.shift-up-less.space-right
+							| {{ provider.label }}
+
+		p.padder-top If this is completely unexpected and you don't know what to do, drop us a mail at admin@vpdb.io and we'll sort things out.
+
+	.modal-footer
+		button.btn.btn-hollow.pull-left(ng-click="vm.abort()") Cancel
+		button.btn.btn-primary(ng-click="vm.merge()", ng-disabled="!vm.selectedUser") Merge Users
