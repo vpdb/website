@@ -98,7 +98,7 @@
 		"stylus": "0.54.5",
 		"stylus-loader": "3.0.1",
 		"svg-sprite-loader": "3.6.2",
-		"svgo": "1.0.4",
+		"svgo": "1.0.5",
 		"svgo-loader": "2.1.0",
 		"ts-node": "5.0.0",
 		"typescript": "2.7.2",
