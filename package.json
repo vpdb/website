@@ -96,7 +96,7 @@
 		"stream-to-array": "2.3.0",
 		"style-loader": "0.20.2",
 		"stylus": "0.54.5",
-		"stylus-loader": "3.0.1",
+		"stylus-loader": "3.0.2",
 		"svg-sprite-loader": "3.6.2",
 		"svgo": "1.0.4",
 		"svgo-loader": "2.1.0",
