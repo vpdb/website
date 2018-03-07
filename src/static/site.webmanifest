@@ -1,6 +1,7 @@
 {
     "name": "The Virtual Pinball Database",
     "short_name": "VPDB",
+    "start_url": "/",
     "icons": [
         {
             "src": "/favicon/android-chrome-192x192.png",
