@@ -28,7 +28,7 @@ module.exports = function(options) {
 			new WorkboxPlugin({
 				cacheId: 'vpdb',
 				globDirectory: options.outputPath,
-				globPatterns: ['**/*.{html,js,css,jpg,png,eot,svg,ttf,woff}'],
+				globPatterns: ['**/*.{html,js,css,jpg,png,eot,svg,ttf,woff,webmanifest}'],
 				globIgnores: ['sprite.svg', '**/glyphicons-*'],
 				swDest: join(options.outputPath, 'sw.js'),
 				clientsClaim: true,
