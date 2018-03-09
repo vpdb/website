@@ -18,6 +18,7 @@
  */
 
 import $ from 'jquery';
+import angular from 'angular';
 import { forEach, isObject } from 'lodash';
 
 /**
@@ -90,7 +91,7 @@ export function imgBg($parse, AuthService) {
 
 			scope.img = { url: false, loading: false };
 
-			const setImgUrl = function(url) {
+			const loadImg = function(url) {
 				scope.img = { url: url, loading: true };
 				// eslint-disable-next-line
 				element.css('background-image', "url('" + url + "')");
@@ -114,6 +115,25 @@ export function imgBg($parse, AuthService) {
 					true
 				);
 			};
+
+			const setImgUrl = function(url) {
+
+				// if supported, only load image when in view.
+				if (typeof IntersectionObserver !== 'undefined') {
+					const observer = new IntersectionObserver(changes => {
+						changes.forEach(change => {
+							if (change.intersectionRatio > 0) {
+								loadImg(url);
+							}
+						});
+					});
+					observer.observe(angular.element(element)[0]);
+				} else {
+					loadImg(url);
+				}
+			};
+
+
 
 			const setImg = function(value) {
 				const url = isObject(value) ? value.url : value;
