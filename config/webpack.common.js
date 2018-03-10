@@ -17,6 +17,7 @@ module.exports  = function(options) {
 		entry: {
 			app: './src/app/index.js'
 		},
+		mode: isProd ? 'production' : 'development',
 		module: {
 			rules: [
 				{ test: /\.js$/, use: [
@@ -64,11 +65,6 @@ module.exports  = function(options) {
 				plainSprite: true
 			}),
 
-			new webpack.optimize.CommonsChunkPlugin({
-				name: 'vendors',
-				minChunks: m => /node_modules/.test(m.context)
-			}),
-
 			new webpack.ProvidePlugin({
 				'window.jQuery': 'jquery'
 			}),
@@ -77,8 +73,19 @@ module.exports  = function(options) {
 				WEBSITE_CONFIG: JSON.stringify(options.websiteConfig),
 				BUILD_CONFIG: JSON.stringify({ revision: options.revision, production: isProd })
 			}),
-
 		],
+		optimization: {
+			splitChunks: {
+				cacheGroups: {
+					vendor: {
+						test: /node_modules/, // you may add "vendor.js" here if you want to
+						name: "vendor",
+						chunks: "initial",
+						enforce: true
+					}
+				}
+			}
+		},
 		output: {
 			path: options.outputPath,
 			filename: '[name].bundle-[hash].js',
