@@ -19,8 +19,8 @@
 
 import { browser } from "protractor";
 import { GameAddAdminPage } from './game.add.admin.page';
-import { AppPage } from '../app.page';
-import { Games } from '../../test/backend/Games';
+import { AppPage } from '../../../app.page';
+import { Games } from '../../../../test/backend/Games';
 
 describe('Add new game', () => {
 

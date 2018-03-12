@@ -18,25 +18,25 @@
  */
 
 import angular from 'angular';
-import GameDetailsCtrl from './game.details.ctrl';
-import GameListCtrl from './game.list.ctrl';
+//import GameDetailsCtrl from './game.details.ctrl';
+//import GameListCtrl from './game.list.ctrl';
 import GameReleaseDetailsCtrl from './game.release.details.ctrl';
 import GameRequestModalCtrl from './game.request.modal.ctrl';
 import GameSelectModalCtrl from './game.select.modal.ctrl';
-import GameAddAdminCtrl from './game.add.admin.ctrl';
-import GameEditAdminCtrl from './game.edit.admin.ctrl';
+//import GameAddAdminCtrl from './admin/add/game.add.admin.ctrl';
+//import GameEditAdminCtrl from './admin/edit/game.edit.admin.ctrl';
 import GameSystems from './game.systems.constant';
 import { gameTypeFilter, ratingFormatFilter } from './game.filters';
 
 export default angular
 	.module('vpdb.games', [])
-	.controller('GameDetailsCtrl', GameDetailsCtrl)
-	.controller('GameListCtrl', GameListCtrl)
+//	.controller('GameDetailsCtrl', GameDetailsCtrl)
+//	.controller('GameListCtrl', GameListCtrl)
 	.controller('GameReleaseDetailsCtrl', GameReleaseDetailsCtrl)
 	.controller('GameRequestModalCtrl', GameRequestModalCtrl)
 	.controller('GameSelectModalCtrl', GameSelectModalCtrl)
-	.controller('GameAddAdminCtrl', GameAddAdminCtrl)
-	.controller('GameEditAdminCtrl', GameEditAdminCtrl)
+//	.controller('GameAddAdminCtrl', GameAddAdminCtrl)
+//	.controller('GameEditAdminCtrl', GameEditAdminCtrl)
 	.filter('gametype', gameTypeFilter)
 	.filter('ratingFormat', ratingFormatFilter)
 	.constant('GameSystems', GameSystems)

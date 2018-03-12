@@ -18,8 +18,8 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { AppPage } from '../app.page';
-import { BasePage } from '../../test/BasePage';
+import { AppPage } from '../../../app.page';
+import { BasePage } from '../../../../test/BasePage';
 import { promise } from 'selenium-webdriver';
 
 export class GameAddAdminPage extends BasePage {

@@ -146,7 +146,7 @@ export default class GameEditAdminCtrl {
 	 */
 	reset(game) {
 		this.game = cloneDeep(game);
-		this.arrayFields.forEach(what => this.arrays[what] = game[what].join(', '));
+		this.arrayFields.forEach(what => this.arrays[what] = game[what] ? game[what].join(', ') : '');
 		this.game.mediaFile = pick(game, [ 'backglass', 'logo' ]);
 		this.errors = {};
 	}

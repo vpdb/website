@@ -15,14 +15,14 @@ module.exports  = function(options) {
 	const cssLoader = { loader: 'css-loader', options: { sourceMap: true, minimize: isProd } };
 	return {
 		entry: {
-			app: './src/app/index.js'
+			app: './src/index.js'
 		},
 		mode: isProd ? 'production' : 'development',
 		module: {
 			rules: [
 				{ test: /\.js$/, use: [
 					{ loader: 'ng-annotate-loader', options: { ngAnnotate: 'ng-annotate-patched', es6: false, explicitOnly: false } },
-					{ loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } }
+					{ loader: 'babel-loader', options: { presets: ['@babel/preset-env'], plugins: [ 'syntax-dynamic-import' ] } }
 				], include: appContext  },
 				{ test: /\.pug$/, oneOf: [
 					{ test: /index\.pug$/, use: [ { loader: 'pug-loader', options: { pretty: !isProd } } ] },
@@ -88,7 +88,7 @@ module.exports  = function(options) {
 		},
 		output: {
 			path: options.outputPath,
-			filename: '[name].bundle-[hash].js',
+			filename: '[name].bundle-[chunkhash].js',
 			hashFunction: 'sha256',
 			hashDigest: 'hex',
 			hashDigestLength: 12

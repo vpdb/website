@@ -19,8 +19,8 @@
 
 import { isEmpty, isObject, indexOf, find, filter, mapValues, map, forEach } from 'lodash';
 
-import BackglassDetailsModalTpl from '../backglasses/backglass.details.modal.pug';
-import MediumInfoModalTpl from '../media/medium.info.modal.pug';
+import BackglassDetailsModalTpl from '../../backglasses/backglass.details.modal.pug';
+import MediumInfoModalTpl from '../../media/medium.info.modal.pug';
 
 /**
  * The game's details view.

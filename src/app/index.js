@@ -19,11 +19,11 @@
 
 import 'jquery';
 import 'jquery.waitforimages';
-import 'jquery-ui/ui/core';
-import 'jquery-ui/ui/widget';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui/ui/widgets/droppable';
-import 'magnific-popup';
+// import 'jquery-ui/ui/core';
+// import 'jquery-ui/ui/widget';
+// import 'jquery-ui/ui/widgets/mouse';
+// import 'jquery-ui/ui/widgets/droppable';
+// import 'magnific-popup';
 
 import angular from 'angular';
 import ngAnimate from 'angular-animate';
@@ -33,14 +33,15 @@ import ngTouch from 'angular-touch';
 import uiRouter from '@uirouter/angularjs';
 import uiBootstrap from 'angular-ui-bootstrap';
 import ngElastic from 'angular-elastic';
-import ngFileUpload from 'ng-file-upload';
+//import ngFileUpload from 'ng-file-upload';
 
 import 'ngstorage';
 import 'angular-gravatar';
 import 'angular-timeago';
-import 'angular-dragdrop';
+
 import 'ment.io';
 import 'ngclipboard';
+import 'oclazyload';
 
 import core from './core';
 import auth from './auth';
@@ -83,7 +84,7 @@ import '../icons';
 import '../static';
 import '../static/favicon';
 
-angular.module('vpdb', [
+const VPDB = angular.module('vpdb', [
 
 	// angular components
 	ngAnimate,
@@ -93,10 +94,11 @@ angular.module('vpdb', [
 
 	// third party components
 	uiRouter,
+	'oc.lazyLoad',
 	uiBootstrap,
 	ngElastic,
-	ngFileUpload,
-	'ngDragDrop',
+	//	ngFileUpload,
+	//	'ngDragDrop',
 	'ngStorage',
 	'ngclipboard',
 	'ui.gravatar',
@@ -131,3 +133,5 @@ angular.module('vpdb', [
 	.service('App', service)
 	.controller('AppCtrl', controller)
 	.directive('vpdb', app);
+
+export { VPDB };

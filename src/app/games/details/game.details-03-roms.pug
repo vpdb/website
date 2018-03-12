@@ -1,4 +1,4 @@
-include ../template/_mixins
+include ../../template/_mixins
 
 h1(ng-show="vm.roms.length > 0 || !vm.game.restrictions.rom.mpu") ROMs
 	button.btn.btn-primary.btn--round.pull-right(ng-click="vm.romUploadCollapsed = !vm.romUploadCollapsed", ng-show="vm.AuthService.hasPermission('roms/add')")

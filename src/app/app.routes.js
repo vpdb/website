@@ -18,9 +18,9 @@
  */
 
 import HomeTpl from './home/home.pug';
-import GameListTpl from './games/game.list.pug';
-import GameDetailsTpl from './games/game.details.pug';
-import GameAddAdminTpl from './games/game.add.admin.pug';
+//import GameListTpl from './games/game.list.pug';
+//import GameDetailsTpl from './games/game.details.pug';
+//import GameAddAdminTpl from './games/admin/add/game.add.admin.pug';
 import ReleaseListTpl from './releases/release.list.pug';
 import ReleaseDetailsTpl from './releases/release.details.pug';
 import ReleaseAddTpl from './releases/release.add.pug';
@@ -46,6 +46,9 @@ import PrivacyTpl from './content/privacy.pug';
 import Error404Tpl from './errors/error.404.pug';
 import ConfigService from './core/config.service';
 
+import { GAME_LIST, GAME_DETAILS } from './games/game.states';
+import { GAME_ADMIN_ADD, GAME_ADMIN_EDIT } from './games/admin/game.admin.states';
+
 /**
  * @param $urlRouterProvider
  * @param $locationProvider
@@ -60,9 +63,10 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state('home',              { url: '/', templateUrl: HomeTpl, controller: 'HomeCtrl', controllerAs: 'vm' });
 
 	// games
-	$stateProvider.state('games',             { url: '/games', templateUrl: GameListTpl });
-	$stateProvider.state('gameDetails',       { url: '/games/:id', templateUrl: GameDetailsTpl });
-	$stateProvider.state('addGame',           { url: '/add-game', templateUrl: GameAddAdminTpl });
+	$stateProvider.state(GAME_LIST);
+	$stateProvider.state(GAME_DETAILS);
+	$stateProvider.state(GAME_ADMIN_ADD);
+	$stateProvider.state(GAME_ADMIN_EDIT);
 
 	// releases
 	$stateProvider.state('releases',          { url: '/releases?builds', templateUrl: ReleaseListTpl, reloadOnSearch: false });
