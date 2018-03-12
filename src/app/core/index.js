@@ -34,7 +34,6 @@ import EditorDirectiveCtrl from './editor.directive.ctrl';
 import CommentCtrl from './comment.ctrl';
 import heightAnimation from './height.animation';
 import collapseInAnimation from './collapse-in.animation';
-import videoJs from './videojs.directive';
 
 export default angular.module('vpdb.core', [])
 	// eslint-disable-next-line no-undef
@@ -44,7 +43,6 @@ export default angular.module('vpdb.core', [])
 	.constant('Flavors', Flavors)
 	.service('ConfigService', ConfigService)
 	.service('TrackerService', TrackerService)
-
 	.controller('EditorDirectiveCtrl', EditorDirectiveCtrl)
 	.controller('CommentCtrl', CommentCtrl)
 	.controller('RatingDirectiveCtrl', RatingDirectiveCtrl)
@@ -63,8 +61,6 @@ export default angular.module('vpdb.core', [])
 	.directive('markdown', markdown)
 	.directive('sort', sort)
 	.directive('filterArray', filterArray)
-
-	.directive('videojs', videoJs)
 	.filter('authors', authorsFilter)
 	.filter('bytes', bytesFilter)
 	.filter('escape', escapeFilter)

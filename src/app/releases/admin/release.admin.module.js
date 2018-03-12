@@ -19,6 +19,7 @@
 import angular from 'angular';
 
 import FileUploadModule from '../../shared/file-upload/file.upload.module';
+import VideoJsModule from '../../shared/videojs/videojs.module';
 
 import RELEASE_META from './release.meta';
 import ReleaseAddComponent from './add/release.add.component';
@@ -28,7 +29,7 @@ import ReleaseSelectPlayfieldModalCtrl from './add/release.select.playfield.moda
 import allowedFlavors from './add/release.allowed.flavors.filter';
 
 const RELEASES_ADMIN_MODULE = angular
-	.module('vpdb.releases.admin', [ FileUploadModule.name ])
+	.module('vpdb.releases.admin', [ FileUploadModule.name, VideoJsModule.name ])
 	.component('releaseAddComponent', new ReleaseAddComponent())
 	.component('releaseAddVersionComponent', new ReleaseAddVersionComponent())
 	.controller('ReleaseEditVersionModalCtrl', ReleaseEditVersionModalCtrl)
