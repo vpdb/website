@@ -16,28 +16,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
 import angular from 'angular';
-//import GameDetailsCtrl from './game.details.ctrl';
-//import GameListCtrl from './game.list.ctrl';
-import GameReleaseDetailsCtrl from './game.release.details.ctrl';
-import GameRequestModalCtrl from './game.request.modal.ctrl';
-import GameSelectModalCtrl from './game.select.modal.ctrl';
-//import GameAddAdminCtrl from './admin/add/game.add.admin.ctrl';
-//import GameEditAdminCtrl from './admin/edit/game.edit.admin.ctrl';
-import GameSystems from './game.systems.constant';
-import { gameTypeFilter, ratingFormatFilter } from './game.filters';
+import { gameTypeFilter } from './games/game.type.filter';
+import { ratingFormatFilter } from './games/rating.format.filter';
+import GameSelectModalCtrl from './games/game.select.modal.ctrl';
+import GameRequestModalCtrl from './games/game.request.modal.ctrl';
+import GameSystems from './games/game.systems.constant';
 
-export default angular
-	.module('vpdb.games', [])
-//	.controller('GameDetailsCtrl', GameDetailsCtrl)
-//	.controller('GameListCtrl', GameListCtrl)
-	.controller('GameReleaseDetailsCtrl', GameReleaseDetailsCtrl)
+const COMMON_MODULE = angular
+	.module('vpdb.common', [])
+
+	// games
 	.controller('GameRequestModalCtrl', GameRequestModalCtrl)
 	.controller('GameSelectModalCtrl', GameSelectModalCtrl)
-//	.controller('GameAddAdminCtrl', GameAddAdminCtrl)
-//	.controller('GameEditAdminCtrl', GameEditAdminCtrl)
 	.filter('gametype', gameTypeFilter)
-	.filter('ratingFormat', ratingFormatFilter)
 	.constant('GameSystems', GameSystems)
-	.name;
+
+	.filter('ratingFormat', ratingFormatFilter);
+
+
+export { COMMON_MODULE };

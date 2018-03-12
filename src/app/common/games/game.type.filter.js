@@ -18,6 +18,8 @@
  */
 
 /**
+ * Converts the game type enum into a display string.
+ *
  * @ngInject
  */
 export function gameTypeFilter() {
@@ -37,23 +39,6 @@ export function gameTypeFilter() {
 			}
 		} else {
 			return 'Undefined';
-		}
-	};
-}
-
-/**
- * @ngInject
- */
-export function ratingFormatFilter() {
-	return function(rating) {
-		rating = parseFloat(rating);
-		if (!rating) {
-			return ' — ';
-		}
-		if (rating % 1 === 0 && rating < 10) {
-			return rating + '.0';
-		} else {
-			return Math.round(rating * 10) / 10;
 		}
 	};
 }

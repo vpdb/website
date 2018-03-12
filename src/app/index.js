@@ -50,7 +50,6 @@ import template from './template';
 import modal from './modal';
 
 import home from './home';
-import games from './games';
 import releases from './releases';
 import backglasses from './backglasses';
 import users from './users';
@@ -71,6 +70,9 @@ import { msdElasticConfig, timeAgoConfig } from './app.config';
 import './app.styles';
 import AppTpl from './app.pug';
 
+// global modules
+import { COMMON_MODULE } from './common/common.module';
+
 const app = () => {
 	return {
 		templateUrl: AppTpl,
@@ -84,6 +86,12 @@ import '../icons';
 import '../static';
 import '../static/favicon';
 
+/**
+ * Dependencies here are global dependencies only, everything else is
+ * lady-loaded.
+ *
+ * @type {*|ng.$compileProvider|{test}}
+ */
 const VPDB = angular.module('vpdb', [
 
 	// angular components
@@ -112,9 +120,10 @@ const VPDB = angular.module('vpdb', [
 	template,
 	modal,
 
+	COMMON_MODULE.name,
+
 	// sections
 	home,
-	games,
 	releases,
 	backglasses,
 	profile,

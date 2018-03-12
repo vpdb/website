@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import GameSelectModalTpl from './games/game.select.modal.pug';
+import GameSelectModalTpl from './common/games/game.select.modal.pug';
 
 /**
  * The application controller manages parts of the page that is common to

@@ -22,10 +22,12 @@ import ngFileUpload from 'ng-file-upload';
 
 import { GameListComponent } from './list/game.list.component';
 import { GameDetailsComponent } from './details/game.details.component';
+import GameReleaseDetailsCtrl from './details/game.release.details.ctrl';
 
 const GAMES_MODULE = angular
-	.module('games.module', [ ngFileUpload ])
+	.module('vpdb.games', [ ngFileUpload ])
 	.component('gameListComponent', new GameListComponent())
-	.component('gameDetailsComponent', new GameDetailsComponent());
+	.component('gameDetailsComponent', new GameDetailsComponent())
+	.controller('GameReleaseDetailsCtrl', GameReleaseDetailsCtrl);
 
 export { GAMES_MODULE };
