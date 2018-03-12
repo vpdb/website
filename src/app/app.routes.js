@@ -18,14 +18,8 @@
  */
 
 import HomeTpl from './home/home.pug';
-//import GameListTpl from './games/game.list.pug';
-//import GameDetailsTpl from './games/game.details.pug';
-//import GameAddAdminTpl from './games/admin/add/game.add.admin.pug';
-import ReleaseListTpl from './releases/release.list.pug';
-import ReleaseDetailsTpl from './releases/release.details.pug';
-import ReleaseAddTpl from './releases/release.add.pug';
-import ReleaseAddVersionTpl from './releases/release.add.version.pug';
-import ReleaseEditTpl from './releases/release.edit.pug';
+import ReleaseAddVersionTpl from './releases/admin/add/release.add.version.pug';
+import ReleaseEditTpl from './releases/admin/edit/release.edit.pug';
 import BackglassAddTpl from './backglasses/backglass.add.pug';
 import AuthCallbackTpl from './auth/auth.callback.pug';
 import EmailConfirmationTpl from './auth/email.confirmation.pug';
@@ -48,6 +42,8 @@ import ConfigService from './core/config.service';
 
 import { GAME_LIST, GAME_DETAILS } from './games/game.states';
 import { GAME_ADMIN_ADD, GAME_ADMIN_EDIT } from './games/admin/game.admin.states';
+import { RELEASE_LIST, RELEASE_DETAILS } from './releases/release.states';
+import { RELEASE_ADD, RELEASE_VERSION_ADD } from './releases/admin/release.admin.states';
 
 /**
  * @param $urlRouterProvider
@@ -69,10 +65,10 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state(GAME_ADMIN_EDIT);
 
 	// releases
-	$stateProvider.state('releases',          { url: '/releases?builds', templateUrl: ReleaseListTpl, reloadOnSearch: false });
-	$stateProvider.state('releaseDetails',    { url: '/games/:id/releases/:releaseId', templateUrl: ReleaseDetailsTpl, controller: 'ReleaseDetailsCtrl', controllerAs: 'vm' });
-	$stateProvider.state('addRelease',        { url: '/games/:id/add-release', templateUrl: ReleaseAddTpl });
-	$stateProvider.state('addReleaseVersion', { url: '/games/:id/releases/:releaseId/add', templateUrl: ReleaseAddVersionTpl });
+	$stateProvider.state(RELEASE_LIST);
+	$stateProvider.state(RELEASE_DETAILS);
+	$stateProvider.state(RELEASE_ADD);
+	$stateProvider.state(RELEASE_VERSION_ADD);
 	$stateProvider.state('editRelease',       { url: '/games/:id/releases/:releaseId/edit', templateUrl: ReleaseEditTpl });
 
 	// backglasses

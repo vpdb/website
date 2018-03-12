@@ -17,18 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import GameListCtrl from './game.list.ctrl';
+import ReleaseListCtrl from './release.list.ctrl';
 
 /**
- * Lists games at /games, providing several filtering options.
+ * Lists releases at /releases, providing several filtering options.
  */
-export default class GameListComponent {
+export default class ReleaseListComponent {
 	/**
 	 * @ngInject
 	 */
 	constructor() {
-		this.templateUrl = require('./game.list.pug');
-		this.controller = GameListCtrl;
+		this.templateUrl = require('./release.list.pug');
+		this.controller = ReleaseListCtrl;
 		this.controllerAs = 'vm';
 	}
 }

@@ -22,7 +22,7 @@ import GameDetailsCtrl from './game.details.ctrl';
 /**
  * Shows game details with releases, ROMs, backglasses, media, etc.
  */
-export class GameDetailsComponent {
+export default class GameDetailsComponent {
 	/**
 	 * @ngInject
 	 */

@@ -17,21 +17,36 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
-import { gameTypeFilter } from './games/game.type.filter';
-import { ratingFormatFilter } from './games/rating.format.filter';
+import GAME_SYSTEMS from './games/game.systems.constant';
 import GameSelectModalCtrl from './games/game.select.modal.ctrl';
 import GameRequestModalCtrl from './games/game.request.modal.ctrl';
-import GameSystems from './games/game.systems.constant';
+import BootstrapPatcher from './utils/bootstrap.patcher';
+import ReleaseService from './releases/release.service';
+import gameTypeFilter from './games/game.type.filter';
+import ratingFormatFilter from './games/rating.format.filter';
 
-const COMMON_MODULE = angular
-	.module('vpdb.common', [])
+/**
+ * These are global components that are or can be used on any page,
+ * e.g. from the menu bar or within the markup.
+ *
+ * This module is a dependency of the main app as well as of most
+ * other components.
+ */
+const COMMON_MODULE = angular.module('vpdb.common', [])
+
+	// utils
+	.service('BootstrapPatcher', BootstrapPatcher)
 
 	// games
 	.controller('GameRequestModalCtrl', GameRequestModalCtrl)
 	.controller('GameSelectModalCtrl', GameSelectModalCtrl)
 	.filter('gametype', gameTypeFilter)
-	.constant('GameSystems', GameSystems)
+	.constant('GameSystems', GAME_SYSTEMS)
 
+	// releases
+	.service('ReleaseService', ReleaseService)
+
+	// other
 	.filter('ratingFormat', ratingFormatFilter);
 
 

@@ -17,18 +17,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import GameListCtrl from './game.list.ctrl';
-
 /**
- * Lists games at /games, providing several filtering options.
+ * @ngInject
  */
-export default class GameListComponent {
-	/**
-	 * @ngInject
-	 */
-	constructor() {
-		this.templateUrl = require('./game.list.pug');
-		this.controller = GameListCtrl;
-		this.controllerAs = 'vm';
-	}
+export default function validationTooltip() {
+	return function(validation) {
+		if (!validation) {
+			// eslint-disable-next-line
+			return "This file hasn't been validated yet.";
+		}
+		switch (validation.status) {
+			case 'verified': return 'This file has been validated by a moderator.';
+			case 'playable': return 'There are minor problems but the file is still playable.';
+			case 'broken': return 'This file has been reported to be broken.';
+		}
+	};
 }

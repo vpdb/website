@@ -22,7 +22,7 @@ import GameEditAdminCtrl from './game.edit.admin.ctrl';
 /**
  * Edit a game as administrator.
  */
-export class GameEditAdminComponent {
+export default class GameEditAdminComponent {
 	/**
 	 * @ngInject
 	 */

@@ -25,15 +25,23 @@ import 'angular-dragdrop';
 
 import ngFileUpload from 'ng-file-upload';
 
-import GameAddAdminComponent from './add/game.add.admin.component';
-import GameEditAdminComponent from './edit/game.edit.admin.component';
+import RELEASE_META from './release.meta';
+import ReleaseAddComponent from './add/release.add.component';
+import ReleaseAddVersionComponent from './add/release.add.version.component';
+import ReleaseEditVersionModalCtrl from './edit/release.edit.version.modal.ctrl';
+import ReleaseSelectPlayfieldModalCtrl from './add/release.select.playfield.modal.ctrl';
+import allowedFlavors from './add/release.allowed.flavors.filter';
 
-const GAMES_ADMIN_MODULE = angular
-	.module('vpdb.games.admin', [
+const RELEASES_ADMIN_MODULE = angular
+	.module('vpdb.releases.admin', [
 		ngFileUpload,
-		'ngDragDrop'
+		'ngDragDrop',
 	])
-	.component('gameAddAdminComponent', new GameAddAdminComponent())
-	.component('gameEditAdminComponent', new GameEditAdminComponent());
+	.component('releaseAddComponent', new ReleaseAddComponent())
+	.component('releaseAddVersionComponent', new ReleaseAddVersionComponent())
+	.controller('ReleaseEditVersionModalCtrl', ReleaseEditVersionModalCtrl)
+	.controller('ReleaseSelectPlayfieldModalCtrl', ReleaseSelectPlayfieldModalCtrl)
+	.filter('allowedFlavors', allowedFlavors)
+	.constant('ReleaseMeta', RELEASE_META);
 
-export { GAMES_ADMIN_MODULE };
+export { RELEASES_ADMIN_MODULE };

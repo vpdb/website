@@ -21,7 +21,7 @@
  * Formats a rating number: 0.0, 0.1, 1.0, 2.0, 9.9, 10
  * @ngInject
  */
-export function ratingFormatFilter() {
+export default function ratingFormatFilter() {
 	return function(rating) {
 		rating = parseFloat(rating);
 		if (!rating) {

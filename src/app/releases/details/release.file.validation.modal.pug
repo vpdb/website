@@ -1,0 +1,51 @@
+include ../../template/_mixins
+
+.theme-light
+	.modal-header
+		h1.h--no-margin.h--small
+			+icon('ext').space-right.svg-2x
+			| &nbsp;File Validation
+	h3.hr--no-margin.text-center
+		+icon('{{ "medal-" + (vm.file.validation | validationStatus) }}').validation-badge
+		| &nbsp;{{ vm.file.validation | validationStatus:true }}
+	.modal-body
+		p {{ vm.message }}
+		div.markdown(markdown="vm.file.validation.message", ng-show="vm.file.validation.message")
+
+		div(ng-show="vm.AuthService.hasPermission('releases/validate')")
+			hr
+			h3.hr--margin-smaller Moderation Zone
+			p
+				| As a moderator, you can update the validation status of the file.<br>
+				| File name: <code>{{ vm.file.file.name }}</code>
+			form.form-horizontal(role="form")
+
+				.form-group
+					label.col-sm-2.control-label Status
+					.col-sm-10
+						ul.list--checkboxes.list--condensed
+							li(ng-repeat="status in vm.statuses")
+								.radio--lg.radio--lg-twoliner.radio--lg-lighter
+									label
+										input(type="radio", name="statuses", value="{{ status.name }}", ng-model="vm.validation.status")
+										span: h4.h--no-margin.h--lighter {{ status.name }}
+										span
+											span {{ status.description }}
+
+				div.alert.alert-danger(ng-show="vm.errors.status")
+					+icon('warning').shift-up.space-right
+					| {{ vm.errors.status }}
+
+				.form-group.padder-top-2x(ng-class="{ error: vm.errors.message }")
+					label.col-sm-2.control-label INFO
+					.col-sm-10
+						editor.tabset--light(ng-model="vm.validation.message", placeholder="Message visible to all users")
+				div.alert.alert-danger(ng-show="vm.errors.message")
+					+icon('warning').shift-up.space-right
+					| {{ vm.errors.message }}
+
+			.clearfix
+
+	.modal-footer
+		button.btn.btn-hollow.text-center.space-right(ng-click="$dismiss()") Close
+		button.btn.btn-primary.pull-right(ng-click="vm.submit()", ng-show="vm.AuthService.hasPermission('releases/validate')") Save

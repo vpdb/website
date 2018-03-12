@@ -20,8 +20,8 @@ import angular from 'angular';
 import 'magnific-popup';
 import ngFileUpload from 'ng-file-upload';
 
-import { GameListComponent } from './list/game.list.component';
-import { GameDetailsComponent } from './details/game.details.component';
+import GameListComponent from './list/game.list.component';
+import GameDetailsComponent from './details/game.details.component';
 import GameReleaseDetailsCtrl from './details/game.release.details.ctrl';
 
 const GAMES_MODULE = angular

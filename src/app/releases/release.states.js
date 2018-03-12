@@ -17,18 +17,28 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import GameListCtrl from './game.list.ctrl';
-
-/**
- * Lists games at /games, providing several filtering options.
- */
-export default class GameListComponent {
-	/**
-	 * @ngInject
-	 */
-	constructor() {
-		this.templateUrl = require('./game.list.pug');
-		this.controller = GameListCtrl;
-		this.controllerAs = 'vm';
-	}
+function loadModule($transition$) {
+	const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
+	return require.ensure([], () => {
+		// load whole module
+		const module = require('./release.module');
+		$ocLazyLoad.load(module.RELEASE_MODULE);
+	}, 'releases');
 }
+
+const RELEASE_LIST = {
+	name: 'releases',
+	url: '/releases?builds',
+	component: 'releaseListComponent',
+	reloadOnSearch: false,
+	lazyLoad: loadModule
+};
+
+const RELEASE_DETAILS = {
+	name: 'releaseDetails',
+	url: '/games/:id/releases/:releaseId',
+	component: 'releaseDetailsComponent',
+	lazyLoad: loadModule
+};
+
+export { RELEASE_LIST, RELEASE_DETAILS };

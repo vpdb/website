@@ -22,7 +22,7 @@ import { Games } from '../../test/backend/Games';
 import { Users } from '../../test/backend/Users';
 import { Game } from '../../test/models/Game';
 import { AppPage } from '../app.page';
-import { ReleaseAddPage } from '../releases/release.add.page';
+import { ReleaseAddPage } from '../releases/admin/add/release.add.page';
 import { AuthorSelectModalPage } from './author.select.modal.page';
 
 describe('Add author', () => {

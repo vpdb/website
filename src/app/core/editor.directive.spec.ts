@@ -21,7 +21,7 @@ import { browser, by, element } from 'protractor';
 import { Releases } from '../../test/backend/Releases';
 import { Release } from '../../test/models/Release';
 import { AppPage } from '../app.page';
-import { ReleaseDetailsPage } from '../releases/release.details.page';
+import { ReleaseDetailsPage } from '../releases/details/release.details.page';
 import { EditorDirectivePage } from './editor.directive.page';
 
 describe('Editor', () => {

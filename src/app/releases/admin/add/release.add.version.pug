@@ -1,0 +1,88 @@
+include ../../../template/_mixins
+
+.row.row--fullheight
+	.col-sm-9.col--main
+		h1.h--primary Upload new files
+		hr.hr--primary
+
+		.alert.alert--rounded.alert--aligned.padder-bottom(ng-show="vm.showHelp")
+			+icon('info')
+			p Here you can either upload additional flavors for an existing version or upload a new version of you release.
+
+		.row: #upload-mode.col-sm-10.col-sm-offset-1
+			select.form-control.pull-right(ng-disabled="vm.meta.mode == 'newVersion'", ng-options="version for version in vm.versions", ng-model="vm.meta.version")
+			.radio--lg: label
+				input.input-lg(type="radio", name="mode", value="newFile", ng-model="vm.meta.mode")
+				span.aligned: h1 Existing version
+
+			input.form-control.width-md.pull-right(type="text", ng-disabled="vm.meta.mode == 'newFile'", ng-model="vm.releaseVersion.version", placeholder="x.x.x")
+			.radio--lg: label
+				input(type="radio", name="mode", value="newVersion", ng-model="vm.meta.mode")
+				span.aligned: h1 New version
+		.row.padder-bottom(ng-show="vm.errors.versions[0].version"): .col-sm-12
+			.alert.alert-danger
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.versions[0].version }}
+
+		.row: .col-sm-10.col-sm-offset-1
+			.form-group(ng-show="vm.meta.mode == 'newVersion'")
+				label.control-label Release Information
+				editor.tabset--light(ng-model="vm.releaseVersion.changes", placeholder="Release Information", markdown-text="Markdown enabled. This will show up in the release's change log.")
+
+		.row: .col-sm-10.col-sm-offset-1
+			.form-group(ng-show="vm.meta.mode == 'newVersion'")
+				label.control-label Release Date
+				.row
+					.col-sm-4: .input-group
+						input.form-control.datepicker(
+							type="text",
+							ng-model="vm.releaseVersion.released_at",
+							uib-datepicker-popup="yyyy-MM-dd",
+							is-open="vm.calendarOpened",
+							close-text="Close",
+							show-weeks="false",
+							starting-day="1",
+							ng-required="true"
+						)
+						span.input-group-addon: +icon('calendar').a(ng-click='vm.openCalendar($event)')
+					.col-sm-4
+						div(uib-timepicker, ng-model="vm.releaseVersion.released_at", hour-step="1", minute-step="5", show-meridian="false")
+
+
+		h1 1. Upload Files
+		hr
+		include release.add-01-upload.files.pug
+
+		h1 2. Define your Flavors
+		hr
+		include release.add-03-flavors.pug
+
+		h1 3. Set Compatibility
+		hr
+		include release.add-05-compat.pug
+
+		h1 4. Upload Media
+		hr
+		include release.add-07-upload.media.pug
+
+		//------------------------- FINISH LINE -------------------------------
+		//---------------------------------------------------------------------
+		hr
+		.alert.alert-danger.alert--inverted.padder-bottom(ng-show="vm.errors && vm.errors.__count")
+			+icon('warning').shift-up.space-right
+			| There were errors while submitting your release. Please scroll up and fix the marked fields.
+		a.btn.btn-hollow.btn-lg.space-right(ui-sref="releaseDetails({ id: vm.game.id, releaseId: vm.release.id })") Cancel
+		button#version-reset-btn.btn.btn-default.btn-lg(ng-click="vm.reset()") Reset
+		button#version-submit-btn.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="vm.submitting") Submit
+		.clearfix
+		p &nbsp;
+	.col-sm-3.col--menu
+		img.img--logo(ng-show="vm.game.logo.url", ng-src="{{ vm.App.img(vm.game.logo.variations, 'medium') }}")
+		h3.h--multiline.text-center {{ vm.game.title }}
+		.text-center {{ vm.release.name }}
+
+		hr
+		input#showHelp.checkbox--toggle(type='checkbox', ng-model="vm.showHelp")
+		label(for="showHelp")
+		label.a.a--light.padder-bottom(for="showHelp") Show Instructions
+		.clearfix

@@ -19,11 +19,6 @@
 
 import 'jquery';
 import 'jquery.waitforimages';
-// import 'jquery-ui/ui/core';
-// import 'jquery-ui/ui/widget';
-// import 'jquery-ui/ui/widgets/mouse';
-// import 'jquery-ui/ui/widgets/droppable';
-// import 'magnific-popup';
 
 import angular from 'angular';
 import ngAnimate from 'angular-animate';
@@ -33,7 +28,6 @@ import ngTouch from 'angular-touch';
 import uiRouter from '@uirouter/angularjs';
 import uiBootstrap from 'angular-ui-bootstrap';
 import ngElastic from 'angular-elastic';
-//import ngFileUpload from 'ng-file-upload';
 
 import 'ngstorage';
 import 'angular-gravatar';
@@ -46,11 +40,9 @@ import 'oclazyload';
 import core from './core';
 import auth from './auth';
 import backend from './backend';
-import template from './template';
 import modal from './modal';
 
 import home from './home';
-import releases from './releases';
 import backglasses from './backglasses';
 import users from './users';
 import profile from './profile';
@@ -105,8 +97,6 @@ const VPDB = angular.module('vpdb', [
 	'oc.lazyLoad',
 	uiBootstrap,
 	ngElastic,
-	//	ngFileUpload,
-	//	'ngDragDrop',
 	'ngStorage',
 	'ngclipboard',
 	'ui.gravatar',
@@ -117,14 +107,12 @@ const VPDB = angular.module('vpdb', [
 	core,
 	auth,
 	backend,
-	template,
 	modal,
 
 	COMMON_MODULE.name,
 
 	// sections
 	home,
-	releases,
 	backglasses,
 	profile,
 	users,

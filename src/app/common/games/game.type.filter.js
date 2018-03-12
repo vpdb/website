@@ -22,7 +22,7 @@
  *
  * @ngInject
  */
-export function gameTypeFilter() {
+export default function gameTypeFilter() {
 	return function(type) {
 		if (type) {
 			switch (type.toLowerCase()) {
