@@ -18,14 +18,13 @@
  */
 
 import angular from 'angular';
-import BackglassAddCtrl from './backglass.add.ctrl';
-import BackglassDetailsModalCtrl from './backglass.details.modal.ctrl';
-import BackglassEditModalCtrl from './backglass.edit.modal.ctrl';
-import EditorModule from '../shared/editor/editor.module';
+import editor from './editor.directive';
+import editorMarkdownInfo from './editor.markdown-info.directive';
+import EditorDirectiveCtrl from './editor.directive.ctrl';
+import MarkdownModule from '../markdown/markdown.module';
 
 export default angular
-	.module('vpdb.backglasses', [ EditorModule.name ])
-	.controller('BackglassAddCtrl', BackglassAddCtrl)
-	.controller('BackglassDetailsModalCtrl', BackglassDetailsModalCtrl)
-	.controller('BackglassEditModalCtrl', BackglassEditModalCtrl)
-	.name;
+	.module('vpdb.editor', [ MarkdownModule.name ])
+	.controller('EditorDirectiveCtrl', EditorDirectiveCtrl)
+	.directive('editor', editor)
+	.directive('markdownInfo', editorMarkdownInfo);

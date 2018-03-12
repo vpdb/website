@@ -32,7 +32,7 @@ import ratingFormatFilter from './games/rating.format.filter';
  * This module is a dependency of the main app as well as of most
  * other components.
  */
-const COMMON_MODULE = angular.module('vpdb.common', [])
+export default angular.module('vpdb.common', [])
 
 	// utils
 	.service('BootstrapPatcher', BootstrapPatcher)
@@ -48,6 +48,3 @@ const COMMON_MODULE = angular.module('vpdb.common', [])
 
 	// other
 	.filter('ratingFormat', ratingFormatFilter);
-
-
-export { COMMON_MODULE };

@@ -25,12 +25,9 @@ import RatingDirectiveCtrl from './rating.directive.ctrl';
 import TopBadgeDirectiveCtrl from './top-badge.directive.ctrl';
 import ratingBox from './rating.directive';
 import topBadge from './top-badge.directive';
-import editor from './editor.directive';
-import editorMarkdownInfo from './editor.markdown-info.directive';
 import { makeLoaded, imgBg, imgSrc } from './image.directives';
-import { fallbackIcon, focusOn, onEnter, jsonLd, markdown, sort, filterArray } from './util.directives';
+import { fallbackIcon, focusOn, onEnter, jsonLd, sort, filterArray } from './util.directives';
 import { bytesFilter, escapeFilter, fileExtFilter, hexFilter, hashPrefixFilter, authorsFilter } from './util.filters';
-import EditorDirectiveCtrl from './editor.directive.ctrl';
 import CommentCtrl from './comment.ctrl';
 import heightAnimation from './height.animation';
 import collapseInAnimation from './collapse-in.animation';
@@ -43,12 +40,9 @@ export default angular.module('vpdb.core', [])
 	.constant('Flavors', Flavors)
 	.service('ConfigService', ConfigService)
 	.service('TrackerService', TrackerService)
-	.controller('EditorDirectiveCtrl', EditorDirectiveCtrl)
 	.controller('CommentCtrl', CommentCtrl)
 	.controller('RatingDirectiveCtrl', RatingDirectiveCtrl)
 	.controller('TopBadgeDirectiveCtrl', TopBadgeDirectiveCtrl)
-	.directive('editor', editor)
-	.directive('markdownInfo', editorMarkdownInfo)
 	.directive('ratingbox', ratingBox)
 	.directive('topBadge', topBadge)
 	.directive('makeLoaded', makeLoaded)
@@ -58,7 +52,6 @@ export default angular.module('vpdb.core', [])
 	.directive('focusOn', focusOn)
 	.directive('onEnter', onEnter)
 	.directive('jsonld', jsonLd)
-	.directive('markdown', markdown)
 	.directive('sort', sort)
 	.directive('filterArray', filterArray)
 	.filter('authors', authorsFilter)

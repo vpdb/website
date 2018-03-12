@@ -63,7 +63,7 @@ import './app.styles';
 import AppTpl from './app.pug';
 
 // global modules
-import { COMMON_MODULE } from './common/common.module';
+import CommonModule from './common/common.module';
 
 const app = () => {
 	return {
@@ -92,16 +92,17 @@ const VPDB = angular.module('vpdb', [
 	ngSanitize,
 	ngTouch,
 
-	// third party components
+	// global third party components
 	uiRouter,
-	'oc.lazyLoad',
 	uiBootstrap,
-	ngElastic,
+	'oc.lazyLoad',
 	'ngStorage',
 	'ngclipboard',
 	'ui.gravatar',
 	'mentio',
 	'yaru22.angular-timeago',
+
+	ngElastic,
 
 	// common modules
 	core,
@@ -109,7 +110,7 @@ const VPDB = angular.module('vpdb', [
 	backend,
 	modal,
 
-	COMMON_MODULE.name,
+	CommonModule.name,
 
 	// sections
 	home,

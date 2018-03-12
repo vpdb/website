@@ -19,7 +19,6 @@
 
 import $ from 'jquery';
 import angular from 'angular';
-import Showdown from 'showdown';
 import { includes } from 'lodash';
 
 /**
@@ -82,37 +81,6 @@ export function jsonLd($filter, $sce) {
 			};
 		},
 		replace: true
-	};
-}
-
-/**
- * @param $sanitize
- * @param $compile
- * @ngInject
- */
-export function markdown($sanitize, $compile) {
-	const converter = new Showdown.Converter();
-	return {
-		restrict: 'AE',
-		link: function(scope, element, attrs) {
-			const linkUsers = html => {
-				return html.replace(/@&#3[49];([a-z0-9 ]+)&#3[49];/gi, '<user>$1</user>').replace(/@([a-z0-9]+)/gi, '<user>$1</user>');
-			};
-			if (attrs.markdown) {
-				scope.$watch(attrs.markdown, newVal => {
-					const html = newVal ? $sanitize(converter.makeHtml(newVal)) : '';
-					element.html(linkUsers(html));
-					$compile(element.contents())(scope);
-				});
-			} else {
-				let mdText = element.text().replace(/^\s*[\n\r]+/g, '');
-				const firstIdent = mdText.match(/^\s+/);
-				mdText = ('\n' + mdText).replace(new RegExp('[\\n\\r]' + firstIdent, 'g'), '\n');
-				const html = $sanitize(converter.makeHtml(mdText));
-				element.html(linkUsers(html));
-				$compile(element.contents())(scope);
-			}
-		}
 	};
 }
 

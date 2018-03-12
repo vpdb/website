@@ -24,9 +24,10 @@ import UploadsBackglassListAdminCtrl from './uploads.backglass.admin.list.ctrl';
 import UploadsBackglassModerateAdminModalCtrl from './uploads.backglass.moderate.admin.modal.ctrl';
 import UploadsReleaseListAdminCtrl from './uploads.release.admin.list.ctrl';
 import UploadsReleaseModerateAdminModalCtrl from './uploads.release.moderate.admin.modal.ctrl';
+import EditorModule from '../shared/editor/editor.module';
 
 export default angular
-	.module('vpdb.uploads', [])
+	.module('vpdb.uploads', [ EditorModule.name ])
 	.service('UploadHelper', UploadHelper)
 	.controller('UploadsListAdminCtrl', UploadsListAdminCtrl)
 	.controller('UploadsBackglassListAdminCtrl', UploadsBackglassListAdminCtrl)

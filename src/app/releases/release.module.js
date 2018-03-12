@@ -18,7 +18,11 @@
  */
 import angular from 'angular';
 import 'magnific-popup';
+
 import ngFileUpload from 'ng-file-upload';
+import EditorModule from '../shared/editor/editor.module';
+import MarkdownModule from '../shared/markdown/markdown.module';
+
 import ReleaseListComponent from './list/release.list.component';
 import ReleaseDetailsComponent from './details/release.details.component';
 import ReleaseDownloadModalCtrl from './details/release.download.modal.ctrl';
@@ -27,7 +31,7 @@ import validationStatus from './details/release.validation.status.filter';
 import validationTooltip from './details/release.validation.tooltip.filter';
 
 const RELEASE_MODULE = angular
-	.module('vpdb.releases', [ ngFileUpload ])
+	.module('vpdb.releases', [ ngFileUpload, MarkdownModule.name, EditorModule.name ])
 	.component('releaseListComponent', new ReleaseListComponent())
 	.component('releaseDetailsComponent', new ReleaseDetailsComponent())
 	.controller('ReleaseDownloadModalCtrl', ReleaseDownloadModalCtrl)

@@ -21,9 +21,10 @@ import angular from 'angular';
 import GameAddAdminComponent from './add/game.add.admin.component';
 import GameEditAdminComponent from './edit/game.edit.admin.component';
 import FileUploadModule from '../../shared/file-upload/file.upload.module';
+import EditorModule from '../../shared/editor/editor.module';
 
 const GAMES_ADMIN_MODULE = angular
-	.module('vpdb.games.admin', [ FileUploadModule.name ])
+	.module('vpdb.games.admin', [ FileUploadModule.name, EditorModule.name ])
 	.component('gameAddAdminComponent', new GameAddAdminComponent())
 	.component('gameEditAdminComponent', new GameEditAdminComponent());
 
