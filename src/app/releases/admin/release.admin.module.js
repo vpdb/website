@@ -17,13 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
-import 'jquery-ui/ui/core';
-import 'jquery-ui/ui/widget';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui/ui/widgets/droppable';
-import 'angular-dragdrop';
 
-import ngFileUpload from 'ng-file-upload';
+import FileUploadModule from '../../shared/file-upload/file.upload.module';
 
 import RELEASE_META from './release.meta';
 import ReleaseAddComponent from './add/release.add.component';
@@ -33,10 +28,7 @@ import ReleaseSelectPlayfieldModalCtrl from './add/release.select.playfield.moda
 import allowedFlavors from './add/release.allowed.flavors.filter';
 
 const RELEASES_ADMIN_MODULE = angular
-	.module('vpdb.releases.admin', [
-		ngFileUpload,
-		'ngDragDrop',
-	])
+	.module('vpdb.releases.admin', [ FileUploadModule.name ])
 	.component('releaseAddComponent', new ReleaseAddComponent())
 	.component('releaseAddVersionComponent', new ReleaseAddVersionComponent())
 	.controller('ReleaseEditVersionModalCtrl', ReleaseEditVersionModalCtrl)

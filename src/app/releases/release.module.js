@@ -26,7 +26,6 @@ import ReleaseFileValidationCtrl from './details/release.file.validation.ctrl';
 import validationStatus from './details/release.validation.status.filter';
 import validationTooltip from './details/release.validation.tooltip.filter';
 
-
 const RELEASE_MODULE = angular
 	.module('vpdb.releases', [ ngFileUpload ])
 	.component('releaseListComponent', new ReleaseListComponent())

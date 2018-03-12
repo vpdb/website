@@ -17,14 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import 'jquery-ui/ui/core';
+import 'jquery-ui/ui/widget';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui/ui/widgets/droppable';
+import 'angular-dragdrop';
 
-import GameAddAdminComponent from './add/game.add.admin.component';
-import GameEditAdminComponent from './edit/game.edit.admin.component';
-import FileUploadModule from '../../shared/file-upload/file.upload.module';
+import ngFileUpload from 'ng-file-upload';
 
-const GAMES_ADMIN_MODULE = angular
-	.module('vpdb.games.admin', [ FileUploadModule.name ])
-	.component('gameAddAdminComponent', new GameAddAdminComponent())
-	.component('gameEditAdminComponent', new GameEditAdminComponent());
+import FileUploadHelperService from './file.upload.helper.service';
+import fileUpload from './file.upload.directive';
 
-export { GAMES_ADMIN_MODULE };
+export default angular
+	.module('vpdb.file.upload', [ ngFileUpload ])
+	.service('FileUploadHelperService', FileUploadHelperService)
+	.directive('fileUpload', fileUpload);
