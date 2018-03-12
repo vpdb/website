@@ -40,4 +40,11 @@ const RELEASE_VERSION_ADD = {
 	lazyLoad: loadModule
 };
 
-export { RELEASE_ADD, RELEASE_VERSION_ADD };
+const RELEASE_EDIT = {
+	name: 'editRelease',
+	url: '/games/:id/releases/:releaseId/edit',
+	component: 'releaseEditComponent',
+	lazyLoad: loadModule
+};
+
+export { RELEASE_ADD, RELEASE_VERSION_ADD, RELEASE_EDIT };

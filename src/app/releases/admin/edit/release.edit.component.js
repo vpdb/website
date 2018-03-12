@@ -22,7 +22,7 @@ import ReleaseEditCtrl from './release.edit.ctrl';
 /**
  * Edit an existing release.
  */
-export class ReleaseEditComponent {
+export default class ReleaseEditComponent {
 	/**
 	 * @ngInject
 	 */

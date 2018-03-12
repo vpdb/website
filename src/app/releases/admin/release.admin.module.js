@@ -25,6 +25,7 @@ import EditorModule from '../../shared/editor/editor.module';
 import RELEASE_META from './release.meta';
 import ReleaseAddComponent from './add/release.add.component';
 import ReleaseAddVersionComponent from './add/release.add.version.component';
+import ReleaseEditComponent from './edit/release.edit.component';
 import ReleaseEditVersionModalCtrl from './edit/release.edit.version.modal.ctrl';
 import ReleaseSelectPlayfieldModalCtrl from './add/release.select.playfield.modal.ctrl';
 import allowedFlavors from './add/release.allowed.flavors.filter';
@@ -33,6 +34,7 @@ const RELEASES_ADMIN_MODULE = angular
 	.module('vpdb.releases.admin', [ FileUploadModule.name, VideoJsModule.name, EditorModule.name ])
 	.component('releaseAddComponent', new ReleaseAddComponent())
 	.component('releaseAddVersionComponent', new ReleaseAddVersionComponent())
+	.component('releaseEditComponent', new ReleaseEditComponent())
 	.controller('ReleaseEditVersionModalCtrl', ReleaseEditVersionModalCtrl)
 	.controller('ReleaseSelectPlayfieldModalCtrl', ReleaseSelectPlayfieldModalCtrl)
 	.filter('allowedFlavors', allowedFlavors)

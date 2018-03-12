@@ -18,8 +18,6 @@
  */
 
 import HomeTpl from './home/home.pug';
-import ReleaseAddVersionTpl from './releases/admin/add/release.add.version.pug';
-import ReleaseEditTpl from './releases/admin/edit/release.edit.pug';
 import BackglassAddTpl from './backglasses/backglass.add.pug';
 import AuthCallbackTpl from './auth/auth.callback.pug';
 import EmailConfirmationTpl from './auth/email.confirmation.pug';
@@ -43,7 +41,7 @@ import ConfigService from './core/config.service';
 import { GAME_LIST, GAME_DETAILS } from './games/game.states';
 import { GAME_ADMIN_ADD, GAME_ADMIN_EDIT } from './games/admin/game.admin.states';
 import { RELEASE_LIST, RELEASE_DETAILS } from './releases/release.states';
-import { RELEASE_ADD, RELEASE_VERSION_ADD } from './releases/admin/release.admin.states';
+import { RELEASE_ADD, RELEASE_VERSION_ADD, RELEASE_EDIT } from './releases/admin/release.admin.states';
 
 /**
  * @param $urlRouterProvider
@@ -69,7 +67,7 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state(RELEASE_DETAILS);
 	$stateProvider.state(RELEASE_ADD);
 	$stateProvider.state(RELEASE_VERSION_ADD);
-	$stateProvider.state('editRelease',       { url: '/games/:id/releases/:releaseId/edit', templateUrl: ReleaseEditTpl });
+	$stateProvider.state(RELEASE_EDIT);
 
 	// backglasses
 	$stateProvider.state('addBackglass',      { url: '/games/:id/add-backglass', templateUrl: BackglassAddTpl });
