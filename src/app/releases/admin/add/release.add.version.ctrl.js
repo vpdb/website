@@ -21,7 +21,7 @@ import { values, map, orderBy, cloneDeep, isEmpty, isArray } from 'lodash';
 import ReleaseSelectPlayfieldModalTpl from './release.select.playfield.modal.pug';
 import ReleaseBaseCtrl from '../release.base.ctrl';
 
-class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
+export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 
 	/**
 	 * @param $scope
@@ -250,5 +250,3 @@ class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 		return images;
 	}
 }
-
-export { ReleaseAddVersionCtrl };
