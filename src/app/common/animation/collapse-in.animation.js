@@ -18,6 +18,9 @@
  */
 
 /**
+ * Animates a new comment into the view.
+ *
+ * @todo fix, doesn't seem to work.
  * @param $timeout
  * @return {{enter: (function(*=, *)), beforeRemoveClass: (function(*, *, *)), removeClass: (function(*, *, *))}}
  * @ngInject

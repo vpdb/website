@@ -17,9 +17,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import { VPDB } from './app';
+import { filter, includes } from 'lodash';
 
-angular.bootstrap(document, [ VPDB.name ], {
-	strictDi: true
-});
+/**
+ * @ngInject
+ */
+export default function fileExtFilter() {
+	return function(files, exts) {
+		return filter(files, function(file) {
+			const ext = file.name.substr(file.name.lastIndexOf('.') + 1, file.name.length).toLowerCase();
+			return includes(exts, ext);
+		});
+	};
+}

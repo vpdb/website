@@ -17,9 +17,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import { VPDB } from './app';
-
-angular.bootstrap(document, [ VPDB.name ], {
-	strictDi: true
-});
+/**
+ * @ngInject
+ */
+export default function hexFilter() {
+	return function(data) {
+		return data ? data.toString(16) : '';
+	};
+}

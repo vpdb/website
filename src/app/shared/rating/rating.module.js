@@ -18,9 +18,9 @@
  */
 
 import angular from 'angular';
-import HomeCtrl from './home.ctrl';
+import ratingBox from './rating.directive';
 
 export default angular
-	.module('vpdb.home', [])
-	.controller('HomeCtrl', HomeCtrl)
-	.name;
+	.module('vpdb.rating', [])
+	.directive('ratingbox', ratingBox);
+

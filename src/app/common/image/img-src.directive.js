@@ -17,22 +17,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import TopBadgeDirectiveTpl from './top-badge.directive.pug';
+import $ from 'jquery';
 
 /**
  * @ngInject
  */
-export default function() {
+export default function imgSrc() {
 	return {
-		restrict: 'E',
-		scope: {
-			ranks: '=ngModel',
-			site: '@',
-			href: '@'
-		},
-		replace: true,
-		templateUrl: TopBadgeDirectiveTpl,
-		controller: 'TopBadgeDirectiveCtrl',
-		controllerAs: 'vm'
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			attrs.$observe('imgSrc', value => {
+				element.attr('src', value);
+				$(element).waitForImages(function() {
+					$(this).addClass('loaded');
+				}, function() {
+					console.error('wait has failed.');
+				});
+			});
+		}
 	};
 }

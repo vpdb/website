@@ -18,71 +18,6 @@
  */
 
 import $ from 'jquery';
-import angular from 'angular';
-import { includes } from 'lodash';
-
-/**
- * @ngInject
- */
-export function onEnter() {
-	return {
-		link: function(scope, element, attrs) {
-			element.bind('keypress', function (event) {
-				if (event.which === 13) {
-					scope.$apply(function () {
-						scope.$eval(attrs.onEnter);
-					});
-					event.preventDefault();
-				}
-			});
-		}
-	};
-}
-
-/**
- * @ngInject
- */
-export function focusOn() {
-	return function(scope, elem) {
-		elem[0].focus();
-	};
-}
-
-/**
- * @ngInject
- */
-export function fallbackIcon() {
-	return {
-		link: function postLink(scope, element, attrs) {
-			element.bind('error', function() {
-				angular.element(this).replaceWith('<svg class="svg-icon ' + attrs.class + '"><use xlink:href="#icon-' + attrs.fallbackIcon + '"></use></svg>');
-			});
-		}
-	};
-}
-
-/**
- * @param $filter
- * @param $sce
- * @ngInject
- */
-export function jsonLd($filter, $sce) {
-	return {
-		restrict: 'E',
-		template: function() {
-			return '<script type="application/ld+json" ng-bind-html="onGetJson()"></script>';
-		},
-		scope: {
-			json: '=json'
-		},
-		link: function(scope) {
-			scope.onGetJson = function() {
-				return $sce.trustAsHtml($filter('json')(scope.json));
-			};
-		},
-		replace: true
-	};
-}
 
 /**
  * Updates the given model with the selected value.
@@ -96,7 +31,7 @@ export function jsonLd($filter, $sce) {
  * <li> <a sort="popularity" sort-default="desc" ng-model="vm.query.sort">Popularity</a></li>
  * @ngInject
  */
-export function sort() {
+export default function sort() {
 	return {
 		restrict: 'A',
 		scope: { sortModel: '=ngModel' },
@@ -130,38 +65,6 @@ export function sort() {
 					}
 				}
 				scope.sortModel = (element.hasClass('asc') ? '' : '-') + attrs.sort;
-				scope.$apply();
-			});
-		}
-	};
-}
-
-/**
- * Toggles a value in an array.
- *
- * The example adds "dof" in the `vm.query.filterTags` array when the user
- * clicks on the div if it's not there or otherwise removes it.
- *
- * @example
- *  <div filter-array="dof" ng-model="vm.query.filterTags">DOF</div>
- * @ngInject
- */
-export function filterArray() {
-	return {
-		restrict: 'A',
-		scope: { filterObjects: '=ngModel' },
-		link: function(scope, element, attrs) {
-			const objectId = attrs.filterArray;
-			if (includes(scope.filterObjects, objectId)) {
-				element.addClass('active');
-			}
-			element.click(function() {
-				element.toggleClass('active');
-				if (includes(scope.filterObjects, objectId)) {
-					scope.filterObjects.splice(scope.filterObjects.indexOf(objectId), 1);
-				} else {
-					scope.filterObjects.push(objectId);
-				}
 				scope.$apply();
 			});
 		}

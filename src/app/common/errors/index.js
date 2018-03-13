@@ -18,8 +18,9 @@
  */
 
 import angular from 'angular';
-import { VPDB } from './app';
+import Error404Ctrl from './error.404.ctrl';
 
-angular.bootstrap(document, [ VPDB.name ], {
-	strictDi: true
-});
+export default angular
+	.module('vpdb.errors', [])
+
+	.name;

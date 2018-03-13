@@ -236,7 +236,7 @@ p.padder-top(ng-show="vm.pageLoading")
 		//-- EXISTING COMMENTS
 		//---------------------------------------------------------------------
 		label(ng-show="!vm.comments || vm.comments.length == 0") No comments yet.
-		.media.media--no-margin.collapse-in-animation(ng-repeat="comment in vm.comments track by comment.id", ng-controller="CommentCtrl", ng-init="show=true")
+		.media.media--no-margin.collapse-in-animation(ng-repeat="comment in vm.comments track by comment.id", ng-init="show=true")
 			.collapse-in-animation-inner
 				.media-left.avatar
 					img.img-avatar.pull-left(gravatar-src="comment.from.gravatar_id", gravatar-default="retro", fallback-icon="user")

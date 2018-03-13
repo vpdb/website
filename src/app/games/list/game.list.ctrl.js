@@ -18,7 +18,8 @@
  */
 
 import { isEmpty, isEqual} from 'lodash';
-import { Param, Params } from '../../core/param.helper';
+import Params from '../../common/util/params';
+import Param from '../../common/util/param';
 
 export default class GameListCtrl {
 

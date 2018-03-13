@@ -1,3 +1,4 @@
+
 /*
  * VPDB - Virtual Pinball Database
  * Copyright (C) 2018 freezy <freezy@vpdb.io>
@@ -17,10 +18,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import Error404Ctrl from './error.404.ctrl';
-
-export default angular
-	.module('vpdb.errors', [])
-	.controller('Error404Ctrl', Error404Ctrl)
-	.name;
+/**
+ * @ngInject
+ */
+export default function focusOn() {
+	return function(scope, elem) {
+		elem[0].focus();
+	};
+}

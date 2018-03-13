@@ -17,37 +17,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-/**
- * @param msdElasticConfig
- * @ngInject
- */
-export function msdElasticConfig(msdElasticConfig) {
-	msdElasticConfig.append = '\n\n';
-}
+import TopBadgeDirectiveTpl from './top-badge.directive.pug';
+import TopBadgeDirectiveCtrl from './top-badge.directive.ctrl';
 
 /**
- * @param timeAgoSettings
  * @ngInject
  */
-export function timeAgoConfig(timeAgoSettings) {
-	timeAgoSettings.allowFuture = true;
-	timeAgoSettings.overrideLang = 'en_US';
-	timeAgoSettings.strings.en_US = {
-		prefixAgo: null,
-		prefixFromNow: 'in',
-		suffixAgo: 'ago',
-		suffixFromNow: null,
-		seconds: 'less than a minute',
-		minute: 'about a minute',
-		minutes: '%d minutes',
-		hour: 'about an hour',
-		hours: 'about %d hours',
-		day: 'a day',
-		days: '%d days',
-		month: 'about a month',
-		months: '%d months',
-		year: 'about a year',
-		years: '%d years',
-		numbers: []
+export default function() {
+	return {
+		restrict: 'E',
+		scope: {
+			ranks: '=ngModel',
+			site: '@',
+			href: '@'
+		},
+		replace: true,
+		templateUrl: TopBadgeDirectiveTpl,
+		controller: TopBadgeDirectiveCtrl,
+		controllerAs: 'vm'
 	};
 }

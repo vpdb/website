@@ -18,7 +18,8 @@
  */
 
 import { assign, includes, isEqual, isEmpty, values, toPairs, fromPairs, mapValues } from 'lodash';
-import { Param, Params } from '../../core/param.helper';
+import Param from '../../common/util/param';
+import Params from '../../common/util/params';
 
 export default class ReleaseListCtrl {
 

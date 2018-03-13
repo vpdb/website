@@ -18,8 +18,8 @@
  */
 
 import HomeTpl from './home/home.pug';
-import Error404Tpl from './errors/error.404.pug';
-import ConfigService from './core/config.service';
+import Error404Tpl from './common/errors/error.404.pug';
+import ConfigService from './common/config/config.service';
 
 import { GAME_LIST, GAME_DETAILS } from './games/game.states';
 import { GAME_ADMIN_ADD, GAME_ADMIN_EDIT } from './games/admin/game.admin.states';

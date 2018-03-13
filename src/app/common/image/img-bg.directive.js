@@ -19,56 +19,7 @@
 
 import $ from 'jquery';
 import angular from 'angular';
-import { forEach, isObject } from 'lodash';
-
-/**
- * @param $timeout
- * @param $parse
- * @ngInject
- */
-export function makeLoaded($timeout, $parse) {
-	return {
-		scope: true,
-		restrict: 'A',
-		link: function(scope, element, attrs) {
-			let postVar;
-			let filter = {};
-			scope.$watch(attrs.makeLoaded, function() {
-				filter = scope.$eval(attrs.makeLoaded);
-			}, true);
-
-			if (attrs.makeLoadedPost) {
-				postVar = $parse(attrs.makeLoadedPost);
-				postVar.assign(scope, false);
-			}
-			const eventPrefix = attrs.makeLoadedEvent || 'image';
-			scope.$on(eventPrefix + 'Loaded', function(event) {
-				event.stopPropagation();
-				forEach(filter, function(enabled, className) {
-					if (!enabled) {
-						return;
-					}
-					element.addClass(className);
-					if (postVar) {
-						$timeout(function() {
-							postVar.assign(scope, true);
-						}, 350);
-					}
-				});
-			});
-			scope.$on(eventPrefix + 'Unloaded', function(event) {
-				event.stopPropagation();
-				forEach(filter, function(enabled, className) {
-					element.removeClass(className);
-					if (postVar) {
-						postVar.assign(scope, false);
-					}
-				});
-
-			});
-		}
-	};
-}
+import { isObject } from 'lodash';
 
 /**
  * Sets the image background of an element.
@@ -83,7 +34,7 @@ export function makeLoaded($timeout, $parse) {
  * @param {AuthService} AuthService
  * @ngInject
  */
-export function imgBg($parse, AuthService) {
+export default function imgBg($parse, AuthService) {
 	return {
 		scope: true,
 		restrict: 'A',
@@ -174,21 +125,3 @@ export function imgBg($parse, AuthService) {
 	};
 }
 
-/**
- * @ngInject
- */
-export function imgSrc() {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs) {
-			attrs.$observe('imgSrc', value => {
-				element.attr('src', value);
-				$(element).waitForImages(function() {
-					$(this).addClass('loaded');
-				}, function() {
-					console.error('wait has failed.');
-				});
-			});
-		}
-	};
-}

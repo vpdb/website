@@ -16,24 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+import angular from 'angular';
+import HomeCtrl from './home.ctrl';
 
-export default class CommentCtrl {
-
-	constructor() {
-		this.editing = false;
-	}
-
-	editComment() {
-		this.updatedComment = this.comment.message;
-		this.editing = true;
-	}
-
-	saveComment() {
-		this.comment.message = this.updatedComment;
-		this.editing = false;
-	}
-
-	cancelEdit() {
-		this.editing = false;
-	}
-}
+export default angular
+	.module('vpdb.home', [ ])
+	.controller('HomeCtrl', HomeCtrl);

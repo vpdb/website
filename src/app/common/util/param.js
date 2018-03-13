@@ -17,67 +17,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { cloneDeep, pickBy, isObject, isArray, defaultsDeep } from 'lodash';
+import { isArray } from 'lodash';
 
-/**
- * This is a helper class that manages mapping between the URL,
- * the internal data model and the backend's API model, where each
- * might have different names or types.
- *
- * @author freezy <freezy@vpdb.io>
- */
-export class Params {
-
-	constructor(params) {
-		this.defaults = {};
-		params.forEach(param => this.defaults[param.name] = param.defaultValue);
-		this.value = cloneDeep(this.defaults);
-		/** @type {Param[]} */
-		this.params = params;
-	}
-
-	fromUrl(urlParams) {
-		this.params.forEach(param => {
-			if (urlParams[param.urlName] && param.fromUrl) {
-				if (isObject(param.defaultValue)) {
-					this.value[param.name] = defaultsDeep(param.fromUrl(urlParams[param.urlName]), param.defaultValue);
-				} else {
-					this.value[param.name] = param.fromUrl(urlParams[param.urlName]);
-				}
-
-			}
-		});
-	}
-
-	toRequest() {
-		const reqParams = {};
-		this.params.forEach(param => {
-			const value = this.value[param.name];
-			if (param.reqCondition(value) && param.toReq(value)) {
-				reqParams[param.reqName] = param.toReq(value);
-			}
-		});
-		return reqParams;
-	}
-
-	toUrl(useDefaults = false) {
-		const urlParams = {};
-		const value = useDefaults ? this.defaults : this.value;
-		this.params.forEach(param => {
-			if (value[param.name]) {
-				urlParams[param.urlName] = param.toUrl(value[param.name]);
-			}
-		});
-		return urlParams;
-	}
-
-	getUrl() {
-		const defaultUrlQuery = this.toUrl(true);
-		return pickBy(this.toUrl(), (value, key) => defaultUrlQuery[key] !== value);
-	}
-}
-
-export class Param {
+export default class Param {
 
 	/**
 	 * @param {{ name:string, defaultValue:*, [urlName]:string, [reqName]:string, [fromUrl]:function, [toUrl]:function, [toReq]:function, [reqCondition]:function }} obj

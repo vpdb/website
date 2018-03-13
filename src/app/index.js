@@ -37,23 +37,18 @@ import 'ment.io';
 import 'ngclipboard';
 import 'oclazyload';
 
-import core from './core';
-import backend from './backend';
-import modal from './modal';
-
-import home from './home';
-import errors from './errors';
-
 import routes from './app.routes';
 import controller from './app.ctrl';
 import service from './app.service';
-import { msdElasticConfig, timeAgoConfig } from './app.config';
+import msdElasticConfig from './common/config/msd-elastic.config';
+import timeAgoConfig from './common/config/time-ago.config';
 
 import './app.styles';
 import AppTpl from './app.pug';
 
 // global modules
 import CommonModule from './common/common.module';
+import HomeModule from './home/home.module';
 
 const app = () => {
 	return {
@@ -94,16 +89,9 @@ const VPDB = angular.module('vpdb', [
 
 	ngElastic,
 
-	// common modules
-	core,
-	backend,
-	modal,
-
+	// global app modules
 	CommonModule.name,
-
-	// sections
-	home,
-	errors
+	HomeModule.name,
 ])
 	.config(routes)
 	.config(msdElasticConfig)

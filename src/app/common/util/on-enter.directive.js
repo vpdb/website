@@ -1,3 +1,4 @@
+
 /*
  * VPDB - Virtual Pinball Database
  * Copyright (C) 2018 freezy <freezy@vpdb.io>
@@ -17,46 +18,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import RatingDirectiveTpl from './rating.directive.pug';
-
 /**
- * The rating box for releases and games.
- *
- * Use like this:
- *
- *  rating-avg="game.rating.average",
- *  rating-votes="game.rating.votes",
- *  rating-user="gameRating"
- *  rating-action="rateGame($rating)"
- *
- * @param $animate
  * @ngInject
  */
-export default function($animate) {
+export default function onEnter() {
 	return {
-		restrict: 'C',
-		scope: {
-			ratingAvg: '=',
-			ratingVotes: '=',
-			ratingUser: '=',
-			ratingAction: '&',
-			ratingReadonly: '@'
-		},
-		templateUrl: RatingDirectiveTpl,
-		link: function(scope, elem, attr, ctrl) {
-			elem.mouseenter(function(e) {
-				e.preventDefault();
-				ctrl.editStart();
-				scope.$apply();
+		link: function(scope, element, attrs) {
+			element.bind('keypress', function (event) {
+				if (event.which === 13) {
+					scope.$apply(function () {
+						scope.$eval(attrs.onEnter);
+					});
+					event.preventDefault();
+				}
 			});
-			elem.mouseleave(function(e) {
-				e.preventDefault();
-				ctrl.editEnd();
-				scope.$apply();
-			});
-			$animate.enabled(elem, false);
-		},
-		controller: 'RatingDirectiveCtrl',
-		controllerAs: 'ratingVm'
+		}
 	};
 }

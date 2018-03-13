@@ -17,9 +17,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import { VPDB } from './app';
-
-angular.bootstrap(document, [ VPDB.name ], {
-	strictDi: true
-});
+/**
+ * @param $filter
+ * @param $sce
+ * @ngInject
+ */
+export default function jsonLd($filter, $sce) {
+	return {
+		restrict: 'E',
+		template: function() {
+			return '<script type="application/ld+json" ng-bind-html="onGetJson()"></script>';
+		},
+		scope: {
+			json: '=json'
+		},
+		link: function(scope) {
+			scope.onGetJson = function() {
+				return $sce.trustAsHtml($filter('json')(scope.json));
+			};
+		},
+		replace: true
+	};
+}
