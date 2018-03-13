@@ -17,9 +17,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+// jquery
 import 'jquery';
 import 'jquery.waitforimages';
 
+// core angular modules
 import angular from 'angular';
 import ngAnimate from 'angular-animate';
 import ngResource from 'angular-resource';
@@ -27,41 +29,39 @@ import ngSanitize from 'angular-sanitize';
 import ngTouch from 'angular-touch';
 import uiRouter from '@uirouter/angularjs';
 import uiBootstrap from 'angular-ui-bootstrap';
-import ngElastic from 'angular-elastic';
 
+// global third party modules
 import 'ngstorage';
 import 'angular-gravatar';
 import 'angular-timeago';
-
-import 'ment.io';
-import 'ngclipboard';
 import 'oclazyload';
 
+// app bootstrap
+import AppCtrl from './app.ctrl';
+import AppTpl from './app.pug';
 import routes from './app.routes';
-import controller from './app.ctrl';
 import service from './app.service';
-import msdElasticConfig from './common/config/msd-elastic.config';
 import timeAgoConfig from './common/config/time-ago.config';
 
+// styles
 import './app.styles';
-import AppTpl from './app.pug';
 
-// global modules
+// global app modules
 import CommonModule from './common/common.module';
 import HomeModule from './home/home.module';
+
+// static assets
+import '../icons';
+import '../static';
+import '../static/favicon';
 
 const app = () => {
 	return {
 		templateUrl: AppTpl,
-		controller: 'AppCtrl',
+		controller: AppCtrl,
 		controllerAs: 'vm'
 	};
 };
-
-// require static assets
-import '../icons';
-import '../static';
-import '../static/favicon';
 
 /**
  * Dependencies here are global dependencies only, everything else is
@@ -82,22 +82,16 @@ const VPDB = angular.module('vpdb', [
 	uiBootstrap,
 	'oc.lazyLoad',
 	'ngStorage',
-	'ngclipboard',
 	'ui.gravatar',
-	'mentio',
 	'yaru22.angular-timeago',
-
-	ngElastic,
 
 	// global app modules
 	CommonModule.name,
 	HomeModule.name,
 ])
 	.config(routes)
-	.config(msdElasticConfig)
 	.config(timeAgoConfig)
 	.service('App', service)
-	.controller('AppCtrl', controller)
 	.directive('vpdb', app);
 
 export { VPDB };

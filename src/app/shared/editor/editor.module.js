@@ -18,13 +18,18 @@
  */
 
 import angular from 'angular';
+import 'ment.io';
+import ngElastic from 'angular-elastic';
+
 import editor from './editor.directive';
 import editorMarkdownInfo from './editor.markdown-info.directive';
 import EditorDirectiveCtrl from './editor.directive.ctrl';
 import MarkdownModule from '../markdown/markdown.module';
+import msdElasticConfig from './msd-elastic.config';
 
 export default angular
-	.module('vpdb.editor', [ MarkdownModule.name ])
+	.module('vpdb.editor', [ MarkdownModule.name, ngElastic, 'mentio' ])
 	.controller('EditorDirectiveCtrl', EditorDirectiveCtrl)
 	.directive('editor', editor)
-	.directive('markdownInfo', editorMarkdownInfo);
+	.directive('markdownInfo', editorMarkdownInfo)
+	.config(msdElasticConfig);

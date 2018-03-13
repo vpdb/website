@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import 'ngclipboard';
 
 import BuildListAdminComponent from './builds/build.list.admin.component';
 import BuildAddAdminModalCtrl from './builds/build.add.admin.modal.ctrl';
@@ -34,7 +35,7 @@ import TokenListAdminComponent from './tokens/token.list.admin.component';
 import filterRole from './users/user.filter-role.directive';
 
 const ADMIN_MODULE = angular
-	.module('vpdb.admin', [ ])
+	.module('vpdb.admin', [ 'ngclipboard' ])
 	.service('UploadHelper', UploadHelper)
 	.component('buildListAdminComponent', new BuildListAdminComponent())
 	.component('userListAdminComponent', new UserListAdminComponent())

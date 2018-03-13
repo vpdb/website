@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
-import 'magnific-popup';
+import 'ngclipboard';
 
 import ProfileComponent from './profile.component';
 import ProfileSettingsComponent from './settings/profile.settings.component';
@@ -27,7 +27,7 @@ import ProfileStatsComponent from './stats/profile.stats.component';
 import TokenCreateModalCtrl from './settings/token.create.modal.ctrl';
 
 const PROFILE_MODULE = angular
-	.module('vpdb.profile', [ ])
+	.module('vpdb.profile', [ 'ngclipboard' ])
 	.component('profileComponent', new ProfileComponent())
 	.component('profileSettingsComponent', new ProfileSettingsComponent())
 	.component('profileDownloadsComponent', new ProfileDownloadsComponent())
