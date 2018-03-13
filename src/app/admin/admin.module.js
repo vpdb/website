@@ -23,13 +23,25 @@ import BuildAddAdminModalCtrl from './builds/build.add.admin.modal.ctrl';
 import BuildEditAdminModalCtrl from './builds/build.edit.admin.modal.ctrl';
 import UserListAdminComponent from './users/user.list.admin.component';
 import UploadsListAdminComponent from './uploads/uploads.list.admin.component';
+import UploadsReleaseListAdminCtrl from './uploads/uploads.release.admin.list.ctrl';
+import UploadsListAdminCtrl from './uploads/uploads.list.admin.ctrl';
+import UploadsBackglassModerateAdminModalCtrl from './uploads/uploads.backglass.moderate.admin.modal.ctrl';
+import UploadsReleaseModerateAdminModalCtrl from './uploads/uploads.release.moderate.admin.modal.ctrl';
+import UploadsBackglassListAdminCtrl from './uploads/uploads.backglass.admin.list.ctrl';
+import UploadHelper from './uploads/uploads.helper.service';
 
 const ADMIN_MODULE = angular
 	.module('vpdb.admin', [ ])
+	.service('UploadHelper', UploadHelper)
 	.component('buildListAdminComponent', new BuildListAdminComponent())
 	.component('userListAdminComponent', new UserListAdminComponent())
 	.component('uploadsListAdminComponent', new UploadsListAdminComponent())
 	.controller('BuildAddAdminModalCtrl', BuildAddAdminModalCtrl)
 	.controller('BuildEditAdminModalCtrl', BuildEditAdminModalCtrl)
+	.controller('UploadsListAdminCtrl', UploadsListAdminCtrl)
+	.controller('UploadsBackglassListAdminCtrl', UploadsBackglassListAdminCtrl)
+	.controller('UploadsBackglassModerateAdminModalCtrl', UploadsBackglassModerateAdminModalCtrl)
+	.controller('UploadsReleaseListAdminCtrl', UploadsReleaseListAdminCtrl)
+	.controller('UploadsReleaseModerateAdminModalCtrl', UploadsReleaseModerateAdminModalCtrl);
 
 export { ADMIN_MODULE };
