@@ -25,7 +25,7 @@ html#app(lang="en")
 
 		base(href="/")
 
-	body.theme-dark#top(ng-class="themeName")
+	body#top(ng-class="themeName || 'theme-dark'")
 
 		//- the app
 		vpdb
