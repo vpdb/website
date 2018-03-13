@@ -19,7 +19,7 @@
 
 import { pick, omit } from 'lodash';
 
-import TokenCreateModalTpl from '../tokens/token.create.modal.pug';
+import TokenCreateModalTpl from '../../tokens/token.create.modal.pug';
 
 export default class ProfileSettingsCtrl {
 

@@ -20,7 +20,7 @@
 import angular from 'angular';
 import { max, map, keys } from 'lodash';
 
-import LoginModalTpl from './auth/login.modal.pug';
+import LoginModalTpl from './common/auth/login.modal.pug';
 
 export default class App {
 

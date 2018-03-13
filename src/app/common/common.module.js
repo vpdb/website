@@ -24,18 +24,31 @@ import BootstrapPatcher from './utils/bootstrap.patcher';
 import ReleaseService from './releases/release.service';
 import gameTypeFilter from './games/game.type.filter';
 import ratingFormatFilter from './games/rating.format.filter';
+import AuthService from './auth/auth.service';
+import AuthInterceptorConfig from './auth/auth.interceptor.config';
+import LoginService from './auth/login.service';
+import AuthInterceptorService from './auth/auth.interceptor.service';
+import AuthCallbackCtrl from './auth/auth.callback.ctrl';
+import EmailConfirmationCtrl from './auth/email.confirmation.ctrl';
+import LoginModalCtrl from './auth/login.modal.ctrl';
 
 /**
  * These are global components that are or can be used on any page,
  * e.g. from the menu bar or within the markup.
  *
  * This module is a dependency of the main app as well as of most
- * other components.
+ * other components, so it will be always loaded.
  */
 export default angular.module('vpdb.common', [])
 
-	// utils
-	.service('BootstrapPatcher', BootstrapPatcher)
+	// auth
+	.service('AuthService', AuthService)
+	.service('AuthInterceptorService', AuthInterceptorService)
+	.service('LoginService', LoginService)
+	.controller('AuthCallbackCtrl', AuthCallbackCtrl)
+	.controller('LoginModalCtrl', LoginModalCtrl)
+	.controller('EmailConfirmationCtrl', EmailConfirmationCtrl)
+	.config(AuthInterceptorConfig)
 
 	// games
 	.controller('GameRequestModalCtrl', GameRequestModalCtrl)
@@ -47,4 +60,5 @@ export default angular.module('vpdb.common', [])
 	.service('ReleaseService', ReleaseService)
 
 	// other
+	.service('BootstrapPatcher', BootstrapPatcher)
 	.filter('ratingFormat', ratingFormatFilter);

@@ -18,7 +18,7 @@
  */
 
 import { browser, by, element, ExpectedConditions as until } from 'protractor';
-import { LoginModalPage } from './auth/login.modal.page';
+import { LoginModalPage } from './common/auth/login.modal.page';
 import { ModalErrorInfoPage } from "./modal/modal.error.info.page";
 
 export class AppPage {

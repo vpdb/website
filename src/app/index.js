@@ -38,13 +38,11 @@ import 'ngclipboard';
 import 'oclazyload';
 
 import core from './core';
-import auth from './auth';
 import backend from './backend';
 import modal from './modal';
 
 import home from './home';
 import users from './users';
-import profile from './profile';
 import builds from './builds';
 import media from './media';
 import uploads from './uploads';
@@ -105,7 +103,6 @@ const VPDB = angular.module('vpdb', [
 
 	// common modules
 	core,
-	auth,
 	backend,
 	modal,
 
@@ -113,7 +110,6 @@ const VPDB = angular.module('vpdb', [
 
 	// sections
 	home,
-	profile,
 	users,
 	builds,
 	media,

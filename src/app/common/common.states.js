@@ -17,23 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import AuthService from './auth.service';
-import AuthInterceptorService from './auth.interceptor.service';
-import AuthInterceptorConfig from './auth.interceptor.config';
-import AuthCallbackCtrl from './auth.callback.ctrl';
-import LoginService from './login.service';
-import LoginModalCtrl from './login.modal.ctrl';
-import EmailConfirmationCtrl from './email.confirmation.ctrl';
+import AuthCallbackTpl from './auth/auth.callback.pug';
+import EmailConfirmationTpl from './auth/email.confirmation.pug';
 
-export default angular
-	.module('vpdb.auth', [])
-	.service('AuthService', AuthService)
-	.service('AuthInterceptorService', AuthInterceptorService)
-	.service('LoginService', LoginService)
-	.controller('AuthCallbackCtrl', AuthCallbackCtrl)
-	.controller('LoginModalCtrl', LoginModalCtrl)
+const AUTH_CALLBACK = {
+	name: 'authCallback',
+	url: '/auth/:strategy/callback?cod',
+	templateUrl: AuthCallbackTpl
+};
+const CONFIRM_TOKEN = {
+	name: 'confirmToken',
+	url: '/confirm/:token',
+	templateUrl: EmailConfirmationTpl
+};
 
-	.controller('EmailConfirmationCtrl', EmailConfirmationCtrl)
-	.config(AuthInterceptorConfig)
-	.name;
+export { AUTH_CALLBACK, CONFIRM_TOKEN };

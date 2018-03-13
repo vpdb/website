@@ -19,7 +19,7 @@
 
 import { promise } from 'selenium-webdriver';
 import { browser, element, by } from 'protractor';
-import { LoginModalPage } from '../auth/login.modal.page';
+import { LoginModalPage } from '../common/auth/login.modal.page';
 
 export class HomePage {
 
