@@ -17,20 +17,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
-import 'magnific-popup';
 
-import ngFileUpload from 'ng-file-upload';
-import BackglassModule from '../backglasses/backglass.module';
-import BackglassAdminModule from '../backglasses/admin/backglass.admin.module';
+import FileUploadModule from '../../shared/file-upload/file.upload.module';
+import EditorModule from '../../shared/editor/editor.module';
+import BackglassAddComponent from './backglass.add.component';
+import BackglassEditModalCtrl from './backglass.edit.modal.ctrl';
 
-import GameListComponent from './list/game.list.component';
-import GameDetailsComponent from './details/game.details.component';
-import GameReleaseDetailsCtrl from './details/game.release.details.ctrl';
-
-const GAMES_MODULE = angular
-	.module('vpdb.games', [ ngFileUpload, BackglassModule.name, BackglassAdminModule.name ])
-	.component('gameListComponent', new GameListComponent())
-	.component('gameDetailsComponent', new GameDetailsComponent())
-	.controller('GameReleaseDetailsCtrl', GameReleaseDetailsCtrl);
-
-export { GAMES_MODULE };
+export default angular
+	.module('vpdb.backglasses.admin', [ FileUploadModule.name, EditorModule.name ])
+	.component('backglassAddComponent', new BackglassAddComponent())
+	.controller('BackglassEditModalCtrl', BackglassEditModalCtrl);

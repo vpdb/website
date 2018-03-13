@@ -18,7 +18,6 @@
  */
 
 import HomeTpl from './home/home.pug';
-import BackglassAddTpl from './backglasses/backglass.add.pug';
 import AuthCallbackTpl from './auth/auth.callback.pug';
 import EmailConfirmationTpl from './auth/email.confirmation.pug';
 import ProfileCtrl from './profile/profile.pug';
@@ -42,6 +41,7 @@ import { GAME_LIST, GAME_DETAILS } from './games/game.states';
 import { GAME_ADMIN_ADD, GAME_ADMIN_EDIT } from './games/admin/game.admin.states';
 import { RELEASE_LIST, RELEASE_DETAILS } from './releases/release.states';
 import { RELEASE_ADD, RELEASE_VERSION_ADD, RELEASE_EDIT } from './releases/admin/release.admin.states';
+import { BACKGLASS_ADD } from './backglasses/admin/backglass.admin.states';
 
 /**
  * @param $urlRouterProvider
@@ -70,7 +70,7 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state(RELEASE_EDIT);
 
 	// backglasses
-	$stateProvider.state('addBackglass',      { url: '/games/:id/add-backglass', templateUrl: BackglassAddTpl });
+	$stateProvider.state(BACKGLASS_ADD);
 
 	// auth
 	$stateProvider.state('authCallback',      { url: '/auth/:strategy/callback?code', templateUrl: AuthCallbackTpl });

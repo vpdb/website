@@ -19,8 +19,12 @@
 
 import { findIndex } from 'lodash';
 
-import BackglassEditModalTpl from './backglass.edit.modal.pug';
+import BackglassEditModalTpl from './admin/backglass.edit.modal.pug';
 
+/**
+ * Shows backglass details in a modal dialog.
+ * @todo Make EDIT button conditional and show only when dependency loaded.
+ */
 export default class BackglassDetailsModalCtrl {
 
 	/**

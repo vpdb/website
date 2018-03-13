@@ -43,7 +43,6 @@ import backend from './backend';
 import modal from './modal';
 
 import home from './home';
-import backglasses from './backglasses';
 import users from './users';
 import profile from './profile';
 import builds from './builds';
@@ -114,7 +113,6 @@ const VPDB = angular.module('vpdb', [
 
 	// sections
 	home,
-	backglasses,
 	profile,
 	users,
 	builds,
