@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { isEmpty, isObject, indexOf, find, filter, mapValues, map, forEach } from 'lodash';
+import { filter, find, forEach, indexOf, isEmpty, isObject } from 'lodash';
 
 import BackglassDetailsModalTpl from '../../backglasses/backglass.details.modal.pug';
 import MediumInfoModalTpl from './medium.info.modal.pug';

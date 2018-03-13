@@ -19,7 +19,7 @@
 
 import { promise } from 'selenium-webdriver';
 import { by, ElementFinder } from 'protractor';
-import { BasePage } from '../../test/BasePage';
+import { BasePage } from '../../../test/BasePage';
 
 export class LoginModalPage extends BasePage {
 

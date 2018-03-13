@@ -17,9 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { LoginModalPage } from './login.modal.page';
 import { internet } from 'faker';
-import { AppPage } from "../app.page";
+import { AppPage } from '../../app.page';
 
 describe('Login Modal', () => {
 

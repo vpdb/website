@@ -17,11 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
-import 'jquery-ui/ui/core';
-import 'jquery-ui/ui/widget';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui/ui/widgets/droppable';
-import 'angular-dragdrop';
 
 import ngFileUpload from 'ng-file-upload';
 

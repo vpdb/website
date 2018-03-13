@@ -19,7 +19,6 @@
 
 import { BasePage } from '../../../test/BasePage';
 import { browser, by, element } from 'protractor';
-import { Game } from '../../../test/models/Game';
 import { Release } from '../../../test/models/Release';
 import { AppPage } from '../../app.page';
 

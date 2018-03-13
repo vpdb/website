@@ -17,13 +17,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { browser, by, element, ElementArrayFinder, ElementFinder } from 'protractor';
+import { browser, by, element, ElementArrayFinder } from 'protractor';
 import { promise } from 'selenium-webdriver';
-import { resolve } from 'path';
 import { BasePage } from '../../../test/BasePage';
 import { AppPage } from '../../app.page';
 import { TagAddModalPage } from './tag/tag.add.modal.page';
-import { AuthorSelectModalPage } from "../../shared/author-select/author.select.modal.page";
+import { AuthorSelectModalPage } from '../../shared/author-select/author.select.modal.page';
 
 export class ReleaseBasePage extends BasePage {
 

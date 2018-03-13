@@ -18,10 +18,10 @@
  */
 
 import { browser } from 'protractor';
-import { AppPage } from '../app.page';
-import { Release } from '../../test/models/Release';
-import { Games } from '../../test/backend/Games';
-import { Releases } from '../../test/backend/Releases';
+import { AppPage } from '../../app.page';
+import { Release } from '../../../test/models/Release';
+import { Games } from '../../../test/backend/Games';
+import { Releases } from '../../../test/backend/Releases';
 import { ReleaseDetailsPage } from './release.details.page';
 
 describe('View details of a release', () => {
