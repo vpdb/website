@@ -17,36 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { by, element } from 'protractor';
-import { BasePage } from '../../test/BasePage';
+import AboutCtrl from './about.ctrl';
 
-export class TagAddModalPage extends BasePage {
-
-	private name = element(by.id('tag-name'));
-	private description = element(by.id('tag-description'));
-	private submitButton = element(by.id('tag-submit-btn'));
-
-	setName(name: string) {
-		this.name.sendKeys(name);
-	}
-
-	setDescription(description: string) {
-		this.description.sendKeys(description);
-	}
-
-	hasNameValidationError() {
-		return this.hasClass(this.formGroup(this.name), 'error');
-	}
-
-	hasDescriptionValidationError() {
-		return this.hasClass(this.formGroup(this.description), 'error');
-	}
-
-	dismiss() {
-		element(by.id('tag-cancel-btn')).click();
-	}
-
-	submit() {
-		this.submitButton.click();
+/**
+ * The about page.
+ */
+export default class AboutComponent {
+	/**
+	 * @ngInject
+	 */
+	constructor() {
+		this.templateUrl = require('./about.pug');
+		this.controller = AboutCtrl;
+		this.controllerAs = 'vm';
 	}
 }

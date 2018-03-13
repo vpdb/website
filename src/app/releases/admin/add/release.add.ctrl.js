@@ -20,8 +20,8 @@
 import { values, filter, includes, isArray, cloneDeep, map, flatten } from 'lodash';
 
 import ReleaseBaseCtrl from '../release.base.ctrl';
-import AuthorSelectModalTpl from '../../../users/author.select.modal.pug';
-import TagAddModalTpl from '../../../tag/tag.add.modal.pug';
+import AuthorSelectModalTpl from '../../../shared/author-select/author.select.modal.pug';
+import TagAddModalTpl from '../tag/tag.add.modal.pug';
 
 export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 

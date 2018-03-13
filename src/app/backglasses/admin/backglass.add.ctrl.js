@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import AuthorSelectModalTpl from '../../users/author.select.modal.pug';
+import AuthorSelectModalTpl from '../../shared/author-select/author.select.modal.pug';
 
 export default class BackglassAddCtrl {
 

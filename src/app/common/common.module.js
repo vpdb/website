@@ -31,6 +31,9 @@ import AuthInterceptorService from './auth/auth.interceptor.service';
 import AuthCallbackCtrl from './auth/auth.callback.ctrl';
 import EmailConfirmationCtrl from './auth/email.confirmation.ctrl';
 import LoginModalCtrl from './auth/login.modal.ctrl';
+import UserInfoModalCtrl from './user/user.info.modal.ctrl';
+import UserMergeModalCtrl from './user/user.merge.modal.ctrl';
+import userInfo from './user/user.info.directive';
 
 /**
  * These are global components that are or can be used on any page,
@@ -53,8 +56,13 @@ export default angular.module('vpdb.common', [])
 	// games
 	.controller('GameRequestModalCtrl', GameRequestModalCtrl)
 	.controller('GameSelectModalCtrl', GameSelectModalCtrl)
-	.filter('gametype', gameTypeFilter)
 	.constant('GameSystems', GAME_SYSTEMS)
+	.filter('gametype', gameTypeFilter)
+
+	// user
+	.controller('UserInfoModalCtrl', UserInfoModalCtrl)
+	.controller('UserMergeModalCtrl', UserMergeModalCtrl)
+	.directive('user', userInfo)
 
 	// releases
 	.service('ReleaseService', ReleaseService)

@@ -22,8 +22,8 @@ import { promise } from 'selenium-webdriver';
 import { resolve } from 'path';
 import { BasePage } from '../../../test/BasePage';
 import { AppPage } from '../../app.page';
-import { TagAddModalPage } from '../../tag/tag.add.modal.page';
-import { AuthorSelectModalPage } from "../../users/author.select.modal.page";
+import { TagAddModalPage } from './tag/tag.add.modal.page';
+import { AuthorSelectModalPage } from "../../shared/author-select/author.select.modal.page";
 
 export class ReleaseBasePage extends BasePage {
 

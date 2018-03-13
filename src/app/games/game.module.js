@@ -19,18 +19,21 @@
 import angular from 'angular';
 import 'magnific-popup';
 
-import ngFileUpload from 'ng-file-upload';
+import FileUploadModule from '../shared/file-upload/file.upload.module';
+import MarkdownModule from '../shared/markdown/markdown.module';
 import BackglassModule from '../backglasses/backglass.module';
 import BackglassAdminModule from '../backglasses/admin/backglass.admin.module';
 
 import GameListComponent from './list/game.list.component';
 import GameDetailsComponent from './details/game.details.component';
 import GameReleaseDetailsCtrl from './details/game.release.details.ctrl';
+import MediumInfoModalCtrl from './details/medium.info.modal.ctrl';
 
 const GAMES_MODULE = angular
-	.module('vpdb.games', [ ngFileUpload, BackglassModule.name, BackglassAdminModule.name ])
+	.module('vpdb.games', [ FileUploadModule.name, BackglassModule.name, BackglassAdminModule.name, MarkdownModule.name ])
 	.component('gameListComponent', new GameListComponent())
 	.component('gameDetailsComponent', new GameDetailsComponent())
-	.controller('GameReleaseDetailsCtrl', GameReleaseDetailsCtrl);
+	.controller('GameReleaseDetailsCtrl', GameReleaseDetailsCtrl)
+	.controller('MediumInfoModalCtrl', MediumInfoModalCtrl);
 
 export { GAMES_MODULE };

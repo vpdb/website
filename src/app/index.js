@@ -42,10 +42,6 @@ import backend from './backend';
 import modal from './modal';
 
 import home from './home';
-import users from './users';
-import media from './media';
-import content from './content';
-import tag from './tag';
 import errors from './errors';
 
 import routes from './app.routes';
@@ -107,10 +103,6 @@ const VPDB = angular.module('vpdb', [
 
 	// sections
 	home,
-	users,
-	media,
-	content,
-	tag,
 	errors
 ])
 	.config(routes)

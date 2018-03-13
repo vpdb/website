@@ -18,8 +18,8 @@
  */
 
 import { includes, filter, map, pick, cloneDeep, assign, find } from 'lodash';
-import AuthorSelectModalTpl from '../../../users/author.select.modal.pug';
-import TagAddModalTpl from '../../../tag/tag.add.modal.pug';
+import AuthorSelectModalTpl from '../../../shared/author-select/author.select.modal.pug';
+import TagAddModalTpl from '../tag/tag.add.modal.pug';
 import ReleaseEditVersionModalTpl from './release.edit.version.modal.pug';
 
 export default class ReleaseEditCtrl {

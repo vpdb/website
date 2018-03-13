@@ -25,7 +25,7 @@ import { Users } from '../../../../test/backend/Users';
 import { Game } from '../../../../test/models/Game';
 import { AppPage } from '../../../app.page';
 import { ReleaseAddPage } from './release.add.page';
-import { AuthorSelectModalPage } from '../../../users/author.select.modal.page';
+import { AuthorSelectModalPage } from '../../../shared/author-select/author.select.modal.page';
 
 describe('Add new release', () => {
 

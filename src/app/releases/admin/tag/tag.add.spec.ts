@@ -18,10 +18,10 @@
  */
 
 import { browser } from 'protractor';
-import { Games } from '../../test/backend/Games';
-import { Game } from '../../test/models/Game';
-import { AppPage } from '../app.page';
-import { ReleaseAddPage } from '../releases/admin/add/release.add.page';
+import { Games } from '../../../../test/backend/Games';
+import { Game } from '../../../../test/models/Game';
+import { AppPage } from '../../../app.page';
+import { ReleaseAddPage } from '../add/release.add.page';
 import { TagAddModalPage } from './tag.add.modal.page';
 
 describe('Add tag', () => {

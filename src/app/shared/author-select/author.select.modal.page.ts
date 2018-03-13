@@ -19,7 +19,7 @@
 
 import { by, element, ElementArrayFinder } from 'protractor';
 import { promise } from 'selenium-webdriver';
-import { BasePage } from '../../test/BasePage';
+import { BasePage } from '../../../test/BasePage';
 
 export class AuthorSelectModalPage extends BasePage {
 

@@ -17,10 +17,36 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import MediumInfoModalCtrl from './medium.info.modal.ctrl';
+import { by, element } from 'protractor';
+import { BasePage } from '../../../../test/BasePage';
 
-export default angular
-	.module('vpdb.media', [])
-	.controller('MediumInfoModalCtrl', MediumInfoModalCtrl)
-	.name;
+export class TagAddModalPage extends BasePage {
+
+	private name = element(by.id('tag-name'));
+	private description = element(by.id('tag-description'));
+	private submitButton = element(by.id('tag-submit-btn'));
+
+	setName(name: string) {
+		this.name.sendKeys(name);
+	}
+
+	setDescription(description: string) {
+		this.description.sendKeys(description);
+	}
+
+	hasNameValidationError() {
+		return this.hasClass(this.formGroup(this.name), 'error');
+	}
+
+	hasDescriptionValidationError() {
+		return this.hasClass(this.formGroup(this.description), 'error');
+	}
+
+	dismiss() {
+		element(by.id('tag-cancel-btn')).click();
+	}
+
+	submit() {
+		this.submitButton.click();
+	}
+}

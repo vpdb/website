@@ -18,11 +18,6 @@
  */
 
 import HomeTpl from './home/home.pug';
-import AboutTpl from './content/about.pug';
-import RulesTpl from './content/rules.pug';
-import FaqTpl from './content/faq.pug';
-import LegalTpl from './content/legal.pug';
-import PrivacyTpl from './content/privacy.pug';
 import Error404Tpl from './errors/error.404.pug';
 import ConfigService from './core/config.service';
 
@@ -34,6 +29,7 @@ import { BACKGLASS_ADD } from './backglasses/admin/backglass.admin.states';
 import { AUTH_CALLBACK, CONFIRM_TOKEN } from './common/common.states';
 import { PROFILE_DOWNLOADS, PROFILE_NOTIFICATIONS, PROFILE_ROOT, PROFILE_SETTINGS, PROFILE_STATS } from './profile/profile.states';
 import { ADMIN_BUILDS, ADMIN_USERS, ADMIN_UPLOADS, ADMIN_TOKENS } from './admin/admin.states';
+import { CONTENT_ABOUT, CONTENT_FAQ, CONTENT_LEGAL, CONTENT_PRIVACY, CONTENT_RULES } from './content/content.states';
 
 /**
  * @param $urlRouterProvider
@@ -82,11 +78,11 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state(ADMIN_TOKENS);
 
 	// content
-	$stateProvider.state('about',             { url: '/about', templateUrl: AboutTpl });
-	$stateProvider.state('rules',             { url: '/rules', templateUrl: RulesTpl });
-	$stateProvider.state('faq',               { url: '/faq', templateUrl: FaqTpl });
-	$stateProvider.state('legal',             { url: '/legal', templateUrl: LegalTpl });
-	$stateProvider.state('privacy',           { url: '/privacy', templateUrl: PrivacyTpl });
+	$stateProvider.state(CONTENT_ABOUT);
+	$stateProvider.state(CONTENT_RULES);
+	$stateProvider.state(CONTENT_FAQ);
+	$stateProvider.state(CONTENT_LEGAL);
+	$stateProvider.state(CONTENT_PRIVACY);
 
 	// errors
 	$stateProvider.state('404',            { templateUrl: Error404Tpl, params: { url: null } });

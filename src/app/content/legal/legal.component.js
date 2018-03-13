@@ -17,18 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import AboutCtrl from './about.ctrl';
-import RulesCtrl from './rules.ctrl';
-import FaqCtrl from './faq.ctrl';
 import LegalCtrl from './legal.ctrl';
-import PrivacyCtrl from './privacy.ctrl';
 
-export default angular
-	.module('vpdb.content', [])
-	.controller('AboutCtrl', AboutCtrl)
-	.controller('RulesCtrl', RulesCtrl)
-	.controller('FaqCtrl', FaqCtrl)
-	.controller('LegalCtrl', LegalCtrl)
-	.controller('PrivacyCtrl', PrivacyCtrl)
-	.name;
+/**
+ * Terms and conditions
+ */
+export default class LegalComponent {
+	/**
+	 * @ngInject
+	 */
+	constructor() {
+		this.templateUrl = require('./legal.pug');
+		this.controller = LegalCtrl;
+		this.controllerAs = 'vm';
+	}
+}

@@ -17,11 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import BackglassDetailsModalCtrl from './backglass.details.modal.ctrl';
-import AuthorSelectModule from '../shared/author-select/author.select.module';
-import MarkdownModule from '../shared/markdown/markdown.module';
+import FaqCtrl from './faq.ctrl';
 
-export default angular
-	.module('vpdb.backglasses', [ AuthorSelectModule.name, MarkdownModule.name ])
-	.controller('BackglassDetailsModalCtrl', BackglassDetailsModalCtrl);
+/**
+ * The frequently asked questions.
+ */
+export default class FaqComponent {
+	/**
+	 * @ngInject
+	 */
+	constructor() {
+		this.templateUrl = require('./faq.pug');
+		this.controller = FaqCtrl;
+		this.controllerAs = 'vm';
+	}
+}

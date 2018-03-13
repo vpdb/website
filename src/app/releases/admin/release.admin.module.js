@@ -21,6 +21,7 @@ import angular from 'angular';
 import FileUploadModule from '../../shared/file-upload/file.upload.module';
 import VideoJsModule from '../../shared/videojs/videojs.module';
 import EditorModule from '../../shared/editor/editor.module';
+import AuthorSelectModule from '../../shared/author-select/author.select.module';
 
 import RELEASE_META from './release.meta';
 import ReleaseAddComponent from './add/release.add.component';
@@ -29,16 +30,18 @@ import ReleaseEditComponent from './edit/release.edit.component';
 import ReleaseEditVersionModalCtrl from './edit/release.edit.version.modal.ctrl';
 import ReleaseSelectPlayfieldModalCtrl from './add/release.select.playfield.modal.ctrl';
 import BuildAddModalCtrl from './build/build.add.modal.ctrl';
+import TagAddModalCtrl from './tag/tag.add.modal.ctrl';
 import allowedFlavors from './add/release.allowed.flavors.filter';
 
 const RELEASES_ADMIN_MODULE = angular
-	.module('vpdb.releases.admin', [ FileUploadModule.name, VideoJsModule.name, EditorModule.name ])
+	.module('vpdb.releases.admin', [ FileUploadModule.name, VideoJsModule.name, EditorModule.name, AuthorSelectModule.name ])
 	.component('releaseAddComponent', new ReleaseAddComponent())
 	.component('releaseAddVersionComponent', new ReleaseAddVersionComponent())
 	.component('releaseEditComponent', new ReleaseEditComponent())
 	.controller('ReleaseEditVersionModalCtrl', ReleaseEditVersionModalCtrl)
 	.controller('ReleaseSelectPlayfieldModalCtrl', ReleaseSelectPlayfieldModalCtrl)
 	.controller('BuildAddModalCtrl', BuildAddModalCtrl)
+	.controller('TagAddModalCtrl', TagAddModalCtrl)
 	.filter('allowedFlavors', allowedFlavors)
 	.constant('ReleaseMeta', RELEASE_META);
 

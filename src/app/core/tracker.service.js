@@ -17,6 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
 /**
  * Tracker service.
  *
@@ -24,7 +25,6 @@
  * @author freezy <freezy@vpdb.io>
  */
 export default class TrackerService {
-
 
 	/**
 	 * @param $rootScope

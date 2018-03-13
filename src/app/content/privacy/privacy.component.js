@@ -17,10 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import TagAddModalCtrl from './tag.add.modal.ctrl';
+import PrivacyCtrl from './privacy.ctrl';
 
-export default angular
-	.module('vpdb.tags', [])
-	.controller('TagAddModalCtrl', TagAddModalCtrl)
-	.name;
+/**
+ * The privacy page.
+ */
+export default class PrivacyComponent {
+	/**
+	 * @ngInject
+	 */
+	constructor() {
+		this.templateUrl = require('./privacy.pug');
+		this.controller = PrivacyCtrl;
+		this.controllerAs = 'vm';
+	}
+}

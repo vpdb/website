@@ -31,6 +31,7 @@ import UploadsBackglassListAdminCtrl from './uploads/uploads.backglass.admin.lis
 import TokenCreateAdminModalCtrl from './tokens/token.create.admin.modal.ctrl';
 import UploadHelper from './uploads/uploads.helper.service';
 import TokenListAdminComponent from './tokens/token.list.admin.component';
+import filterRole from './users/user.filter-role.directive';
 
 const ADMIN_MODULE = angular
 	.module('vpdb.admin', [ ])
@@ -46,6 +47,7 @@ const ADMIN_MODULE = angular
 	.controller('UploadsBackglassModerateAdminModalCtrl', UploadsBackglassModerateAdminModalCtrl)
 	.controller('UploadsReleaseListAdminCtrl', UploadsReleaseListAdminCtrl)
 	.controller('UploadsReleaseModerateAdminModalCtrl', UploadsReleaseModerateAdminModalCtrl)
-	.controller('TokenCreateAdminModalCtrl', TokenCreateAdminModalCtrl);
+	.controller('TokenCreateAdminModalCtrl', TokenCreateAdminModalCtrl)
+	.directive('filterRole', filterRole);
 
 export { ADMIN_MODULE };

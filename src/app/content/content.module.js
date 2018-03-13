@@ -16,23 +16,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
 import angular from 'angular';
-import UserInfoModalCtrl from './user.info.modal.ctrl';
-import UserListAdminCtrl from '../admin/users/user.list.admin.ctrl';
-import UserMergeModalCtrl from './user.merge.modal.ctrl';
-import UserEditAdminModalCtrl from '../admin/users/user.edit.admin.modal.ctrl';
-import AuthorSelectModalCtrl from './author.select.modal.ctrl';
-import userInfo from './user.info.directive';
-import filterRole from './user.filter-role.directive';
 
-export default angular
-	.module('vpdb.users', [])
-	.controller('UserInfoModalCtrl', UserInfoModalCtrl)
-	.controller('UserListAdminCtrl', UserListAdminCtrl)
-	.controller('UserEditAdminModalCtrl', UserEditAdminModalCtrl)
-	.controller('UserMergeModalCtrl', UserMergeModalCtrl)
-	.controller('AuthorSelectModalCtrl', AuthorSelectModalCtrl)
-	.directive('user', userInfo)
-	.directive('filterRole', filterRole)
-	.name;
+import AboutComponent from './about/about.component';
+import FaqComponent from './faq/faq.component';
+import LegalComponent from './legal/legal.component';
+import PrivacyComponent from './privacy/privacy.component';
+import RulesComponent from './rules/rules.component';
+
+const CONTENT_MODULE = angular
+	.module('vpdb.content', [ ])
+	.component('aboutComponent', new AboutComponent())
+	.component('faqComponent', new FaqComponent())
+	.component('legalComponent', new LegalComponent())
+	.component('privacyComponent', new PrivacyComponent())
+	.component('rulesComponent', new RulesComponent());
+
+export { CONTENT_MODULE };

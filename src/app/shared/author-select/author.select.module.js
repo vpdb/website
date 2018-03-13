@@ -18,10 +18,8 @@
  */
 
 import angular from 'angular';
-import BackglassDetailsModalCtrl from './backglass.details.modal.ctrl';
-import AuthorSelectModule from '../shared/author-select/author.select.module';
-import MarkdownModule from '../shared/markdown/markdown.module';
+import AuthorSelectModalCtrl from './author.select.modal.ctrl';
 
 export default angular
-	.module('vpdb.backglasses', [ AuthorSelectModule.name, MarkdownModule.name ])
-	.controller('BackglassDetailsModalCtrl', BackglassDetailsModalCtrl);
+	.module('vpdb.author-select', [ ])
+	.controller('AuthorSelectModalCtrl', AuthorSelectModalCtrl);

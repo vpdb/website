@@ -21,37 +21,40 @@ function loadModule($transition$) {
 	const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
 	return require.ensure([], () => {
 		// load whole module
-		const module = require('./admin.module');
-		$ocLazyLoad.load(module.ADMIN_MODULE);
-	}, 'admin');
+		const module = require('./content.module');
+		$ocLazyLoad.load(module.CONTENT_MODULE);
+	}, 'content');
 }
 
-const ADMIN_USERS = {
-	name: 'adminUsers',
-	url: '/admin/users',
-	component: 'userListAdminComponent',
+const CONTENT_ABOUT = {
+	name: 'about',
+	url: '/about',
+	component: 'aboutComponent',
+	lazyLoad: loadModule
+};
+const CONTENT_RULES = {
+	name: 'rules',
+	url: '/rules',
+	component: 'rulesComponent',
+	lazyLoad: loadModule
+};
+const CONTENT_FAQ = {
+	name: 'faq',
+	url: '/faq',
+	component: 'faqComponent',
+	lazyLoad: loadModule
+};
+const CONTENT_LEGAL = {
+	name: 'legal',
+	url: '/legal',
+	component: 'legalComponent',
+	lazyLoad: loadModule
+};
+const CONTENT_PRIVACY = {
+	name: 'privacy',
+	url: '/privacy',
+	component: 'privacyComponent',
 	lazyLoad: loadModule
 };
 
-const ADMIN_BUILDS = {
-	name: 'adminBuilds',
-	url: '/admin/builds',
-	component: 'buildListAdminComponent',
-	lazyLoad: loadModule
-};
-
-const ADMIN_UPLOADS = {
-	name: 'adminUploads',
-	url: '/admin/uploads',
-	component: 'uploadsListAdminComponent',
-	lazyLoad: loadModule
-};
-
-const ADMIN_TOKENS = {
-	name: 'adminTokens',
-	url: '/admin/tokens',
-	component: 'tokenListAdminComponent',
-	lazyLoad: loadModule
-};
-
-export { ADMIN_USERS, ADMIN_BUILDS, ADMIN_UPLOADS, ADMIN_TOKENS };
+export { CONTENT_ABOUT, CONTENT_RULES, CONTENT_FAQ, CONTENT_LEGAL, CONTENT_PRIVACY };
