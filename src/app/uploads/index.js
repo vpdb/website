@@ -19,7 +19,7 @@
 
 import angular from 'angular';
 import UploadHelper from './uploads.helper.service';
-import UploadsListAdminCtrl from './uploads.list.admin.ctrl';
+import UploadsListAdminCtrl from '../admin/uploads/uploads.list.admin.ctrl';
 import UploadsBackglassListAdminCtrl from './uploads.backglass.admin.list.ctrl';
 import UploadsBackglassModerateAdminModalCtrl from './uploads.backglass.moderate.admin.modal.ctrl';
 import UploadsReleaseListAdminCtrl from './uploads.release.admin.list.ctrl';

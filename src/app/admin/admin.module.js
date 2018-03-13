@@ -21,10 +21,14 @@ import angular from 'angular';
 import BuildListAdminComponent from './builds/build.list.admin.component';
 import BuildAddAdminModalCtrl from './builds/build.add.admin.modal.ctrl';
 import BuildEditAdminModalCtrl from './builds/build.edit.admin.modal.ctrl';
+import UserListAdminComponent from './users/user.list.admin.component';
+import UploadsListAdminComponent from './uploads/uploads.list.admin.component';
 
 const ADMIN_MODULE = angular
 	.module('vpdb.admin', [ ])
 	.component('buildListAdminComponent', new BuildListAdminComponent())
+	.component('userListAdminComponent', new UserListAdminComponent())
+	.component('uploadsListAdminComponent', new UploadsListAdminComponent())
 	.controller('BuildAddAdminModalCtrl', BuildAddAdminModalCtrl)
 	.controller('BuildEditAdminModalCtrl', BuildEditAdminModalCtrl)
 

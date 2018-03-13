@@ -26,15 +26,12 @@ function loadModule($transition$) {
 	}, 'admin');
 }
 
-// $stateProvider.state('adminUsers',        { url: '/admin/users', templateUrl: UserListAdminTpl });
-// $stateProvider.state('adminBuilds',       { url: '/admin/builds', templateUrl: BuildListAdminTpl });
-// $stateProvider.state('adminUploads',      { url: '/admin/uploads', templateUrl: UploadsListAdminTpl });
 // $stateProvider.state('adminTokens',       { url: '/admin/tokens', templateUrl: TokenListAdminTpl });
 
 const ADMIN_USERS = {
 	name: 'adminUsers',
 	url: '/admin/users',
-	component: 'adminUsersComponent',
+	component: 'userListAdminComponent',
 	lazyLoad: loadModule
 };
 
@@ -48,7 +45,7 @@ const ADMIN_BUILDS = {
 const ADMIN_UPLOADS = {
 	name: 'adminUploads',
 	url: '/admin/uploads',
-	component: 'adminUploadsComponent',
+	component: 'uploadsListAdminComponent',
 	lazyLoad: loadModule
 };
 
