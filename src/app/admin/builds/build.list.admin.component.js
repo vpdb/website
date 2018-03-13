@@ -17,17 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import BuildAddModalCtrl from './build.add.modal.ctrl';
 import BuildListAdminCtrl from './build.list.admin.ctrl';
-import BuildAddAdminModalCtrl from './build.add.admin.modal.ctrl';
-import BuildEditAdminModalCtrl from './build.edit.admin.modal.ctrl';
-import EditorModule from '../shared/editor/editor.module';
 
-export default angular
-	.module('vpdb.builds', [ EditorModule.name ])
-	.controller('BuildAddModalCtrl', BuildAddModalCtrl)
-	.controller('BuildListAdminCtrl', BuildListAdminCtrl)
-	.controller('BuildAddAdminModalCtrl', BuildAddAdminModalCtrl)
-	.controller('BuildEditAdminModalCtrl', BuildEditAdminModalCtrl)
-	.name;
+/**
+ * Lists all builds.
+ */
+export default class BuildListAdminComponent {
+	/**
+	 * @ngInject
+	 */
+	constructor() {
+		this.templateUrl = require('./build.list.admin.pug');
+		this.controller = BuildListAdminCtrl;
+		this.controllerAs = 'vm';
+	}
+}

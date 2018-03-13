@@ -28,6 +28,7 @@ import ReleaseAddVersionComponent from './add/release.add.version.component';
 import ReleaseEditComponent from './edit/release.edit.component';
 import ReleaseEditVersionModalCtrl from './edit/release.edit.version.modal.ctrl';
 import ReleaseSelectPlayfieldModalCtrl from './add/release.select.playfield.modal.ctrl';
+import BuildAddModalCtrl from './build/build.add.modal.ctrl';
 import allowedFlavors from './add/release.allowed.flavors.filter';
 
 const RELEASES_ADMIN_MODULE = angular
@@ -37,6 +38,7 @@ const RELEASES_ADMIN_MODULE = angular
 	.component('releaseEditComponent', new ReleaseEditComponent())
 	.controller('ReleaseEditVersionModalCtrl', ReleaseEditVersionModalCtrl)
 	.controller('ReleaseSelectPlayfieldModalCtrl', ReleaseSelectPlayfieldModalCtrl)
+	.controller('BuildAddModalCtrl', BuildAddModalCtrl)
 	.filter('allowedFlavors', allowedFlavors)
 	.constant('ReleaseMeta', RELEASE_META);
 

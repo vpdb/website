@@ -43,7 +43,6 @@ import modal from './modal';
 
 import home from './home';
 import users from './users';
-import builds from './builds';
 import media from './media';
 import uploads from './uploads';
 import content from './content';
@@ -111,7 +110,6 @@ const VPDB = angular.module('vpdb', [
 	// sections
 	home,
 	users,
-	builds,
 	media,
 	uploads,
 	content,

@@ -37,6 +37,6 @@ const RELEASE_MODULE = angular
 	.controller('ReleaseDownloadModalCtrl', ReleaseDownloadModalCtrl)
 	.controller('ReleaseFileValidationCtrl', ReleaseFileValidationCtrl)
 	.filter('validationStatus', validationStatus)
-	.filter('validationTooltip', validationTooltip)
+	.filter('validationTooltip', validationTooltip);
 
 export { RELEASE_MODULE };

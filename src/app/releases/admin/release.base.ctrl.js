@@ -18,7 +18,7 @@
  */
 
 import { indexOf, find, isArray, cloneDeep } from 'lodash';
-import BuildAddModalTpl from '../../builds/build.add.modal.pug';
+import BuildAddModalTpl from './build/build.add.modal.pug';
 
 export default class ReleaseBaseCtrl {
 
@@ -45,7 +45,6 @@ export default class ReleaseBaseCtrl {
 
 		this.meta = cloneDeep(ReleaseMeta);
 	}
-
 
 	/**
 	 * Opens the calendar drop-down.
