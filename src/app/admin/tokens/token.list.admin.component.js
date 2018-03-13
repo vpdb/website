@@ -17,14 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-import TokenCreateModalCtrl from './token.create.modal.ctrl';
-import TokenCreateAdminModalCtrl from './token.create.admin.modal.ctrl';
-import TokenListAdminCtrl from './token.list.admin.ctrl';
+import BuildListAdminCtrl from './token.list.admin.ctrl';
 
-export default angular
-	.module('vpdb.token', [])
-	.controller('TokenCreateModalCtrl', TokenCreateModalCtrl)
-	.controller('TokenCreateAdminModalCtrl', TokenCreateAdminModalCtrl)
-	.controller('TokenListAdminCtrl', TokenListAdminCtrl)
-	.name;
+/**
+ * Lists all provider tokens.
+ */
+export default class TokenListAdminComponent {
+	/**
+	 * @ngInject
+	 */
+	constructor() {
+		this.templateUrl = require('./token.list.admin.pug');
+		this.controller = BuildListAdminCtrl;
+		this.controllerAs = 'vm';
+	}
+}

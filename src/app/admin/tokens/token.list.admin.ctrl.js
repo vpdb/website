@@ -18,7 +18,7 @@
  */
 
 import { assign } from 'lodash';
-import TokenCreateAdminModalTpl from '../tokens/token.create.admin.modal.pug';
+import TokenCreateAdminModalTpl from './token.create.admin.modal.pug';
 
 export default class TokenListAdminCtrl {
 

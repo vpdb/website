@@ -52,7 +52,7 @@ const ADMIN_UPLOADS = {
 const ADMIN_TOKENS = {
 	name: 'adminTokens',
 	url: '/admin/tokens',
-	component: 'adminTokensComponent',
+	component: 'tokenListAdminComponent',
 	lazyLoad: loadModule
 };
 

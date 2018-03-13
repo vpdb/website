@@ -47,7 +47,6 @@ import media from './media';
 import content from './content';
 import tag from './tag';
 import errors from './errors';
-import tokens from './tokens';
 
 import routes from './app.routes';
 import controller from './app.ctrl';
@@ -112,8 +111,7 @@ const VPDB = angular.module('vpdb', [
 	media,
 	content,
 	tag,
-	errors,
-	tokens
+	errors
 ])
 	.config(routes)
 	.config(msdElasticConfig)

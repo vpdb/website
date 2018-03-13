@@ -28,7 +28,9 @@ import UploadsListAdminCtrl from './uploads/uploads.list.admin.ctrl';
 import UploadsBackglassModerateAdminModalCtrl from './uploads/uploads.backglass.moderate.admin.modal.ctrl';
 import UploadsReleaseModerateAdminModalCtrl from './uploads/uploads.release.moderate.admin.modal.ctrl';
 import UploadsBackglassListAdminCtrl from './uploads/uploads.backglass.admin.list.ctrl';
+import TokenCreateAdminModalCtrl from './tokens/token.create.admin.modal.ctrl';
 import UploadHelper from './uploads/uploads.helper.service';
+import TokenListAdminComponent from './tokens/token.list.admin.component';
 
 const ADMIN_MODULE = angular
 	.module('vpdb.admin', [ ])
@@ -36,12 +38,14 @@ const ADMIN_MODULE = angular
 	.component('buildListAdminComponent', new BuildListAdminComponent())
 	.component('userListAdminComponent', new UserListAdminComponent())
 	.component('uploadsListAdminComponent', new UploadsListAdminComponent())
+	.component('tokenListAdminComponent', new TokenListAdminComponent())
 	.controller('BuildAddAdminModalCtrl', BuildAddAdminModalCtrl)
 	.controller('BuildEditAdminModalCtrl', BuildEditAdminModalCtrl)
 	.controller('UploadsListAdminCtrl', UploadsListAdminCtrl)
 	.controller('UploadsBackglassListAdminCtrl', UploadsBackglassListAdminCtrl)
 	.controller('UploadsBackglassModerateAdminModalCtrl', UploadsBackglassModerateAdminModalCtrl)
 	.controller('UploadsReleaseListAdminCtrl', UploadsReleaseListAdminCtrl)
-	.controller('UploadsReleaseModerateAdminModalCtrl', UploadsReleaseModerateAdminModalCtrl);
+	.controller('UploadsReleaseModerateAdminModalCtrl', UploadsReleaseModerateAdminModalCtrl)
+	.controller('TokenCreateAdminModalCtrl', TokenCreateAdminModalCtrl);
 
 export { ADMIN_MODULE };

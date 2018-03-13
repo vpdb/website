@@ -18,7 +18,6 @@
  */
 
 import HomeTpl from './home/home.pug';
-import TokenListAdminTpl from './tokens/token.list.admin.pug';
 import AboutTpl from './content/about.pug';
 import RulesTpl from './content/rules.pug';
 import FaqTpl from './content/faq.pug';
@@ -34,7 +33,7 @@ import { RELEASE_ADD, RELEASE_VERSION_ADD, RELEASE_EDIT } from './releases/admin
 import { BACKGLASS_ADD } from './backglasses/admin/backglass.admin.states';
 import { AUTH_CALLBACK, CONFIRM_TOKEN } from './common/common.states';
 import { PROFILE_DOWNLOADS, PROFILE_NOTIFICATIONS, PROFILE_ROOT, PROFILE_SETTINGS, PROFILE_STATS } from './profile/profile.states';
-import { ADMIN_BUILDS, ADMIN_USERS, ADMIN_UPLOADS } from './admin/admin.states';
+import { ADMIN_BUILDS, ADMIN_USERS, ADMIN_UPLOADS, ADMIN_TOKENS } from './admin/admin.states';
 
 /**
  * @param $urlRouterProvider
@@ -80,7 +79,7 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state(ADMIN_USERS);
 	$stateProvider.state(ADMIN_BUILDS);
 	$stateProvider.state(ADMIN_UPLOADS);
-	$stateProvider.state('adminTokens',       { url: '/admin/tokens', templateUrl: TokenListAdminTpl });
+	$stateProvider.state(ADMIN_TOKENS);
 
 	// content
 	$stateProvider.state('about',             { url: '/about', templateUrl: AboutTpl });

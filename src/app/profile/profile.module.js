@@ -24,6 +24,7 @@ import ProfileSettingsComponent from './settings/profile.settings.component';
 import ProfileDownloadsComponent from './downloads/profile.downloads.component';
 import ProfileNotificationsComponent from './notifications/profile.notifications.component';
 import ProfileStatsComponent from './stats/profile.stats.component';
+import TokenCreateModalCtrl from './settings/token.create.modal.ctrl';
 
 const PROFILE_MODULE = angular
 	.module('vpdb.profile', [ ])
@@ -31,6 +32,7 @@ const PROFILE_MODULE = angular
 	.component('profileSettingsComponent', new ProfileSettingsComponent())
 	.component('profileDownloadsComponent', new ProfileDownloadsComponent())
 	.component('profileNotificationsComponent', new ProfileNotificationsComponent())
-	.component('profileStatsComponent', new ProfileStatsComponent());
+	.component('profileStatsComponent', new ProfileStatsComponent())
+	.controller('TokenCreateModalCtrl', TokenCreateModalCtrl);
 
 export { PROFILE_MODULE };
