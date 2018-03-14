@@ -22,7 +22,7 @@ module.exports  = function(options) {
 			rules: [
 				{ test: /\.js$/, use: [
 					{ loader: 'ng-annotate-loader', options: { ngAnnotate: 'ng-annotate-patched', es6: false, explicitOnly: false } },
-					{ loader: 'babel-loader', options: { presets: ['@babel/preset-env'], plugins: [ 'syntax-dynamic-import' ] } }
+					{ loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } }
 				], include: appContext  },
 				{ test: /\.pug$/, oneOf: [
 					{ test: /index\.pug$/, use: [ { loader: 'pug-loader', options: { pretty: !isProd } } ] },
