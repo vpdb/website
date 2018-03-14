@@ -55,14 +55,6 @@ import '../icons';
 import '../static';
 import '../static/favicon';
 
-const app = () => {
-	return {
-		templateUrl: AppTpl,
-		controller: AppCtrl,
-		controllerAs: 'vm'
-	};
-};
-
 /**
  * Dependencies here are global dependencies only, everything else is
  * lady-loaded.
@@ -92,6 +84,10 @@ const VPDB = angular.module('vpdb', [
 	.config(routes)
 	.config(timeAgoConfig)
 	.service('App', service)
-	.directive('vpdb', app);
+	.component('vpdb', {
+		templateUrl: AppTpl,
+		controller: AppCtrl,
+		controllerAs: 'vm'
+	});
 
 export { VPDB };

@@ -39,8 +39,9 @@ export default class AppCtrl {
 	 * @ngInject
 	 */
 	constructor($rootScope, $state, $localStorage, $uibModal, App, AuthService, Config, BuildConfig) {
-		console.log('Application controller loaded.');
+		this.waitCoolDown = 2000;
 
+		this.$rootScope = $rootScope;
 		this.$state = $state;
 		this.$uibModal = $uibModal;
 		this.App = App;
@@ -57,8 +58,21 @@ export default class AppCtrl {
 		this.showLegalUpdated = currentDocumentRevisions.legal < Config.documentRevisions.legal;
 		$localStorage.documentRevisions = Config.documentRevisions;
 
-		// make content available offline
-		this.installServiceWorker();
+		// wait for page load to finish
+		this.$rootScope.$on('loading:start', () => {
+			if (this.waitTimeout) {
+				clearTimeout(this.waitTimeout);
+			}
+		});
+		this.$rootScope.$on('loading:finish', () => {
+			if (this.waitTimeout) {
+				clearTimeout(this.waitTimeout);
+			}
+			this.waitTimeout = setTimeout(() => this.installServiceWorker(), this.waitCoolDown);
+		});
+		this.waitTimeout = setTimeout(() => this.installServiceWorker(), this.waitCoolDown);
+
+		console.log('Application controller loaded.');
 	}
 
 	login() {
@@ -104,7 +118,14 @@ export default class AppCtrl {
 	}
 
 	installServiceWorker() {
-		if (this.BuildConfig.production && 'serviceWorker' in navigator) {
+		if (!this.BuildConfig.production && !this.serviceWorkerInstalled) {
+			console.log('Not installing service worker on non-production.');
+		}
+		if (!('serviceWorker' in navigator) && !this.serviceWorkerInstalled) {
+			console.log('Not installing service worker in unsupported browser.');
+		}
+		if (this.BuildConfig.production && 'serviceWorker' in navigator && !this.serviceWorkerInstalled) {
+			console.log('Installing service worker.');
 			navigator.serviceWorker.register('/sw.js').then(function(reg) {
 				// updatefound is fired if service-worker.js changes.
 				reg.onupdatefound = function() {
@@ -137,5 +158,6 @@ export default class AppCtrl {
 				console.error('Error during service worker registration:', e);
 			});
 		}
+		this.serviceWorkerInstalled = true;
 	}
 }

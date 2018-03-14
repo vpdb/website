@@ -20,6 +20,7 @@
 import $ from 'jquery';
 import angular from 'angular';
 import { isObject } from 'lodash';
+import NetworkService from '../backend/network.service';
 
 /**
  * Sets the image background of an element.
@@ -32,9 +33,10 @@ import { isObject } from 'lodash';
  *
  * @param $parse
  * @param {AuthService} AuthService
+ * @param {NetworkService} NetworkService
  * @ngInject
  */
-export default function imgBg($parse, AuthService) {
+export default function imgBg($parse, AuthService, NetworkService) {
 	return {
 		scope: true,
 		restrict: 'A',
@@ -43,12 +45,14 @@ export default function imgBg($parse, AuthService) {
 			scope.img = { url: false, loading: false };
 
 			const loadImg = function(url) {
+				NetworkService.onRequestStarted(url);
 				scope.img = { url: url, loading: true };
 				// eslint-disable-next-line
 				element.css('background-image', "url('" + url + "')");
 				$(element).waitForImages(
 					$.noop,
 					function(loaded, count, success) {
+						NetworkService.onRequestFinished(url);
 						scope.img.loading = false;
 						if (success) {
 							const that = $(this);
@@ -68,7 +72,6 @@ export default function imgBg($parse, AuthService) {
 			};
 
 			const setImgUrl = function(url) {
-
 				// if supported, only load image when in view.
 				if (typeof IntersectionObserver !== 'undefined') {
 					const observer = new IntersectionObserver(changes => {
@@ -83,8 +86,6 @@ export default function imgBg($parse, AuthService) {
 					loadImg(url);
 				}
 			};
-
-
 
 			const setImg = function(value) {
 				const url = isObject(value) ? value.url : value;

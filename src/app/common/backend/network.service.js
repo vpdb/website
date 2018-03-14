@@ -18,25 +18,32 @@
  */
 
 /**
- * @param $rootScope
- * @param $q
- * @param {NetworkService} NetworkService
- * @return {{response: response}}
- * @ngInject
+ * Sends events when downloads have finished. Works for the API as well as for
+ * images using the `img-bg` directive.
+ *
+ * The goal is to install the service worker only when all other requests have
+ * finished in order not to compete with the page load.
  */
-export default function($rootScope, $q, NetworkService) {
-	return {
-		request: function(config) {
-			NetworkService.onRequestStarted(config.url);
-			return config || $q.when(config);
-		},
-		response: function(response) {
-			NetworkService.onRequestFinished(response.config.url);
-			return response || $q.when(response);
-		},
-		responseError: function(response) {
-			NetworkService.onRequestFinished(response.config.url);
-			return $q.reject(response);
+export default class NetworkService {
+
+	/**
+	 * @param $rootScope
+	 * @ngInject
+	 */
+	constructor($rootScope) {
+		this.$rootScope = $rootScope;
+		this.loadingCount = 0;
+	}
+
+	onRequestStarted(url) {
+		if (this.loadingCount++ === 0) {
+			this.$rootScope.$broadcast('loading:start', url);
 		}
-	};
+	}
+
+	onRequestFinished(url) {
+		if (--this.loadingCount === 0) {
+			this.$rootScope.$broadcast('loading:finish', url);
+		}
+	}
 }

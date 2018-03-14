@@ -64,6 +64,7 @@ import ModalCtrl from './modal/modal.ctrl';
 import ModalService from './modal/modal.service';
 import ModalMarkdownFiddle from './modal/modal.markdown.fiddle';
 import ModalFlashService from './modal/modal.flash.service';
+import NetworkService from './backend/network.service';
 import ReleaseService from './releases/release.service';
 import TrackerService from './util/tracker.service';
 import UserInfoModalCtrl from './user/user.info.modal.ctrl';
@@ -129,6 +130,7 @@ export default angular.module('vpdb.common', [])
 	.service('GameResource', GameResource)
 	.service('GameStarResource', GameStarResource)
 	.service('IpdbResource', IpdbResource)
+	.service('NetworkService', NetworkService)
 	.service('PlanResource', PlanResource)
 	.service('ProfileResource', ProfileResource)
 	.service('ReleaseResource', ReleaseResource)
