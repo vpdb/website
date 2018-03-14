@@ -18,8 +18,7 @@
  */
 
 // Vendor
-import 'bootstrap/dist/css/bootstrap.css';
-import 'magnific-popup/dist/magnific-popup.css';
+import '../styles/vendor.less';
 
 // Core CSS
 import '../styles/scaffolding.styl'; // 1
