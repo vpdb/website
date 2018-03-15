@@ -20,7 +20,6 @@
 import angular from 'angular';
 import { VPDB } from './app';
 
-
 /**
  * This is the entry point of the app.
  *
