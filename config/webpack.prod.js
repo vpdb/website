@@ -25,8 +25,7 @@ module.exports = function(options) {
 				}
 			}),
 			new WorkboxPlugin.GenerateSW({
-
-				swDest: join(options.outputPath, 'sw.js'),
+				swDest: 'sw.js',
 				clientsClaim: true,
 				skipWaiting: true,
 
