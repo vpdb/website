@@ -44,19 +44,10 @@ module.exports  = function(options) {
 		},
 		plugins: [
 
-			//new webpack.IgnorePlugin(/glyphicons/, /bootstrap/),
-
 			new ExtractTextPlugin({
 				filename: '[name]-[sha256:contenthash:base58:8].css',
 				allChunks: true
 			}),
-			//
-			// new webpack.SourceMapDevToolPlugin({
-			// 	filename: "[file].map",
-			// 	append: "//# sourceMappingURL=webpack://[url]",
-			// 	moduleFilenameTemplate: '[resource-path]',
-			// 	fallbackModuleFilenameTemplate: '[resource-path]'
-			// }),
 
 			new HtmlWebpackPlugin({
 				template: './src/index.pug'
