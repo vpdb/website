@@ -18,5 +18,5 @@
  */
 
 // eslint-disable-next-line no-undef
-const filesContext = require.context('!!file-loader?name=/[name].[ext]!.', true, /\.(txt|ico|webmanifest)$/);
+const filesContext = require.context('!!file-loader?name=/[name].[ext]!.', true, /\.(txt|ico|json)$/);
 filesContext.keys().forEach(filesContext);
