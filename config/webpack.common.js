@@ -32,7 +32,7 @@ module.exports  = function(options) {
 					] }
 				] },
 				{ test: /\.html$/, loader: 'raw-loader' },
-				{ test: /\.(eot|woff|woff2|ttf|png|svg|jpg|swf)$/, loader: { loader: 'file-loader', options: { name: '[path][name]-[sha256:hash:base58:8].[ext]', context: staticContext } }, exclude: iconsContext },
+				{ test: /\.(eot|woff|woff2|ttf|otf|png|svg|jpg|swf)$/, loader: { loader: 'file-loader', options: { name: '[path][name]-[sha256:hash:base58:8].[ext]', context: staticContext } }, exclude: iconsContext },
 				{ test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: cssLoader}) },
 				{ test: /\.styl$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ cssLoader, 'stylus-loader?sourceMap=true'] }) },
 				{ test: /\.less$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ cssLoader, 'postcss-loader', 'less-loader'] }) },
@@ -40,7 +40,7 @@ module.exports  = function(options) {
 					{ loader: 'svg-sprite-loader', options: { extract: true } },
 					{ loader: 'svgo-loader', options: { plugins: [ { removeDoctype: true }, { removeXMLProcInst: true }, { removeComments: true }, { removeMetadata: true }, { removeEditorsNSData: true }, { cleanupAttrs: true }, { convertStyleToAttrs: true }, { removeRasterImages: true }, { cleanupNumericValues: true }, { convertColors: true }, { removeUnknownsAndDefaults: true }, { removeNonInheritableGroupAttrs: true }, { removeUselessStrokeAndFill: true }, { removeViewBox: true }, { cleanupEnableBackground: true }, { removeHiddenElems: true }, { removeEmptyText: true }, { convertShapeToPath: true }, { moveElemsAttrsToGroup: true }, { moveGroupAttrsToElems: true }, { collapseGroups: true }, { convertPathData: true }, { convertTransform: true }, { removeEmptyAttrs: true }, { removeEmptyContainers: true }, { mergePaths: true }, { cleanupIDs: true }, { removeUnusedNS: true }, { transformsWithOnePath: false }, { sortAttrs: true }, { removeTitle: true } ] } }
 				], include: iconsContext },
-				{ test: /\.(json|txt|ico)$/, type: 'javascript/auto', exclude: /node_modules/, use: [ { loader: 'file-loader', options: { name: '[name].[ext]' } } ] }
+				{ test: /\.(json|txt|ico|xml)$/, type: 'javascript/auto', exclude: /node_modules/, use: [ { loader: 'file-loader', options: { name: '[name].[ext]' } } ] }
 			]
 		},
 		plugins: [
