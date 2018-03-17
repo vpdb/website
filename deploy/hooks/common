@@ -91,13 +91,14 @@ npm_install_copy() {
 	echo "Installing remaining dependencies..."
 	cd ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
 	npm install --no-optional
-	test $? -eq 0 || rollback_abort $1 "Failed to run npm install. Manually fix and relaunch deployment.".
+	test $? -eq 0 || abort $1 "Failed to run npm install. Manually fix and relaunch deployment.".
 }
 
 npm_build() {
 	echo Building...
 	cd ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
 	WEBSITE_CONFIG=$3 npm run build:$2
+	test $? -eq 0 || abort $1 "Failed to run npm install. Manually fix and relaunch deployment.".
 }
 
 repo_link() {
