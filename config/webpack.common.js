@@ -39,7 +39,8 @@ module.exports  = function(options) {
 				{ test: /\.svg$/, use: [
 					{ loader: 'svg-sprite-loader', options: { extract: true } },
 					{ loader: 'svgo-loader', options: { plugins: [ { removeDoctype: true }, { removeXMLProcInst: true }, { removeComments: true }, { removeMetadata: true }, { removeEditorsNSData: true }, { cleanupAttrs: true }, { convertStyleToAttrs: true }, { removeRasterImages: true }, { cleanupNumericValues: true }, { convertColors: true }, { removeUnknownsAndDefaults: true }, { removeNonInheritableGroupAttrs: true }, { removeUselessStrokeAndFill: true }, { removeViewBox: true }, { cleanupEnableBackground: true }, { removeHiddenElems: true }, { removeEmptyText: true }, { convertShapeToPath: true }, { moveElemsAttrsToGroup: true }, { moveGroupAttrsToElems: true }, { collapseGroups: true }, { convertPathData: true }, { convertTransform: true }, { removeEmptyAttrs: true }, { removeEmptyContainers: true }, { mergePaths: true }, { cleanupIDs: true }, { removeUnusedNS: true }, { transformsWithOnePath: false }, { sortAttrs: true }, { removeTitle: true } ] } }
-				], include: iconsContext }
+				], include: iconsContext },
+				{ test: /\.(json|txt|ico)$/, type: 'javascript/auto', exclude: /node_modules/, use: [ { loader: 'file-loader', options: { name: '[name].[ext]' } } ] }
 			]
 		},
 		plugins: [
