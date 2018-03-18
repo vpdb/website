@@ -84,10 +84,12 @@ const VPDB = angular.module('vpdb', [
 	.config(routes)
 	.config(timeAgoConfig)
 	.service('App', service)
-	.component('vpdb', {
-		templateUrl: AppTpl,
-		controller: AppCtrl,
-		controllerAs: 'vm'
+	.directive('vpdb', () => {
+		return {
+			templateUrl: AppTpl,
+			controller: AppCtrl,
+			controllerAs: 'vm'
+		};
 	});
 
 export { VPDB };
