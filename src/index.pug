@@ -30,7 +30,7 @@ html#app(lang="en")
 		//- the app
 		vpdb
 			//- display this until the app has bootstrapped
-			loading
+			loading#loading(style="display:none")
 				.logo
 					div(style='height:100px')
 						svg.svg-icon(style='height:88px;width:88px;top:6px;left:6px;')
@@ -40,7 +40,7 @@ html#app(lang="en")
 					div
 						svg.svg-icon(style='height:40px;width:40px;position:relative;left:11px')
 							use(xlink:href='#logo-vp')
-						svg.svg-icon(style='height:40px;width:40px;position:relative;left:10px')
+						svg.svg-icon(style='height:40px;width:40px;position:relative;left:6px')
 							use(xlink:href='#logo-db')
 
 		//- notifications
@@ -57,8 +57,11 @@ html#app(lang="en")
 			.container.container--topmost
 				.text-center
 					img(src="favicon/splash-v1.png", width="200", height="200")
-					p Dude, you need to enable Javascript if you want to hang out here.
+					p(style="color: #888") Dude, you need to enable Javascript if you want to hang out here.
 					p.padder-bottom-2x &nbsp;
+
+		//- show loading spinner
+		script(type="text/javascript") document.getElementById('loading').style.display = 'block'
 
 		each spriteFileName in htmlWebpackPlugin.files.sprites
 			| !{spriteFileName}
