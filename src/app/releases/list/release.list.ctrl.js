@@ -79,7 +79,6 @@ export default class ReleaseListCtrl {
 		this.viewtype = includes(viewTypes, viewtype) ? viewtype : defaultViewType;
 		this.setViewTemplate(this.viewtype);
 
-		// FIXME starred filter doesn't work.
 		this.params = new Params([
 			new Param({ name: 'q', defaultValue: '' }),
 			new Param({ name: 'starredOnly', defaultValue: false, reqName: 'starred' }),

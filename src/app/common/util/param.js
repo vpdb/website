@@ -19,6 +19,9 @@
 
 import { isArray } from 'lodash';
 
+/**
+ * A parameter which is mapped to a URL, the API and an internal property.
+ */
 export default class Param {
 
 	/**

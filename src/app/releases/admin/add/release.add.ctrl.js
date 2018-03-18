@@ -26,7 +26,6 @@ import TagAddModalTpl from '../tag/tag.add.modal.pug';
 export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 
 	/**
-	 * FIXME dark theme, population doesn't seem to work.
 	 * @param $scope
 	 * @param $uibModal
 	 * @param $localStorage

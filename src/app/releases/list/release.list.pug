@@ -92,7 +92,7 @@ include ../../template/_mixins
 
 		// starred only
 		span(ng-show="vm.AuthService.isAuthenticated")
-			input#starredOnly.checkbox--toggle(type='checkbox', ng-model="vm.starredOnly")
+			input#starredOnly.checkbox--toggle(type='checkbox', ng-model="vm.query.starredOnly")
 			label(for="starredOnly")
 			label.a.a--light.padder-bottom(for="starredOnly") Starred releases only
 			.clearfix

@@ -20,7 +20,6 @@
 import $ from 'jquery';
 import angular from 'angular';
 import { isObject } from 'lodash';
-import NetworkService from '../backend/network.service';
 
 /**
  * Sets the image background of an element.
