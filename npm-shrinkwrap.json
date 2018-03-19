@@ -10620,7 +10620,7 @@
 		},
 		"pug-loader": {
 			"version": "https://github.com/pugjs/pug-loader/tarball/master",
-			"integrity": "sha1-7I2SCgxkeaA2y2uS4++So27fdBw=",
+			"integrity": "sha512-sbJuZq+zKddGoWHGaKZvnfCiOLGhwVBeDlayZd3xjVNBLIMUUcLma73a0vsZpnRe87s/HOtXCv25pkvT7RAzJA==",
 			"dev": true,
 			"requires": {
 				"loader-utils": "1.1.0",
@@ -12252,15 +12252,6 @@
 			"integrity": "sha1-J5siXfHVgrH1TmWt3UNS4Y+qBxM=",
 			"dev": true
 		},
-		"string_decoder": {
-			"version": "1.0.3",
-			"resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.0.3.tgz",
-			"integrity": "sha512-4AH6Z5fzNNBcH+6XDMfA/BTt87skxqJlO0lAh3Dker5zThcAxG6mKz+iGu308UKoPPQ8Dcqx/4JhujzltRa+hQ==",
-			"dev": true,
-			"requires": {
-				"safe-buffer": "5.1.1"
-			}
-		},
 		"string-template": {
 			"version": "0.2.1",
 			"resolved": "https://registry.npmjs.org/string-template/-/string-template-0.2.1.tgz",
@@ -12296,6 +12287,15 @@
 				"define-properties": "1.1.2",
 				"es-abstract": "1.9.0",
 				"function-bind": "1.1.1"
+			}
+		},
+		"string_decoder": {
+			"version": "1.0.3",
+			"resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.0.3.tgz",
+			"integrity": "sha512-4AH6Z5fzNNBcH+6XDMfA/BTt87skxqJlO0lAh3Dker5zThcAxG6mKz+iGu308UKoPPQ8Dcqx/4JhujzltRa+hQ==",
+			"dev": true,
+			"requires": {
+				"safe-buffer": "5.1.1"
 			}
 		},
 		"stringmap": {
