@@ -96,7 +96,7 @@
 		"pngjs": "3.3.2",
 		"postcss-loader": "2.1.1",
 		"protractor": "5.3.0",
-		"protractor-beautiful-reporter": "0.5.8",
+		"protractor-beautiful-reporter": "1.2.1",
 		"pug": "2.0.1",
 		"pug-html-loader": "1.1.5",
 		"pug-loader": "https://github.com/pugjs/pug-loader/tarball/master",
