@@ -101,7 +101,7 @@ export default function imgBg($parse, AuthService, NetworkService) {
 					if (!isProtected) {
 						setImgUrl(url);
 					} else {
-						console.debug('img-bg: adding url %s to be collected', url);
+						console.info('img-bg: adding url %s to be collected', url);
 						AuthService.addUrlToken(url, setImgUrl);
 					}
 				}

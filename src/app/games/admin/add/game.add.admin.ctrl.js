@@ -236,7 +236,7 @@ export default class GameAddAdminCtrl {
 
 	onBackglassUpload(status) {
 		const bg = status.storage;
-		console.debug('GameAddAdminCtrl: Backglass uploaded, collecting URL props.', status);
+		console.info('GameAddAdminCtrl: Backglass uploaded, collecting URL props.', status);
 		this.AuthService.collectUrlProps(bg, true);
 		this.game._backglass = bg.id;
 		this.game.mediaFile.backglass = bg;

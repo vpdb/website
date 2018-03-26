@@ -20,7 +20,6 @@
 import angular from 'angular';
 import { VPDB } from './app';
 
-
 /**
  * This is the entry point of the app.
  *
@@ -31,10 +30,10 @@ import { VPDB } from './app';
  * @see https://philipwalton.com/articles/loading-polyfills-only-when-needed/
  */
 if (browserSupportsAllFeatures()) {
-	console.debug('No polyfills necessary.');
+	console.info('No polyfills necessary.');
 	bootstrap();
 } else {
-	console.debug('Loading polyfills before continuing...');
+	console.info('Loading polyfills before continuing...');
 	loadScript('https://cdn.polyfill.io/v2/polyfill.min.js', bootstrap);
 }
 
