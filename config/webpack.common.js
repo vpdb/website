@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
+const srcContext = resolve(__dirname, '../src');
 const appContext = resolve(__dirname, '../src/app');
 const staticContext = resolve(__dirname, '../src/static');
 const iconsContext = resolve(__dirname, '../src/icons');
@@ -23,7 +24,7 @@ module.exports  = function(options) {
 				{ test: /\.js$/, use: [
 					{ loader: 'ng-annotate-loader', options: { ngAnnotate: 'ng-annotate-patched', es6: false, explicitOnly: false } },
 					{ loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } }
-				], include: appContext  },
+				], include: srcContext },
 				{ test: /\.pug$/, oneOf: [
 					{ test: /index\.pug$/, use: [ { loader: 'pug-loader', options: { pretty: !isProd } } ] },
 					{ use: [
