@@ -63,6 +63,8 @@ export default class ProfileSettingsCtrl {
 		});
 
 		this.fetchUser();
+
+		this.unlinkedProviders = AuthService.getProviders(AuthService.user, true);
 	}
 
 	fetchUser() {
