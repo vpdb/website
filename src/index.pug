@@ -1,3 +1,4 @@
+include app/template/_mixins
 doctype html
 block root
 //- to debug injections, add ng-strict-di to <html> element and run in dev mode!
@@ -20,9 +21,32 @@ html#app(lang="en")
 		meta(name="msapplication-TileColor", content="#ec843d")
 		meta(name="msapplication-config", content="/favicon/browserconfig.xml")
 		meta(http-equiv="X-UA-Compatible", content="IE=Edge")
-		script(type="text/javascript", src="//use.typekit.net/xhi7wnv.js")
-		script(type="text/javascript") try { Typekit.load(); } catch (e) { }
-		style @keyframes loading-spinner{to{transform:rotate(360deg)}}body{background-color:#121110}loading>.logo{margin:0;position:absolute;top:35%;left:50%;transform:translate(-55%,-35%)}loading>.logo svg.svg-icon{fill:#4d4b49;position:absolute}
+		style.
+			@keyframes loading-spinner {
+				to {
+					transform: rotate(360deg)
+				}
+			}
+			html.wf-loading > body > vpdb > * {
+				display:none
+			}
+			html.wf-loading > body > vpdb > loading {
+				display:block
+			}
+			body {
+				background-color: #121110
+			}
+			loading > .logo {
+				margin: 0;
+				position: absolute;
+				top: 35%;
+				left: 50%;
+				transform: translate(-55%, -35%)
+			}
+			loading > .logo svg.svg-icon {
+				fill: #4d4b49;
+				position: absolute
+			}
 		base(href="/")
 
 	body#top(ng-class="themeName || 'theme-dark'")
@@ -30,7 +54,7 @@ html#app(lang="en")
 		//- the app
 		vpdb
 			//- display this until the app has bootstrapped
-			loading#loading(style="display:none")
+			loading#loading
 				.logo
 					div(style='height:100px')
 						svg.svg-icon(style='height:88px;width:88px;top:6px;left:6px;')
@@ -56,8 +80,7 @@ html#app(lang="en")
 		noscript
 			.container.container--topmost
 				.text-center
-					img(src="favicon/splash-v1.png", width="200", height="200")
-					p(style="color: #888") Dude, you need to enable Javascript if you want to hang out here.
+					p(style="color: #4d4b49; margin-top: 40px") Dude, you need to enable Javascript if you want to hang out here.
 					p.padder-bottom-2x &nbsp;
 
 		//- show loading spinner
@@ -65,6 +88,34 @@ html#app(lang="en")
 
 		each spriteFileName in htmlWebpackPlugin.files.sprites
 			| !{spriteFileName}
+
+		//- load typekit fonts
+		script(type="text/javascript").
+			(function(d) {
+				var config = {
+						kitId: 'xhi7wnv',
+						scriptTimeout: 3000,
+						async: true
+					},
+					h = d.documentElement, t = setTimeout(function() {
+						h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
+					}, config.scriptTimeout), tk = d.createElement("script"), f = false,
+					s = d.getElementsByTagName("script")[0], a;
+				h.className += " wf-loading";
+				tk.src = '//use.typekit.net/' + config.kitId + '.js';
+				tk.async = true;
+				tk.onload = tk.onreadystatechange = function() {
+					a = this.readyState;
+					if (f || a && a != "complete" && a != "loaded") return;
+					f = true;
+					clearTimeout(t);
+					try {
+						Typekit.load(config)
+					} catch (e) {
+					}
+				};
+				s.parentNode.insertBefore(tk, s)
+			})(document);
 
 		//- Google Analytics FIXME
 		//if gaEnabled

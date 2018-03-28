@@ -121,7 +121,9 @@ div(ng-repeat="(id, notification) in notifications track by id")
 
 	//- -----------------------------------------------------------------------------
 	//- content
-	| <div ui-view></div>
+	ui-view
+		+loading("true")
+
 	//- end content
 	//- -----------------------------------------------------------------------------
 
