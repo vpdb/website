@@ -13,7 +13,7 @@ include ../../template/_mixins
 		.span(ng-hide="vm.LoginService.loginParams.localOnly")
 			h3.h--shift-up Login with
 			.text-center
-				a.btn.btn--secondary.btn-lg.padder-bottom(ng-repeat="ipb in vm.Config.authProviders.ipboard", ng-click="vm.oauth(ipb.id)")
+				a.btn.btn--secondary.btn-lg.padder-bottom(ng-repeat="ipb in vm.Config.authProviders.ips", ng-click="vm.oauth(ipb.id)")
 					+icon('{{ ipb.icon }}').space-right
 					| {{ ipb.name }}
 				a.btn.btn--secondary.btn-lg.padder-bottom(ng-show="vm.Config.authProviders.google", ng-click="vm.oauth('google')")

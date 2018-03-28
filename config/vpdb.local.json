@@ -24,7 +24,7 @@
 		"local": true,
 		"google": true,
 		"github": true,
-		"ipboard": [
+		"ips": [
 			{
 				"id": "ips",
 				"name": "IPS Test",

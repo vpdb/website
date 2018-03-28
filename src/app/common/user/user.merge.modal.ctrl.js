@@ -23,6 +23,9 @@ export default class UserMergeModalCtrl {
 	 * @param $state
 	 * @param $uibModalInstance
 	 * @param $localStorage
+	 * @param $window
+	 * @param {ConfigService} ConfigService
+	 * @param {Config} Config
 	 * @param data
 	 * @ngInject
 	 */
@@ -34,24 +37,21 @@ export default class UserMergeModalCtrl {
 		this.ConfigService = ConfigService;
 		this.data = data;
 		this.selectedUser = null;
+		const providerInfo = {
+			local: { icon: 'vpdb-o', label: 'Local account' },
+			github: { icon: 'github', label: 'GitHub' },
+			google: { icon: 'google', label: 'Google' }
+		};
+		Config.authProviders.ips.forEach(ips => {
+			providerInfo[ips.id] = { icon: ips.icon, label: ips.name };
+		});
 
 		this.users = data.users.map(user => {
-			user.providerData = user.providers.map(provider => {
-				switch (provider) {
-					case 'local':
-						return { icon: 'vpdb-o', label: 'Local account' };
-					case 'github':
-						return { icon: 'github', label: 'GitHub' };
-					case 'google':
-						return { icon: 'google', label: 'Google' };
-					default: {
-						const ips = Config.authProviders.ipboard.filter(i => i.id === provider);
-						return ips.length
-							? { icon: ips[0].icon, label: ips[0].name }
-							: { icon: 'question-circle', label: 'Unknown Provider' };
-					}
-				}
-			});
+			const providerNames = user.providers.map(p => p.provider);
+			if (user.is_local) {
+				providerNames.unshift('local');
+			}
+			user.providerData = providerNames.map(p => providerInfo[p] || { icon: 'question-circle', label: 'Unknown Provider' });
 			return user;
 		});
 	}

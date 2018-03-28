@@ -25,7 +25,7 @@
 		"local": true,
 		"google": false,
 		"github": false,
-		"ipboard": []
+		"ips": []
 	},
 	"documentRevisions": {
 		"rules": 2,

@@ -87,11 +87,13 @@ export default class ProfileSettingsCtrl {
 			this.providers = this.AuthService.getProviders(this.AuthService.user);
 			const allProviders = this.AuthService.getProviders();
 
+			console.log(this.providers);
+
 			// pre-fill (local) username from first provider we find.
 			let i, provider;
 			for (i = 0; i < allProviders.length; i++) {
 				provider = allProviders[i];
-				if (this.AuthService.user[provider.id] && this.AuthService.user[provider.id].username) {
+				if (this.AuthService.user.providers[provider.id] && this.AuthService.user.providers[provider.id].name) {
 					this.localCredentials.username = this.AuthService.user[provider.id].username;
 					break;
 				}

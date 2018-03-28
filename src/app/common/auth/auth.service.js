@@ -507,14 +507,14 @@ export default class AuthService {
 				url: '/auth/github'
 			});
 		}
-		if (isArray(this.Config.authProviders.ipboard)) {
-			providers = [ ...providers, ...this.Config.authProviders.ipboard ];
+		if (isArray(this.Config.authProviders.ips)) {
+			providers = [ ...providers, ...this.Config.authProviders.ips ];
 		}
 
 		if (user) {
-			return filter(providers, provider => returnOthers
-				? (!user[provider.id] || isEmpty(user[provider.id]))
-				: (user[provider.id] && !isEmpty(user[provider.id])));
+			return providers
+				.map(provider => Object.assign(provider, { user: user.providers.find(p => p.provider === provider.id) }))
+				.filter(provider => returnOthers ? !provider.user : !!provider.user);
 		} else {
 			return providers;
 		}

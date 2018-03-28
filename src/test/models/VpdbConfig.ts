@@ -29,7 +29,7 @@ export interface VpdbConfig {
 		local:boolean,
 		google:boolean,
 		github:boolean,
-		ipboard: {
+		ips: {
 			id:string,
 			name:string,
 			icon:string,

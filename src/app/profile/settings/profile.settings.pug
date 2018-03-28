@@ -235,9 +235,9 @@ table.table.table-striped(ng-if="vm.providers.length")
 				+icon('{{ provider.icon }}')
 			td
 				b {{ provider.name }}
-			td {{ vm.AuthService.user[provider.id].username }}
-			td {{ vm.AuthService.user[provider.id].id }}
-			td -
+			td {{ provider.user.name}}
+			td {{ provider.user.id }}
+			td {{ provider.user.modified_at | timeAgo }}
 
 p(ng-if="!vm.providers.length")
 	i No linked accounts. Linked accounts appear when you choose to login with one of the supported third party providers.
