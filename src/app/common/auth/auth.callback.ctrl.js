@@ -26,6 +26,7 @@ import UserMergeModalTpl from '../user/user.merge.modal.pug';
 export default class AuthCallbackCtrl {
 
 	/**
+	 * @param $state
 	 * @param $stateParams
 	 * @param $location
 	 * @param $localStorage
@@ -35,14 +36,9 @@ export default class AuthCallbackCtrl {
 	 * @param AuthResource
 	 * @ngInject
 	 */
-	constructor($stateParams, $location, $localStorage, $uibModal, AuthService, ModalService, AuthResource) {
+	constructor($state, $stateParams, $location, $localStorage, $uibModal, AuthService, ModalService, AuthResource) {
 
 		if ($location.search().code) {
-
-			if (AuthService.isAuthenticated) {
-				console.log('Already authenticated with user.', $stateParams, $location, AuthService.user);
-				//return;
-			}
 
 			let query;
 			if ($localStorage.mergeUserId) {
@@ -74,7 +70,7 @@ export default class AuthCallbackCtrl {
 					ModalService.error({
 						subtitle: 'Could not login.',
 						message: err.data.error
-					});
+					}).result.then(() => $state.go('home'), () => $state.go('home'));
 				}
 			});
 		} else {

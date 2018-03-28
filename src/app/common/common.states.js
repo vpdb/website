@@ -22,7 +22,7 @@ import EmailConfirmationTpl from './auth/email.confirmation.pug';
 
 const AUTH_CALLBACK = {
 	name: 'authCallback',
-	url: '/auth/:strategy/callback?cod',
+	url: '/auth/:strategy/callback?code',
 	templateUrl: AuthCallbackTpl
 };
 const CONFIRM_TOKEN = {

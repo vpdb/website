@@ -30,6 +30,12 @@
 				"name": "IPS Test",
 				"icon": "gameex",
 				"url": "/auth/ips"
+			},
+			{
+				"id": "ips43",
+				"name": "Invision",
+				"icon": "offline",
+				"url": "/auth/ips43"
 			}
 		]
 	},

@@ -240,7 +240,8 @@ table.table.table-striped(ng-if="vm.providers.length")
 			td -
 
 p(ng-if="!vm.providers.length")
-	i No linked accounts. Linked accounts appear when you choose to login with one of the supported third party providers. In order to link a third party account to this account, simply login using a third party account where you registered with the same email address.
+	i No linked accounts. Linked accounts appear when you choose to login with one of the supported third party providers.
+	i(ng-show="vm.unlinkedProviders.length > 0")  In order to link a third party account to this account, click on the provider below.
 
 //- link to new account
 div(ng-if="vm.unlinkedProviders.length > 0")

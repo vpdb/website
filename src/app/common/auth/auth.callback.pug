@@ -10,6 +10,7 @@ div.text-center.padder-top-2x.padder-bottom-2x(ng-controller="AuthCallbackCtrl a
 		p(ng-show="vm.error.error && vm.error.error_uri") Something went wrong <a ng-href="{{ vm.error.error_uri }}" target="_blank">({{ vm.error.error }})</a>.
 		p(ng-hide="vm.error.error && vm.error.error_uri") Something went wrong.
 		p(ng-show="vm.error.error_description") {{ vm.error.error_description }}
+		p(ng-show="vm.error.error === 'access_denied'") Looks like you didn't allow access from VPDB.
 
 		br
 		a(ui-sref="home")
