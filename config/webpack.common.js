@@ -1,5 +1,7 @@
 /* eslint-disable */
 const { resolve } = require('path');
+const { readFileSync } = require('fs');
+const UglifyJS = require('uglify-js');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -52,7 +54,10 @@ module.exports  = function(options) {
 			}),
 
 			new HtmlWebpackPlugin({
-				template: './src/index.pug'
+				template: './src/index.pug',
+				inject: false,
+				// see https://github.com/filamentgroup/loadCSS
+				loadCss: UglifyJS.minify(readFileSync('./node_modules/fg-loadcss/src/cssrelpreload.js').toString()).code
 			}),
 
 			new SpriteLoaderPlugin({

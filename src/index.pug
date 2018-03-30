@@ -48,6 +48,10 @@ html#app(lang="en")
 				position: absolute
 			}
 		base(href="/")
+		//- styles
+		each cssFileName in htmlWebpackPlugin.files.css
+			link(rel="preload" href=cssFileName as="style" onload="this.onload=null;this.rel='stylesheet'")
+		script !{htmlWebpackPlugin.options.loadCss}
 
 	body#top(ng-class="themeName || 'theme-dark'")
 
@@ -83,9 +87,7 @@ html#app(lang="en")
 					p(style="color: #4d4b49; margin-top: 40px") Dude, you need to enable Javascript if you want to hang out here.
 					p.padder-bottom-2x &nbsp;
 
-		//- show loading spinner
-		script(type="text/javascript") document.getElementById('loading').style.display = 'block'
-
+		//- sprites
 		each spriteFileName in htmlWebpackPlugin.files.sprites
 			| !{spriteFileName}
 
@@ -116,6 +118,10 @@ html#app(lang="en")
 				};
 				s.parentNode.insertBefore(tk, s)
 			})(document);
+
+		//- scripts
+		each jsFileName in htmlWebpackPlugin.files.js
+			script(type="text/javascript" src=jsFileName)
 
 		//- Google Analytics FIXME
 		//if gaEnabled
