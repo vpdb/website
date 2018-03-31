@@ -88,7 +88,7 @@ module.exports  = function(options) {
 				rel: 'preload',
 				include: 'allAssets',
 				// this leaves *.woff and background_blurred*.jpg
-				fileBlacklist: [ /^((?!((app|vendor)\.bundle-[a-f0-9]{12}\.js|app-[a-zA-Z0-9]{8}\.html|\.woff)).)*$/, /\.map$/ ],
+				fileBlacklist: [ /^((?!((app|vendor)\.bundle-[a-f0-9]{12}\.js|background_blurred-[0-9a-zA-Z]{8}\.jpg|\.woff)).)*$/, /\.map$/ ],
 				as(entry) {
 					if (/\.woff$/.test(entry)) return 'font';
 					if (/\.jpg/.test(entry)) return 'image';
