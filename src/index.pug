@@ -5,6 +5,12 @@ block root
 html#app(lang="en")
 	head
 		title(ng-bind="pageTitle") VPDB
+		//- pre-load fonts
+		each preLoad in htmlWebpackPlugin.options.preLoad
+			link(rel="preload", href!=preLoad.href, as=preLoad.as, crossorigin)
+		//- pre-connect
+		each preConnect in htmlWebpackPlugin.options.preConnect
+			link(rel="preconnect", href!=preConnect, crossorigin)
 		meta(charset='utf8')
 		meta(name="viewport", content="width=device-width, initial-scale=1")
 		meta(name="theme-color", content="#2c190b")
@@ -18,6 +24,7 @@ html#app(lang="en")
 		link(rel="manifest", href="/manifest.json")
 		link(rel="mask-icon", href="/favicon/safari-pinned-tab.svg", color="#5bbad5")
 		link(rel="shortcut icon", href="/favicon.ico")
+
 		meta(name="msapplication-TileColor", content="#ec843d")
 		meta(name="msapplication-config", content="/favicon/browserconfig.xml")
 		meta(http-equiv="X-UA-Compatible", content="IE=Edge")
