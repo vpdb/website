@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { values, map, orderBy, cloneDeep, isEmpty, isArray } from 'lodash';
+import { orderBy, cloneDeep, isEmpty, isArray } from 'lodash';
 import ReleaseSelectPlayfieldModalTpl from './release.select.playfield.modal.pug';
 import ReleaseBaseCtrl from '../release.base.ctrl';
 
@@ -64,7 +64,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 		this.ReleaseMeta = ReleaseMeta;
 
 		// define flavors and builds
-		this.flavors = values(Flavors);
+		this.flavors = Object.values(Flavors);
 		this.fetchBuilds();
 
 		// statuses
@@ -80,7 +80,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 			TrackerService.trackPage();
 
 			// populate versions
-			this.versions = map(orderBy(this.release.versions, 'released_at', false), 'version');
+			this.versions = orderBy(this.release.versions, 'released_at', false).map(rv => rv.version);
 
 			// init data: either copy from local storage or reset.
 			if (this.$localStorage.release_version && this.$localStorage.release_version[this.releaseId]) {

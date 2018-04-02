@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { includes, debounce } from 'lodash';
+import { debounce } from 'lodash';
 
 import UserEditAdminModalTpl from './user.edit.admin.modal.pug';
 
@@ -58,7 +58,7 @@ export default class UserListAdminCtrl {
 		}, 350), true);
 
 		$scope.$on('dataToggleRole', (event, role) => {
-			if (includes(this.filterRole, role)) {
+			if (this.filterRole.includes(role)) {
 				this.filterRole.splice(this.filterRole.indexOf(role), 1);
 			} else {
 				this.filterRole.push(role);

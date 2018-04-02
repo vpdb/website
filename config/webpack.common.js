@@ -102,7 +102,10 @@ module.exports  = function(options) {
 				plainSprite: true
 			}),
 
-			new LodashModuleReplacementPlugin(),
+			// https://github.com/lodash/lodash-webpack-plugin
+			new LodashModuleReplacementPlugin({
+				shorthands: true
+			}),
 
 			new webpack.ProvidePlugin({
 				'window.jQuery': 'jquery'

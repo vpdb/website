@@ -19,7 +19,7 @@
 
 import angular from 'angular';
 import traverse from 'traverse';
-import { forEach, isArray, includes, map, uniqBy, isString, isObject, isEmpty, keys, filter } from 'lodash';
+import { isString, isObject } from 'lodash';
 
 /**
  * Manages all authentication related tasks.
@@ -174,14 +174,14 @@ export default class AuthService {
 					if (!this.permissions.hasOwnProperty(key)) {
 						continue;
 					}
-					if (includes(this.permissions[key], permission)) {
+					if (this.permissions[key] && this.permissions[key].includes(permission)) {
 						return true;
 					}
 				}
 			}
 			return false;
 		} else {
-			return this.permissions && includes(this.permissions[resource], permission);
+			return this.permissions && this.permissions[resource] && this.permissions[resource].includes(permission);
 		}
 	}
 
@@ -193,15 +193,15 @@ export default class AuthService {
 	 * @return {boolean} True if user has role, false otherwise.
 	 */
 	hasRole(role) {
-		if (isArray(role)) {
+		if (Array.isArray(role)) {
 			for (let i = 0; i < role.length; i++) {
-				if (this.roles && includes(this.roles, role[i])) {
+				if (this.roles && this.roles.includes(role[i])) {
 					return true;
 				}
 			}
 			return false;
 		} else {
-			return this.roles && includes(this.roles, role);
+			return this.roles && this.roles.includes(role);
 		}
 	}
 
@@ -214,11 +214,11 @@ export default class AuthService {
 		if (!release || !this.isAuthenticated) {
 			return false;
 		}
-		const authorIds = map(release.authors, 'user.id');
+		const authorIds = release.authors.map(a => a.user.id);
 		if (release.created_by) {
 			authorIds.push(release.created_by.id);
 		}
-		return includes(authorIds, this.user.id);
+		return authorIds.includes(this.user.id);
 	}
 
 	/**
@@ -392,7 +392,7 @@ export default class AuthService {
 				paths.push(value);
 			}
 		});
-		this.paths = uniqBy(paths.concat(this.paths));
+		this.paths = [...new Set([...paths, ...this.paths])];
 		this.$log.debug('AuthService: Added %d URLs to be collected.', this.paths.length);
 		if (fetch) {
 			// wait one digestion cycle so all paths can be added before collecting tokens
@@ -410,7 +410,7 @@ export default class AuthService {
 	 */
 	fetchUrlTokens(paths, callback) {
 		paths = paths || this.paths;
-		if (!isString(paths) && (!isObject(paths) || keys(paths).length === 0)) {
+		if (!isString(paths) && (!isObject(paths) || Object.keys(paths).length === 0)) {
 			return this;
 		}
 		this.$log.debug('AuthService: Collecting tokens for %d URLs.', paths.length);
@@ -428,7 +428,8 @@ export default class AuthService {
 			this.paths = [];
 			if (this.storageTokenCallbacks) {
 				this.$log.debug('AuthService: Executing storage token callbacks.');
-				forEach(response.data, (token, path) => {
+				Object.keys(response.data).forEach(token => {
+					const path = response.data[token];
 					if (this.storageTokenCallbacks[path]) {
 						this.storageTokenCallbacks[path](token);
 						delete this.storageTokenCallbacks[path];
@@ -461,7 +462,7 @@ export default class AuthService {
 			this.$log.log('AuthService: already have storage token.');
 			return callback(url + (~url.indexOf('?') ? '&' : '?') + 'token=' + this.storageTokens[url]);
 		}
-		if (!includes(this.paths, url)) {
+		if (!this.paths.includes(url)) {
 			return this.$log.error('AuthService: Path "%s" neither in collected paths nor in received tokens. Might forgot to collect URL props on some object?', url);
 		}
 		this.$log.debug('AuthService: Adding callback for url %s', url);
@@ -507,7 +508,7 @@ export default class AuthService {
 				url: '/auth/github'
 			});
 		}
-		if (isArray(this.Config.authProviders.ips)) {
+		if (Array.isArray(this.Config.authProviders.ips)) {
 			providers = [ ...providers, ...this.Config.authProviders.ips ];
 		}
 
@@ -524,7 +525,7 @@ export default class AuthService {
 	 * Runs previously saved post login actions.
 	 */
 	runPostLoginActions() {
-		if (isArray(this.$localStorage.postLoginActions)) {
+		if (Array.isArray(this.$localStorage.postLoginActions)) {
 			this.$localStorage.postLoginActions.forEach(postLoginAction => {
 				switch (postLoginAction.action) {
 					case 'redirect':

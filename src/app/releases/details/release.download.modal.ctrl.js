@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { includes, isEmpty, filter, values, map } from 'lodash';
+import { isEmpty } from 'lodash';
 
 export default class ReleaseDownloadModalCtrl {
 
@@ -66,7 +66,7 @@ export default class ReleaseDownloadModalCtrl {
 			if (this.includeGameMedia) {
 				const addedCategories = [];
 				this.gameMedia.forEach(media => {
-					if (!includes(addedCategories, media.category)) {
+					if (!addedCategories.includes(media.category)) {
 						this.downloadRequest.game_media.push(media.id);
 					}
 					addedCategories.push(media.category);
@@ -78,7 +78,7 @@ export default class ReleaseDownloadModalCtrl {
 			this.includeGameMedia = true;
 		}
 
-		const tableFiles = filter(this.latestVersion.files, this.tableFile);
+		const tableFiles = this.latestVersion.files.filter(this.tableFile);
 		if (tableFiles.length === 1) {
 			this.toggleFile(tableFiles[0]);
 		}
@@ -101,7 +101,7 @@ export default class ReleaseDownloadModalCtrl {
 		} else {
 			this.downloadFiles[file.file.id] = file;
 		}
-		this.downloadRequest.files = values(map(map(this.downloadFiles, 'file'), 'id'));
+		this.downloadRequest.files = Object.keys(this.downloadFiles);
 	}
 
 	selectBackglass(backglass) {
@@ -113,7 +113,7 @@ export default class ReleaseDownloadModalCtrl {
 	}
 
 	toggleRom(rom) {
-		if (!includes(this.downloadRequest.roms, rom.id)) {
+		if (!this.downloadRequest.roms.includes(rom.id)) {
 			this.downloadRequest.roms.push(rom.id);
 		} else {
 			this.downloadRequest.roms.splice(this.downloadRequest.roms.indexOf(rom.id), 1);

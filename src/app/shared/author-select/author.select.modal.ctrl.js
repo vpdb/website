@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { filter } from 'lodash';
-
 export default class AuthorSelectModalCtrl {
 
 	/**
@@ -88,7 +86,7 @@ export default class AuthorSelectModalCtrl {
 		if (!this.isValidUser) {
 			this.errors.user = 'You must select an existing user. Typing after selecting a user erases the selected user.';
 			valid = false;
-		} else if (filter(this.subject.authors, author => author._user === this.user.id).length > 0 &&
+		} else if (this.subject.authors.filter(author => author._user === this.user.id).length > 0 &&
 			(this.adding || this.user.id !== this.author._user)) {
 			this.errors.user = 'User "' + this.user.name + '" is already added as author.';
 			valid = false;

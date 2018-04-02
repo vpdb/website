@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { includes } from 'lodash';
-
 /**
  * Uploads files to the server and stores the result.
  *
@@ -113,7 +111,7 @@ export default function($parse, $compile, $log, Upload, ApiHelper, AuthService, 
 				for (let i = 0; i < $files.length; i++) {
 					const file = $files[i];
 					const ext = file.name.substr(file.name.lastIndexOf('.') + 1, file.name.length).toLowerCase();
-					if (!includes(params.allowedExtensions, ext)) {
+					if (!params.allowedExtensions.includes(ext)) {
 						return ModalService.info({
 							icon: 'upload-circle',
 							title: 'File Upload',

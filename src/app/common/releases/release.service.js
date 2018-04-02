@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { filter, orderBy, flatten, map, keys, values } from 'lodash';
+import { orderBy, flatten } from 'lodash';
 
 /**
  * The game's details view.
@@ -72,16 +72,15 @@ export default class ReleaseService {
 		}
 	}
 
-
 	flavorGrid(release) {
 
-		const flavors = orderBy(flatten(map(release.versions, 'files')), 'released_at', true);
+		const flavors = orderBy(flatten(release.versions.map(v => v.files)), 'released_at', true);
 		const flavorGrid = {};
-		filter(flavors, file => !!file.flavor).forEach(file => {
-			const compat = map(file.compatibility, 'id');
+		flavors.filter(file => !!file.flavor).forEach(file => {
+			const compat = file.compatibility.map(fc => fc.id);
 			compat.sort();
 			let flavor = '';
-			keys(file.flavor).sort().forEach(key => {
+			Object.keys(file.flavor).sort().forEach(key => {
 				flavor += key + ':' + file.flavor[key] + ',';
 			});
 			let key = compat.join('/') + '-' + flavor;
@@ -96,12 +95,10 @@ export default class ReleaseService {
 				short: short
 			};
 		});
-		return orderBy(values(flavorGrid), 'released_at', false);
+		return orderBy(Object.values(flavorGrid), 'released_at', false);
 	}
 
 	getVersion(release, file) {
-		return filter(release.versions, version => {
-			return filter(version.files, f => file.file.id === f.file.id).length > 0;
-		})[0];
+		return release.versions.find(version => version.files.filter(f => file.file.id === f.file.id).length > 0);
 	}
 }

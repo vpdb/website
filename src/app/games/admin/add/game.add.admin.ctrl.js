@@ -18,7 +18,7 @@
  */
 
 import angular from 'angular';
-import { assign, omit } from 'lodash';
+import { omit } from 'lodash';
 
 export default class GameAddAdminCtrl {
 
@@ -141,7 +141,7 @@ export default class GameAddAdminCtrl {
 		const game = this.IpdbResource.get({ id: ipdbId }, () => {
 			this.App.setLoading(false);
 
-			this.game = assign(this.game, game);
+			this.game = Object.assign(this.game, game);
 			if (this.game.short) {
 				this.game.id = this.game.short[0].replace(/[^a-z0-9\s-]+/gi, '').replace(/\s+/g, '-').toLowerCase();
 			} else {

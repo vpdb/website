@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { forEach } from 'lodash';
-
 /**
  * @param $timeout
  * @param $parse
@@ -42,7 +40,8 @@ export default function makeLoaded($timeout, $parse) {
 			const eventPrefix = attrs.makeLoadedEvent || 'image';
 			scope.$on(eventPrefix + 'Loaded', function(event) {
 				event.stopPropagation();
-				forEach(filter, function(enabled, className) {
+				Object.keys(filter).forEach(className => {
+					const enabled = filter[className];
 					if (!enabled) {
 						return;
 					}
@@ -56,13 +55,12 @@ export default function makeLoaded($timeout, $parse) {
 			});
 			scope.$on(eventPrefix + 'Unloaded', function(event) {
 				event.stopPropagation();
-				forEach(filter, function(enabled, className) {
+				Object.keys(filter).forEach(className => {
 					element.removeClass(className);
 					if (postVar) {
 						postVar.assign(scope, false);
 					}
 				});
-
 			});
 		}
 	};

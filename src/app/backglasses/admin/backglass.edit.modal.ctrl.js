@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { map } from 'lodash';
-
 export default class BackglassEditModalCtrl {
 	/**
 	 * @param $uibModalInstance
@@ -60,7 +58,10 @@ export default class BackglassEditModalCtrl {
 	}
 
 	reset() {
-		this.updatedBackglass = map(this.backglass, [ 'description', 'acknowledgements']);
+		this.updatedBackglass = {
+			description: this.backglass.description,
+			acknowledgements: this.backglass.acknowledgements
+		};
 		this.updatedBackglass._game = this.game.id;
 		this.query = this.game.title;
 	}

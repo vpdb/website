@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { assign, includes, isEqual, isEmpty, values, toPairs, fromPairs, mapValues } from 'lodash';
+import { isEqual, isEmpty, toPairs, fromPairs, mapValues } from 'lodash';
 import Param from '../../common/util/param';
 import Params from '../../common/util/params';
 
@@ -69,14 +69,14 @@ export default class ReleaseListCtrl {
 		this.pagination = {};
 
 		// stuff we need in the view
-		this.flavors = values(Flavors);
+		this.flavors = Object.values(Flavors);
 		this.tags = TagResource.query();
 		this.builds = BuildResource.query();
 
 		// view types logic
 		$localStorage.releases = $localStorage.releases || {};
 		const viewtype = $localStorage.releases.viewtype || defaultViewType;
-		this.viewtype = includes(viewTypes, viewtype) ? viewtype : defaultViewType;
+		this.viewtype = viewTypes.includes(viewtype) ? viewtype : defaultViewType;
 		this.setViewTemplate(this.viewtype);
 
 		this.params = new Params([
@@ -121,7 +121,7 @@ export default class ReleaseListCtrl {
 	}
 
 	refresh() {
-		const reqParams = assign(this.params.toRequest(), { thumb_format: this.thumbFormat });
+		const reqParams = Object.assign(this.params.toRequest(), { thumb_format: this.thumbFormat });
 		// only refresh if query object changed
 		if (!isEqual(this.lastReqParams, reqParams)) {
 			this.ApiHelper.paginatedRequest(() => this.ReleaseResource.query(reqParams), this.status, this.pagination)

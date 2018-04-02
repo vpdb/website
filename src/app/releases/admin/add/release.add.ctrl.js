@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { values, filter, includes, isArray, cloneDeep, map, flatten } from 'lodash';
+import { isArray, cloneDeep, flatten } from 'lodash';
 
 import ReleaseBaseCtrl from '../release.base.ctrl';
 import AuthorSelectModalTpl from '../../../shared/author-select/author.select.modal.pug';
@@ -67,7 +67,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		this.ReleaseMeta = ReleaseMeta;
 
 		// define flavors and builds
-		this.flavors = values(Flavors);
+		this.flavors = Object.values(Flavors);
 		this.fetchBuilds();
 
 		// statuses
@@ -88,8 +88,8 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		this.tags = TagResource.query(() => {
 			if (this.release && this.release._tags.length > 0) {
 				// only push tags that aren't assigned yet.
-				this.tags = filter(this.tags, tag => {
-					return !includes(this.release._tags, tag.id);
+				this.tags = this.tags.filter(tag => {
+					return !this.release._tags.includes(tag.id);
 				});
 			}
 		});
@@ -232,7 +232,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 	 * When a tag is dropped
 	 */
 	tagDropped() {
-		this.release._tags = map(this.meta.tags, 'id');
+		this.release._tags = this.meta.tags.map(t => t.id);
 	}
 
 	/**
@@ -242,7 +242,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 	removeTag(tag) {
 		this.meta.tags.splice(this.meta.tags.indexOf(tag), 1);
 		this.tags.push(tag);
-		this.release._tags = map(this.meta.tags, 'id');
+		this.release._tags = this.meta.tags.map(t => t.id);
 	}
 
 	/**
@@ -260,7 +260,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 	 * @param {object} link
 	 */
 	removeLink(link) {
-		this.release.links = filter(this.release.links, l => {
+		this.release.links = this.release.links.filter(l => {
 			return l.label !== link.label || l.url !== link.url;
 		});
 	}
@@ -286,7 +286,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 
 		// retrieve rotation parameters
 		const rotationParams = [];
-		flatten(map(this.release.versions, 'files')).forEach(file => {
+		flatten(this.release.versions.map(v => v.files)).forEach(file => {
 			if (!file._playfield_image) {
 				return;
 			}

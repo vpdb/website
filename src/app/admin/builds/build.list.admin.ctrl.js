@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { assign, orderBy } from 'lodash';
+import { orderBy } from 'lodash';
 
 import BuildAddAdminModalTpl from './build.add.admin.modal.pug';
 import BuildEditAdminModalTpl from './build.edit.admin.modal.pug';
@@ -79,7 +79,7 @@ export default class BuildListAdminCtrl {
 
 		}).result.then(updatedBuild => {
 			if (updatedBuild) {
-				assign(build, updatedBuild);
+				build = Object.assign(build, updatedBuild);
 			} else {
 				this.refresh();
 			}

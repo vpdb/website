@@ -19,7 +19,6 @@
 
 import { resolve } from 'path';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { assign } from 'lodash';
 import { Files } from './Files';
 import { Users } from './Users';
 import { File } from '../models/File';
@@ -64,7 +63,7 @@ export class Games {
 			return this.files.uploadBackglassImage(user);
 
 		}).then((backglass:File) => {
-			return this.api.post<File>('/v1/games', assign(Games.getGame(), { _backglass: backglass.id }), {
+			return this.api.post<File>('/v1/games', Object.assign(Games.getGame(), { _backglass: backglass.id }), {
 				headers: { [ this.vpdb.authHeader ]: 'Bearer ' + token }
 			});
 

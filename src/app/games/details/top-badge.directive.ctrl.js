@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { min } from 'lodash';
-
 export default class TopBadgeDirectiveCtrl {
 
 	/**
@@ -29,7 +27,7 @@ export default class TopBadgeDirectiveCtrl {
 		$scope.$watch('ranks', ranks => {
 			if (ranks && ranks.length > 0) {
 				this.hasRank = ranks;
-				this.rank = min(ranks);
+				this.rank = Math.min.apply(null, ranks);
 				if (this.rank <= 10) {
 					this.top = 10;
 					this.place = 'gold';

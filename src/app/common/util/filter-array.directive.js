@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { includes } from 'lodash';
-
 /**
  * Toggles a value in an array.
  *
@@ -35,12 +33,12 @@ export default function filterArray() {
 		scope: { filterObjects: '=ngModel' },
 		link: function(scope, element, attrs) {
 			const objectId = attrs.filterArray;
-			if (includes(scope.filterObjects, objectId)) {
+			if (scope.filterObjects.includes(objectId)) {
 				element.addClass('active');
 			}
 			element.click(function() {
 				element.toggleClass('active');
-				if (includes(scope.filterObjects, objectId)) {
+				if (scope.filterObjects.includes(objectId)) {
 					scope.filterObjects.splice(scope.filterObjects.indexOf(objectId), 1);
 				} else {
 					scope.filterObjects.push(objectId);

@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { findIndex } from 'lodash';
-
 import BackglassEditModalTpl from './admin/backglass.edit.modal.pug';
 
 /**
@@ -75,7 +73,7 @@ export default class BackglassDetailsModalCtrl {
 			}
 		}).result.then(result => {
 			if (!result) {
-				this.game.backglasses.splice(findIndex(this.game.backglasses, { id: backglass.id }), 1);
+				this.game.backglasses.splice(this.game.backglasses.findIndex(bg => bg.id === backglass.id), 1);
 			}
 		});
 	}

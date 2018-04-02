@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { map, assign, orderBy, find, pick } from 'lodash';
+import { orderBy, pick } from 'lodash';
 import ReleaseBaseCtrl from '../release.base.ctrl';
 
 export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
@@ -72,13 +72,13 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 			if (file.playfield_image.file_type === 'playfield-fs') {
 				this.meta.mediaLinks[playfieldImageKey].rotation = 90;
 			}
-			return assign(this.createMeta(file.file, { _compatibility: map(file.compatibility, 'id') }));
+			return Object.assign(this.createMeta(file.file, { _compatibility: file.compatibility.map(c => c.id) }));
 		});
 
 		version.files.forEach(releaseFile => {
 			const mediaFile = this.meta.mediaFiles[this.getMediaKey(releaseFile.file, 'playfield_image')];
 			this.updateRotation(releaseFile, mediaFile);
-			releaseFile._compatibility = map(releaseFile.compatibility, 'id');
+			releaseFile._compatibility = releaseFile.compatibility.map(c => c.id);
 		});
 
 		BuildResource.query(builds => {
@@ -94,7 +94,7 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 	}
 
 	toggleBuild(metaFile, build) {
-		const releaseFile = find(this.releaseVersion.files, f => f.file.id === metaFile.storage.id);
+		const releaseFile = this.releaseVersion.files.find(f => f.file.id === metaFile.storage.id);
 		const idx = releaseFile._compatibility.indexOf(build.id);
 		if (idx > -1) {
 			releaseFile._compatibility.splice(idx, 1);

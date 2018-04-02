@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { isUndefined, extend } from 'lodash';
+import { isUndefined } from 'lodash';
 
 /**
  * The login modal opening when the user clicks on "login".
@@ -111,7 +111,7 @@ export default class LoginModalCtrl {
 
 		this.setRedirect();
 
-		this.UserResource.register(extend(this.userPass, { email: this.email }), () => {
+		this.UserResource.register(Object.assign(this.userPass, { email: this.email }), () => {
 			this.errors = {};
 			this.error = null;
 			this.userPass = {};

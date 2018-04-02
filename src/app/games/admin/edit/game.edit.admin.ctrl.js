@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { cloneDeep, compact, isEmpty, pick } from 'lodash';
+import { cloneDeep, isEmpty, pick } from 'lodash';
 
 export default class GameEditAdminCtrl {
 
@@ -127,7 +127,7 @@ export default class GameEditAdminCtrl {
 
 		// restore arrays
 		this.arrayFields.forEach(what => {
-			game[what] = compact(this.arrays[what].split(/,\s*/));
+			game[what] = this.arrays[what].split(/,\s*/).filter(v => v);
 			if (isEmpty(game[what])) {
 				delete game[what];
 			}

@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { map } from 'lodash';
-
 export default class UploadsReleaseModerateAdminModalCtrl {
 
 	/**
@@ -51,7 +49,7 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 		this.files = [];
 		this.release = ReleaseResource.get({ release: params.release.id, fields: 'moderation' }, release => {
 			this.comments = ReleaseModerationCommentResource.query({ releaseId: release.id });
-			this.history = map(release.moderation.history, UploadHelper.mapHistory);
+			this.history = release.moderation.history.map(UploadHelper.mapHistory);
 			release.versions.forEach(version => {
 				version.files.forEach(file => {
 					file.blockmatches = FileBlockmatchResource.get({ id: file.file.id }, b => {

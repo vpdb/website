@@ -19,7 +19,7 @@
 
 import angular from 'angular';
 import parseUri from 'parse-uri';
-import { isObject, isFunction, map, forEach, set } from 'lodash';
+import { isObject, isFunction, set } from 'lodash';
 
 /**
  * Helper class for API requests.
@@ -126,7 +126,7 @@ export default class ApiHelper {
 		}
 		if (headers('link')) {
 			const links = {};
-			map(headers('link').split(','), link => {
+			headers('link').split(',').forEach(link => {
 				const m = link.match(/<([^>]+)>\s*;\s*rel="([^"]+)"/);
 				const url = m[1];
 				links[m[2]] = {
@@ -192,7 +192,7 @@ export default class ApiHelper {
 
 			if (headers('link')) {
 				const links = {};
-				map(headers('link').split(','), link => {
+				headers('link').split(',').forEach(link => {
 					const m = link.match(/<([^>]+)>\s*;\s*rel="([^"]+)"/);
 					const url = m[1];
 					links[m[2]] = {
@@ -327,7 +327,8 @@ export default class ApiHelper {
 		if (response.config) {
 			this.$log.debug('--> %s %s', response.config.method, response.config.url);
 			if (response.config.headers) {
-				forEach(response.config.headers, (val, key) => {
+				Object.keys(response.config.headers).forEach(key => {
+					const val = response.config.headers[key];
 					this.$log.debug('--> %s: %s', key, val);
 				});
 			}
@@ -339,7 +340,8 @@ export default class ApiHelper {
 		this.$log.debug('<-- %s %s', response.status, response.statusText);
 		const headers = response.headers();
 		if (headers) {
-			forEach(headers, (val, key) => {
+			Object.keys(headers).forEach(key => {
+				const val = headers[key];
 				this.$log.debug('<-- %s: %s', key, val);
 			});
 		}

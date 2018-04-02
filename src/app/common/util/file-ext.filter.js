@@ -17,16 +17,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { filter, includes } from 'lodash';
-
 /**
  * @ngInject
  */
 export default function fileExtFilter() {
-	return function(files, exts) {
-		return filter(files, function(file) {
+	return (files, exts) => {
+		return files.filter(file => {
 			const ext = file.name.substr(file.name.lastIndexOf('.') + 1, file.name.length).toLowerCase();
-			return includes(exts, ext);
+			return exts.includes(ext);
 		});
 	};
 }

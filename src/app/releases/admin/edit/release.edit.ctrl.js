@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { includes, filter, map, pick, cloneDeep, assign, find } from 'lodash';
+import { pick, cloneDeep } from 'lodash';
 import AuthorSelectModalTpl from '../../../shared/author-select/author.select.modal.pug';
 import TagAddModalTpl from '../tag/tag.add.modal.pug';
 import ReleaseEditVersionModalTpl from './release.edit.version.modal.pug';
@@ -66,7 +66,7 @@ export default class ReleaseEditCtrl {
 			this.tags = TagResource.query(() => {
 				if (release && release.tags.length > 0) {
 					// only push tags that aren't assigned yet.
-					this.tags = filter(this.tags, tag => !includes(map(release.tags, 'id'), tag.id));
+					this.tags = this.tags.filter(tag => !release.tags.map(t => t.id).includes(tag.id));
 				}
 			});
 			if (AuthService.isAuthenticated) {
@@ -156,9 +156,7 @@ export default class ReleaseEditCtrl {
 	 * @param {object} link
 	 */
 	removeLink(link) {
-		this.updatedRelease.links = filter(this.updatedRelease.links, l => {
-			return l.label !== link.label || l.url !== link.url;
-		});
+		this.updatedRelease.links = this.updatedRelease.links.filter(l => l.label !== link.label || l.url !== link.url);
 	}
 
 	editVersion(version) {
@@ -173,7 +171,7 @@ export default class ReleaseEditCtrl {
 				version: () => version
 			}
 		}).result.then(updatedVersion => {
-			assign(find(this.release.versions, version => version.version === updatedVersion.version), updatedVersion);
+			Object.assign(this.release.versions.find(version => version.version === updatedVersion.version), updatedVersion);
 		});
 	}
 
@@ -184,7 +182,7 @@ export default class ReleaseEditCtrl {
 		const release = cloneDeep(this.updatedRelease);
 
 		// map tags
-		release._tags = map(release.tags, 'id');
+		release._tags = release.tags.map(t => t.id);
 		delete release.tags;
 
 		// map authors

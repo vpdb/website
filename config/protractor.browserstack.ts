@@ -12,7 +12,7 @@ function capability(browser:any) {
 		'build': 'Codeship build ' + process.env.CI_BUILD_NUMBER,
 		'project': 'vpdb/website'
 	};
-	return assign(base, isObject(browser) ? browser : { browserName: browser });
+	return Object.assign(base, isObject(browser) ? browser : { browserName: browser });
 }
 
 export let config: Config = merge(commonConfig, {

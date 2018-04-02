@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { indexOf, find, isArray, cloneDeep } from 'lodash';
+import { isArray, cloneDeep } from 'lodash';
 import BuildAddModalTpl from './build/build.add.modal.pug';
 
 export default class ReleaseBaseCtrl {
@@ -131,7 +131,7 @@ export default class ReleaseBaseCtrl {
 	removeFile(file) {
 		this.FileResource.delete({ id: file.storage.id }, () => {
 			this.meta.files.splice(this.meta.files.indexOf(file), 1);
-			this.releaseVersion.files.splice(indexOf(this.releaseVersion.files, find(this.releaseVersion.files, { id : file.storage.id })), 1);
+			this.releaseVersion.files.splice(this.releaseVersion.files.indexOf(this.releaseVersion.files.find(f => f.id === file.storage.id)), 1);
 
 		}, this.ApiHelper.handleErrorsInDialog('Error removing file.'));
 	}
@@ -158,7 +158,7 @@ export default class ReleaseBaseCtrl {
 	 * @param status
 	 */
 	onFileUploadError(status) {
-		const tableFile = find(this.releaseVersion.files, { _randomId: status.randomId });
+		const tableFile = this.releaseVersion.files.find(f => f._randomId === status.randomId);
 		if (tableFile) {
 			this.releaseVersion.files.splice(this.releaseVersion.files.indexOf(tableFile), 1);
 		}
@@ -173,7 +173,7 @@ export default class ReleaseBaseCtrl {
 
 		// table files are already there from #beforeFileUpload(), so just find the right one and update
 		if (/^application\/x-visual-pinball-table/i.test(status.mimeType)) {
-			tableFile = find(this.releaseVersion.files, { _randomId: status.randomId });
+			tableFile = this.releaseVersion.files.find(f => f._randomId === status.randomId);
 			tableFile._file = status.storage.id;
 
 			// get auth tokens for generated screenshot
@@ -266,7 +266,7 @@ export default class ReleaseBaseCtrl {
 	getReleaseFile(metaReleaseFile) {
 		this.releaseFileRefs = this.releaseFileRefs || {};
 		if (!this.releaseFileRefs[metaReleaseFile.randomId]) {
-			this.releaseFileRefs[metaReleaseFile.randomId] = find(this.releaseVersion.files, { _randomId: metaReleaseFile.randomId });
+			this.releaseFileRefs[metaReleaseFile.randomId] = this.releaseVersion.files.find(f => f._randomId === metaReleaseFile.randomId);
 		}
 		return this.releaseFileRefs[metaReleaseFile.randomId];
 	}
@@ -279,7 +279,7 @@ export default class ReleaseBaseCtrl {
 	 * @return {*}
 	 */
 	getReleaseFileForMedia(status) {
-		return find(this.releaseVersion.files, { _randomId: status.key.split(':')[1] });
+		return this.releaseVersion.files.find(f => f._randomId === status.key.split(':')[1]);
 	}
 
 

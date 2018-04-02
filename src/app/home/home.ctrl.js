@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { extend, isEqual, map } from 'lodash';
+import { isEqual } from 'lodash';
 
 /**
  * Home page controller.
@@ -128,7 +128,7 @@ export default class HomeCtrl {
 			query.q = this.q;
 		}
 
-		query = extend(query, queryOverride);
+		query = Object.extend(query, queryOverride);
 
 		// refresh if changes
 		if (!isEqual(this.lastReqParams, query)) {
@@ -136,7 +136,7 @@ export default class HomeCtrl {
 			this.ApiHelper.paginatedRequest(() => this.GameResource.query(query), this.status.gameResult, this.pagination)
 				.then(games => {
 					// only update results if result is different to avoid flicker.
-					if (!isEqual(map(this.games, 'id'), map(games, 'id'))) {
+					if (!isEqual(this.games.map(g => g.id), games.map(g => g.id))) {
 						this.gameResult = games;
 					}
 				})

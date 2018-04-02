@@ -18,12 +18,9 @@
  */
 
 import angular from 'angular';
-import { max, map, keys } from 'lodash';
-
 import LoginModalTpl from './common/auth/login.modal.pug';
 
 export default class App {
-
 	/**
 	 * @param $rootScope
 	 * @param $window
@@ -166,7 +163,7 @@ export default class App {
 
 	showNotification(message, ttl) {
 		ttl = ttl || 3000;
-		const i = max(map(keys(this.$rootScope.notifications).concat([0]), parseInt)) + 1;
+		const i = [ 0, ...Object.keys(this.$rootScope.notifications)].map(parseInt).reduce((a, b) => Math.max(a, b)) + 1;
 		this.$rootScope.notifications[i] = { message: message, ttl: ttl };
 		this.$timeout(() => delete this.$rootScope.notifications[i], ttl);
 	}

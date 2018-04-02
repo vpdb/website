@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { map } from 'lodash';
-
 export default class UploadsBackglassModerateAdminModalCtrl {
 
 	/**
@@ -46,7 +44,7 @@ export default class UploadsBackglassModerateAdminModalCtrl {
 
 		this.files = [];
 		this.backglass = BackglassResource.get({ id: params.backglass.id, fields: 'moderation' }, backglass => {
-			this.history = map(backglass.moderation.history, UploadHelper.mapHistory);
+			this.history = backglass.moderation.history.map(UploadHelper.mapHistory);
 		});
 	}
 

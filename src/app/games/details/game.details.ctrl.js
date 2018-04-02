@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { filter, find, forEach, indexOf, isEmpty, isObject } from 'lodash';
+import { isEmpty, isObject } from 'lodash';
 
 import BackglassDetailsModalTpl from '../../backglasses/backglass.details.modal.pug';
 import MediumInfoModalTpl from './medium.info.modal.pug';
@@ -239,7 +239,7 @@ export default class GameDetailsCtrl {
 	 * Posts all uploaded ROM files to the API
 	 */
 	saveRoms() {
-		forEach(this.data().roms, rom => {
+		this.data().roms.forEach(rom => {
 			if (isObject(rom.language)) {
 				rom.language = rom.language.value;
 			}
@@ -251,13 +251,13 @@ export default class GameDetailsCtrl {
 			// post to api
 			this.RomResource.save({ id: this.gameId }, rom, () => {
 				this.roms = this.RomResource.query({ id : this.gameId });
-				this.meta.romFiles.splice(indexOf(this.meta.romFiles, find(this.meta.romFiles, { id : rom._file })), 1);
+				this.meta.romFiles.splice(this.meta.romFiles.indexOf(this.meta.romFiles.find(romFile => romFile.id === rom._file)), 1);
 				delete this.data().roms[rom._file];
 
 			}, response => {
 				if (response.data.errors) {
 					response.data.errors.forEach(err => {
-						filter(this.meta.romFiles, { romId: rom.id })[0].error = err.message;
+						this.meta.romFiles.find(romFile => romFile.romId === rom.id).error = err.message;
 					});
 				}
 			});

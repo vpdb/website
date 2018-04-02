@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { orderBy, compact, map } from 'lodash';
+import { orderBy } from 'lodash';
 
 /**
  * The release view within the game details view.
@@ -43,7 +43,7 @@ export default class GameReleaseDetailsCtrl {
 			this.flavorGrid = ReleaseService.flavorGrid(release);
 
 			// get latest shots
-			this.shot = orderBy(compact(map(this.latestVersion.files, file => {
+			this.shot = orderBy(this.latestVersion.files.map(file => {
 				if (!file.playfield_image) {
 					return null;
 				}
@@ -52,7 +52,7 @@ export default class GameReleaseDetailsCtrl {
 					url: App.img(file.playfield_image, 'medium'),
 					full: file.playfield_image.variations.full.url
 				};
-			})), 'type', true)[0];
+			}).filter(v => v), 'type', true)[0];
 		});
 	}
 }
