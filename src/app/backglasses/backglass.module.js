@@ -18,10 +18,15 @@
  */
 
 import angular from 'angular';
+import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
+import uiDatepickerPopup from 'angular-ui-bootstrap/src/datepickerPopup';
+import uiTimepicker from 'angular-ui-bootstrap/src/timepicker';
+import uiAccordion from 'angular-ui-bootstrap/src/accordion';
+import uiTypeahead from 'angular-ui-bootstrap/src/typeahead';
 import BackglassDetailsModalCtrl from './backglass.details.modal.ctrl';
 import AuthorSelectModule from '../shared/author-select/author.select.module';
 import MarkdownModule from '../shared/markdown/markdown.module';
 
 export default angular
-	.module('vpdb.backglasses', [ AuthorSelectModule.name, MarkdownModule.name ])
+	.module('vpdb.backglasses', [ uiProgressbar, uiDatepickerPopup, uiTimepicker, uiAccordion, uiTypeahead, AuthorSelectModule.name, MarkdownModule.name ])
 	.controller('BackglassDetailsModalCtrl', BackglassDetailsModalCtrl);

@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import uiTypeahead from 'angular-ui-bootstrap/src/typeahead';
 import {
 	ReleaseCommentResource,
 	ReleaseFileValidationResource,
@@ -99,7 +100,7 @@ import globalInterceptor from './backend/global.interceptor';
  * This module is a dependency of the main app as well as of most
  * other components, so it will be always loaded.
  */
-export default angular.module('vpdb.common', [])
+export default angular.module('vpdb.common', [ uiTypeahead ])
 
 	// animation
 	.animation('.height-animation', heightAnimation)

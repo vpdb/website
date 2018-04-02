@@ -18,8 +18,9 @@
  */
 
 import angular from 'angular';
+import uiTypeahead from 'angular-ui-bootstrap/src/typeahead';
 import AuthorSelectModalCtrl from './author.select.modal.ctrl';
 
 export default angular
-	.module('vpdb.author-select', [ ])
+	.module('vpdb.author-select', [ uiTypeahead ])
 	.controller('AuthorSelectModalCtrl', AuthorSelectModalCtrl);

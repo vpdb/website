@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 import 'ngclipboard';
 
 import ProfileComponent from './profile.component';
@@ -27,7 +28,7 @@ import ProfileStatsComponent from './stats/profile.stats.component';
 import TokenCreateModalCtrl from './settings/token.create.modal.ctrl';
 
 const PROFILE_MODULE = angular
-	.module('vpdb.profile', [ 'ngclipboard' ])
+	.module('vpdb.profile', [ uiTooltip, 'ngclipboard' ])
 	.component('profileComponent', new ProfileComponent())
 	.component('profileSettingsComponent', new ProfileSettingsComponent())
 	.component('profileDownloadsComponent', new ProfileDownloadsComponent())

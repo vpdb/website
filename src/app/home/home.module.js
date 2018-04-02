@@ -17,8 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import uiCollapse from 'angular-ui-bootstrap/src/collapse';
+import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 import HomeCtrl from './home.ctrl';
 
 export default angular
-	.module('vpdb.home', [ ])
+	.module('vpdb.home', [ uiCollapse, uiTooltip ])
 	.controller('HomeCtrl', HomeCtrl);

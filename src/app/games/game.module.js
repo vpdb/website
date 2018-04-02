@@ -17,6 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
+import uiCollapse from 'angular-ui-bootstrap/src/collapse';
+import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
+import uiAccordion from 'angular-ui-bootstrap/src/accordion';
 import 'magnific-popup';
 
 import FileUploadModule from '../shared/file-upload/file.upload.module';
@@ -33,6 +37,10 @@ import topBadge from './details/top-badge.directive';
 
 const GAMES_MODULE = angular
 	.module('vpdb.games', [
+		uiProgressbar,
+		uiCollapse,
+		uiTooltip,
+		uiAccordion,
 		FileUploadModule.name,
 		BackglassModule.name,
 		BackglassAdminModule.name,

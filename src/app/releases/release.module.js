@@ -17,6 +17,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import uiCarousel from 'angular-ui-bootstrap/src/carousel';
+import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
+import uiAccordion from 'angular-ui-bootstrap/src/accordion';
 import 'magnific-popup';
 
 import FileUploadModule from '../shared/file-upload/file.upload.module';
@@ -32,7 +35,7 @@ import validationStatus from './details/release.validation.status.filter';
 import validationTooltip from './details/release.validation.tooltip.filter';
 
 const RELEASE_MODULE = angular
-	.module('vpdb.releases', [ FileUploadModule.name, MarkdownModule.name, EditorModule.name, RatingModule.name ])
+	.module('vpdb.releases', [ uiCarousel, uiTooltip, uiAccordion, FileUploadModule.name, MarkdownModule.name, EditorModule.name, RatingModule.name ])
 	.component('releaseListComponent', new ReleaseListComponent())
 	.component('releaseDetailsComponent', new ReleaseDetailsComponent())
 	.controller('ReleaseDownloadModalCtrl', ReleaseDownloadModalCtrl)

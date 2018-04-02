@@ -17,6 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import uiDatepickerPopup from 'angular-ui-bootstrap/src/datepickerPopup';
+import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
+import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
+import uiAccordion from 'angular-ui-bootstrap/src/accordion';
 import 'ngclipboard';
 
 import BuildListAdminComponent from './builds/build.list.admin.component';
@@ -35,7 +39,7 @@ import TokenListAdminComponent from './tokens/token.list.admin.component';
 import filterRole from './users/user.filter-role.directive';
 
 const ADMIN_MODULE = angular
-	.module('vpdb.admin', [ 'ngclipboard' ])
+	.module('vpdb.admin', [ uiDatepickerPopup, uiTooltip, uiProgressbar, uiAccordion, 'ngclipboard' ])
 	.service('UploadHelper', UploadHelper)
 	.component('buildListAdminComponent', new BuildListAdminComponent())
 	.component('userListAdminComponent', new UserListAdminComponent())

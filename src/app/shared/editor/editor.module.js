@@ -18,6 +18,8 @@
  */
 
 import angular from 'angular';
+import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
+import uiTabs from 'angular-ui-bootstrap/src/tabs';
 import 'ment.io';
 import ngElastic from 'angular-elastic';
 
@@ -28,7 +30,7 @@ import MarkdownModule from '../markdown/markdown.module';
 import msdElasticConfig from './msd-elastic.config';
 
 export default angular
-	.module('vpdb.editor', [ MarkdownModule.name, ngElastic, 'mentio' ])
+	.module('vpdb.editor', [ uiTooltip, uiTabs, MarkdownModule.name, ngElastic, 'mentio' ])
 	.controller('EditorDirectiveCtrl', EditorDirectiveCtrl)
 	.directive('editor', editor)
 	.directive('markdownInfo', editorMarkdownInfo)

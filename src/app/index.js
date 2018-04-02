@@ -28,7 +28,9 @@ import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
 import ngTouch from 'angular-touch';
 import uiRouter from '@uirouter/angularjs';
-import uiBootstrap from 'angular-ui-bootstrap';
+import uiModal from 'angular-ui-bootstrap/src/modal';
+import uiDropdown from 'angular-ui-bootstrap/src/dropdown';
+import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 
 // global third party modules
 import 'ngstorage';
@@ -71,7 +73,9 @@ const VPDB = angular.module('vpdb', [
 
 	// global third party components
 	uiRouter,
-	uiBootstrap,
+	uiModal,
+	uiDropdown,
+	uiTooltip,
 	'oc.lazyLoad',
 	'ngStorage',
 	'ui.gravatar',

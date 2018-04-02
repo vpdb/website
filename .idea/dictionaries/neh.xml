@@ -5,12 +5,15 @@
       <w>axios</w>
       <w>backglass</w>
       <w>backglasses</w>
+      <w>datepicker</w>
       <w>directb</w>
       <w>eslint</w>
       <w>gravatar</w>
       <w>ipdb</w>
       <w>pinside</w>
       <w>playfield</w>
+      <w>timepicker</w>
+      <w>typeahead</w>
       <w>uglify</w>
       <w>videojs</w>
       <w>viewtype</w>
