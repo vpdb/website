@@ -8,6 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const srcContext = resolve(__dirname, '../src');
 const appContext = resolve(__dirname, '../src/app');
@@ -47,7 +48,7 @@ module.exports  = function(options) {
 			rules: [
 				{ test: /\.js$/, use: [
 					{ loader: 'ng-annotate-loader', options: { ngAnnotate: 'ng-annotate-patched', es6: false, explicitOnly: false } },
-					{ loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } }
+					{ loader: 'babel-loader', options: { presets: ['@babel/preset-env'], plugins: [ 'lodash' ] } }
 				], include: srcContext },
 				{ test: /\.pug$/, oneOf: [
 					{ test: /index\.pug$/, use: [ { loader: 'pug-loader', options: { pretty: !isProd } } ] },
@@ -100,6 +101,8 @@ module.exports  = function(options) {
 			new SpriteLoaderPlugin({
 				plainSprite: true
 			}),
+
+			new LodashModuleReplacementPlugin(),
 
 			new webpack.ProvidePlugin({
 				'window.jQuery': 'jquery'
