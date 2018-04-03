@@ -6129,30 +6129,25 @@
 				},
 				"path-is-absolute": {
 					"version": "1.0.1",
-					"bundled": true,
-					"dev": true
+					"bundled": true
 				},
 				"performance-now": {
 					"version": "0.2.0",
 					"bundled": true,
-					"dev": true,
 					"optional": true
 				},
 				"process-nextick-args": {
 					"version": "1.0.7",
-					"bundled": true,
-					"dev": true
+					"bundled": true
 				},
 				"punycode": {
 					"version": "1.4.1",
 					"bundled": true,
-					"dev": true,
 					"optional": true
 				},
 				"qs": {
 					"version": "6.4.0",
 					"bundled": true,
-					"dev": true,
 					"optional": true
 				},
 				"rc": {
@@ -6170,7 +6165,6 @@
 						"minimist": {
 							"version": "1.2.0",
 							"bundled": true,
-							"dev": true,
 							"optional": true
 						}
 					}
@@ -6229,19 +6223,16 @@
 				},
 				"safe-buffer": {
 					"version": "5.0.1",
-					"bundled": true,
-					"dev": true
+					"bundled": true
 				},
 				"semver": {
 					"version": "5.3.0",
 					"bundled": true,
-					"dev": true,
 					"optional": true
 				},
 				"set-blocking": {
 					"version": "2.0.0",
 					"bundled": true,
-					"dev": true,
 					"optional": true
 				},
 				"signal-exit": {
