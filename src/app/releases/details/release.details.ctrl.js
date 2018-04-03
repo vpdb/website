@@ -113,7 +113,7 @@ export default class ReleaseDetailsCtrl {
 
 			const title = release.game.title + ' · ' + release.name;
 			const meta = {
-				description: release.description,
+				description: `${release.game.title} (${release.game.manufacturer} ${release.game.year}) - ${release.name} ${release.versions[0].version} by ${release.authors.map(a => a.user.name).join(', ')}`,
 				keywords: [release.game.title, release.name, 'Download', 'Visual Pinball'].join(','),  // TODO add FP when supported
 			};
 			this.release = release;
@@ -201,7 +201,7 @@ export default class ReleaseDetailsCtrl {
 			});
 			if (playfieldImage) {
 				this.ldRelease.image = playfieldImage.variations['medium'].url;
-				meta.thumbnails = playfieldImage.variations['medium'].url;
+				meta.thumbnail = playfieldImage.variations['medium'].url;
 			}
 			this.App.setMeta(meta);
 
