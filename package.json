@@ -57,6 +57,7 @@
 		"ment.io": "^0.9.23",
 		"ng-file-upload": "^12.2.13",
 		"ngclipboard": "^2.0.0",
+		"ngdraggable": "github:fatlinesofcode/ngDraggable",
 		"ngstorage": "^0.3.11",
 		"oclazyload": "^1.1.0",
 		"parse-uri": "^1.0.0",
@@ -126,5 +127,19 @@
 	},
 	"engines": {
 		"node": ">=8.0 <9.0"
-	}
+	},
+	"bundlesize": [
+		{
+			"path": "./dist/app.bundle*.js",
+			"maxSize": "30 kB"
+		},
+		{
+			"path": "./dist/vendor.bundle-*.js",
+			"maxSize": "200 kB"
+		},
+		{
+			"path": "./dist/vendors*.js",
+			"maxSize": "75 kB"
+		}
+	]
 }

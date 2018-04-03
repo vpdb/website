@@ -18,8 +18,8 @@
  */
 
 // jquery
-import 'jquery';
-import 'jquery.waitforimages';
+// import 'jquery';
+// import 'jquery.waitforimages';
 
 // core angular modules
 import angular from 'angular';

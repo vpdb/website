@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import $ from 'jquery';
+// import $ from 'jquery';
 
 export default class MediumInfoModalCtrl {
 
@@ -35,7 +35,7 @@ export default class MediumInfoModalCtrl {
 		this.game = params.game;
 
 		if (this.medium.file.variations.full) {
-			$timeout(() => $('#lightbox').magnificPopup({ type: 'image' }));
+			// $timeout(() => $('#lightbox').magnificPopup({ type: 'image' }));
 		}
 	}
 

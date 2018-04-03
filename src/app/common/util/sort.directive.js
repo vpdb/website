@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import $ from 'jquery';
+// import $ from 'jquery';
 
 /**
  * Updates the given model with the selected value.
@@ -37,7 +37,7 @@ export default function sort() {
 		scope: { sortModel: '=ngModel' },
 		link: function(scope, element, attrs) {
 			const currentSort = scope.sortModel[0] === '-' ? scope.sortModel.substr(1) : scope.sortModel;
-			element = $(element);
+			// element = $(element);
 			if (currentSort === attrs.sort) {
 				element.addClass('selected');
 			}

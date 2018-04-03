@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import $ from 'jquery';
+// import $ from 'jquery';
 import angular from 'angular';
 import { isObject } from 'lodash';
 
@@ -48,26 +48,26 @@ export default function imgBg($parse, AuthService, NetworkService) {
 				scope.img = { url: url, loading: true };
 				// eslint-disable-next-line
 				element.css('background-image', "url('" + url + "')");
-				$(element).waitForImages(
-					$.noop,
-					function(loaded, count, success) {
-						NetworkService.onRequestFinished(url);
-						scope.img.loading = false;
-						if (success) {
-							const that = $(this);
-							that.addClass('loaded');
-							scope.$emit('imageLoaded');
-						} else {
-							delete scope.img.url;
-							console.warn('Could not load image "%s".', url);
-							if (attrs.error) {
-								$parse(attrs.error)(scope);
-							}
-						}
-						scope.$apply();
-					},
-					true
-				);
+				// $(element).waitForImages(
+				// 	$.noop,
+				// 	function(loaded, count, success) {
+				// 		NetworkService.onRequestFinished(url);
+				// 		scope.img.loading = false;
+				// 		if (success) {
+				// 			const that = $(this);
+				// 			that.addClass('loaded');
+				// 			scope.$emit('imageLoaded');
+				// 		} else {
+				// 			delete scope.img.url;
+				// 			console.warn('Could not load image "%s".', url);
+				// 			if (attrs.error) {
+				// 				$parse(attrs.error)(scope);
+				// 			}
+				// 		}
+				// 		scope.$apply();
+				// 	},
+				// 	true
+				// );
 			};
 
 			const setImgUrl = function(url) {

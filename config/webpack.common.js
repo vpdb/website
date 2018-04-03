@@ -107,9 +107,9 @@ module.exports  = function(options) {
 				shorthands: true
 			}),
 
-			new webpack.ProvidePlugin({
-				'window.jQuery': 'jquery'
-			}),
+			// new webpack.ProvidePlugin({
+			// 	'window.jQuery': 'jquery'
+			// }),
 
 			new webpack.DefinePlugin({
 				WEBSITE_CONFIG: JSON.stringify(options.websiteConfig),

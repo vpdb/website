@@ -239,10 +239,47 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 	 * Removes a tag from the release
 	 * @param {object} tag
 	 */
-	removeTag(tag) {
+	removeTag(tag, event) {
+		if (event && event.preventDefault) {
+			event.preventDefault();
+		}
+
+		console.log('Removing tag', tag, event);
+		// if dropped on the same spot, ignore.
+		if (this.tags.includes(tag)) {
+			console.log('Ignoring drop of tag %s', tag.name)
+			return;
+		}
 		this.meta.tags.splice(this.meta.tags.indexOf(tag), 1);
 		this.tags.push(tag);
 		this.release._tags = this.meta.tags.map(t => t.id);
+	}
+
+	/**
+	 * Adds a tag from the release
+	 * @param {object} tag
+	 */
+	addTag(tag, event) {
+		if (event && event.preventDefault) {
+			event.preventDefault();
+		}
+		console.log('Adding tag', tag, event);
+		// if dropped on the same spot, ignore.
+		if (this.meta.tags.includes(tag)) {
+			console.log('Ignoring drop of tag %s', tag.name)
+			return;
+		}
+		this.meta.tags.push(tag);
+		this.tags.splice(this.tags.indexOf(tag), 1);
+		this.release._tags = this.meta.tags.map(t => t.id);
+	}
+
+	startTagDrag(tag, event) {
+		console.log('Starting tag drag', tag, event);
+	}
+
+	stopTagDrag(tag, event) {
+		console.log('Stopping tag drag', tag, event);
 	}
 
 	/**

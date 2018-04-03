@@ -18,7 +18,7 @@
  */
 
 import { orderBy } from 'lodash';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import ReleaseDownloadModalTpl from './release.download.modal.pug';
 import ReleaseFileValidationTpl from './release.file.validation.modal.pug';

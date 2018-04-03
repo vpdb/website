@@ -21,11 +21,11 @@ import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
 import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 import uiDatepickerPopup from 'angular-ui-bootstrap/src/datepickerPopup';
 import uiTimepicker from 'angular-ui-bootstrap/src/timepicker';
-import 'jquery-ui/ui/core';
-import 'jquery-ui/ui/widget';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui/ui/widgets/droppable';
-import 'angular-dragdrop';
+// import 'jquery-ui/ui/core';
+// import 'jquery-ui/ui/widget';
+// import 'jquery-ui/ui/widgets/mouse';
+// import 'jquery-ui/ui/widgets/droppable';
+import 'ngdraggable';
 
 import FileUploadModule from '../../shared/file-upload/file.upload.module';
 import VideoJsModule from '../../shared/videojs/videojs.module';
@@ -43,7 +43,7 @@ import TagAddModalCtrl from './tag/tag.add.modal.ctrl';
 import allowedFlavors from './add/release.allowed.flavors.filter';
 
 const RELEASES_ADMIN_MODULE = angular
-	.module('vpdb.releases.admin', [ uiProgressbar, uiTooltip, uiDatepickerPopup, uiTimepicker, 'ngDragDrop', FileUploadModule.name, VideoJsModule.name, EditorModule.name, AuthorSelectModule.name ])
+	.module('vpdb.releases.admin', [ uiProgressbar, uiTooltip, uiDatepickerPopup, uiTimepicker, 'ngDraggable', FileUploadModule.name, VideoJsModule.name, EditorModule.name, AuthorSelectModule.name ])
 	.component('releaseAddComponent', new ReleaseAddComponent())
 	.component('releaseAddVersionComponent', new ReleaseAddVersionComponent())
 	.component('releaseEditComponent', new ReleaseEditComponent())
