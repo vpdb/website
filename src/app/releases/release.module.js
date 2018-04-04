@@ -20,7 +20,7 @@ import angular from 'angular';
 import uiCarousel from 'angular-ui-bootstrap/src/carousel';
 import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 import uiAccordion from 'angular-ui-bootstrap/src/accordion';
-import 'magnific-popup';
+//import 'magnific-popup';
 
 import FileUploadModule from '../shared/file-upload/file.upload.module';
 import EditorModule from '../shared/editor/editor.module';

@@ -17,10 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-// jquery
-// import 'jquery';
-// import 'jquery.waitforimages';
-
 // core angular modules
 import angular from 'angular';
 import ngAnimate from 'angular-animate';

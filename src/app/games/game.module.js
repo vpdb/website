@@ -21,7 +21,7 @@ import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
 import uiCollapse from 'angular-ui-bootstrap/src/collapse';
 import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 import uiAccordion from 'angular-ui-bootstrap/src/accordion';
-import 'magnific-popup';
+//import 'magnific-popup';
 
 import FileUploadModule from '../shared/file-upload/file.upload.module';
 import MarkdownModule from '../shared/markdown/markdown.module';

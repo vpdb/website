@@ -7,8 +7,8 @@
 		//- SELECTED
 		h5.h--shift-up.hr--margin-small Selected Tags
 		#selected-tags.panel--dropzone-alt(
-			ng-drop="true",
-			ng-drop-success="vm.addTag($data.tag, $event);"
+
+
 		)
 			div.padder-top(ng-repeat="tag in vm.meta.tags")
 				.badge.badge--tag(
@@ -22,17 +22,13 @@
 	.col-sm-6
 		.rel-pos
 			#available-tags.panel--dropzone-alt-2(
-				ng-drop="removingTag",
-				ng-drop-success="vm.removeTag($data.tag, $event)"
+				draggable-container
 			)
 				//- EXISTING
 				h5.hr--margin-small.h--shift-up Existing Tags
-				.badge.badge--tag(
+				.badge.badge--tag.draggable-source(
 					ng-repeat="tag in vm.tags",
-					ng-drag="true",
-					ng-drag-data="{tag}",
-					ng-drag-start="vm.startTagDrag($data, $event)",
-					ng-drag-stop="vm.stopTagDrag($data, $event)"
+					draggable-data="tag"
 				)
 					| {{ tag.name }}
 					+icon('question-circle').small.shift-up.space-left.a(
