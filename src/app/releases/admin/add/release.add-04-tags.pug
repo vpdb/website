@@ -7,8 +7,10 @@
 		//- SELECTED
 		h5.h--shift-up.hr--margin-small Selected Tags
 		#selected-tags.panel--dropzone-alt(
-
-
+			draggable-container="available-tag",
+			draggable-on-drop="vm.addTag($data)",
+			draggable-dragging-class="active",
+			draggable-hover-class="hover",
 		)
 			div.padder-top(ng-repeat="tag in vm.meta.tags")
 				.badge.badge--tag(
@@ -28,10 +30,12 @@
 				h5.hr--margin-small.h--shift-up Existing Tags
 				.badge.badge--tag.draggable-source(
 					ng-repeat="tag in vm.tags",
-					draggable-data="tag"
+					draggable-item="available-tag",
+					draggable-data="tag",
+					draggable-animate-duration="200"
 				)
 					| {{ tag.name }}
-					+icon('question-circle').small.shift-up.space-left.a(
+					+icon('question-circle').small.shift-up-less.space-left.a(
 						uib-tooltip="{{ tag.description }}",
 						tooltip-append-to-body="true",
 						tooltip-popup-delay="200"

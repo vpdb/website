@@ -36,7 +36,6 @@
 	"author": "freezy <freezy@vpdb.io>",
 	"license": "GPL-2.0",
 	"dependencies": {
-		"@shopify/draggable": "^1.0.0-beta.6",
 		"@uirouter/angularjs": "^1.0.15",
 		"angular": "^1.6.9",
 		"angular-animate": "^1.6.9",
@@ -48,6 +47,7 @@
 		"angular-touch": "^1.6.9",
 		"angular-ui-bootstrap": "^2.5.6",
 		"bootstrap": "^3.3.7",
+		"draggabilly": "^2.2.0",
 		"fg-loadcss": "^2.0.1",
 		"lodash": "^4.17.5",
 		"magnific-popup": "^1.1.0",

@@ -19,8 +19,12 @@
 
 import angular from 'angular';
 
+import DraggableService from './draggable.service';
 import draggableContainer from './draggable-container.directive';
+import draggableItem from './draggable-item.directive';
 
 export default angular
 	.module('vpdb.draggable', [ ])
-	.directive('draggableContainer', draggableContainer);
+	.service('DraggableService', DraggableService)
+	.directive('draggableContainer', draggableContainer)
+	.directive('draggableItem', draggableItem);

@@ -16,31 +16,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-import angular from 'angular';
-import Draggable from '@shopify/draggable/lib/draggable';
-//import { Draggable } from '@shopify/draggable';
 
 /**
  * The editor with markdown preview.
  * @ngInject
  */
-export default function($parse) {
+export default function($parse, DraggableService) {
 	return {
 		restrict: 'A',
-		scope: true,
-		link: function(scope, element) {
-			console.log('directive loaded.', element);
-			const draggable = new Draggable(element[0]);
-			let data;
-			draggable.on('draggable:initialize', () => {
-				console.log('draggable initialized.');
+		scope: false,
+		link: function(scope, element, attrs) {
+			DraggableService.addContainer(attrs['draggableContainer'], element, {
+				draggingClass: attrs['draggableDraggingClass'] || 'draggable-dragging',
+				hoverClass: attrs['draggableHoverClass'] || 'draggable-hovering'
 			});
-			draggable.on('drag:start', event => {
-				console.log('drag started.', event);
-				const getData = $parse(event.data.source.attributes['draggable-data'].value);
-				data = getData(angular.element(event.data.originalSource).scope());
-				console.log('data', data);
-			});
+			scope.$on('dropped', data => scope.draggableOnDrop({ $data: data }));
 		}
 	};
 }

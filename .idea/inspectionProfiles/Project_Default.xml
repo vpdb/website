@@ -5,7 +5,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="56">
+          <list size="59">
             <item index="0" class="java.lang.String" itemvalue="format-day-header" />
             <item index="1" class="java.lang.String" itemvalue="is-open" />
             <item index="2" class="java.lang.String" itemvalue="close-text" />
@@ -62,6 +62,9 @@
             <item index="53" class="java.lang.String" itemvalue="ng-attr-content" />
             <item index="54" class="java.lang.String" itemvalue="ng-drop-success" />
             <item index="55" class="java.lang.String" itemvalue="ng-drag-data" />
+            <item index="56" class="java.lang.String" itemvalue="draggable-on-drop" />
+            <item index="57" class="java.lang.String" itemvalue="draggable-dragging-class" />
+            <item index="58" class="java.lang.String" itemvalue="draggable-hover-class" />
           </list>
         </value>
       </option>
