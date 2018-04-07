@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
+
 export default class DraggableService {
 
 	/**
@@ -33,22 +35,21 @@ export default class DraggableService {
 			this.drags[dragId] = {};
 		}
 		if (!this.drags[dragId].containers) {
-			this.drags[dragId].containers = [];
+			this.drags[dragId].containers = new Map();
 		}
-		this.drags[dragId].containers.push(element);
+		this.drags[dragId].containers.set(element, { inDropZone: false });
 		this.drags[dragId].opts = opts;
-		this.drags[dragId].inDropZone = false;
 	}
 
 	startDrag(dragId, element, opts) {
 		if (this.drags[dragId]) {
 
 			if (this.drags[dragId].containers) {
-				this.drags[dragId].containers.forEach(element => {
+				for (let element of this.drags[dragId].containers.keys()) {
 					element.addClass(this.drags[dragId].opts.draggingClass);
 					element.on('mouseenter', () => this._mouseEnter(element, this.drags[dragId]));
 					element.on('mouseleave', () => this._mouseLeave(element, this.drags[dragId]));
-				});
+				}
 				this.drags[dragId].item = element;
 				this.drags[dragId].itemOpts = opts;
 			}
@@ -56,14 +57,22 @@ export default class DraggableService {
 	}
 
 	stopDrag(dragId, itemElement) {
-		this.drags[dragId].containers.forEach(element => {
+		let draggedOverContainer = null;
+		for (let element of this.drags[dragId].containers.keys()) {
+
+			// clean class and event listeners
 			element.removeClass(this.drags[dragId].opts.draggingClass);
+			element.removeClass(this.drags[dragId].opts.hoverClass);
 			element.off('mouseenter');
 			element.off('mouseleave');
-			delete this.drags[dragId].data;
-		});
-		if (this.drags[dragId].inDropZone) {
 
+			if (this.drags[dragId].containers.get(element).inDropZone) {
+				draggedOverContainer = element;
+			}
+		}
+
+		if (draggedOverContainer) {
+			angular.element(draggedOverContainer).scope().$broadcast('dropped', this.drags[dragId].itemOpts.data);
 
 		} else {
 			if (this.drags[dragId].itemOpts.animateDuration) {
@@ -87,15 +96,20 @@ export default class DraggableService {
 				});
 			}
 		}
+
+		// clean up item
+		delete this.drags[dragId].item;
 		delete this.drags[dragId].itemOpts;
 	}
 
 	_mouseEnter(element, drag) {
-		drag.inDropZone = true;
+		drag.containers.get(element).inDropZone = true;
 		element.addClass(drag.opts.hoverClass);
+		element.removeClass(drag.opts.draggingClass);
 	}
 	_mouseLeave(element, drag) {
-		drag.inDropZone = false;
+		drag.containers.get(element).inDropZone = false;
 		element.removeClass(drag.opts.hoverClass);
+		element.addClass(drag.opts.draggingClass);
 	}
 }

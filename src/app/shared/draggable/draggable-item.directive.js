@@ -40,7 +40,6 @@ export default function($parse, DraggableService) {
 		restrict: 'A',
 		scope: true,
 		link: function(scope, element, attrs) {
-			console.log('directive loaded.', element[0]);
 			const draggie = new Draggabilly(element[0], {});
 
 			draggie.on('dragStart', () => {

@@ -24,13 +24,15 @@
 export default function($parse, DraggableService) {
 	return {
 		restrict: 'A',
-		scope: false,
+		scope: {
+			draggableOnDrop: '&',
+		},
 		link: function(scope, element, attrs) {
 			DraggableService.addContainer(attrs['draggableContainer'], element, {
 				draggingClass: attrs['draggableDraggingClass'] || 'draggable-dragging',
 				hoverClass: attrs['draggableHoverClass'] || 'draggable-hovering'
 			});
-			scope.$on('dropped', data => scope.draggableOnDrop({ $data: data }));
+			scope.$on('dropped', (event, data) => scope.draggableOnDrop({ $data: data }));
 		}
 	};
 }
