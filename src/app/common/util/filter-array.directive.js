@@ -36,7 +36,7 @@ export default function filterArray() {
 			if (scope.filterObjects.includes(objectId)) {
 				element.addClass('active');
 			}
-			element.click(function() {
+			element.on('click', () => {
 				element.toggleClass('active');
 				if (scope.filterObjects.includes(objectId)) {
 					scope.filterObjects.splice(scope.filterObjects.indexOf(objectId), 1);

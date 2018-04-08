@@ -82,7 +82,7 @@ import focusOn from './util/focus-on.directive';
 import hashPrefixFilter from './util/hash-prefix.filter';
 import heightAnimation from './animation/height.animation';
 import hexFilter from './util/hex.filter';
-import imgBg from './image/img-bg.directive';
+import { BackgroundImageDirective } from './image/img-bg.directive';
 import imgSrc from './image/img-src.directive';
 import jsonLd from './util/json-ld.directive';
 import onEnter from './util/on-enter.directive';
@@ -165,7 +165,7 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 
 	// image
 	.directive('makeLoaded', makeLoaded)
-	.directive('imgBg', imgBg)
+	.directive('imgBg', BackgroundImageDirective.directiveFactory)
 	.directive('imgSrc', imgSrc)
 
 	// games

@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-// import $ from 'jquery';
+import imagesLoaded from 'imagesloaded';
 
 /**
  * @ngInject
@@ -28,11 +28,13 @@ export default function imgSrc() {
 		link: function(scope, element, attrs) {
 			attrs.$observe('imgSrc', value => {
 				element.attr('src', value);
-				// $(element).waitForImages(function() {
-				// 	$(this).addClass('loaded');
-				// }, function() {
-				// 	console.error('wait has failed.');
-				// });
+				imagesLoaded(element, { background: true }, loaded => {
+					if (!loaded.hasAnyBroken) {
+						element.addClass('loaded');
+					} else {
+						console.warn('Could not load image "%s".', value);
+					}
+				});
 			});
 		}
 	};

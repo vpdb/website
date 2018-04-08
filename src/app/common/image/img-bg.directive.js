@@ -17,9 +17,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-// import $ from 'jquery';
 import angular from 'angular';
 import { isObject } from 'lodash';
+import imagesLoaded from 'imagesloaded';
 
 /**
  * Sets the image background of an element.
@@ -29,99 +29,113 @@ import { isObject } from 'lodash';
  *
  * Value of the attribute is reference to an image object { url:string, is_protected:bool } or
  * just an URL string.
- *
- * @param $parse
- * @param {AuthService} AuthService
- * @param {NetworkService} NetworkService
- * @ngInject
  */
-export default function imgBg($parse, AuthService, NetworkService) {
-	return {
-		scope: true,
-		restrict: 'A',
-		link: function(scope, element, attrs) {
+class BackgroundImageDirective {
 
-			scope.img = { url: false, loading: false };
+	/**
+	 * @param $parse
+	 * @param {AuthService} AuthService
+	 * @param {NetworkService} NetworkService
+	 */
+	constructor($parse, AuthService, NetworkService) {
+		this.scope = true;
+		this.restrict = 'A';
 
-			const loadImg = function(url) {
-				NetworkService.onRequestStarted(url);
-				scope.img = { url: url, loading: true };
-				// eslint-disable-next-line
-				element.css('background-image', "url('" + url + "')");
-				// $(element).waitForImages(
-				// 	$.noop,
-				// 	function(loaded, count, success) {
-				// 		NetworkService.onRequestFinished(url);
-				// 		scope.img.loading = false;
-				// 		if (success) {
-				// 			const that = $(this);
-				// 			that.addClass('loaded');
-				// 			scope.$emit('imageLoaded');
-				// 		} else {
-				// 			delete scope.img.url;
-				// 			console.warn('Could not load image "%s".', url);
-				// 			if (attrs.error) {
-				// 				$parse(attrs.error)(scope);
-				// 			}
-				// 		}
-				// 		scope.$apply();
-				// 	},
-				// 	true
-				// );
-			};
+		this.$parse = $parse;
+		this.AuthService = AuthService;
+		this.NetworkService = NetworkService;
+	}
 
-			const setImgUrl = function(url) {
-				// if supported, only load image when in view.
-				if (typeof IntersectionObserver !== 'undefined') {
-					const observer = new IntersectionObserver(changes => {
-						changes.forEach(change => {
-							if (change.intersectionRatio > 0) {
-								loadImg(url);
-							}
-						});
-					});
-					observer.observe(angular.element(element)[0]);
-				} else {
-					loadImg(url);
-				}
-			};
+	link(scope, element, attrs) {
+		scope.img = { url: false, loading: false };
 
-			const setImg = function(value) {
-				const url = isObject(value) ? value.url : value;
-				let isProtected = isObject(value) ? value.is_protected : false;
+		// check for constant
+		if (attrs.imgBg[0] === '/') {
+			this._setImg(attrs.imgBg, scope, element, attrs);
 
-				// check for empty
-				if (url === false) {
-					scope.img = { url: false, loading: false };
-					element.css('background-image', 'none');
-					//element.removeClass('loaded');
-					scope.$emit('imageUnloaded');
-
-				} else {
-					if (!isProtected) {
-						setImgUrl(url);
-					} else {
-						console.info('img-bg: adding url %s to be collected', url);
-						AuthService.addUrlToken(url, setImgUrl);
-					}
-				}
-			};
-
-			// check for constant
-			if (attrs.imgBg[0] === '/') {
-				setImg(attrs.imgBg);
-
+		} else {
 			// otherwise, watch scope for expression.
+			let value = this.$parse(attrs.imgBg);
+			scope.$watch(value, () => {
+				const v = value(scope);
+				if (v || v === false) {
+					this._setImg(v, scope, element, attrs);
+				}
+			});
+		}
+	}
+
+	_setImg(value, scope, element, attrs) {
+		const url = isObject(value) ? value.url : value;
+		let isProtected = isObject(value) ? value.is_protected : false;
+
+		// check for empty
+		if (url === false) {
+			scope.img = { url: false, loading: false };
+			element.css('background-image', 'none');
+			scope.$emit('imageUnloaded');
+
+		} else {
+			if (!isProtected) {
+				this._setImgUrl(url, scope, element, attrs);
+
 			} else {
-				let value = $parse(attrs.imgBg);
-				scope.$watch(value, function() {
-					const v = value(scope);
-					if (v || v === false) {
-						setImg(v);
-					}
-				});
+				console.info('img-bg: adding url %s to be collected', url);
+				this.AuthService.addUrlToken(url, url => this._setImgUrl(url, scope, element, attrs));
 			}
 		}
-	};
+	}
+
+	_setImgUrl(url, scope, element, attrs) {
+		// if supported, only load image when in view.
+		if (typeof IntersectionObserver !== 'undefined') {
+			const observer = new IntersectionObserver(changes => {
+				changes.forEach(change => {
+					if (change.intersectionRatio > 0) {
+						this._loadImg(url, scope, element, attrs);
+					}
+				});
+			});
+			observer.observe(angular.element(element)[0]);
+		} else {
+			this._loadImg(url, scope, element, attrs);
+		}
+	}
+
+	_loadImg(url, scope, element, attrs) {
+		this.NetworkService.onRequestStarted(url);
+		scope.img = { url: url, loading: true };
+		element.css('background-image', `url("${url}")`);
+		imagesLoaded(element, { background: true }, loaded => {
+			this.NetworkService.onRequestFinished(url);
+			scope.img.loading = false;
+			if (!loaded.hasAnyBroken) {
+				element.addClass('loaded');
+				scope.$emit('imageLoaded');
+			} else {
+				delete scope.img.url;
+				console.warn('Could not load image "%s".', url);
+				if (attrs.error) {
+					this.$parse(attrs.error)(scope);
+				}
+			}
+			scope.$apply();
+		});
+	}
+
+	/**
+	 * @param $parse
+	 * @param AuthService
+	 * @param NetworkService
+	 * @return {BackgroundImageDirective}
+	 */
+	static directiveFactory($parse, AuthService, NetworkService) {
+		BackgroundImageDirective.instance = new BackgroundImageDirective($parse, AuthService, NetworkService);
+		return BackgroundImageDirective.instance;
+	}
 }
+// need to manually inject this :/
+BackgroundImageDirective.directiveFactory.$inject = ['$parse', 'AuthService', 'NetworkService'];
+
+export { BackgroundImageDirective };
 

@@ -21,10 +21,6 @@ import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
 import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 import uiDatepickerPopup from 'angular-ui-bootstrap/src/datepickerPopup';
 import uiTimepicker from 'angular-ui-bootstrap/src/timepicker';
-// import 'jquery-ui/ui/core';
-// import 'jquery-ui/ui/widget';
-// import 'jquery-ui/ui/widgets/mouse';
-// import 'jquery-ui/ui/widgets/droppable';
 
 import FileUploadModule from '../../shared/file-upload/file.upload.module';
 import VideoJsModule from '../../shared/videojs/videojs.module';
