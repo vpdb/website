@@ -19,6 +19,15 @@
 
 import angular from 'angular';
 
+/**
+ * The service bridging draggable-container and draggable-item.
+ *
+ * The drag and drop feature uses Draggabilly for the drag feature and a custom
+ * AngularJS binding.
+ *
+ * @see <a href="https://draggabilly.desandro.com/">Draggabilly</a>
+ * @author freezy <freezy@vpdb.io>
+ */
 export default class DraggableService {
 
 	/**
@@ -28,6 +37,13 @@ export default class DraggableService {
 		this.drags = {};
 	}
 
+	/**
+	 * Initializes a container when the container directive is linked.
+	 *
+	 * @param {string} dragId Drag ID
+	 * @param {JQLite} element Drag container
+	 * @param {{draggingClass:string, hoverClass:string}} opts Options
+	 */
 	addContainer(dragId, element, opts) {
 		if (!this.drags[dragId]) {
 			this.drags[dragId] = {};
@@ -39,21 +55,31 @@ export default class DraggableService {
 		this.drags[dragId].opts = opts;
 	}
 
+	/**
+	 * Sets up the mouse events and item data when and item starts dragging.
+	 *
+	 * @param {string} dragId Drag ID
+	 * @param {JQLite} element
+	 * @param {{animateDuration:number, data:*}} opts
+	 */
 	startDrag(dragId, element, opts) {
-		if (this.drags[dragId]) {
-
-			if (this.drags[dragId].containers) {
-				for (let element of this.drags[dragId].containers.keys()) {
-					element.addClass(this.drags[dragId].opts.draggingClass);
-					element.on('mouseenter', () => this._mouseEnter(element, this.drags[dragId]));
-					element.on('mouseleave', () => this._mouseLeave(element, this.drags[dragId]));
-				}
-				this.drags[dragId].item = element;
-				this.drags[dragId].itemOpts = opts;
+		if (this.drags[dragId] && this.drags[dragId].containers) {
+			for (let element of this.drags[dragId].containers.keys()) {
+				element.addClass(this.drags[dragId].opts.draggingClass);
+				element.on('mouseenter', () => this._mouseEnter(element, this.drags[dragId]));
+				element.on('mouseleave', () => this._mouseLeave(element, this.drags[dragId]));
 			}
+			this.drags[dragId].item = element;
+			this.drags[dragId].itemOpts = opts;
 		}
 	}
 
+	/**
+	 * Executes the action when the item is dropped into a container.
+	 *
+	 * @param {string} dragId Drag ID
+	 * @param {JQLite} itemElement Dropped item
+	 */
 	stopDrag(dragId, itemElement) {
 		let dropContainer = null;
 		for (let element of this.drags[dragId].containers.keys()) {
@@ -71,10 +97,12 @@ export default class DraggableService {
 			this.drags[dragId].containers.get(element).inDropZone = false;
 		}
 
+		// on hit, execute action
 		if (dropContainer) {
 			angular.element(dropContainer).scope().$broadcast(dragId + '-dropped', this.drags[dragId].itemOpts.data);
 
 		} else {
+			// otherwise, animate back
 			if (this.drags[dragId].itemOpts.animateDuration) {
 				const opts = this.drags[dragId].itemOpts;
 				if (opts.animateDuration) {
@@ -102,10 +130,23 @@ export default class DraggableService {
 		delete this.drags[dragId].itemOpts;
 	}
 
+	/**
+	 * Sets up the hover listener on the drop container.
+	 * @param {JQLite} element Drop container
+	 * @param {{ opts:{draggingClass:string, hoverClass:string}, containers:Map }} drag Drag configuration
+	 * @private
+	 */
 	_mouseEnter(element, drag) {
 		drag.containers.get(element).inDropZone = true;
 		element.addClass(drag.opts.hoverClass);
 	}
+
+	/**
+	 * Sets up the hover listener on the drop container.
+	 * @param {JQLite} element Drop container
+	 * @param {{ opts:{draggingClass:string, hoverClass:string}, containers:Map }} drag Drag configuration
+	 * @private
+	 */
 	_mouseLeave(element, drag) {
 		drag.containers.get(element).inDropZone = false;
 		element.removeClass(drag.opts.hoverClass);

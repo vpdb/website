@@ -32,7 +32,19 @@ Draggabilly.prototype.dragEnd = function(event, pointer) {
 };
 
 /**
- * The editor with markdown preview.
+ * Defines a draggable item.
+ *
+ * Attributes:
+ *    - draggable-item: The drag ID. The item can only be dropped into a
+ *      draggable-container with the same ID.
+ *    - draggable-data: The data available as $data in the container when the
+ *      item is dropped.
+ *    - draggable-animate-duration: Duration of the animation when the item is
+ *      dropped outside the drop container and moved back to its original
+ *      position. Default is no animation.
+ *
+ * @param {function} $parse Expression parser
+ * @param {DraggableService} DraggableService
  * @ngInject
  */
 export default function($parse, DraggableService) {

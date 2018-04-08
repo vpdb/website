@@ -18,7 +18,17 @@
  */
 
 /**
- * The editor with markdown preview.
+ * Defines a drop zone.
+ *
+ * Attributes:
+ *    - draggable-container: The drag ID. Only items with the same draggable-item
+ *      can be dropped.
+ *    - draggable-dragging-class: Added when an item is being dragged.
+ *    - draggable-hover-class: Added when an item is being dragged over this
+ *      container.
+ *    - draggable-on-drop: An action executed when an item is dropped into the
+ *      container. Use $data for the item's draggable-data value.
+ *
  * @ngInject
  */
 export default function($parse, DraggableService) {
