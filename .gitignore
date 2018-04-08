@@ -15,12 +15,17 @@
 gitinfo.json
 raml.json
 postman*.json
+stats.json
 
 .idea/bashsupport_project.xml
 .idea/compiler.xml
 .idea/encodings.xml
+.idea/markdown-navigator*
 .idea/modules.xml
+.idea/dbnavigator.xml
 .idea/scopes/
 .idea/uiDesigner.xml
 .idea/workspace.xml
+.idea/preferred-vcs.xml
+.idea/codeStyles/Project.xml
 .idea/mongoSettings.xml
