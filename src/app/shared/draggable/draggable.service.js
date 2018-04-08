@@ -25,9 +25,7 @@ export default class DraggableService {
 	 * @ngInject
 	 */
 	constructor() {
-		this.drags = {
-
-		};
+		this.drags = {};
 	}
 
 	addContainer(dragId, element, opts) {
@@ -57,22 +55,25 @@ export default class DraggableService {
 	}
 
 	stopDrag(dragId, itemElement) {
-		let draggedOverContainer = null;
+		let dropContainer = null;
 		for (let element of this.drags[dragId].containers.keys()) {
 
-			// clean class and event listeners
-			element.removeClass(this.drags[dragId].opts.draggingClass);
-			element.removeClass(this.drags[dragId].opts.hoverClass);
+			// clean event listeners
 			element.off('mouseenter');
 			element.off('mouseleave');
 
+			// clean classes and set drop element if in zone
 			if (this.drags[dragId].containers.get(element).inDropZone) {
-				draggedOverContainer = element;
+				dropContainer = element;
+				element.removeClass(this.drags[dragId].opts.hoverClass);
+			} else {
+				element.removeClass(this.drags[dragId].opts.draggingClass);
 			}
+			this.drags[dragId].containers.get(element).inDropZone = false;
 		}
 
-		if (draggedOverContainer) {
-			angular.element(draggedOverContainer).scope().$broadcast('dropped', this.drags[dragId].itemOpts.data);
+		if (dropContainer) {
+			angular.element(dropContainer).scope().$broadcast(dragId + '-dropped', this.drags[dragId].itemOpts.data);
 
 		} else {
 			if (this.drags[dragId].itemOpts.animateDuration) {

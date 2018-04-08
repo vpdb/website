@@ -5,7 +5,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="59">
+          <list size="61">
             <item index="0" class="java.lang.String" itemvalue="format-day-header" />
             <item index="1" class="java.lang.String" itemvalue="is-open" />
             <item index="2" class="java.lang.String" itemvalue="close-text" />
@@ -65,6 +65,8 @@
             <item index="56" class="java.lang.String" itemvalue="draggable-on-drop" />
             <item index="57" class="java.lang.String" itemvalue="draggable-dragging-class" />
             <item index="58" class="java.lang.String" itemvalue="draggable-hover-class" />
+            <item index="59" class="java.lang.String" itemvalue="draggable-data" />
+            <item index="60" class="java.lang.String" itemvalue="draggable-animate-duration" />
           </list>
         </value>
       </option>

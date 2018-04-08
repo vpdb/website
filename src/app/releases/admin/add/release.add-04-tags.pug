@@ -14,8 +14,9 @@
 		)
 			div.padder-top(ng-repeat="tag in vm.meta.tags")
 				.badge.badge--tag(
-					ng-drag="true",
-					ng-drag-data="{tag}"
+					draggable-item="selected-tag",
+					draggable-data="tag",
+					draggable-animate-duration="200"
 				)
 					| {{ tag.name }}
 					+icon('times-circle').small.shift-up-less.space-left.a(ng-prevent-drag, ng-click="vm.removeTag(tag, $event)")
@@ -24,12 +25,15 @@
 	.col-sm-6
 		.rel-pos
 			#available-tags.panel--dropzone-alt-2(
-				draggable-container
+				draggable-container="selected-tag",
+				draggable-on-drop="vm.removeTag($data)",
+				draggable-dragging-class="active",
+				draggable-hover-class="hover",
 			)
 				//- EXISTING
 				h5.hr--margin-small.h--shift-up Existing Tags
 				.badge.badge--tag.draggable-source(
-					ng-repeat="tag in vm.tags",
+					ng-repeat="tag in vm.availableTags",
 					draggable-item="available-tag",
 					draggable-data="tag",
 					draggable-animate-duration="200"
@@ -41,7 +45,7 @@
 						tooltip-popup-delay="200"
 					)
 
-				i(ng-show="vm.tags.length == 0") No more tags available.
+				i(ng-show="vm.availableTags.length == 0") No more tags available.
 
 		button#add-tag-btn.btn.btn-default.padder-top.pull-right(ng-click="vm.createTag()")
 			+icon('plus-circle').space-right

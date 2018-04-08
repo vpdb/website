@@ -88,9 +88,9 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		this.tags = TagResource.query(() => {
 			if (this.release && this.release._tags.length > 0) {
 				// only push tags that aren't assigned yet.
-				this.tags = this.tags.filter(tag => {
-					return !this.release._tags.includes(tag.id);
-				});
+				this.availableTags = this.tags.filter(tag => !this.release._tags.includes(tag.id));
+			} else {
+				this.availableTags = this.tags.slice();
 			}
 		});
 
@@ -141,6 +141,10 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		}
 		this.newLink = {};
 		this.meta.idMap = {};
+		if (this.tags) {
+			this.availableTags = this.tags.slice();
+		}
+
 
 		// TODO remove files via API
 
@@ -224,34 +228,24 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 			controller: 'TagAddModalCtrl',
 			controllerAs: 'vm'
 		}).result.then(newTag => {
+			this.availableTags.push(newTag);
 			this.tags.push(newTag);
 		});
-	}
-
-	/**
-	 * When a tag is dropped
-	 */
-	tagDropped() {
-		this.release._tags = this.meta.tags.map(t => t.id);
 	}
 
 	/**
 	 * Removes a tag from the release
 	 * @param {object} tag
 	 */
-	removeTag(tag, event) {
-		if (event && event.preventDefault) {
-			event.preventDefault();
-		}
-
+	removeTag(tag) {
 		console.log('Removing tag', tag, event);
 		// if dropped on the same spot, ignore.
-		if (this.tags.includes(tag)) {
+		if (this.availableTags.includes(tag)) {
 			console.log('Ignoring drop of tag %s', tag.name)
 			return;
 		}
 		this.meta.tags.splice(this.meta.tags.indexOf(tag), 1);
-		this.tags.push(tag);
+		this.availableTags.push(tag);
 		this.release._tags = this.meta.tags.map(t => t.id);
 	}
 
@@ -259,27 +253,16 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 	 * Adds a tag from the release
 	 * @param {object} tag
 	 */
-	addTag(tag, event) {
-		if (event && event.preventDefault) {
-			event.preventDefault();
-		}
+	addTag(tag) {
 		console.log('Adding tag', tag, event);
 		// if dropped on the same spot, ignore.
 		if (this.meta.tags.includes(tag)) {
-			console.log('Ignoring drop of tag %s', tag.name)
+			console.log('Ignoring drop of tag %s', tag.name);
 			return;
 		}
 		this.meta.tags.push(tag);
-		this.tags.splice(this.tags.indexOf(tag), 1);
+		this.availableTags.splice(this.availableTags.indexOf(tag), 1);
 		this.release._tags = this.meta.tags.map(t => t.id);
-	}
-
-	startTagDrag(tag, event) {
-		console.log('Starting tag drag', tag, event);
-	}
-
-	stopTagDrag(tag, event) {
-		console.log('Stopping tag drag', tag, event);
 	}
 
 	/**

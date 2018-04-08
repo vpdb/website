@@ -32,7 +32,10 @@ export default function($parse, DraggableService) {
 				draggingClass: attrs['draggableDraggingClass'] || 'draggable-dragging',
 				hoverClass: attrs['draggableHoverClass'] || 'draggable-hovering'
 			});
-			scope.$on('dropped', (event, data) => scope.draggableOnDrop({ $data: data }));
+			scope.$on(attrs['draggableContainer'] + '-dropped', (event, data) => {
+				scope.draggableOnDrop({ $data: data });
+				scope.$apply();
+			});
 		}
 	};
 }
