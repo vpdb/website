@@ -428,8 +428,8 @@ export default class AuthService {
 			this.paths = [];
 			if (this.storageTokenCallbacks) {
 				this.$log.debug('AuthService: Executing storage token callbacks.');
-				Object.keys(response.data).forEach(token => {
-					const path = response.data[token];
+				Object.keys(response.data).forEach(path => {
+					const token = response.data[path];
 					if (this.storageTokenCallbacks[path]) {
 						this.storageTokenCallbacks[path](token);
 						delete this.storageTokenCallbacks[path];

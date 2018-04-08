@@ -1,0 +1,21 @@
+include ../../template/_mixins
+
+.theme-light.modal--lightbox
+	.modal-header
+		.row(ng-if="Lightbox.images.length > 1")
+			.col-xs-4
+				a(ng-click="Lightbox.prevImage()")
+					+icon("arrow-left").space-right.shift-up-less
+					span.hidden-xs Previous
+			.col-xs-4.text-center
+				a(ng-href="{{Lightbox.imageUrl}}", target="_blank", title="Open in new tab") Full
+			.col-xs-4.text-right
+				a(ng-click="Lightbox.nextImage()")
+					span.hidden-xs Next
+					+icon("arrow-right").space-left.shift-up-less
+		.row.text-right(ng-if="Lightbox.images.length === 1")
+			a(ng-click="$dismiss()")
+				+icon("times").space-right.shift-up-less
+				span &nbsp;
+	.modal-body(ng-swipe-left="Lightbox.nextImage()", ng-swipe-right="Lightbox.prevImage()")
+		img(lightbox-src="{{Lightbox.imageUrl}}")

@@ -21,13 +21,13 @@ import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
 import uiCollapse from 'angular-ui-bootstrap/src/collapse';
 import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 import uiAccordion from 'angular-ui-bootstrap/src/accordion';
-//import 'magnific-popup';
 
 import FileUploadModule from '../shared/file-upload/file.upload.module';
 import MarkdownModule from '../shared/markdown/markdown.module';
 import RatingModule from '../shared/rating/rating.module';
 import BackglassModule from '../backglasses/backglass.module';
 import BackglassAdminModule from '../backglasses/admin/backglass.admin.module';
+import LightboxModule from '../shared/lightbox/lightbox.module';
 
 import GameListComponent from './list/game.list.component';
 import GameDetailsComponent from './details/game.details.component';
@@ -41,6 +41,7 @@ const GAMES_MODULE = angular
 		uiCollapse,
 		uiTooltip,
 		uiAccordion,
+		LightboxModule.name,
 		FileUploadModule.name,
 		BackglassModule.name,
 		BackglassAdminModule.name,

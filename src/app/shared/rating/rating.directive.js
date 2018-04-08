@@ -45,12 +45,12 @@ export default function($animate) {
 		},
 		templateUrl: RatingDirectiveTpl,
 		link: function(scope, elem, attr, ctrl) {
-			elem.mouseenter(function(e) {
+			elem.on('mouseenter', e => {
 				e.preventDefault();
 				ctrl.editStart();
 				scope.$apply();
 			});
-			elem.mouseleave(function(e) {
+			elem.on('mouseleave', e => {
 				e.preventDefault();
 				ctrl.editEnd();
 				scope.$apply();

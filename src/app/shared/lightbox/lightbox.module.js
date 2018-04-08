@@ -17,35 +17,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-export default class MediumInfoModalCtrl {
+import angular from 'angular';
+import 'angular-bootstrap-lightbox';
 
-	/**
-	 * @param $timeout
-	 * @param {App} App
-	 * @param {DownloadService} DownloadService
-	 * @param {Lightbox} Lightbox
-	 * @param params
-	 * @ngInject
-	 */
-	constructor($timeout, App, DownloadService, Lightbox, params) {
+import LightboxConfig from './lightbox.config';
 
-		this.DownloadService = DownloadService;
-		this.Lightbox = Lightbox;
+// we include ui.bootstrap per module, so this isn't available. let's mock it so angular-bootstrap-lightbox doesn't crash.
+angular.module('ui.bootstrap', []);
 
-		this.medium = params.medium;
-		this.game = params.game;
-
-		if (this.medium.file.variations.full) {
-			this.shot = {
-				thumbUrl: App.img(this.medium.file, 'medium-2x'),
-				url: this.medium.file.variations.full ? App.img(this.medium.file, 'full') : undefined
-			};
-		}
-	}
-
-	download(file) {
-		this.DownloadService.downloadFile(file, () => {
-			this.medium.file.counter.downloads++;
-		});
-	}
-}
+/**
+ * This module just groups config and template of the
+ * angular-bootstrap-lightbox dependency.
+ *
+ * @see https://github.com/compact/angular-bootstrap-lightbox
+ */
+export default angular
+	.module('vpdb.lightbox', [ 'bootstrapLightbox' ])
+	.config(LightboxConfig);

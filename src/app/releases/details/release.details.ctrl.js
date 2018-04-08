@@ -18,7 +18,6 @@
  */
 
 import { orderBy } from 'lodash';
-// import $ from 'jquery';
 
 import ReleaseDownloadModalTpl from './release.download.modal.pug';
 import ReleaseFileValidationTpl from './release.file.validation.modal.pug';
@@ -33,11 +32,11 @@ export default class ReleaseDetailsCtrl {
 
 	/**
 	 * Class constructor
-	 * @param $timeout
 	 * @param $stateParams
 	 * @param $location
 	 * @param $localStorage
 	 * @param $uibModal
+	 * @param {Lightbox} Lightbox
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
@@ -51,7 +50,7 @@ export default class ReleaseDetailsCtrl {
 	 * @param ReleaseModerationCommentResource
 	 * @ngInject
 	 */
-	constructor($timeout, $stateParams, $location, $localStorage, $uibModal,
+	constructor($stateParams, $location, $localStorage, $uibModal, Lightbox,
 				App, AuthService, ApiHelper, ReleaseService, TrackerService, BootstrapPatcher, GameResource,
 				ReleaseResource, ReleaseRatingResource, ReleaseCommentResource, ReleaseModerationCommentResource) {
 
@@ -61,10 +60,10 @@ export default class ReleaseDetailsCtrl {
 		BootstrapPatcher.patchCarousel();
 
 		this.imgPinDestruct = imgPinDestruct;
-		this.$timeout = $timeout;
 		this.$location = $location;
 		this.$localStorage = $localStorage;
 		this.$uibModal = $uibModal;
+		this.Lightbox = Lightbox;
 
 		this.App = App;
 		this.AuthService = AuthService;
@@ -134,16 +133,15 @@ export default class ReleaseDetailsCtrl {
 			this.latestVersion = this.releaseVersions[0];
 
 			// get latest shots
-			let i = 0;
-			this.shots = orderBy(this.latestVersion.files.map(file => {
+			this.shots = orderBy(this.latestVersion.files.map((file, index) => {
 				if (!file.playfield_image) {
 					return null;
 				}
 				return {
-					index: i++,
+					index: index,
 					type: file.playfield_image.file_type,
-					url: file.playfield_image.variations[this.App.pixelSuffix('medium')].url,
-					full: file.playfield_image.variations.full.url
+					thumbUrl: file.playfield_image.variations[this.App.pixelSuffix('medium')].url,
+					url: file.playfield_image.variations.full.url
 				};
 			}).filter(v => v), [ 'type' ], [ 'asc' ]);
 
@@ -161,27 +159,6 @@ export default class ReleaseDetailsCtrl {
 			}
 
 			this.flavorGrid = this.ReleaseService.flavorGrid(release);
-
-			// setup lightbox
-			this.$timeout(() => {
-				$('uib-slide').each(function() {
-					$(this).magnificPopup({
-						delegate: '.image',
-						type: 'image',
-						removalDelay: 300,
-						mainClass: 'mfp-fade',
-						gallery: {
-							enabled: true,
-							preload: [0,2],
-							navigateByImgClick: true,
-							arrowMarkup: '',
-							tPrev: '',
-							tNext: '',
-							tCounter: ''
-						}
-					});
-				});
-			}, 0);
 
 			// seo structured data
 			this.ldRelease.name = title;
@@ -243,7 +220,6 @@ export default class ReleaseDetailsCtrl {
 	 * @param game Game
 	 */
 	download(game) {
-
 		if (this.AuthService.isAuthenticated) {
 			this.$uibModal.open({
 				templateUrl: ReleaseDownloadModalTpl,

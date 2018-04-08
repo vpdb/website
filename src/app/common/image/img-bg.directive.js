@@ -52,7 +52,6 @@ class BackgroundImageDirective {
 		// check for constant
 		if (attrs.imgBg[0] === '/') {
 			this._setImg(attrs.imgBg, scope, element, attrs);
-
 		} else {
 			// otherwise, watch scope for expression.
 			let value = this.$parse(attrs.imgBg);

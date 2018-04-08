@@ -20,12 +20,12 @@ import angular from 'angular';
 import uiCarousel from 'angular-ui-bootstrap/src/carousel';
 import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 import uiAccordion from 'angular-ui-bootstrap/src/accordion';
-//import 'magnific-popup';
 
 import FileUploadModule from '../shared/file-upload/file.upload.module';
 import EditorModule from '../shared/editor/editor.module';
 import MarkdownModule from '../shared/markdown/markdown.module';
 import RatingModule from '../shared/rating/rating.module';
+import LightboxModule from '../shared/lightbox/lightbox.module';
 
 import ReleaseListComponent from './list/release.list.component';
 import ReleaseDetailsComponent from './details/release.details.component';
@@ -35,7 +35,16 @@ import validationStatus from './details/release.validation.status.filter';
 import validationTooltip from './details/release.validation.tooltip.filter';
 
 const RELEASE_MODULE = angular
-	.module('vpdb.releases', [ uiCarousel, uiTooltip, uiAccordion, FileUploadModule.name, MarkdownModule.name, EditorModule.name, RatingModule.name ])
+	.module('vpdb.releases', [
+		uiCarousel,
+		uiTooltip,
+		uiAccordion,
+		LightboxModule.name,
+		FileUploadModule.name,
+		MarkdownModule.name,
+		EditorModule.name,
+		RatingModule.name
+	])
 	.component('releaseListComponent', new ReleaseListComponent())
 	.component('releaseDetailsComponent', new ReleaseDetailsComponent())
 	.controller('ReleaseDownloadModalCtrl', ReleaseDownloadModalCtrl)
