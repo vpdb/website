@@ -28,7 +28,7 @@ include ../../../template/_mixins
 
 		//- AUTHORS
 		//-----------------------------------------
-		.span(ng-show="vm.editAuthors")
+		.span(ng-if="vm.canEditAuthors")
 			h4.h--primary.padder-top-2x Authors
 			i.pull-left(ng-show="vm.updatedRelease.authors.length == 0") No authors added.
 			.row--fullwidth
@@ -59,40 +59,39 @@ include ../../../template/_mixins
 				//- SELECTED
 				h5.h--shift-up.hr--margin-small Selected Tags
 				#selected-tags.panel--dropzone-alt(
-					ng-model="vm.updatedRelease.tags",
-					data-drop="true",
-					data-jqyoui-options="{ accept: '.badge:not([ng-model=vm.updatedRelease.tags])', activeClass: 'active', 'hoverClass': 'hover' }",
-					jqyoui-droppable="{ multiple: true }"
+					draggable-container="available-tag",
+					draggable-on-drop="vm.addTag($data)",
+					draggable-dragging-class="active",
+					draggable-hover-class="hover",
 				)
 					div.padder-top(ng-repeat="tag in vm.updatedRelease.tags")
 						.badge.badge--tag(
-							ng-model="vm.updatedRelease.tags",
-							data-drag="true",
-							data-jqyoui-options="{ revert: 'invalid' }",
-							jqyoui-draggable="{ animate: true, index: {{$index}} }"
+							draggable-item="selected-tag",
+							draggable-data="tag",
+							draggable-animate-duration="200"
 						) {{ tag.name }}
-							+icon('times-circle').small.shift-up.space-left.a(ng-click="vm.removeTag(tag)")
+							+icon('times-circle').small.shift-up-less.space-left.a(ng-click="vm.removeTag(tag)")
 						i.space-left {{ tag.description }}
 					i(ng-show="vm.updatedRelease.tags.length == 0") No tags selected. Drag and drop them from the right hand pane in here.
 			.col-sm-6
 				.rel-pos
 					#available-tags.panel--dropzone-alt-2(
-						ng-model="vm.tags",
-						data-drop="true",
-						data-jqyoui-options="{ accept:':not([ng-model=vm.tags])', activeClass: 'active', hoverClass: 'hover' }",
-						jqyoui-droppable="{ multiple: true }"
+						draggable-container="selected-tag",
+						draggable-on-drop="vm.removeTag($data)",
+						draggable-dragging-class="active",
+						draggable-hover-class="hover",
 					)
 
 						//- EXISTING
 						h5.hr--margin-small.h--shift-up Existing Tags
 						.badge.badge--tag(
-							ng-repeat="tag in vm.tags", ng-model="vm.tags",
-							data-drag="true",
-							data-jqyoui-options="{ revert: 'invalid' }",
-							jqyoui-draggable='{ animate: true, index: {{$index}} }'
+							ng-repeat="tag in vm.availableTags",
+							draggable-item="available-tag",
+							draggable-data="tag",
+							draggable-animate-duration="200"
 						)
 							| {{ tag.name }}
-							+icon('question-circle').small.shift-up.space-left.a(
+							+icon('question-circle').small.shift-up-less.space-left.a(
 								uib-tooltip="{{ tag.description }}",
 								tooltip-append-to-body="true",
 								tooltip-trigger="click",

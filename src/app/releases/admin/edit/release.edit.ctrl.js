@@ -17,7 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { pick, cloneDeep } from 'lodash';
+import angular from 'angular';
+import { pick } from 'lodash';
 import AuthorSelectModalTpl from '../../../shared/author-select/author.select.modal.pug';
 import TagAddModalTpl from '../tag/tag.add.modal.pug';
 import ReleaseEditVersionModalTpl from './release.edit.version.modal.pug';
@@ -57,20 +58,16 @@ export default class ReleaseEditCtrl {
 		this.gameId = $stateParams.id;
 		this.releaseId = $stateParams.releaseId;
 		this.newLink = {};
-		this.editAuthors = false;
+		this.canEditAuthors = false;
 
 		this.game = GameResource.get({ id: this.gameId });
 		this.release = ReleaseResource.get({ release: this.releaseId }, release => {
 
-			this.reset();
-			this.tags = TagResource.query(() => {
-				if (release && release.tags.length > 0) {
-					// only push tags that aren't assigned yet.
-					this.tags = this.tags.filter(tag => !release.tags.map(t => t.id).includes(tag.id));
-				}
-			});
+			// retrieve available tags, then reset.
+			this.tags = TagResource.query(() => this.reset());
+
 			if (AuthService.isAuthenticated) {
-				this.editAuthors = AuthService.getUser().id === release.created_by.id;
+				this.canEditAuthors = AuthService.getUser().id === release.created_by.id;
 			}
 		});
 	}
@@ -79,7 +76,8 @@ export default class ReleaseEditCtrl {
 	 * Resets the data to current release.
 	 */
 	reset() {
-		this.updatedRelease = pick(cloneDeep(this.release), [ 'name', 'description', 'tags', 'links', 'acknowledgements', 'authors' ]);
+		this.updatedRelease = pick(angular.copy(this.release), [ 'name', 'description', 'tags', 'links', 'acknowledgements', 'authors' ]);
+		this.availableTags = this.tags.filter(tag => !this.updatedRelease.tags.map(t => t.id).includes(tag.id));
 		this.errors = {};
 	}
 
@@ -129,6 +127,7 @@ export default class ReleaseEditCtrl {
 			controllerAs: 'vm'
 		}).result.then(newTag => {
 			this.tags.push(newTag);
+			this.availableTags.push(newTag);
 		});
 	}
 
@@ -137,8 +136,26 @@ export default class ReleaseEditCtrl {
 	 * @param {object} tag
 	 */
 	removeTag(tag) {
+		if (this.availableTags.includes(tag)) {
+			console.log('Ignoring drop of tag %s', tag.name);
+			return;
+		}
+		this.availableTags.push(tag);
 		this.updatedRelease.tags.splice(this.updatedRelease.tags.indexOf(tag), 1);
-		this.tags.push(tag);
+	}
+
+	/**
+	 * Adds a tag to the release
+	 * @param {object} tag
+	 */
+	addTag(tag) {
+		// if dropped on the same spot, ignore.
+		if (this.updatedRelease.tags.includes(tag)) {
+			console.log('Ignoring drop of tag %s', tag.name);
+			return;
+		}
+		this.updatedRelease.tags.push(tag);
+		this.availableTags.splice(this.availableTags.indexOf(tag), 1);
 	}
 
 	/**
@@ -179,14 +196,14 @@ export default class ReleaseEditCtrl {
 	 * Posts the release add form to the server.
 	 */
 	submit() {
-		const release = cloneDeep(this.updatedRelease);
+		const release = angular.copy(this.updatedRelease);
 
 		// map tags
 		release._tags = release.tags.map(t => t.id);
 		delete release.tags;
 
 		// map authors
-		if (this.editAuthors) {
+		if (this.canEditAuthors) {
 			release.authors = release.authors.map(author => {
 				author._user = author.user.id;
 				delete author.user;
@@ -196,7 +213,7 @@ export default class ReleaseEditCtrl {
 			delete release.authors;
 		}
 
-		this.ReleaseResource.update({ release: this.release.id }, release, () => {
+		this.ReleaseResource.update({ release: this.releaseId }, release, () => {
 			this.$state.go('releaseDetails', { id: this.gameId, releaseId: this.releaseId });
 			this.App.showNotification('Successfully updated release.');
 

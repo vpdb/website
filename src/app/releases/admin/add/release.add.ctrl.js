@@ -75,33 +75,6 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		this.showHelp = $localStorage.showInstructions.release_add;
 		$scope.$watch(() => this.showHelp, () => $localStorage.showInstructions.release_add = this.showHelp);
 
-		// fetch game info
-		this.gameId = $stateParams.id;
-		this.game = GameResource.get({ id: this.gameId }, () => {
-			this.game.lastrelease = new Date(this.game.lastrelease).getTime();
-			this.release._game = this.game.id;
-			App.setTitle('Add Release - ' + this.game.title);
-			TrackerService.trackPage();
-		});
-
-		// retrieve available tags
-		this.tags = TagResource.query(() => {
-			if (this.release && this.release._tags.length > 0) {
-				// only push tags that aren't assigned yet.
-				this.availableTags = this.tags.filter(tag => !this.release._tags.includes(tag.id));
-			} else {
-				this.availableTags = this.tags.slice();
-			}
-		});
-
-		this.step = {
-			files: 1,
-			flavors: 3,
-			compat: 5,
-			media: 7
-		};
-		this.newLink = {};
-
 		// init data: either copy from local storage or reset.
 		if (this.$localStorage.release && this.$localStorage.release[this.gameId] && this.$localStorage.release[this.gameId].versions) {
 			this.release = this.$localStorage.release[this.gameId];
@@ -119,6 +92,33 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		} else {
 			this.reset();
 		}
+
+		// fetch game info
+		this.gameId = $stateParams.id;
+		this.game = GameResource.get({ id: this.gameId }, () => {
+			this.game.lastrelease = new Date(this.game.lastrelease).getTime();
+			this.release._game = this.game.id;
+			App.setTitle('Add Release - ' + this.game.title);
+			TrackerService.trackPage();
+		});
+
+		// retrieve available tags
+		this.tags = TagResource.query(() => {
+			if (this.release._tags.length > 0) {
+				// only push tags that aren't assigned yet.
+				this.availableTags = this.tags.filter(tag => !this.release._tags.includes(tag.id));
+			} else {
+				this.availableTags = this.tags.slice();
+			}
+		});
+
+		this.step = {
+			files: 1,
+			flavors: 3,
+			compat: 5,
+			media: 7
+		};
+		this.newLink = {};
 	}
 
 
@@ -249,7 +249,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 	}
 
 	/**
-	 * Adds a tag from the release
+	 * Adds a tag to the release
 	 * @param {object} tag
 	 */
 	addTag(tag) {

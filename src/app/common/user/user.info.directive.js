@@ -42,7 +42,7 @@ export default function userDetails($compile, $uibModal, $rootScope, AuthService
 			if (AuthService.hasPermission('users/view')) {
 				element.addClass('a');
 			}
-			element.click(function() {
+			element.on('click', () => {
 				if (AuthService.hasPermission('users/view')) {
 					$uibModal.open({
 						templateUrl: UserInfoModalTpl,
