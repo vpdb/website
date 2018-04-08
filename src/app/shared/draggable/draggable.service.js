@@ -66,9 +66,8 @@ export default class DraggableService {
 			if (this.drags[dragId].containers.get(element).inDropZone) {
 				dropContainer = element;
 				element.removeClass(this.drags[dragId].opts.hoverClass);
-			} else {
-				element.removeClass(this.drags[dragId].opts.draggingClass);
 			}
+			element.removeClass(this.drags[dragId].opts.draggingClass);
 			this.drags[dragId].containers.get(element).inDropZone = false;
 		}
 
@@ -106,11 +105,9 @@ export default class DraggableService {
 	_mouseEnter(element, drag) {
 		drag.containers.get(element).inDropZone = true;
 		element.addClass(drag.opts.hoverClass);
-		element.removeClass(drag.opts.draggingClass);
 	}
 	_mouseLeave(element, drag) {
 		drag.containers.get(element).inDropZone = false;
 		element.removeClass(drag.opts.hoverClass);
-		element.addClass(drag.opts.draggingClass);
 	}
 }

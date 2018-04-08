@@ -238,10 +238,9 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 	 * @param {object} tag
 	 */
 	removeTag(tag) {
-		console.log('Removing tag', tag, event);
 		// if dropped on the same spot, ignore.
 		if (this.availableTags.includes(tag)) {
-			console.log('Ignoring drop of tag %s', tag.name)
+			console.log('Ignoring drop of tag %s', tag.name);
 			return;
 		}
 		this.meta.tags.splice(this.meta.tags.indexOf(tag), 1);
@@ -254,7 +253,6 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 	 * @param {object} tag
 	 */
 	addTag(tag) {
-		console.log('Adding tag', tag, event);
 		// if dropped on the same spot, ignore.
 		if (this.meta.tags.includes(tag)) {
 			console.log('Ignoring drop of tag %s', tag.name);
