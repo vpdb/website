@@ -25,53 +25,52 @@ describe('Login Modal', () => {
 	const appPage = new AppPage();
 	const loginModal = appPage.loginModal;
 
-	beforeAll(() => {
-		appPage.get();
-		appPage.openLoginModal();
+	beforeAll(async () => {
+		await appPage.get();
+		await appPage.openLoginModal();
 	});
 
-	it('should toggle between login and register', () => {
-		loginModal.toggleLogin();
-		expect(loginModal.loginSubmit.isDisplayed()).toBeTruthy();
-		expect(loginModal.registerSubmit.isDisplayed()).not.toBeTruthy();
-		expect(loginModal.toggleButton.getText()).toEqual('Register');
-		loginModal.toggleRegister();
-		expect(loginModal.loginSubmit.isDisplayed()).not.toBeTruthy();
-		expect(loginModal.registerSubmit.isDisplayed()).toBeTruthy();
-		expect(loginModal.toggleButton.getText()).toEqual('Login');
-		loginModal.toggle();
+	it('should toggle between login and register', async () => {
+		await loginModal.toggleLogin();
+		await expect(loginModal.loginSubmit.isDisplayed()).toBeTruthy();
+		await expect(loginModal.registerSubmit.isDisplayed()).not.toBeTruthy();
+		await expect(loginModal.toggleButton.getText()).toEqual('Register');
+		await loginModal.toggleRegister();
+		await expect(loginModal.loginSubmit.isDisplayed()).not.toBeTruthy();
+		await expect(loginModal.registerSubmit.isDisplayed()).toBeTruthy();
+		await expect(loginModal.toggleButton.getText()).toEqual('Login');
+		await loginModal.toggle();
 	});
 
-	it('should show validation errors when registering', () => {
-		loginModal.toggleRegister();
-		loginModal.submitRegister();
-		expect(loginModal.hasEmailValidationError()).toBeTruthy();
-		expect(loginModal.hasUsernameValidationError()).toBeTruthy();
-		expect(loginModal.hasPasswordValidationError()).toBeTruthy();
-		loginModal.toggle();
+	it('should show validation errors when registering', async () => {
+		await loginModal.toggleRegister();
+		await loginModal.submitRegister();
+		await expect(loginModal.hasEmailValidationError()).toBeTruthy();
+		await expect(loginModal.hasUsernameValidationError()).toBeTruthy();
+		await expect(loginModal.hasPasswordValidationError()).toBeTruthy();
+		await loginModal.toggle();
 	});
 
-	it('should register and login correctly', () => {
+	it('should register and login correctly', async () => {
 		const username = internet.userName().replace(/[^a-z0-9]+/gi, '');
 		const password = internet.password(6);
 
-		loginModal.toggleRegister();
-		loginModal.setRegister(internet.email().toLowerCase(), username, password);
-		loginModal.submitRegister();
+		await loginModal.toggleRegister();
+		await loginModal.setRegister(internet.email().toLowerCase(), username, password);
+		await loginModal.submitRegister();
 
-		expect(loginModal.successMessage.isDisplayed()).toBeTruthy();
-		expect(loginModal.successMessage.getText()).toContain('Registration successful.');
-		expect(loginModal.loginSubmit.isDisplayed()).toBeTruthy();
+		await expect(loginModal.successMessage.isDisplayed()).toBeTruthy();
+		await expect(loginModal.successMessage.getText()).toContain('Registration successful.');
+		await expect(loginModal.loginSubmit.isDisplayed()).toBeTruthy();
 
-		loginModal.toggleLogin();
-		loginModal.setLogin(username, password);
-		loginModal.submitLogin();
+		await loginModal.toggleLogin();
+		await loginModal.setLogin(username, password);
+		await loginModal.submitLogin();
 
-		expect(loginModal.element.isPresent()).not.toBeTruthy();
-		expect(appPage.getLoggedUsername()).toEqual(username);
+		await expect(loginModal.element.isPresent()).not.toBeTruthy();
+		await expect(appPage.getLoggedUsername()).toEqual(username);
 
-		appPage.logout();
-		appPage.openLoginModal();
+		await appPage.logout();
+		await appPage.openLoginModal();
 	});
-
 });

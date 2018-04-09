@@ -27,10 +27,10 @@ export let config: Config = merge(commonConfig, {
 			//{ browserName: 'IE', browser_version: '11.0' },
 			//{ browserName: 'Safari', browser_version: '11.0', os: 'OS X', os_version: 'High Sierra' }
 		].map(capability),
-	onPrepare: () => {
+	onPrepare: async () => {
 		setupReporter();
 		console.log('Setting file detector to remote.'); // https://www.browserstack.com/automate/node
 		browser.setFileDetector(new FileDetector());
-		return setupUsers();
+		await setupUsers();
 	}
 });

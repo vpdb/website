@@ -33,39 +33,39 @@ export class ReleaseEditPage extends ReleaseBasePage {
 		this.authors = element.all(by.repeater('author in vm.updatedRelease.authors'))
 	}
 
-	get(release: Release) {
-		this.appPage.get();
-		this.appPage.loginAs('member');
-		this.navigate(release);
+	async get(release: Release) {
+		await this.appPage.get();
+		await this.appPage.loginAs('member');
+		await this.navigate(release);
 	}
 
-	navigate(release: Release) {
-		browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id + '/edit');
+	async navigate(release: Release) {
+		await browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id + '/edit');
 	}
 
-	setReleaseName(name:string) {
-		this.name.clear();
-		this.name.sendKeys(name);
+	async setReleaseName(name:string) {
+		await this.name.clear();
+		await this.name.sendKeys(name);
 	}
 
-	cancel() {
-		this.submitButton.click();
+	async cancel() {
+		await this.submitButton.click();
 	}
 
-	reset() {
-		this.resetButton.click();
+	async reset() {
+		await this.resetButton.click();
 	}
 
-	submit() {
-		this.submitButton.click();
+	async submit() {
+		await this.submitButton.click();
 	}
 
-	editVersion(version: string) {
-		this.versions
+	async editVersion(version: string) {
+		await this.versions
 			.all(by.tagName('td'))
 			.filter(el => el.getText().then(text => text === version))
 			.first()
 			.click();
-		browser.wait(until.presenceOf(element(by.className('modal-dialog'))), 1000);
+		await browser.wait(until.presenceOf(element(by.className('modal-dialog'))), 1000);
 	}
 }

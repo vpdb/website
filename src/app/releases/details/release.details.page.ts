@@ -37,66 +37,66 @@ export class ReleaseDetailsPage extends BasePage {
 	private moderationToggleModeration = element(by.css('#show-moderation + label'));
 	private newCommentElement = element(by.id('new-comment-editor'));
 
-	get(release:Release, username:string = null) {
+	async get(release:Release, username:string = null) {
 		if (username) {
-			this.appPage.get();
-			this.appPage.loginAs('member');
+			await this.appPage.get();
+			await this.appPage.loginAs('member');
 		}
-		this.navigate(release);
+		await this.navigate(release);
 	}
 
-	navigate(release:Release) {
-		browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+	async navigate(release:Release) {
+		await browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
 	}
 
-	getDescription() {
-		return this.description.getText();
+	async getDescription() {
+		return await this.description.getText();
 	}
 
-	getTitle() {
-		return this.title.getText();
+	async getTitle() {
+		return await this.title.getText();
 	}
 
-	toggleFilenames() {
-		this.showFilenames.click();
+	async toggleFilenames() {
+		await this.showFilenames.click();
 	}
 
-	toggleModerationZone() {
-		this.moderationToggleModeration.click();
+	async toggleModerationZone() {
+		await this.moderationToggleModeration.click();
 	}
 
-	editRelease() {
-		this.editReleaseButton.click();
+	async editRelease() {
+		await this.editReleaseButton.click();
 	}
 
-	addVersion() {
-		this.addVersionButton.click();
+	async hasAdminZone() {
+		return await browser.isElementPresent(this.adminZone);
 	}
 
-	hasAdminZone() {
-		return browser.isElementPresent(this.adminZone);
+	async addVersion() {
+		await this.addVersionButton.click();
 	}
 
-	hasModerationZone() {
-		return browser.isElementPresent(this.moderationZone);
+	async hasModerationZone() {
+		return await browser.isElementPresent(this.moderationZone);
 	}
 
-	hasModerationZoneToggle() {
-		return this.moderationToggleModeration.isDisplayed();
+	async hasModerationZoneToggle() {
+		return await this.moderationToggleModeration.isDisplayed();
 	}
 
-	hasFilenamesToggled() {
-		return element(by.id('flavors'))
+	async hasFilenamesToggled() {
+		const els = await element(by.id('flavors'))
 			.all(by.css('thead > tr > th'))
-			.filter(el => el.getText().then(str => str === 'File Name'))
-			.then(els => els.length === 1);
+			.filter(el => el.getText().then(str => str === 'File Name'));
+		return els.length === 1;
 	}
 
-	hasNewCommentForm() {
-		return this.newCommentElement.isDisplayed();
+	async hasNewCommentForm() {
+		return await this.newCommentElement.isDisplayed();
 	}
 
-	doesExist() {
-		return browser.isElementPresent(this.destructionPic).then(present => !present);
+	async doesExist() {
+		return !(await browser.isElementPresent(this.destructionPic));
 	}
 }

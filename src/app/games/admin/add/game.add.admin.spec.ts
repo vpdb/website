@@ -27,61 +27,61 @@ describe('Add new game', () => {
 	const appPage = new AppPage();
 	const addGamePage = new GameAddAdminPage();
 
-	beforeAll(() => {
-		addGamePage.get();
+	beforeAll(async () => {
+		await addGamePage.get();
 	});
 
-	afterEach(() => {
-		browser.executeScript('window.scrollTo(0,0);');
+	afterEach(async () => {
+		await browser.executeScript('window.scrollTo(0,0);');
 	});
 
-	afterAll(() => {
-		appPage.logout();
+	afterAll(async () => {
+		await appPage.logout();
 	});
 
-	it('should display validation errors', () => {
-		addGamePage.submit();
-		expect(addGamePage.hasTitleValidatorErrors()).toBe(true);
-		expect(addGamePage.hasRecreationIdValidationErrors()).toBe(true);
-		expect(addGamePage.hasBackglassValidationErrors()).toBe(true);
-		addGamePage.reset();
+	it('should display validation errors', async () => {
+		await addGamePage.submit();
+		await expect(addGamePage.hasTitleValidatorErrors()).toBe(true);
+		await expect(addGamePage.hasRecreationIdValidationErrors()).toBe(true);
+		await expect(addGamePage.hasBackglassValidationErrors()).toBe(true);
+		await addGamePage.reset();
 	});
 
-	it('should display the game info from IPDB', () => {
-		addGamePage.fetchIpdb('3781');
-		appPage.waitUntilLoaded();
-		expect(addGamePage.gameInfoPanel.isDisplayed()).toBeTruthy();
-		expect(addGamePage.gameInfoTitle.getText()).toEqual('Attack from Mars');
-		addGamePage.reset();
+	it('should display the game info from IPDB', async () => {
+		await addGamePage.fetchIpdb('3781');
+		await appPage.waitUntilLoaded();
+		await expect(addGamePage.gameInfoPanel.isDisplayed()).toBeTruthy();
+		await expect(addGamePage.gameInfoTitle.getText()).toEqual('Attack from Mars');
+		await addGamePage.reset();
 	});
 
-	it('should upload a backglass', () => {
-		addGamePage.uploadBackglass('backglass-1280x1024.png');
-		expect(addGamePage.backglassImage.getAttribute('style')).toContain('background-image: url');
-		addGamePage.reset();
+	it('should upload a backglass', async () => {
+		await addGamePage.uploadBackglass('backglass-1280x1024.png');
+		await expect(addGamePage.backglassImage.getAttribute('style')).toContain('background-image: url');
+		await addGamePage.reset();
 	});
 
-	it('should upload a logo', () => {
-		addGamePage.uploadLogo('game.logo-800x300.png');
-		expect(addGamePage.logoImage.getAttribute('style')).toContain('background-image: url');
-		addGamePage.reset();
+	it('should upload a logo', async () => {
+		await addGamePage.uploadLogo('game.logo-800x300.png');
+		await expect(addGamePage.logoImage.getAttribute('style')).toContain('background-image: url');
+		await addGamePage.reset();
 	});
 
-	it('should successfully add a new game', () => {
+	it('should successfully add a new game', async () => {
 		const game = Games.getGame();
-		addGamePage.fetchIpdb(String(game.ipdb.number));
-		appPage.waitUntilLoaded();
-		addGamePage.uploadBackglass('backglass-1280x1024.png');
-		addGamePage.uploadLogo('game.logo-800x300.png');
-		addGamePage.submit();
+		await addGamePage.fetchIpdb(String(game.ipdb.number));
+		await appPage.waitUntilLoaded();
+		await addGamePage.uploadBackglass('backglass-1280x1024.png');
+		await addGamePage.uploadLogo('game.logo-800x300.png');
+		await addGamePage.submit();
 
-		const modal = appPage.getErrorInfoModal();
-		expect(modal.title.getText()).toEqual('GAME CREATED!');
-		expect(modal.subtitle.getText()).toEqual(game.title.toUpperCase());
-		expect(modal.message.getText()).toEqual('The game has been successfully created.');
-		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/');
-		modal.close();
-		addGamePage.navigate();
+		const modal = await appPage.getErrorInfoModal();
+		await expect(modal.title.getText()).toEqual('GAME CREATED!');
+		await expect(modal.subtitle.getText()).toEqual(game.title.toUpperCase());
+		await expect(modal.message.getText()).toEqual('The game has been successfully created.');
+		await expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/');
+		await modal.close();
+		await addGamePage.navigate();
 	});
 
 });

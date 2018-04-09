@@ -31,27 +31,27 @@ export class HomePage {
 	panelTitle = this.panel.element(by.css('h3'));
 	panelClose = this.panel.element(by.css('.clear > svg'));
 
-	get() {
-		browser.get(browser.baseUrl);
+	async get() {
+		await browser.get(browser.baseUrl);
 	}
 
-	search(query: string) {
-		this.searchInput.sendKeys(query);
+	async search(query: string) {
+		await this.searchInput.sendKeys(query);
 	}
 
-	clearSearch() {
-		this.searchInput.clear();
+	async clearSearch() {
+		await this.searchInput.clear();
 	}
 
-	togglePanel() {
-		this.panelToggle.click();
+	async togglePanel() {
+		await this.panelToggle.click();
 	}
 
-	closePanel() {
-		this.panelClose.click();
+	async closePanel() {
+		await this.panelClose.click();
 	}
 
-	getNoResult(): promise.Promise<string> {
-		return this.noResult.getText();
+	async getNoResult(): Promise<string> {
+		return await this.noResult.getText();
 	}
 }

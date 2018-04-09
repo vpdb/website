@@ -44,74 +44,74 @@ export class ReleaseBasePage extends BasePage {
 
 	protected authors:ElementArrayFinder;
 
-	uploadFile(fileName:string) {
-		return this.upload(this.filesUploadPanel, fileName);
+	async uploadFile(fileName:string) {
+		return await this.upload(this.filesUploadPanel, fileName);
 	}
 
-	uploadPlayfield(tableFileName:string, imageFileName:string) {
+	async uploadPlayfield(tableFileName:string, imageFileName:string) {
 		const panel = this.parentWithText('media', tableFileName, 'span', 'ng-scope');
 		const uploadPanel = panel
 			.all(by.className('playfield--image'))
 			.filter(el => el.getAttribute('id').then(id => id.startsWith('playfield-image')))
 			.first();
-		return this.upload(uploadPanel, imageFileName);
+		return await this.upload(uploadPanel, imageFileName);
 	}
 
-	setDescription(description:string) {
-		this.description.clear();
-		this.description.sendKeys(description);
+	async setDescription(description:string) {
+		await this.description.clear();
+		await this.description.sendKeys(description);
 	}
 
-	setFlavor(fileName:string, type:number, value:number) {
+	async setFlavor(fileName:string, type:number, value:number) {
 		const panel = this.parentWithText('flavors', fileName);
-		panel.all(by.tagName('tr')).get(type)
+		await panel.all(by.tagName('tr')).get(type)
 			.all(by.tagName('td')).get(value)
 			.element(by.tagName('label'))
 			.click();
 	}
 
-	setCompatibility(fileName:string, type:number, value:number) {
+	async setCompatibility(fileName:string, type:number, value:number) {
 		const panel = this.parentWithText('compatibility', fileName);
-		panel.all(by.css('.col--list-files-right > .col-md-4')).get(type)
+		await panel.all(by.css('.col--list-files-right > .col-md-4')).get(type)
 			.all(by.css('.simple-list')).get(value)
 			.element(by.tagName('label'))
 			.click();
 	}
 
-	addAuthor(name:string = '', role:string = '') {
-		this.addAuthorButton.click();
+	async addAuthor(name:string = '', role:string = '') {
+		await this.addAuthorButton.click();
 		const authorModal = new AuthorSelectModalPage();
 		if (name) {
-			authorModal.search(name);
-			authorModal.selectSearchResult(0);
+			await authorModal.search(name);
+			await authorModal.selectSearchResult(0);
 		}
 		if (role) {
-			authorModal.addRole(role);
+			await authorModal.addRole(role);
 		}
 
 		if (name && role) {
-			authorModal.submit();
+			await authorModal.submit();
 		}
 	}
 
-	editAuthor(name:string) {
+	async editAuthor(name:string) {
 		const author = this.authors.filter(el => el.element(by.css('.media-body h6')).getText().then(text => text === name)).first();
-		browser.actions().mouseMove(author).perform();
+		await browser.actions().mouseMove(author).perform();
 		const editButton = author.element(by.css('[ng-click="vm.addAuthor(author)"]'));
-		editButton.click();
+		await editButton.click();
 	}
 
-	hasAuthor(name:string, role:string) {
+	async hasAuthor(name:string, role:string) {
 		const author = this.authors.filter(el => el.element(by.css('.media-body h6')).getText().then(text => text === name)).first();
-		return author.element(by.css('.media-body > span')).getText().then(text => text === role);
+		return await author.element(by.css('.media-body > span')).getText().then(text => text === role);
 
 	}
 
-	clearAuthors() {
-		this.authors.each(author => {
-			browser.actions().mouseMove(author).perform();
+	async clearAuthors() {
+		this.authors.each(async author => {
+			await browser.actions().mouseMove(author).perform();
 			const delButton = author.element(by.css('[ng-click="vm.removeAuthor(author)"]'));
-			delButton.click();
+			await delButton.click();
 		});
 	}
 
@@ -123,86 +123,85 @@ export class ReleaseBasePage extends BasePage {
 	 * @param {string} name
 	 * @param {string} description
 	 */
-	createTag(name:string = null, description:string = null) {
+	async createTag(name: string = null, description: string = null) {
 		if (name !== null && description !== null) {
-			this.hasAvailableTag(name).then(hasTag => {
-				if (hasTag) {
-					console.log('Tag "%s" already exists, not creating.', name);
-					return;
-				}
-				this.addTagButton.click();
-				const tagModal = new TagAddModalPage();
-				tagModal.setName(name);
-				tagModal.setDescription(description);
-				tagModal.submit();
-			});
+			const hasTag = await this.hasAvailableTag(name);
+			if (hasTag) {
+				console.log('Tag "%s" already exists, not creating.', name);
+				return;
+			}
+			await this.addTagButton.click();
+			const tagModal = new TagAddModalPage();
+			await tagModal.setName(name);
+			await tagModal.setDescription(description);
+			await tagModal.submit();
 		} else {
-			this.addTagButton.click();
+			await this.addTagButton.click();
 		}
 	}
 
-	selectTag(name:string) {
+	async selectTag(name:string) {
 		const tag = this.tagsAvailable.filter(el => el.getText().then(text => text === name)).first();
-		browser.actions().dragAndDrop(tag, this.selectedTags).mouseUp().perform();
-		browser.wait(() => this.hasSelectedTag(name), 5000);
+		await browser.actions().dragAndDrop(tag, this.selectedTags).mouseUp().perform();
+		await browser.wait(() => this.hasSelectedTag(name), 5000);
 	}
 
-	removeTagByClick(name:string) {
-		return this.findSelectedTag(name).first().element(by.tagName('svg')).click();
+	async removeTagByClick(name:string) {
+		return await this.findSelectedTag(name).first().element(by.tagName('svg')).click();
 	}
 
-	removeTagByDrag(name:string) {
+	async removeTagByDrag(name:string) {
 		const tag = this.findSelectedTag(name).first().element(by.className('badge'));
-		browser.actions().dragAndDrop(tag, this.availableTags).mouseUp().perform();
-		browser.wait(() => this.hasAvailableTag(name), 5000);
+		await browser.actions().dragAndDrop(tag, this.availableTags).mouseUp().perform();
+		await browser.wait(() => this.hasAvailableTag(name), 5000);
 	}
 
-	hasAvailableTag(name:string) {
-		return this.tagsAvailable
-			.filter(el => el.getText().then(text => text === name))
-			.then(els => els.length === 1);
+	async hasAvailableTag(name:string) {
+		const els = await this.tagsAvailable.filter(el => el.getText().then(text => text === name));
+		return els.length === 1;
 	}
 
-	hasSelectedTag(name:string) {
-		return this.findSelectedTag(name).then(els => els.length === 1);
+	async hasSelectedTag(name:string) {
+		const els = await this.findSelectedTag(name);
+		return els.length === 1;
 	}
 
-	private findSelectedTag(name:string) {
+	private findSelectedTag(name:string): ElementArrayFinder {
 		return this.tagsSelected.filter(el => el.element(by.className('badge')).getText().then(text => text === name));
 	}
 
-	hasFileUploadValidationError(): promise.Promise<boolean> {
-		return this.hasClass(this.filesUploadPanel, 'error');
+	async hasFileUploadValidationError(): Promise<boolean> {
+		return await this.hasClass(this.filesUploadPanel, 'error');
 	}
 
-	addLink(label: string, url: string) {
-		this.newLinkLabel.sendKeys(label);
-		this.newLinkUrl.sendKeys(url);
-		this.newLinkButton.click();
+	async addLink(label: string, url: string) {
+		await this.newLinkLabel.sendKeys(label);
+		await this.newLinkUrl.sendKeys(url);
+		await this.newLinkButton.click();
 	}
 
-	setAcknowledgements(acknowledgements:string) {
-		this.acknowledgements.clear();
-		this.acknowledgements.sendKeys(acknowledgements);
+	async setAcknowledgements(acknowledgements:string) {
+		await this.acknowledgements.clear();
+		await this.acknowledgements.sendKeys(acknowledgements);
 	}
 
-	hasFlavorValidationError(fileName:string): promise.Promise<boolean> {
-		return this.hasClass(this.parentWithText('flavors', fileName), 'error');
+	async hasFlavorValidationError(fileName:string): Promise<boolean> {
+		return await this.hasClass(this.parentWithText('flavors', fileName), 'error');
 	}
 
-	hasCompatibilityValidationError(fileName:string): promise.Promise<boolean> {
-		return this.hasClass(this.parentWithText('compatibility', fileName), 'error');
+	async hasCompatibilityValidationError(fileName:string): Promise<boolean> {
+		return await this.hasClass(this.parentWithText('compatibility', fileName), 'error');
 	}
 
-	hasPlayfieldImageValidationError(fileName:string): promise.Promise<boolean> {
-		return this.parentWithText('media', fileName, 'span', 'ng-scope').element(by.className('alert')).isDisplayed();
+	async hasPlayfieldImageValidationError(fileName:string): Promise<boolean> {
+		return await this.parentWithText('media', fileName, 'span', 'ng-scope').element(by.className('alert')).isDisplayed();
 	}
 
-	hasNameValidationError(): promise.Promise<boolean> {
-		return this.hasClass(this.formGroup(this.name), 'error');
+	async hasNameValidationError(): Promise<boolean> {
+		return await this.hasClass(this.formGroup(this.name), 'error');
 	}
 
-	hasAuthorValidationError(): promise.Promise<boolean> {
-		return element(by.css('.alert[ng-show="vm.errors.authors"]')).isDisplayed();
+	async hasAuthorValidationError(): Promise<boolean> {
+		return await element(by.css('.alert[ng-show="vm.errors.authors"]')).isDisplayed();
 	}
 }

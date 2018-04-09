@@ -27,35 +27,35 @@ export class ReleaseAddVersionPage extends ReleaseBasePage {
 	private submitButton = element(by.id('version-submit-btn'));
 	private uploadMode = element(by.id('upload-mode'));
 
-	get(release: Release) {
-		this.appPage.get();
-		this.appPage.loginAs('member');
-		this.navigate(release);
+	async get(release: Release) {
+		await this.appPage.get();
+		await this.appPage.loginAs('member');
+		await this.navigate(release);
 	}
 
-	navigate(release: Release) {
-		browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id + '/add');
+	async navigate(release: Release) {
+		await browser.get(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id + '/add');
 	}
 
-	setExistingVersion(version: string) {
-		this.uploadMode.all(by.className('radio--lg')).get(0).element(by.tagName('label')).click();
-		this.uploadMode.element(by.model('vm.meta.version'))
+	async setExistingVersion(version: string) {
+		await this.uploadMode.all(by.className('radio--lg')).get(0).element(by.tagName('label')).click();
+		await this.uploadMode.element(by.model('vm.meta.version'))
 			.all(by.tagName('option'))
 			.filter(el => el.getText().then(text => text === version))
 			.first()
 			.click();
 	}
 
-	setNewVersion(version: string) {
-		this.uploadMode.all(by.className('radio--lg')).get(1).element(by.tagName('label')).click();
-		this.uploadMode.element(by.model('vm.releaseVersion.version')).sendKeys(version);
+	async setNewVersion(version: string) {
+		await this.uploadMode.all(by.className('radio--lg')).get(1).element(by.tagName('label')).click();
+		await this.uploadMode.element(by.model('vm.releaseVersion.version')).sendKeys(version);
 	}
 
-	reset() {
-		this.resetButton.click();
+	async reset() {
+		await this.resetButton.click();
 	}
 
-	submit() {
-		this.submitButton.click();
+	async submit() {
+		await this.submitButton.click();
 	}
 }

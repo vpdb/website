@@ -26,27 +26,27 @@ export class TagAddModalPage extends BasePage {
 	private description = element(by.id('tag-description'));
 	private submitButton = element(by.id('tag-submit-btn'));
 
-	setName(name: string) {
-		this.name.sendKeys(name);
+	async setName(name: string) {
+		await this.name.sendKeys(name);
 	}
 
-	setDescription(description: string) {
-		this.description.sendKeys(description);
+	async setDescription(description: string) {
+		await this.description.sendKeys(description);
 	}
 
-	hasNameValidationError() {
-		return this.hasClass(this.formGroup(this.name), 'error');
+	async hasNameValidationError() {
+		return await this.hasClass(this.formGroup(this.name), 'error');
 	}
 
-	hasDescriptionValidationError() {
-		return this.hasClass(this.formGroup(this.description), 'error');
+	async hasDescriptionValidationError() {
+		return await this.hasClass(this.formGroup(this.description), 'error');
 	}
 
-	dismiss() {
-		element(by.id('tag-cancel-btn')).click();
+	async dismiss() {
+		await element(by.id('tag-cancel-btn')).click();
 	}
 
-	submit() {
-		this.submitButton.click();
+	async submit() {
+		await this.submitButton.click();
 	}
 }

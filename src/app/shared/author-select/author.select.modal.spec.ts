@@ -33,69 +33,66 @@ describe('Add author', () => {
 	const games:Games = new Games(browser.params.vpdb);
 	const users:Users = new Users(browser.params.vpdb);
 
-	beforeAll(() => {
-
-		return users.authenticateOrCreateUser('membah')
-			.then(() => users.authenticateOrCreateUser('membrrr'))
-			.then(() => games.createGame())
-			.then((game:Game) => releaseAddPage.get(game));
+	beforeAll(async () => {
+		await users.authenticateOrCreateUser('membah');
+		await users.authenticateOrCreateUser('membrrr');
+		const game = await games.createGame();
+		await releaseAddPage.get(game);
 	});
 
-	beforeEach(() => {
-		releaseAddPage.addAuthor();
+	beforeEach(async () => {
+		await releaseAddPage.addAuthor();
 	});
 
-	afterAll(() => {
-		appPage.logout();
+	afterAll(async () => {
+		await appPage.logout();
 	});
 
-	it('should display validation errors', () => {
-		authorSelectModal.submit();
-		expect(authorSelectModal.hasAuthorValidationError()).toBe(true);
-		expect(authorSelectModal.hasRoleValidationError()).toBe(true);
-		authorSelectModal.dismiss();
+	it('should display validation errors', async () => {
+		await authorSelectModal.submit();
+		await expect(authorSelectModal.hasAuthorValidationError()).toBe(true);
+		await expect(authorSelectModal.hasRoleValidationError()).toBe(true);
+		await authorSelectModal.dismiss();
 	});
 
-	it('should find a member', () => {
-		authorSelectModal.search('memb');
-		expect(authorSelectModal.hasSearchResults()).toBe(true);
+	it('should find a member', async () => {
+		await authorSelectModal.search('memb');
+		await expect(authorSelectModal.hasSearchResults()).toBe(true);
 
-		authorSelectModal.dismiss();
+		await authorSelectModal.dismiss();
 	});
 
-	it('should select a member', () => {
-		authorSelectModal.search('memb');
-		authorSelectModal.selectSearchResult('member');
-		expect(authorSelectModal.getSelectedName()).toBe('member');
+	it('should select a member', async () => {
+		await authorSelectModal.search('memb');
+		await authorSelectModal.selectSearchResult('member');
+		await expect(authorSelectModal.getSelectedName()).toBe('member');
 
-		authorSelectModal.dismiss();
+		await authorSelectModal.dismiss();
 	});
 
-	it('should add a role', () => {
-		authorSelectModal.addRole('superhero');
-		expect(authorSelectModal.hasRole('superhero')).toBe(true);
+	it('should add a role', async () => {
+		await authorSelectModal.addRole('superhero');
+		await expect(authorSelectModal.hasRole('superhero')).toBe(true);
 
-		authorSelectModal.dismiss();
+		await authorSelectModal.dismiss();
 	});
 
-	it('should add multiple roles', () => {
-		authorSelectModal.addRole('idiot');
-		authorSelectModal.addRole('gros con');
-		expect(authorSelectModal.hasRole('idiot')).toBe(true);
-		expect(authorSelectModal.hasRole('gros con')).toBe(true);
+	it('should add multiple roles', async () => {
+		await authorSelectModal.addRole('idiot');
+		await authorSelectModal.addRole('gros con');
+		await expect(authorSelectModal.hasRole('idiot')).toBe(true);
+		await expect(authorSelectModal.hasRole('gros con')).toBe(true);
 
-		authorSelectModal.dismiss();
+		await authorSelectModal.dismiss();
 	});
 
-	it('should remove a role', () => {
-		authorSelectModal.addRole('hangman');
-		expect(authorSelectModal.hasRole('hangman')).toBe(true);
+	it('should remove a role', async () => {
+		await authorSelectModal.addRole('hangman');
+		await expect(authorSelectModal.hasRole('hangman')).toBe(true);
 
-		authorSelectModal.removeRole('hangman')
-		expect(authorSelectModal.hasRole('hangman')).toBe(false);
+		await authorSelectModal.removeRole('hangman')
+		await expect(authorSelectModal.hasRole('hangman')).toBe(false);
 
-		authorSelectModal.dismiss();
+		await authorSelectModal.dismiss();
 	});
-
-
 });

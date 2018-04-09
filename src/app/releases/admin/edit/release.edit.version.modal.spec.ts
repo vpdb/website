@@ -35,50 +35,47 @@ describe('Edit an existing version of a release', () => {
 	const releases: Releases = new Releases(browser.params.vpdb);
 	let release: Release;
 
-	beforeAll(() => {
-		return releases.createRelease('member', { versions: [ { version: '1.0.0' } ] }, null, tableFilename)
-			.then((createdRelease:Release) => {
-				release = createdRelease;
-				releaseEditPage.get(release);
-			});
+	beforeAll(async () => {
+		release = await releases.createRelease('member', { versions: [ { version: '1.0.0' } ] }, null, tableFilename);
+		await releaseEditPage.get(release);
 	});
 
-	beforeEach(() => {
-		releaseEditPage.editVersion('1.0.0');
+	beforeEach(async () => {
+		await releaseEditPage.editVersion('1.0.0');
 	});
 
-	afterEach(() => {
-		browser.executeScript('window.scrollTo(0,0);');
+	afterEach(async () => {
+		await browser.executeScript('window.scrollTo(0,0);');
 	});
 
-	afterAll(() => {
-		appPage.logout();
+	afterAll(async () => {
+		await appPage.logout();
 	});
 
-	it('should display validation errors', () => {
-		versionEditModal.clearCompatibility(tableFilename);
-		versionEditModal.rotatePlayfieldImage(tableFilename);
-		versionEditModal.submit();
-		expect(versionEditModal.hasCompatibilityValidationError(tableFilename)).toBeTruthy();
-		expect(versionEditModal.hasPlayfieldImageValidationError(tableFilename)).toBeTruthy();
-		versionEditModal.close();
+	it('should display validation errors', async () => {
+		await versionEditModal.clearCompatibility(tableFilename);
+		await versionEditModal.rotatePlayfieldImage(tableFilename);
+		await versionEditModal.submit();
+		await expect(versionEditModal.hasCompatibilityValidationError(tableFilename)).toBeTruthy();
+		await expect(versionEditModal.hasPlayfieldImageValidationError(tableFilename)).toBeTruthy();
+		await versionEditModal.close();
 	});
 
-	it('should edit an existing version', () => {
-		versionEditModal.setChangelog('- Edited data');
-		versionEditModal.setReleaseDate('1978-05-07', 14, 20);
-		versionEditModal.clearCompatibility(tableFilename);
-		versionEditModal.setCompatibilityByName(tableFilename, 'physmod5');
-		versionEditModal.uploadPlayfield(tableFilename, 'playfield-1080x1920.png');
-		versionEditModal.submit();
+	it('should edit an existing version', async () => {
+		await versionEditModal.setChangelog('- Edited data');
+		await versionEditModal.setReleaseDate('1978-05-07', 14, 20);
+		await versionEditModal.clearCompatibility(tableFilename);
+		await versionEditModal.setCompatibilityByName(tableFilename, 'physmod5');
+		await versionEditModal.uploadPlayfield(tableFilename, 'playfield-1080x1920.png');
+		await versionEditModal.submit();
 
-		const modal = appPage.getErrorInfoModal();
-		expect(modal.title.getText()).toEqual('VERSION UPDATED');
-		expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
-		expect(modal.message.getText()).toContain('You have successfully updated version');
-		modal.close();
+		const modal = await appPage.getErrorInfoModal();
+		await expect(modal.title.getText()).toEqual('VERSION UPDATED');
+		await expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
+		await expect(modal.message.getText()).toContain('You have successfully updated version');
+		await modal.close();
 
-		releaseEditPage.cancel();
-		releasePage.editRelease();
+		await releaseEditPage.cancel();
+		await releasePage.editRelease();
 	});
 });

@@ -32,29 +32,25 @@ describe('Editor', () => {
 
 	const editor = new EditorDirectivePage(element(by.id('new-comment-editor')));
 
-	beforeAll(() => {
-		let release:Release;
-		return releases.createRelease('EditorReleaseAuthor')
-			.then(r =>  {
-				release = r;
-				return releases.approveRelease('moderator', release);
-			}).then(() => releaseDetailsPage.get(release, 'member'));
+	beforeAll(async () => {
+		const release:Release = await releases.createRelease('EditorReleaseAuthor');
+		await releases.approveRelease('moderator', release);
+		await releaseDetailsPage.get(release, 'member')
 	});
 
-	afterEach(() => {
-		editor.toggleEdit();
-		editor.clear();
+	afterEach(async () => {
+		await editor.toggleEdit();
+		await editor.clear();
 	});
 
-	afterAll(() => {
-		appPage.logout();
+	afterAll(async () => {
+		await appPage.logout();
 	});
 
-	it('should render text in the preview pane', () => {
+	it('should render text in the preview pane', async () => {
 		const content = 'This is a sentence.';
-		editor.setText(content);
-		editor.togglePreview();
-		expect(editor.getPreview()).toContain(content);
+		await editor.setText(content);
+		await editor.togglePreview();
+		await expect(editor.getPreview()).toContain(content);
 	});
-
 });

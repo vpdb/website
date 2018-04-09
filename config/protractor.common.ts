@@ -17,11 +17,15 @@ export let config: Config = {
 		browserName: 'chrome'
 	},
 	specs: [ '../**/*.spec.js' ],
+	SELENIUM_PROMISE_MANAGER: false,
 	baseUrl: webBaseUrl,
 	params: { vpdb: vpdbConfig },
-	onPrepare: () => {
+	jasmineNodeOpts: {
+		defaultTimeoutInterval: 10000
+	},
+	onPrepare: async () => {
 		setupReporter();
-		return setupUsers();
+		await setupUsers();
 	}
 };
 
@@ -42,20 +46,19 @@ export function setupReporter() {
 	}).getJasmine2Reporter());
 }
 
-export function setupUsers() {
+export async function setupUsers() {
 	console.log('Creating users before tests.');
 	console.log('API URL for setup: %s', apiBaseUrl);
 	console.log('Base URL for testing: %s', webBaseUrl);
 
 	// register users
 	const userHelper = new Users(vpdbConfig);
-	return userHelper.createUsers(root, users).then(users => {
-		browser.users = {};
-		users.forEach((user:User) => {
-			browser.users[user.username] = user;
-		});
-		console.log('Global users are:', browser.users);
+	const createdUsers = await userHelper.createUsers(root, users);
+	browser.users = {};
+	createdUsers.forEach((user:User) => {
+		browser.users[user.username] = user;
 	});
+	console.log('Global users are:', browser.users);
 }
 
 export function throttleBrowser() {

@@ -20,7 +20,6 @@
 import { browser, by, element } from 'protractor';
 import { AppPage } from '../../../app.page';
 import { BasePage } from '../../../../test/BasePage';
-import { promise } from 'selenium-webdriver';
 
 export class GameAddAdminPage extends BasePage {
 
@@ -43,50 +42,50 @@ export class GameAddAdminPage extends BasePage {
 	logoImage = this.logoUploadPanel.element(by.css('.img--ar-logo'));
 	logoProgress = this.logoUploadPanel.element(by.css('.progress'));
 
-	get() {
-		this.appPage.get();
-		this.appPage.loginAs('contributor');
-		this.navigate();
+	async get() {
+		await this.appPage.get();
+		await this.appPage.loginAs('contributor');
+		await this.navigate();
 	}
 
-	navigate() {
-		this.appPage.uploadButton.click();
-		this.appPage.uploadGameButton.click();
+	async navigate() {
+		await this.appPage.uploadButton.click();
+		await this.appPage.uploadGameButton.click();
 	}
 
-	submit() {
-		this.submitButton.click();
+	async submit() {
+		await this.submitButton.click();
 	}
 
-	reset() {
-		this.resetButton.click();
+	async reset() {
+		await this.resetButton.click();
 	}
 
-	fetchIpdb(ipdb:string) {
-		this.ipdbUrl.sendKeys(ipdb);
-		this.ipdbFetchButton.click();
+	async fetchIpdb(ipdb:string) {
+		await this.ipdbUrl.sendKeys(ipdb);
+		await this.ipdbFetchButton.click();
 	}
 
-	uploadBackglass(fileName:string) {
-		this.upload(this.backglassUploadPanel, fileName);
-		browser.wait(() => this.backglassProgress.isDisplayed().then(result => !result), 5000);
+	async uploadBackglass(fileName:string) {
+		await this.upload(this.backglassUploadPanel, fileName);
+		await browser.wait(() => this.backglassProgress.isDisplayed().then(result => !result), 5000);
 	}
 
-	uploadLogo(fileName:string) {
-		this.upload(this.logoUploadPanel, fileName);
-		browser.wait(() => this.logoProgress.isDisplayed().then(result => !result), 5000);
+	async uploadLogo(fileName:string) {
+		await this.upload(this.logoUploadPanel, fileName);
+		await browser.wait(() => this.logoProgress.isDisplayed().then(result => !result), 5000);
 	}
 
-	hasTitleValidatorErrors(): promise.Promise<boolean> {
-		return this.hasClass(this.formGroup(this.title), 'error');
+	async hasTitleValidatorErrors(): Promise<boolean> {
+		return await this.hasClass(this.formGroup(this.title), 'error');
 	}
 
-	hasRecreationIdValidationErrors(): promise.Promise<boolean> {
-		return this.hasClass(this.formGroup(this.gameIdRecreation), 'error');
+	async hasRecreationIdValidationErrors(): Promise<boolean> {
+		return await this.hasClass(this.formGroup(this.gameIdRecreation), 'error');
 	}
 
-	hasBackglassValidationErrors() {
-		return element(by.css(`[ng-show="vm.errors['_backglass']"]`)).isDisplayed();
+	async hasBackglassValidationErrors() {
+		return await element(by.css(`[ng-show="vm.errors['_backglass']"]`)).isDisplayed();
 	}
 
 }

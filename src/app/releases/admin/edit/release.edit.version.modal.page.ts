@@ -19,8 +19,6 @@
 
 import { by, element, ElementFinder } from 'protractor';
 import { ReleaseBasePage } from '../release.base.page';
-import { promise } from 'selenium-webdriver';
-import { resolve } from "path";
 
 export class ReleaseEditVersionModalPage extends ReleaseBasePage {
 
@@ -30,63 +28,63 @@ export class ReleaseEditVersionModalPage extends ReleaseBasePage {
 	private submitButton = element(by.id('version-submit-btn'));
 	private closeButton = element(by.id('version-close-btn'));
 
-	setChangelog(text: string) {
-		this.changelog.clear();
-		this.changelog.sendKeys(text);
+	async setChangelog(text: string) {
+		await this.changelog.clear();
+		await this.changelog.sendKeys(text);
 	}
 
-	setReleaseDate(date: string, hours: number, minutes: number) {
-		this.releaseDate.clear();
-		this.releaseDate.sendKeys(date);
+	async setReleaseDate(date: string, hours: number, minutes: number) {
+		await this.releaseDate.clear();
+		await this.releaseDate.sendKeys(date);
 		const hoursFinder = this.releaseTime.element(by.model('hours'));
 		const minutesFinder = this.releaseTime.element(by.model('minutes'));
 
-		hoursFinder.clear();
-		hoursFinder.sendKeys(hours);
+		await hoursFinder.clear();
+		await hoursFinder.sendKeys(hours);
 
-		minutesFinder.clear();
-		minutesFinder.sendKeys(minutes);
+		await minutesFinder.clear();
+		await minutesFinder.sendKeys(minutes);
 	}
 
-	clearCompatibility(fileName: string) {
-		this.getCompatibilityPanel(fileName).all(by.css('input[checked="checked"]')).each(el => el.click());
+	async clearCompatibility(fileName: string) {
+		await this.getCompatibilityPanel(fileName).all(by.css('input[checked="checked"]')).each(async el => await el.click());
 	}
 
-	setCompatibilityByName(fileName:string, buildName:string) {
-		this.getCompatibilityPanel(fileName)
+	async setCompatibilityByName(fileName:string, buildName:string) {
+		await this.getCompatibilityPanel(fileName)
 			.all(by.css('label.ng-binding'))
 			.filter(el => el.getText().then(text => text === buildName))
 			.first()
 			.click();
 	}
 
-	uploadPlayfield(tableFileName:string, imageFileName:string) {
+	async uploadPlayfield(tableFileName:string, imageFileName:string) {
 		const uploadPanel = this.getFilePanel(tableFileName)
 			.all(by.className('playfield--image'))
 			.filter(el => el.getAttribute('id').then(id => id.startsWith('playfield-image')))
 			.first();
-		return this.upload(uploadPanel, imageFileName);
+		return await this.upload(uploadPanel, imageFileName);
 	}
 
-	rotatePlayfieldImage(fileName: string, clockwise = true) {
+	async rotatePlayfieldImage(fileName: string, clockwise = true) {
 		const index = clockwise ? 1 : 0;
-		this.getFilePanel(fileName).all(by.css('.playfield-image h4 a')).get(index).click();
+		await this.getFilePanel(fileName).all(by.css('.playfield-image h4 a')).get(index).click();
 	}
 
-	hasCompatibilityValidationError(fileName:string): promise.Promise<boolean> {
-		return this.getFilePanel(fileName).element(by.css('.alert.compatibility')).isDisplayed();
+	async hasCompatibilityValidationError(fileName:string): Promise<boolean> {
+		return await this.getFilePanel(fileName).element(by.css('.alert.compatibility')).isDisplayed();
 	}
 
-	hasPlayfieldImageValidationError(fileName:string): promise.Promise<boolean> {
-		return this.getFilePanel(fileName).element(by.css('.alert.media')).isDisplayed();
+	async hasPlayfieldImageValidationError(fileName:string): Promise<boolean> {
+		return await this.getFilePanel(fileName).element(by.css('.alert.media')).isDisplayed();
 	}
 
-	submit() {
-		this.submitButton.click();
+	async submit() {
+		await this.submitButton.click();
 	}
 
-	close() {
-		this.closeButton.click();
+	async close() {
+		await this.closeButton.click();
 	}
 
 	private getCompatibilityPanel(fileName:string) {

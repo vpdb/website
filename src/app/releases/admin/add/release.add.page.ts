@@ -35,42 +35,42 @@ export class ReleaseAddPage extends ReleaseBasePage {
 		this.authors = element.all(by.repeater('author in vm.release.authors'))
 	}
 
-	get(game:Game) {
-		this.appPage.get();
-		this.appPage.loginAs('member');
-		this.navigate(game);
+	async get(game:Game) {
+		await this.appPage.get();
+		await this.appPage.loginAs('member');
+		await this.navigate(game);
 	}
 
-	navigate(game:Game) {
-		browser.get(browser.baseUrl + '/games/' + game.id + '/add-release');
+	async navigate(game:Game) {
+		await browser.get(browser.baseUrl + '/games/' + game.id + '/add-release');
 	}
 
-	generateReleaseName() {
-		this.generateNameButton.click();
-		browser.wait(() => this.name.getAttribute('value').then(text => !!text), 5000);
+	async generateReleaseName() {
+		await this.generateNameButton.click();
+		await browser.wait(() => this.name.getAttribute('value').then(text => !!text), 5000);
 	}
 
-	setVersion(version:string) {
-		this.version.sendKeys(version);
+	async setVersion(version:string) {
+		await this.version.sendKeys(version);
 	}
 
-	setModPermission(pos:number) {
-		this.modPermission.all(by.tagName('label')).get(pos).click();
+	async setModPermission(pos:number) {
+		await this.modPermission.all(by.tagName('label')).get(pos).click();
 	}
 
-	reset() {
-		this.resetButton.click();
+	async reset() {
+		await this.resetButton.click();
 	}
 
-	submit() {
-		this.submitButton.click();
+	async submit() {
+		await this.submitButton.click();
 	}
 
-	hasVersionValidationError(): promise.Promise<boolean> {
-		return this.hasClass(this.formGroup(this.version), 'error');
+	async hasVersionValidationError(): Promise<boolean> {
+		return await this.hasClass(this.formGroup(this.version), 'error');
 	}
 
-	hasLicenseValidationError(): promise.Promise<boolean> {
-		return element(by.css('.alert[ng-show="vm.errors.license"]')).isDisplayed();
+	async hasLicenseValidationError(): Promise<boolean> {
+		return await element(by.css('.alert[ng-show="vm.errors.license"]')).isDisplayed();
 	}
 }

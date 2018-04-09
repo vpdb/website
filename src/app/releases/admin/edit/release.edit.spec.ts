@@ -33,50 +33,47 @@ describe('Edit a release', () => {
 	const releases:Releases = new Releases(browser.params.vpdb);
 	let release:Release;
 
-	beforeAll(() => {
-		return users.authenticateOrCreateUser('SecondMate')
-			.then(() => releases.createRelease('member'))
-			.then((createdRelease:Release) => {
-				release = createdRelease;
-				releaseEditPage.get(release);
-			});
+	beforeAll(async () => {
+		await users.authenticateOrCreateUser('SecondMate');
+		release = await releases.createRelease('member');
+		await releaseEditPage.get(release);
 	});
 
-	afterEach(() => {
-		browser.executeScript('window.scrollTo(0,0);');
+	afterEach(async () => {
+		await browser.executeScript('window.scrollTo(0,0);');
 	});
 
-	afterAll(() => {
-		appPage.logout();
+	afterAll(async () => {
+		await appPage.logout();
 	});
 
-	it('should display validation errors', () => {
-		releaseEditPage.setReleaseName('');
-		releaseEditPage.clearAuthors();
-		releaseEditPage.submit();
+	it('should display validation errors', async () => {
+		await releaseEditPage.setReleaseName('');
+		await releaseEditPage.clearAuthors();
+		await releaseEditPage.submit();
 
-		expect(releaseEditPage.hasNameValidationError()).toBeTruthy();
-		expect(releaseEditPage.hasAuthorValidationError()).toBeTruthy();
-		releaseEditPage.reset();
+		await expect(releaseEditPage.hasNameValidationError()).toBeTruthy();
+		await expect(releaseEditPage.hasAuthorValidationError()).toBeTruthy();
+		await releaseEditPage.reset();
 	});
 
-	it('should correctly update the release', () => {
-		releaseEditPage.setReleaseName('Updated Release Edition');
-		releaseEditPage.setDescription('Sup, release description is updated!');
-		releaseEditPage.addAuthor('SecondMate', 'Pet');
-		releaseEditPage.createTag('Edited', 'Release has been edited.');
-		releaseEditPage.selectTag('Edited');
-		releaseEditPage.addLink('VPDB', 'https://vpdb.io');
-		releaseEditPage.setAcknowledgements('- My friends\n- My family\n- My fools');
+	it('should correctly update the release', async () => {
+		await releaseEditPage.setReleaseName('Updated Release Edition');
+		await releaseEditPage.setDescription('Sup, release description is updated!');
+		await releaseEditPage.addAuthor('SecondMate', 'Pet');
+		await releaseEditPage.createTag('Edited', 'Release has been edited.');
+		await releaseEditPage.selectTag('Edited');
+		await releaseEditPage.addLink('VPDB', 'https://vpdb.io');
+		await releaseEditPage.setAcknowledgements('- My friends\n- My family\n- My fools');
 
-		releaseEditPage.submit();
+		await releaseEditPage.submit();
 
-		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+		await expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
 		const releaseDetailsPage = new ReleaseDetailsPage();
 
-		expect(releaseDetailsPage.getTitle()).toContain('Updated Release Edition'.toUpperCase());
-		expect(releaseDetailsPage.getDescription()).toContain('release description is updated');
+		await expect(releaseDetailsPage.getTitle()).toContain('Updated Release Edition'.toUpperCase());
+		await expect(releaseDetailsPage.getDescription()).toContain('release description is updated');
 
-		releaseEditPage.navigate(release);
+		await releaseEditPage.navigate(release);
 	});
 });

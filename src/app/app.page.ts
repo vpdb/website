@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { browser, by, element, ExpectedConditions as until } from 'protractor';
+import { browser, by, element, ExpectedConditions as until, protractor } from 'protractor';
 import { LoginModalPage } from './common/auth/login.modal.page';
 import { ModalErrorInfoPage } from "./common/modal/modal.error.info.page";
 
@@ -37,51 +37,54 @@ export class AppPage {
 
 	spinner = element(by.css('.spinner'));
 
-	get() {
-		browser.get(browser.baseUrl);
+	async get() {
+		await browser.get(browser.baseUrl);
 	}
 
-	openLoginModal() {
-		this.loginButton.click();
-		browser.wait(until.presenceOf(this.loginModal.element), 1000);
+	async openLoginModal() {
+		await this.loginButton.click();
+		await browser.wait(until.presenceOf(this.loginModal.element), 1000);
 	}
 
-	loginAs(username: string) {
-		this.openLoginModal();
-		this.loginModal.toggleLogin();
-		this.loginModal.setLogin(browser.users[username].username, browser.users[username].password);
-		this.loginModal.submitLogin();
-		browser.wait(() => this.getLoggedUsername().then(loggedUsername => loggedUsername === username), 1000);
+	async loginAs(username: string) {
+		await this.openLoginModal();
+		await this.loginModal.toggleLogin();
+		await this.loginModal.setLogin(browser.users[username].username, browser.users[username].password);
+		await this.loginModal.submitLogin();
+		await browser.wait(() => this.getLoggedUsername().then(loggedUsername => loggedUsername === username), 1000);
 	}
 
-	logout() {
+	async logout() {
 		this.userButton.click();
 		this.logoutButton.click();
 	}
+	//
+	// async isLoading() {
+	// 	return await this.spinner.isDisplayed();
+	// }
+	//
+	// async isLogged() {
+	// 	return !(await this.loginButton.isDisplayed());
+	// }
 
-	isLoading() {
-		this.spinner.isDisplayed();
+	async waitUntilLoaded() {
+		await browser.wait(() => this.spinner.isDisplayed().then(result => !result), 10000);
 	}
 
-	isLogged() {
-		!this.loginButton.isDisplayed();
+	async waitUtilFinished() {
+		const until = protractor.ExpectedConditions;
+		//await browser.wait(until.presenceOf(this.loginButton), 5000, 'Login button should have appeared.');
+		await browser.sleep(1000);
+		//await browser.wait(() => this.loginButton.isDisplayed(), 3000);
 	}
 
-	waitUntilLoaded() {
-		browser.wait(() => this.spinner.isDisplayed().then(result => !result), 10000);
-	}
-
-	waitUtilFinished() {
-		browser.wait(() => this.loginButton.isDisplayed(), 1000);
-	}
-
-	getLoggedUsername() {
+	async getLoggedUsername() {
 		// might be hidden in small viewports, so we need to retrieve it differently.
-		return browser.driver.executeScript("return document.getElementById('logged-user').innerHTML");
+		return await browser.driver.executeScript("return document.getElementById('logged-user').innerHTML");
 	}
 
-	getErrorInfoModal() {
-		browser.wait(until.presenceOf(this.errorInfoModal), 3000);
+	async getErrorInfoModal() {
+		await browser.wait(until.presenceOf(this.errorInfoModal), 3000);
 		return new ModalErrorInfoPage(this.errorInfoModal);
 	}
 

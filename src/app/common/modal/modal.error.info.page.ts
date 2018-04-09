@@ -29,7 +29,7 @@ export class ModalErrorInfoPage {
 	constructor(public element: ElementFinder) {
 	}
 
-	close() {
-		this.closeButton.click();
+	async close() {
+		await this.closeButton.click();
 	}
 }

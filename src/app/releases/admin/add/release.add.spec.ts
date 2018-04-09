@@ -36,7 +36,7 @@ describe('Add new release', () => {
 	const releases:Releases = new Releases(browser.params.vpdb);
 	let game:Game;
 
-	beforeAll(() => {
+	beforeAll(async () => {
 		return users.authenticateOrCreateUser('rlsaddauthor')
 			.then(() => games.createGame())
 			.then((createdGame:Game) =>  {
@@ -45,103 +45,103 @@ describe('Add new release', () => {
 			});
 	});
 
-	afterEach(() => {
+	afterEach(async () => {
 		browser.executeScript('window.scrollTo(0,0);');
 	});
 
-	afterAll(() => {
+	afterAll(async () => {
 		appPage.logout();
 	});
 
-	it('should display validation errors when no file uploaded', () => {
-		releaseAddPage.clearAuthors();
-		releaseAddPage.submit();
-		expect(releaseAddPage.hasFileUploadValidationError()).toBe(true);
-		expect(releaseAddPage.hasNameValidationError()).toBe(true);
-		expect(releaseAddPage.hasVersionValidationError()).toBe(true);
-		expect(releaseAddPage.hasAuthorValidationError()).toBe(true);
-		expect(releaseAddPage.hasLicenseValidationError()).toBe(true);
-		releaseAddPage.reset();
+	it('should display validation errors when no file uploaded', async () => {
+		await releaseAddPage.clearAuthors();
+		await releaseAddPage.submit();
+		await expect(releaseAddPage.hasFileUploadValidationError()).toBe(true);
+		await expect(releaseAddPage.hasNameValidationError()).toBe(true);
+		await expect(releaseAddPage.hasVersionValidationError()).toBe(true);
+		await expect(releaseAddPage.hasAuthorValidationError()).toBe(true);
+		await expect(releaseAddPage.hasLicenseValidationError()).toBe(true);
+		await releaseAddPage.reset();
 	});
 
-	it('should display validation errors when a file is uploaded.', () => {
+	it('should display validation errors when a file is uploaded.', async () => {
 		const fileName = 'blank.vpt';
-		releaseAddPage.uploadFile(fileName);
-		releaseAddPage.submit();
-		expect(releaseAddPage.hasFlavorValidationError(fileName)).toBe(true);
-		expect(releaseAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
-		expect(releaseAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
-		releaseAddPage.reset();
+		await releaseAddPage.uploadFile(fileName);
+		await releaseAddPage.submit();
+		await expect(releaseAddPage.hasFlavorValidationError(fileName)).toBe(true);
+		await expect(releaseAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
+		await expect(releaseAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
+		await releaseAddPage.reset();
 	});
 
-	it('should be able to add an author', () => {
-		releaseAddPage.addAuthor('rlsaddauthor', 'Drama Queen');
-		expect(releaseAddPage.hasAuthor('rlsaddauthor', 'Drama Queen')).toBe(true);
-		releaseAddPage.reset();
+	it('should be able to add an author', async () => {
+		await releaseAddPage.addAuthor('rlsaddauthor', 'Drama Queen');
+		await expect(releaseAddPage.hasAuthor('rlsaddauthor', 'Drama Queen')).toBe(true);
+		await releaseAddPage.reset();
 	});
 
-	it('should be able to edit an author', () => {
-		releaseAddPage.editAuthor('member');
+	it('should be able to edit an author', async () => {
+		await releaseAddPage.editAuthor('member');
 		const authorModal = new AuthorSelectModalPage();
-		expect(authorModal.getSubmitButtonText()).toContain('UPDATE');
-		authorModal.removeRole('Table Creator');
-		authorModal.addRole('Coke Fetcher');
-		authorModal.submit();
-		expect(releaseAddPage.hasAuthor('member', 'Coke Fetcher')).toBe(true);
+		await expect(authorModal.getSubmitButtonText()).toContain('UPDATE');
+		await authorModal.removeRole('Table Creator');
+		await authorModal.addRole('Coke Fetcher');
+		await authorModal.submit();
+		await expect(releaseAddPage.hasAuthor('member', 'Coke Fetcher')).toBe(true);
 	});
 
-	it('should be able to create a new tag', () => {
+	it('should be able to create a new tag', async () => {
 		const tagName = company.bsAdjective();
-		releaseAddPage.createTag(tagName, company.catchPhraseDescriptor());
-		expect(releaseAddPage.hasAvailableTag(tagName)).toBe(true);
-		expect(releaseAddPage.hasSelectedTag(tagName)).toBe(false);
-		releaseAddPage.reset();
+		await releaseAddPage.createTag(tagName, company.catchPhraseDescriptor());
+		await expect(releaseAddPage.hasAvailableTag(tagName)).toBe(true);
+		await expect(releaseAddPage.hasSelectedTag(tagName)).toBe(false);
+		await releaseAddPage.reset();
 	});
 
-	it('should be able to add an existing tag', () => {
-		releaseAddPage.selectTag('HD');
-		expect(releaseAddPage.hasAvailableTag('HD')).toBe(false);
-		expect(releaseAddPage.hasSelectedTag('HD')).toBe(true);
-		releaseAddPage.reset();
+	it('should be able to add an existing tag', async () => {
+		await releaseAddPage.selectTag('HD');
+		await expect(releaseAddPage.hasAvailableTag('HD')).toBe(false);
+		await expect(releaseAddPage.hasSelectedTag('HD')).toBe(true);
+		await releaseAddPage.reset();
 	});
 
-	it('should be able to remove a tag by dragging', () => {
-		releaseAddPage.selectTag('3D');
-		releaseAddPage.removeTagByDrag('3D');
-		expect(releaseAddPage.hasAvailableTag('3D')).toBe(true);
-		expect(releaseAddPage.hasSelectedTag('3D')).toBe(false);
-		releaseAddPage.reset();
+	it('should be able to remove a tag by dragging', async () => {
+		await releaseAddPage.selectTag('3D');
+		await releaseAddPage.removeTagByDrag('3D');
+		await expect(releaseAddPage.hasAvailableTag('3D')).toBe(true);
+		await expect(releaseAddPage.hasSelectedTag('3D')).toBe(false);
+		await releaseAddPage.reset();
 	});
 
-	it('should be able to remove a tag by clicking', () => {
-		releaseAddPage.selectTag('3D');
-		releaseAddPage.removeTagByClick('3D');
-		expect(releaseAddPage.hasAvailableTag('3D')).toBe(true);
-		expect(releaseAddPage.hasSelectedTag('3D')).toBe(false);
-		releaseAddPage.reset();
+	it('should be able to remove a tag by clicking', async () => {
+		await releaseAddPage.selectTag('3D');
+		await releaseAddPage.removeTagByClick('3D');
+		await expect(releaseAddPage.hasAvailableTag('3D')).toBe(true);
+		await expect(releaseAddPage.hasSelectedTag('3D')).toBe(false);
+		await releaseAddPage.reset();
 	});
 
-	it('should be able to add a minimal release', () => {
+	it('should be able to add a minimal release', async () => {
 		const fileName = 'blank.vpt';
-		releaseAddPage.uploadFile(fileName);
-		releaseAddPage.generateReleaseName();
-		releaseAddPage.setFlavor(fileName, 0, 0); // orientation: desktop
-		releaseAddPage.setFlavor(fileName, 1, 1); // lighting: day
-		releaseAddPage.setVersion('v1.0.0');
-		releaseAddPage.setModPermission(1);
-		releaseAddPage.setCompatibility(fileName, 0, 0);
-		releaseAddPage.setCompatibility(fileName, 0, 1);
-		releaseAddPage.uploadPlayfield(fileName,'playfield-1920x1080.png');
-		releaseAddPage.submit();
+		await releaseAddPage.uploadFile(fileName);
+		await releaseAddPage.generateReleaseName();
+		await releaseAddPage.setFlavor(fileName, 0, 0); // orientation: desktop
+		await releaseAddPage.setFlavor(fileName, 1, 1); // lighting: day
+		await releaseAddPage.setVersion('v1.0.0');
+		await releaseAddPage.setModPermission(1);
+		await releaseAddPage.setCompatibility(fileName, 0, 0);
+		await releaseAddPage.setCompatibility(fileName, 0, 1);
+		await releaseAddPage.uploadPlayfield(fileName,'playfield-1920x1080.png');
+		await releaseAddPage.submit();
 
-		const modal = appPage.getErrorInfoModal();
-		expect(modal.title.getText()).toEqual('RELEASE CREATED!');
-		expect(modal.subtitle.getText()).toEqual(game.title.toUpperCase());
-		expect(modal.message.getText()).toContain('The release has been successfully created.');
-		expect(modal.message.getText()).toContain('You will be notified');
-		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + game.id + '/releases/');
-		modal.close();
-		releaseAddPage.navigate(game);
+		const modal = await appPage.getErrorInfoModal();
+		await expect(modal.title.getText()).toEqual('RELEASE CREATED!');
+		await expect(modal.subtitle.getText()).toEqual(game.title.toUpperCase());
+		await expect(modal.message.getText()).toContain('The release has been successfully created.');
+		await expect(modal.message.getText()).toContain('You will be notified');
+		await expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + game.id + '/releases/');
+		await modal.close();
+		await releaseAddPage.navigate(game);
 	});
 
 });

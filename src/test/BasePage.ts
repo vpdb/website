@@ -18,8 +18,7 @@
  */
 
 import { by, element, ElementFinder } from 'protractor';
-import { promise } from 'selenium-webdriver';
-import { resolve } from "path";
+import { resolve } from 'path';
 
 export class BasePage {
 
@@ -30,10 +29,9 @@ export class BasePage {
 	 * @param {string} className Class name to check
 	 * @returns {promise.Promise<boolean>}
 	 */
-	protected hasClass(input: ElementFinder, className:string): promise.Promise<boolean> {
-		return input.getAttribute('class').then(classes => {
-			return classes.split(' ').indexOf(className) > -1;
-		});
+	protected async hasClass(input: ElementFinder, className:string): Promise<boolean> {
+		const classes = await input.getAttribute('class');
+		return classes.split(' ').indexOf(className) > -1;
 	}
 
 	/**
@@ -70,10 +68,10 @@ export class BasePage {
 	 * @param {ElementFinder} dropPanel File-upload panel
 	 * @param {string} fileName File to upload
 	 */
-	protected upload(dropPanel:ElementFinder, fileName:string) {
+	protected async upload(dropPanel:ElementFinder, fileName:string) {
 		const path = resolve(__dirname, '../../../src/test/assets/', fileName);
-		return dropPanel.getAttribute('id').then(id => {
-			return dropPanel.click().then(() => element(by.id('ngf-' + id)).sendKeys(path));
-		});
+		const id = await dropPanel.getAttribute('id');
+		await dropPanel.click();
+		return element(by.id('ngf-' + id)).sendKeys(path);
 	}
 }

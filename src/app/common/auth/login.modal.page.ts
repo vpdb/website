@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { promise } from 'selenium-webdriver';
 import { by, ElementFinder } from 'protractor';
 import { BasePage } from '../../../test/BasePage';
 
@@ -42,72 +41,66 @@ export class LoginModalPage extends BasePage {
 	public dismissButton = this.element.element(by.id('dismiss-button'));
 	public successMessage = this.element.element(by.css('.modal-body > .alert-success[ng-show="vm.message"]'));
 
-	toggle(): promise.Promise<void> {
-		return this.toggleButton.click();
+	async toggle(): Promise<void> {
+		return await this.toggleButton.click();
 	}
 
-	toggleRegister() {
-		return this.registerSubmit.isDisplayed().then(isDisplayed => {
-			if (!isDisplayed) {
-				return this.toggle();
-			}
-			return null;
-		});
+	async toggleRegister() {
+		const isDisplayed = await this.registerSubmit.isDisplayed();
+		if (!isDisplayed) {
+			await this.toggle();
+		}
 	}
 
-	setRegister(email:string, username:string, password:string) {
-		this.registerEmail.sendKeys(email);
-		this.registerUsername.sendKeys(username);
-		this.registerPassword.sendKeys(password);
+	async setRegister(email:string, username:string, password:string) {
+		await this.registerEmail.sendKeys(email);
+		await this.registerUsername.sendKeys(username);
+		await this.registerPassword.sendKeys(password);
 	}
 
-	submitRegister() {
-		this.registerSubmit.click();
+	async submitRegister() {
+		await this.registerSubmit.click();
 	}
 
-	toggleLogin() {
-		return this.loginSubmit.isDisplayed().then(isDisplayed => {
-			if (!isDisplayed) {
-				return this.toggle();
-			}
-			return null;
-		});
+	async toggleLogin() {
+		const isDisplayed = await this.loginSubmit.isDisplayed();
+		if (!isDisplayed) {
+			await this.toggle();
+		}
 	}
 
-	setLogin(username:string, password:string) {
-		this.loginUsername.sendKeys(username);
-		this.loginPassword.sendKeys(password);
+	async setLogin(username:string, password:string) {
+		await this.loginUsername.sendKeys(username);
+		await this.loginPassword.sendKeys(password);
 	}
 
-	submitLogin() {
-		this.loginSubmit.click();
+	async submitLogin() {
+		await this.loginSubmit.click();
 	}
 
-	login() {
-		return this.loginSubmit.isDisplayed().then(isDisplayed => {
-			if (!isDisplayed) {
-				this.toggle();
-			}
-			this.setLogin(LoginModalPage.USERNAME, LoginModalPage.PASSWORD);
-			this.submitLogin();
-		});
+	async login() {
+		const isDisplayed = await this.loginSubmit.isDisplayed();
+		if (!isDisplayed) {
+			await this.toggle();
+		}
+		await this.setLogin(LoginModalPage.USERNAME, LoginModalPage.PASSWORD);
+		await this.submitLogin();
 	}
 
-	hasEmailValidationError(): promise.Promise<boolean> {
-		return this.hasClass(this.formGroup(this.registerEmail), 'error');
+	async hasEmailValidationError(): Promise<boolean> {
+		return await this.hasClass(this.formGroup(this.registerEmail), 'error');
 	}
 
-	hasUsernameValidationError(): promise.Promise<boolean> {
-		return this.hasClass(this.formGroup(this.registerUsername), 'error');
+	async hasUsernameValidationError(): Promise<boolean> {
+		return await this.hasClass(this.formGroup(this.registerUsername), 'error');
 	}
 
-	hasPasswordValidationError(): promise.Promise<boolean> {
-		return this.hasClass(this.formGroup(this.registerPassword), 'error');
+	async hasPasswordValidationError(): Promise<boolean> {
+		return await this.hasClass(this.formGroup(this.registerPassword), 'error');
 	}
 
-
-	dismiss(): promise.Promise<void> {
-		return this.dismissButton.click();
+	async dismiss(): Promise<void> {
+		return await this.dismissButton.click();
 	}
 
 	static formGroup(input: ElementFinder) {

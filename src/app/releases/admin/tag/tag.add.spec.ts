@@ -19,7 +19,6 @@
 
 import { browser } from 'protractor';
 import { Games } from '../../../../test/backend/Games';
-import { Game } from '../../../../test/models/Game';
 import { AppPage } from '../../../app.page';
 import { ReleaseAddPage } from '../add/release.add.page';
 import { TagAddModalPage } from './tag.add.modal.page';
@@ -31,24 +30,24 @@ describe('Add tag', () => {
 	const tagAddModal = new TagAddModalPage();
 	const games: Games = new Games(browser.params.vpdb);
 
-	beforeAll(() => {
-		return games.createGame().then((game: Game) => releaseAddPage.get(game));
+	beforeAll(async () => {
+		const game = await games.createGame();
+		await releaseAddPage.get(game);
 	});
 
-	beforeEach(() => {
-		releaseAddPage.createTag();
+	beforeEach(async () => {
+		await releaseAddPage.createTag();
 	});
 
-
-	afterAll(() => {
-		appPage.logout();
+	afterAll(async () => {
+		await appPage.logout();
 	});
 
-	it('should display validation errors', () => {
-		tagAddModal.submit();
-		expect(tagAddModal.hasNameValidationError()).toBe(true);
-		expect(tagAddModal.hasDescriptionValidationError()).toBe(true);
-		tagAddModal.dismiss();
+	it('should display validation errors', async () => {
+		await tagAddModal.submit();
+		await expect(tagAddModal.hasNameValidationError()).toBe(true);
+		await expect(tagAddModal.hasDescriptionValidationError()).toBe(true);
+		await tagAddModal.dismiss();
 	});
 
 });

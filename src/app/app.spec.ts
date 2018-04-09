@@ -19,53 +19,53 @@
 
 import { AppPage } from './app.page';
 
-describe('App', () => {
+fdescribe('App', () => {
 
 	const appPage = new AppPage();
 
-	beforeAll(() => {
-		appPage.get();
+	beforeAll(async () => {
+		await appPage.get();
 	});
 
-	afterAll(() => {
-		appPage.waitUtilFinished();
+	afterEach(async () => {
+		await appPage.waitUtilFinished();
 	});
 
 	describe('as anonymous', () => {
 
-		it('should open the login modal when clicking on login', () => {
-			appPage.openLoginModal();
-			expect(appPage.loginModal.element.isDisplayed()).toBeTruthy();
-			appPage.loginModal.dismiss();
+		it('should open the login modal when clicking on login', async () => {
+			await appPage.openLoginModal();
+			await expect(appPage.loginModal.element.isDisplayed()).toBeTruthy();
+			await appPage.loginModal.dismiss();
 		});
 
-		it('should be able to login as a pre-defined user', () => {
-			appPage.loginAs('contributor');
-			expect(appPage.loginModal.element.isPresent()).not.toBeTruthy();
-			expect(appPage.getLoggedUsername()).toEqual('contributor');
-			appPage.logout();
+		it('should be able to login as a pre-defined user', async () => {
+			await appPage.loginAs('contributor');
+			await expect(appPage.loginModal.element.isPresent()).not.toBeTruthy();
+			await expect(appPage.getLoggedUsername()).toEqual('contributor');
+			await appPage.logout();
 		});
 	});
 
 	describe('as contributor', () => {
 
-		beforeAll(() => {
-			appPage.loginAs('contributor');
-			expect(appPage.uploadButton.isDisplayed()).toBeTruthy();
+		beforeAll(async () => {
+			await appPage.loginAs('contributor');
+			await expect(appPage.uploadButton.isDisplayed()).toBeTruthy();
 		});
 
-		afterAll(() => {
-			appPage.logout();
+		afterAll(async () => {
+			await appPage.logout();
 		});
 
-		it('should be able to access the upload menu for game, release and backglass.', () => {
+		it('should be able to access the upload menu for game, release and backglass.', async () => {
 
-			appPage.uploadButton.click();
-			expect(appPage.uploadGameButton.isDisplayed()).toBeTruthy();
-			expect(appPage.uploadReleaseButton.isDisplayed()).toBeTruthy();
-			expect(appPage.uploadBackglassButton.isDisplayed()).toBeTruthy();
-			appPage.uploadButton.click();
-		})
+			await appPage.uploadButton.click();
+			await expect(appPage.uploadGameButton.isDisplayed()).toBeTruthy();
+			await expect(appPage.uploadReleaseButton.isDisplayed()).toBeTruthy();
+			await expect(appPage.uploadBackglassButton.isDisplayed()).toBeTruthy();
+			await appPage.uploadButton.click();
+		});
 	});
 
 });

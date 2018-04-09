@@ -32,41 +32,39 @@ export class EditorDirectivePage extends BasePage {
 		super();
 	}
 
-	setText(text:string) {
-		this.textarea.clear();
-		this.textarea.sendKeys(text);
+	async setText(text:string) {
+		await this.textarea.clear();
+		await this.textarea.sendKeys(text);
 	}
 
-	clear() {
-		this.textarea.clear();
+	async clear() {
+		await this.textarea.clear();
 	}
 
-	getPreview(): promise.Promise<string> {
-		return this.previewContent.getAttribute('innerHTML');
+	async getPreview(): Promise<string> {
+		return await this.previewContent.getAttribute('innerHTML');
 	}
 
-	toggleEdit(): promise.Promise<void> {
-		return this.isPreviewToggled().then(mustToggle => {
-			if (mustToggle) {
-				return this.editTab.click();
-			}
-		});
+	async toggleEdit(): Promise<void> {
+		const mustToggle = await this.isPreviewToggled();
+		if (mustToggle) {
+			await this.editTab.click();
+		}
 	}
 
-	togglePreview(): promise.Promise<void> {
-		return this.isEditToggled().then(mustToggle => {
-			if (mustToggle) {
-				return this.previewTab.click();
-			}
-		});
+	async togglePreview(): Promise<void> {
+		const mustToggle = this.isEditToggled();
+		if (mustToggle) {
+			this.previewTab.click();
+		}
 	}
 
-	isEditToggled(): promise.Promise<boolean> {
-		return this.hasClass(this.editTab, 'active');
+	async isEditToggled(): Promise<boolean> {
+		return await this.hasClass(this.editTab, 'active');
 	}
 
-	isPreviewToggled(): promise.Promise<boolean> {
-		return this.hasClass(this.previewTab, 'active');
+	async isPreviewToggled(): Promise<boolean> {
+		return await this.hasClass(this.previewTab, 'active');
 	}
 }
 

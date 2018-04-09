@@ -30,77 +30,73 @@ describe('Add new version to release', () => {
 	const releases:Releases = new Releases(browser.params.vpdb);
 	let release:Release;
 
-	beforeAll(() => {
-		return releases.createRelease('member', { versions: [ { version: '1.0.0' } ] }).then((createdRelease:Release) => {
-			release = createdRelease;
-			versionAddPage.get(release);
-		});
+	beforeAll(async () => {
+		release = await releases.createRelease('member', { versions: [ { version: '1.0.0' } ] });
+		await versionAddPage.get(release);
 	});
 
-	afterEach(() => {
-		browser.executeScript('window.scrollTo(0,0);');
+	afterEach(async () => {
+		await browser.executeScript('window.scrollTo(0,0);');
 	});
 
-	afterAll(() => {
-		appPage.logout();
+	afterAll(async () => {
+		await appPage.logout();
 	});
 
-	it('should display validation errors when no file uploaded', () => {
-		versionAddPage.submit();
-		expect(versionAddPage.hasFileUploadValidationError()).toBe(true);
-		versionAddPage.reset();
+	it('should display validation errors when no file uploaded', async () => {
+		await versionAddPage.submit();
+		await expect(versionAddPage.hasFileUploadValidationError()).toBe(true);
+		await versionAddPage.reset();
 	});
 
-	it('should display validation errors when a file is uploaded.', () => {
+	it('should display validation errors when a file is uploaded.', async () => {
 		const fileName = 'blank.vpt';
-		versionAddPage.uploadFile(fileName);
-		versionAddPage.submit();
-		expect(versionAddPage.hasFlavorValidationError(fileName)).toBe(true);
-		expect(versionAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
-		expect(versionAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
-		versionAddPage.reset();
+		await versionAddPage.uploadFile(fileName);
+		await versionAddPage.submit();
+		await expect(versionAddPage.hasFlavorValidationError(fileName)).toBe(true);
+		await expect(versionAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
+		await expect(versionAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
+		await versionAddPage.reset();
 	});
 
-	it('should add a new file to an existing version', () => {
+	it('should add a new file to an existing version', async () => {
 		const fileName = 'blank.vpt';
-		versionAddPage.uploadFile(fileName);
-		versionAddPage.setExistingVersion('1.0.0');
-		versionAddPage.setFlavor(fileName, 0, 0); // orientation: desktop
-		versionAddPage.setFlavor(fileName, 1, 1); // lighting: day
-		versionAddPage.setCompatibility(fileName, 0, 0);
-		versionAddPage.uploadPlayfield(fileName,'playfield-1920x1080.png');
-		versionAddPage.submit();
+		await versionAddPage.uploadFile(fileName);
+		await versionAddPage.setExistingVersion('1.0.0');
+		await versionAddPage.setFlavor(fileName, 0, 0); // orientation: desktop
+		await versionAddPage.setFlavor(fileName, 1, 1); // lighting: day
+		await versionAddPage.setCompatibility(fileName, 0, 0);
+		await versionAddPage.uploadPlayfield(fileName,'playfield-1920x1080.png');
+		await versionAddPage.submit();
 
-		const modal = appPage.getErrorInfoModal();
-		expect(modal.title.getText()).toEqual('SUCCESS!');
-		expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
-		expect(modal.subtitle.getText()).toContain(release.name.toUpperCase());
-		expect(modal.message.getText()).toContain('Successfully uploaded new files to version');
-		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
-		modal.close();
-		versionAddPage.navigate(release);
+		const modal = await appPage.getErrorInfoModal();
+		await expect(modal.title.getText()).toEqual('SUCCESS!');
+		await expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
+		await expect(modal.subtitle.getText()).toContain(release.name.toUpperCase());
+		await expect(modal.message.getText()).toContain('Successfully uploaded new files to version');
+		await expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+		await modal.close();
+		await versionAddPage.navigate(release);
 	});
 
-	it('should add a new version to an existing release', () => {
+	it('should add a new version to an existing release', async () => {
 		const fileName = 'blank.vpt';
-		versionAddPage.uploadFile(fileName);
-		versionAddPage.setNewVersion('2.0.0');
-		versionAddPage.setFlavor(fileName, 0, 1); // orientation: fullscreen
-		versionAddPage.setFlavor(fileName, 1, 1); // lighting: day
-		versionAddPage.setCompatibility(fileName, 0, 0);
-		versionAddPage.uploadPlayfield(fileName,'playfield-1080x1920.png');
-		versionAddPage.submit();
+		await versionAddPage.uploadFile(fileName);
+		await versionAddPage.setNewVersion('2.0.0');
+		await versionAddPage.setFlavor(fileName, 0, 1); // orientation: fullscreen
+		await versionAddPage.setFlavor(fileName, 1, 1); // lighting: day
+		await versionAddPage.setCompatibility(fileName, 0, 0);
+		await versionAddPage.uploadPlayfield(fileName,'playfield-1080x1920.png');
+		await versionAddPage.submit();
 
-		const modal = appPage.getErrorInfoModal();
-		expect(modal.title.getText()).toEqual('SUCCESS!');
-		expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
-		expect(modal.subtitle.getText()).toContain(release.name.toUpperCase());
-		expect(modal.message.getText()).toContain('Successfully uploaded new release version');
-		expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
-		modal.close();
-		versionAddPage.navigate(release);
+		const modal = await appPage.getErrorInfoModal();
+		await expect(modal.title.getText()).toEqual('SUCCESS!');
+		await expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
+		await expect(modal.subtitle.getText()).toContain(release.name.toUpperCase());
+		await expect(modal.message.getText()).toContain('Successfully uploaded new release version');
+		await expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+		await modal.close();
+		await versionAddPage.navigate(release);
 	});
-
-
 
 });
