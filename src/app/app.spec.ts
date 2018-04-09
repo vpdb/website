@@ -19,7 +19,7 @@
 
 import { AppPage } from './app.page';
 
-fdescribe('App', () => {
+describe('App', () => {
 
 	const appPage = new AppPage();
 
