@@ -22,6 +22,7 @@ import LoginModalTpl from './common/auth/login.modal.pug';
 
 export default class App {
 	/**
+	 * @param $log
 	 * @param $rootScope
 	 * @param $window
 	 * @param $timeout
@@ -33,11 +34,12 @@ export default class App {
 	 * @param ProfileResource
 	 * @ngInject
 	 */
-	constructor($rootScope, $window, $timeout, $uibModal, $localStorage, $injector, LoginService, ModalFlashService, ProfileResource) {
+	constructor($rootScope, $window, $timeout, $uibModal, $localStorage, $injector, $log, LoginService, ModalFlashService, ProfileResource) {
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.$timeout = $timeout;
 		this.$uibModal = $uibModal;
+		this.$log = $log;
 		this.LoginService = LoginService;
 
 		this.$rootScope.timeoutNoticeCollapsed = true;
@@ -53,7 +55,7 @@ export default class App {
 			ProfileResource.get(user => {
 				$rootScope.$broadcast('userUpdated', user);
 			}, err => {
-				console.log('Error retrieving user profile: %s', err);
+				$log.error('Error retrieving user profile: ', err);
 			});
 		});
 
@@ -125,12 +127,12 @@ export default class App {
 			return;
 		}
 		if (!image.variations) {
-			console.warn('No variations in ', image);
+			this.$log.warn('No variations in ', image);
 			return;
 		}
 		const name = this.pixelSuffix(variation);
 		if (!image.variations[name]) {
-			console.warn('No variation "%s" in ', variation, image);
+			this.$log.warn('No variation "%s" in ', variation, image);
 			return;
 		}
 		return image.variations[this.pixelSuffix(variation)].url;

@@ -108,7 +108,6 @@ export default class ReleaseBaseCtrl {
 		}
 	}
 
-
 	/**
 	 * Opens the dialog for creating a new build.
 	 */
@@ -309,6 +308,7 @@ export default class ReleaseBaseCtrl {
 
 	/**
 	 * Removes the media link from meta data in case a file failed to load
+	 * TODO
 	 * @param file
 	 * @param type
 	 */

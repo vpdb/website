@@ -137,7 +137,6 @@ export default class ReleaseEditCtrl {
 	 */
 	removeTag(tag) {
 		if (this.availableTags.includes(tag)) {
-			console.log('Ignoring drop of tag %s', tag.name);
 			return;
 		}
 		this.availableTags.push(tag);
@@ -151,7 +150,6 @@ export default class ReleaseEditCtrl {
 	addTag(tag) {
 		// if dropped on the same spot, ignore.
 		if (this.updatedRelease.tags.includes(tag)) {
-			console.log('Ignoring drop of tag %s', tag.name);
 			return;
 		}
 		this.updatedRelease.tags.push(tag);

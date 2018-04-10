@@ -243,7 +243,7 @@ export default class AuthService {
 			if (callback) {
 				callback(err);
 			}
-			console.log('Error retrieving user profile: %s', err);
+			this.$log.error('Error retrieving user profile: ', err);
 		});
 	}
 

@@ -37,11 +37,12 @@ class BackgroundImageDirective {
 	 * @param {AuthService} AuthService
 	 * @param {NetworkService} NetworkService
 	 */
-	constructor($parse, AuthService, NetworkService) {
+	constructor($parse, $log, AuthService, NetworkService) {
 		this.scope = true;
 		this.restrict = 'A';
 
 		this.$parse = $parse;
+		this.$log = $log;
 		this.AuthService = AuthService;
 		this.NetworkService = NetworkService;
 	}
@@ -79,7 +80,7 @@ class BackgroundImageDirective {
 				this._setImgUrl(url, scope, element, attrs);
 
 			} else {
-				console.info('img-bg: adding url %s to be collected', url);
+				this.$log.debug('img-bg: adding url %s to be collected', url);
 				this.AuthService.addUrlToken(url, url => this._setImgUrl(url, scope, element, attrs));
 			}
 		}
@@ -113,7 +114,7 @@ class BackgroundImageDirective {
 				scope.$emit('imageLoaded');
 			} else {
 				delete scope.img.url;
-				console.warn('Could not load image "%s".', url);
+				this.$log.debug('Could not load image "%s".', url);
 				if (attrs.error) {
 					this.$parse(attrs.error)(scope);
 				}

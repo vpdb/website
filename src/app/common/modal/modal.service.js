@@ -30,8 +30,9 @@ export default class ModalService {
 	 * @param ModalMarkdownFiddle
 	 * @ngInject
 	 */
-	constructor($uibModal, ModalMarkdownFiddle) {
+	constructor($uibModal, $log, ModalMarkdownFiddle) {
 		this.$uibModal = $uibModal;
+		this.$log = $log;
 		this.ModalMarkdownFiddle = ModalMarkdownFiddle;
 		this._flashMessage = null;
 	}
@@ -127,7 +128,7 @@ export default class ModalService {
 					resolve: { data: () => data }
 				});
 			} catch (err) {
-				console.error(err);
+				this.$log.error(err);
 			}
 		}
 	}

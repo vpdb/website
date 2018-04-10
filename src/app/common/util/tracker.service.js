@@ -28,11 +28,12 @@ export default class TrackerService {
 
 	/**
 	 * @param $rootScope
+	 * @param $log
 	 * @param {Config} Config
 	 * @param {AuthService} AuthService
 	 * @ngInject
 	 */
-	constructor($rootScope, Config, AuthService) {
+	constructor($rootScope, $log, Config, AuthService) {
 
 		this.$rootScope = $rootScope;
 		this.Config = Config;
@@ -51,7 +52,7 @@ export default class TrackerService {
 			});
 
 		} else {
-			console.info('Google Analytics disabled.');
+			$log.info('Google Analytics disabled.');
 		}
 	}
 

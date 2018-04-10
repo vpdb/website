@@ -38,12 +38,13 @@ export default class AppCtrl {
 	 * @param {BuildConfig} BuildConfig
 	 * @ngInject
 	 */
-	constructor($rootScope, $state, $localStorage, $uibModal, App, AuthService, Config, BuildConfig) {
+	constructor($rootScope, $state, $localStorage, $uibModal, $log, App, AuthService, Config, BuildConfig) {
 		this.waitCoolDown = 2000;
 
 		this.$rootScope = $rootScope;
 		this.$state = $state;
 		this.$uibModal = $uibModal;
+		this.$log = $log;
 		this.App = App;
 		this.AuthService = AuthService;
 		this.BuildConfig = BuildConfig;
@@ -72,7 +73,7 @@ export default class AppCtrl {
 		});
 		this.waitTimeout = setTimeout(() => this.installServiceWorker(), this.waitCoolDown);
 
-		console.log('Application controller loaded.');
+		this.$log.info('Application controller loaded.');
 	}
 
 	login() {
@@ -119,13 +120,13 @@ export default class AppCtrl {
 
 	installServiceWorker() {
 		if (!this.BuildConfig.production && !this.serviceWorkerInstalled) {
-			console.log('Not installing service worker on non-production.');
+			this.$log.debug('Not installing service worker on non-production.');
 		}
 		if (!('serviceWorker' in navigator) && !this.serviceWorkerInstalled) {
-			console.log('Not installing service worker in unsupported browser.');
+			this.$log.warn('Not installing service worker in unsupported browser.');
 		}
 		if (this.BuildConfig.production && 'serviceWorker' in navigator && !this.serviceWorkerInstalled) {
-			console.log('Installing service worker.');
+			this.$log.debug('Installing service worker.');
 			navigator.serviceWorker.register('/sw.js').then(function(reg) {
 				// updatefound is fired if service-worker.js changes.
 				reg.onupdatefound = function() {
@@ -140,22 +141,22 @@ export default class AppCtrl {
 									// have been added to the cache.
 									// It's the perfect time to display a "New content is available; please refresh."
 									// message in the page's interface.
-									console.log('New or updated content is available.');
+									this.$log.warn('New or updated content is available.');
 								} else {
 									// At this point, everything has been precached.
 									// It's the perfect time to display a "Content is cached for offline use." message.
-									console.log('Content is now available offline!');
+									this.$log.info('Content is now available offline!');
 								}
 								break;
 
 							case 'redundant':
-								console.error('The installing service worker became redundant.');
+								this.$log.info('The installing service worker became redundant.');
 								break;
 						}
 					};
 				};
 			}).catch(function(e) {
-				console.error('Error during service worker registration:', e);
+				this.$log.error('Error during service worker registration:', e);
 			});
 		}
 		this.serviceWorkerInstalled = true;

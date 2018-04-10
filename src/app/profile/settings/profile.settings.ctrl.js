@@ -27,6 +27,7 @@ export default class ProfileSettingsCtrl {
 	 * @param $scope
 	 * @param $uibModal
 	 * @param $window
+	 * @param $log
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
@@ -37,7 +38,7 @@ export default class ProfileSettingsCtrl {
 	 * @param TokenResource
 	 * @ngInject
 	 */
-	constructor($scope, $uibModal, $window, App, AuthService, ApiHelper, ConfigService, ModalService, TrackerService,
+	constructor($scope, $uibModal, $window, $log, App, AuthService, ApiHelper, ConfigService, ModalService, TrackerService,
 				ProfileResource, TokenResource) {
 
 		App.theme('dark');
@@ -46,6 +47,7 @@ export default class ProfileSettingsCtrl {
 
 		this.$uibModal = $uibModal;
 		this.$window = $window;
+		this.$log = $log;
 		this.App = App;
 		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
@@ -71,7 +73,7 @@ export default class ProfileSettingsCtrl {
 		this.AuthService.refreshUser(err => {
 
 			if (err) {
-				return console.error(err);
+				return this.$log.error(err);
 			}
 
 			// personal tokens
@@ -86,8 +88,6 @@ export default class ProfileSettingsCtrl {
 			// linked accounts
 			this.providers = this.AuthService.getProviders(this.AuthService.user);
 			const allProviders = this.AuthService.getProviders();
-
-			console.log(this.providers);
 
 			// pre-fill (local) username from first provider we find.
 			let i, provider;

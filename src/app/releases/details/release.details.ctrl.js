@@ -35,6 +35,7 @@ export default class ReleaseDetailsCtrl {
 	 * @param $stateParams
 	 * @param $location
 	 * @param $localStorage
+	 * @param $log
 	 * @param $uibModal
 	 * @param {Lightbox} Lightbox
 	 * @param {App} App
@@ -50,7 +51,7 @@ export default class ReleaseDetailsCtrl {
 	 * @param ReleaseModerationCommentResource
 	 * @ngInject
 	 */
-	constructor($stateParams, $location, $localStorage, $uibModal, Lightbox,
+	constructor($stateParams, $location, $localStorage, $log, $uibModal, Lightbox,
 				App, AuthService, ApiHelper, ReleaseService, TrackerService, BootstrapPatcher, GameResource,
 				ReleaseResource, ReleaseRatingResource, ReleaseCommentResource, ReleaseModerationCommentResource) {
 
@@ -60,6 +61,7 @@ export default class ReleaseDetailsCtrl {
 		BootstrapPatcher.patchCarousel();
 
 		this.imgPinDestruct = imgPinDestruct;
+		this.$log = $log;
 		this.$location = $location;
 		this.$localStorage = $localStorage;
 		this.$uibModal = $uibModal;
@@ -96,7 +98,7 @@ export default class ReleaseDetailsCtrl {
 		if (this.AuthService.hasPermission('releases/rate')) {
 			this.ReleaseRatingResource.get({ releaseId: this.releaseId }).$promise.then(rating => {
 				this.releaseRating = rating.value;
-			}, console.error);
+			}, $log.error);
 		}
 
 		this.fetchData();
@@ -194,7 +196,7 @@ export default class ReleaseDetailsCtrl {
 			this.TrackerService.trackPage();
 
 		}, err => {
-			console.error(err);
+			this.$log.error(err);
 			this.pageLoading = false;
 			this.found = false;
 		});
@@ -279,6 +281,6 @@ export default class ReleaseDetailsCtrl {
 			if (validation) {
 				file.validation = validation;
 			}
-		}, console.error);
+		}, this.$log.error);
 	}
 }

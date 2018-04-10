@@ -27,13 +27,15 @@ import { orderBy, flatten } from 'lodash';
 export default class ReleaseService {
 
 	/**
+	 * @param {$log}
 	 * @param {AuthService} AuthService
 	 * @param {Flavors} Flavors
 	 * @param {ModalService} ModalService
 	 * @param ReleaseStarResource
 	 * @ngInject
 	 */
-	constructor(AuthService, Flavors, ModalService, ReleaseStarResource) {
+	constructor($log, AuthService, Flavors, ModalService, ReleaseStarResource) {
+		this.$log = $log;
 		this.AuthService = AuthService;
 		this.Flavors = Flavors;
 		this.ModalService = ModalService;
@@ -44,14 +46,14 @@ export default class ReleaseService {
 	 * Stars or unstars a release depending if game is already starred.
 	 */
 	toggleReleaseStar(release, $event) {
-		const err = function(err) {
+		const err = err => {
 			if (err.data && err.data.error) {
 				this.ModalService.error({
 					subtitle: 'Error starring release.',
 					message: err.data.error
 				});
 			} else {
-				console.error(err);
+				this.$log.error(err);
 			}
 		};
 		if (this.AuthService.hasPermission('releases/star')) {
