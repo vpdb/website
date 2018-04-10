@@ -51,6 +51,6 @@ describe('Editor', () => {
 		const content = 'This is a sentence.';
 		await editor.setText(content);
 		await editor.togglePreview();
-		await expect(editor.getPreview()).toContain(content);
+		expect(await editor.getPreview()).toContain(content);
 	});
 });

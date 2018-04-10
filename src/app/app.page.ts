@@ -55,27 +55,12 @@ export class AppPage {
 	}
 
 	async logout() {
-		this.userButton.click();
-		this.logoutButton.click();
+		await this.userButton.click();
+		await this.logoutButton.click();
 	}
-	//
-	// async isLoading() {
-	// 	return await this.spinner.isDisplayed();
-	// }
-	//
-	// async isLogged() {
-	// 	return !(await this.loginButton.isDisplayed());
-	// }
 
 	async waitUntilLoaded() {
 		await browser.wait(() => this.spinner.isDisplayed().then(result => !result), 10000);
-	}
-
-	async waitUtilFinished() {
-		const until = protractor.ExpectedConditions;
-		//await browser.wait(until.presenceOf(this.loginButton), 5000, 'Login button should have appeared.');
-		await browser.sleep(1000);
-		//await browser.wait(() => this.loginButton.isDisplayed(), 3000);
 	}
 
 	async getLoggedUsername() {

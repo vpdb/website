@@ -19,6 +19,7 @@
 
 import { internet } from 'faker';
 import { AppPage } from '../../app.page';
+import { browser } from 'protractor';
 
 describe('Login Modal', () => {
 
@@ -30,25 +31,27 @@ describe('Login Modal', () => {
 		await appPage.openLoginModal();
 	});
 
+	afterEach(async () => {
+		await loginModal.toggleLogin();
+	});
+
 	it('should toggle between login and register', async () => {
 		await loginModal.toggleLogin();
-		await expect(loginModal.loginSubmit.isDisplayed()).toBeTruthy();
-		await expect(loginModal.registerSubmit.isDisplayed()).not.toBeTruthy();
-		await expect(loginModal.toggleButton.getText()).toEqual('Register');
+		expect(await loginModal.loginSubmit.isDisplayed()).toBeTruthy();
+		expect(await loginModal.registerSubmit.isDisplayed()).not.toBeTruthy();
+		expect(await loginModal.toggleButton.getText()).toEqual('Register');
 		await loginModal.toggleRegister();
-		await expect(loginModal.loginSubmit.isDisplayed()).not.toBeTruthy();
-		await expect(loginModal.registerSubmit.isDisplayed()).toBeTruthy();
-		await expect(loginModal.toggleButton.getText()).toEqual('Login');
-		await loginModal.toggle();
+		expect(await loginModal.loginSubmit.isDisplayed()).not.toBeTruthy();
+		expect(await loginModal.registerSubmit.isDisplayed()).toBeTruthy();
+		expect(await loginModal.toggleButton.getText()).toEqual('Login');
 	});
 
 	it('should show validation errors when registering', async () => {
 		await loginModal.toggleRegister();
 		await loginModal.submitRegister();
-		await expect(loginModal.hasEmailValidationError()).toBeTruthy();
-		await expect(loginModal.hasUsernameValidationError()).toBeTruthy();
-		await expect(loginModal.hasPasswordValidationError()).toBeTruthy();
-		await loginModal.toggle();
+		expect(await loginModal.hasEmailValidationError()).toBeTruthy();
+		expect(await loginModal.hasUsernameValidationError()).toBeTruthy();
+		expect(await loginModal.hasPasswordValidationError()).toBeTruthy();
 	});
 
 	it('should register and login correctly', async () => {
@@ -57,18 +60,19 @@ describe('Login Modal', () => {
 
 		await loginModal.toggleRegister();
 		await loginModal.setRegister(internet.email().toLowerCase(), username, password);
+
 		await loginModal.submitRegister();
 
-		await expect(loginModal.successMessage.isDisplayed()).toBeTruthy();
-		await expect(loginModal.successMessage.getText()).toContain('Registration successful.');
-		await expect(loginModal.loginSubmit.isDisplayed()).toBeTruthy();
+		expect(await loginModal.successMessage.isDisplayed()).toBeTruthy();
+		expect(await loginModal.successMessage.getText()).toContain('Registration successful.');
+		expect(await loginModal.loginSubmit.isDisplayed()).toBeTruthy();
 
 		await loginModal.toggleLogin();
 		await loginModal.setLogin(username, password);
 		await loginModal.submitLogin();
 
-		await expect(loginModal.element.isPresent()).not.toBeTruthy();
-		await expect(appPage.getLoggedUsername()).toEqual(username);
+		expect(await loginModal.element.isPresent()).not.toBeTruthy();
+		expect(await appPage.getLoggedUsername()).toEqual(username);
 
 		await appPage.logout();
 		await appPage.openLoginModal();

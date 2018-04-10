@@ -41,29 +41,29 @@ describe('Add new game', () => {
 
 	it('should display validation errors', async () => {
 		await addGamePage.submit();
-		await expect(addGamePage.hasTitleValidatorErrors()).toBe(true);
-		await expect(addGamePage.hasRecreationIdValidationErrors()).toBe(true);
-		await expect(addGamePage.hasBackglassValidationErrors()).toBe(true);
+		expect(await addGamePage.hasTitleValidatorErrors()).toBe(true);
+		expect(await addGamePage.hasRecreationIdValidationErrors()).toBe(true);
+		expect(await addGamePage.hasBackglassValidationErrors()).toBe(true);
 		await addGamePage.reset();
 	});
 
 	it('should display the game info from IPDB', async () => {
 		await addGamePage.fetchIpdb('3781');
 		await appPage.waitUntilLoaded();
-		await expect(addGamePage.gameInfoPanel.isDisplayed()).toBeTruthy();
-		await expect(addGamePage.gameInfoTitle.getText()).toEqual('Attack from Mars');
+		expect(await addGamePage.gameInfoPanel.isDisplayed()).toBeTruthy();
+		expect(await addGamePage.gameInfoTitle.getText()).toEqual('Attack from Mars');
 		await addGamePage.reset();
 	});
 
 	it('should upload a backglass', async () => {
 		await addGamePage.uploadBackglass('backglass-1280x1024.png');
-		await expect(addGamePage.backglassImage.getAttribute('style')).toContain('background-image: url');
+		expect(await addGamePage.backglassImage.getAttribute('style')).toContain('background-image: url');
 		await addGamePage.reset();
 	});
 
 	it('should upload a logo', async () => {
 		await addGamePage.uploadLogo('game.logo-800x300.png');
-		await expect(addGamePage.logoImage.getAttribute('style')).toContain('background-image: url');
+		expect(await addGamePage.logoImage.getAttribute('style')).toContain('background-image: url');
 		await addGamePage.reset();
 	});
 
@@ -76,10 +76,10 @@ describe('Add new game', () => {
 		await addGamePage.submit();
 
 		const modal = await appPage.getErrorInfoModal();
-		await expect(modal.title.getText()).toEqual('GAME CREATED!');
-		await expect(modal.subtitle.getText()).toEqual(game.title.toUpperCase());
-		await expect(modal.message.getText()).toEqual('The game has been successfully created.');
-		await expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/');
+		expect(await modal.title.getText()).toEqual('GAME CREATED!');
+		expect(await modal.subtitle.getText()).toEqual(game.title.toUpperCase());
+		expect(await modal.message.getText()).toEqual('The game has been successfully created.');
+		expect(await browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/');
 		await modal.close();
 		await addGamePage.navigate();
 	});

@@ -45,8 +45,8 @@ describe('Add tag', () => {
 
 	it('should display validation errors', async () => {
 		await tagAddModal.submit();
-		await expect(tagAddModal.hasNameValidationError()).toBe(true);
-		await expect(tagAddModal.hasDescriptionValidationError()).toBe(true);
+		expect(await tagAddModal.hasNameValidationError()).toBe(true);
+		expect(await tagAddModal.hasDescriptionValidationError()).toBe(true);
 		await tagAddModal.dismiss();
 	});
 

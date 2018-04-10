@@ -45,7 +45,7 @@ describe('Add new version to release', () => {
 
 	it('should display validation errors when no file uploaded', async () => {
 		await versionAddPage.submit();
-		await expect(versionAddPage.hasFileUploadValidationError()).toBe(true);
+		expect(await versionAddPage.hasFileUploadValidationError()).toBe(true);
 		await versionAddPage.reset();
 	});
 
@@ -53,9 +53,9 @@ describe('Add new version to release', () => {
 		const fileName = 'blank.vpt';
 		await versionAddPage.uploadFile(fileName);
 		await versionAddPage.submit();
-		await expect(versionAddPage.hasFlavorValidationError(fileName)).toBe(true);
-		await expect(versionAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
-		await expect(versionAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
+		expect(await versionAddPage.hasFlavorValidationError(fileName)).toBe(true);
+		expect(await versionAddPage.hasCompatibilityValidationError(fileName)).toBe(true);
+		expect(await versionAddPage.hasPlayfieldImageValidationError(fileName)).toBe(true);
 		await versionAddPage.reset();
 	});
 
@@ -70,11 +70,11 @@ describe('Add new version to release', () => {
 		await versionAddPage.submit();
 
 		const modal = await appPage.getErrorInfoModal();
-		await expect(modal.title.getText()).toEqual('SUCCESS!');
-		await expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
-		await expect(modal.subtitle.getText()).toContain(release.name.toUpperCase());
-		await expect(modal.message.getText()).toContain('Successfully uploaded new files to version');
-		await expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+		expect(await modal.title.getText()).toEqual('SUCCESS!');
+		expect(await modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
+		expect(await modal.subtitle.getText()).toContain(release.name.toUpperCase());
+		expect(await modal.message.getText()).toContain('Successfully uploaded new files to version');
+		expect(await browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
 		await modal.close();
 		await versionAddPage.navigate(release);
 	});
@@ -90,11 +90,11 @@ describe('Add new version to release', () => {
 		await versionAddPage.submit();
 
 		const modal = await appPage.getErrorInfoModal();
-		await expect(modal.title.getText()).toEqual('SUCCESS!');
-		await expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
-		await expect(modal.subtitle.getText()).toContain(release.name.toUpperCase());
-		await expect(modal.message.getText()).toContain('Successfully uploaded new release version');
-		await expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+		expect(await modal.title.getText()).toEqual('SUCCESS!');
+		expect(await modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
+		expect(await modal.subtitle.getText()).toContain(release.name.toUpperCase());
+		expect(await modal.message.getText()).toContain('Successfully uploaded new release version');
+		expect(await browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
 		await modal.close();
 		await versionAddPage.navigate(release);
 	});

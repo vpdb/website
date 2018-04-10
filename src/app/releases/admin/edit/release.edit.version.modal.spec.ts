@@ -56,8 +56,8 @@ describe('Edit an existing version of a release', () => {
 		await versionEditModal.clearCompatibility(tableFilename);
 		await versionEditModal.rotatePlayfieldImage(tableFilename);
 		await versionEditModal.submit();
-		await expect(versionEditModal.hasCompatibilityValidationError(tableFilename)).toBeTruthy();
-		await expect(versionEditModal.hasPlayfieldImageValidationError(tableFilename)).toBeTruthy();
+		expect(await versionEditModal.hasCompatibilityValidationError(tableFilename)).toBeTruthy();
+		expect(await versionEditModal.hasPlayfieldImageValidationError(tableFilename)).toBeTruthy();
 		await versionEditModal.close();
 	});
 
@@ -70,9 +70,9 @@ describe('Edit an existing version of a release', () => {
 		await versionEditModal.submit();
 
 		const modal = await appPage.getErrorInfoModal();
-		await expect(modal.title.getText()).toEqual('VERSION UPDATED');
-		await expect(modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
-		await expect(modal.message.getText()).toContain('You have successfully updated version');
+		expect(await modal.title.getText()).toEqual('VERSION UPDATED');
+		expect(await modal.subtitle.getText()).toContain(release.game.title.toUpperCase());
+		expect(await modal.message.getText()).toContain('You have successfully updated version');
 		await modal.close();
 
 		await releaseEditPage.cancel();

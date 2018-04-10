@@ -52,8 +52,8 @@ describe('Edit a release', () => {
 		await releaseEditPage.clearAuthors();
 		await releaseEditPage.submit();
 
-		await expect(releaseEditPage.hasNameValidationError()).toBeTruthy();
-		await expect(releaseEditPage.hasAuthorValidationError()).toBeTruthy();
+		expect(await releaseEditPage.hasNameValidationError()).toBeTruthy();
+		expect(await releaseEditPage.hasAuthorValidationError()).toBeTruthy();
 		await releaseEditPage.reset();
 	});
 
@@ -68,11 +68,11 @@ describe('Edit a release', () => {
 
 		await releaseEditPage.submit();
 
-		await expect(browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
+		expect(await browser.getCurrentUrl()).toContain(browser.baseUrl + '/games/' + release.game.id + '/releases/' + release.id);
 		const releaseDetailsPage = new ReleaseDetailsPage();
 
-		await expect(releaseDetailsPage.getTitle()).toContain('Updated Release Edition'.toUpperCase());
-		await expect(releaseDetailsPage.getDescription()).toContain('release description is updated');
+		expect(await releaseDetailsPage.getTitle()).toContain('Updated Release Edition'.toUpperCase());
+		expect(await releaseDetailsPage.getDescription()).toContain('release description is updated');
 
 		await releaseEditPage.navigate(release);
 	});

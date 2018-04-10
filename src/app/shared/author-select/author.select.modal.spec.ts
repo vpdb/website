@@ -50,14 +50,14 @@ describe('Add author', () => {
 
 	it('should display validation errors', async () => {
 		await authorSelectModal.submit();
-		await expect(authorSelectModal.hasAuthorValidationError()).toBe(true);
-		await expect(authorSelectModal.hasRoleValidationError()).toBe(true);
+		expect(await authorSelectModal.hasAuthorValidationError()).toBe(true);
+		expect(await authorSelectModal.hasRoleValidationError()).toBe(true);
 		await authorSelectModal.dismiss();
 	});
 
 	it('should find a member', async () => {
 		await authorSelectModal.search('memb');
-		await expect(authorSelectModal.hasSearchResults()).toBe(true);
+		expect(await authorSelectModal.hasSearchResults()).toBe(true);
 
 		await authorSelectModal.dismiss();
 	});
@@ -65,14 +65,14 @@ describe('Add author', () => {
 	it('should select a member', async () => {
 		await authorSelectModal.search('memb');
 		await authorSelectModal.selectSearchResult('member');
-		await expect(authorSelectModal.getSelectedName()).toBe('member');
+		expect(await authorSelectModal.getSelectedName()).toBe('member');
 
 		await authorSelectModal.dismiss();
 	});
 
 	it('should add a role', async () => {
 		await authorSelectModal.addRole('superhero');
-		await expect(authorSelectModal.hasRole('superhero')).toBe(true);
+		expect(await authorSelectModal.hasRole('superhero')).toBe(true);
 
 		await authorSelectModal.dismiss();
 	});
@@ -80,18 +80,18 @@ describe('Add author', () => {
 	it('should add multiple roles', async () => {
 		await authorSelectModal.addRole('idiot');
 		await authorSelectModal.addRole('gros con');
-		await expect(authorSelectModal.hasRole('idiot')).toBe(true);
-		await expect(authorSelectModal.hasRole('gros con')).toBe(true);
+		expect(await authorSelectModal.hasRole('idiot')).toBe(true);
+		expect(await authorSelectModal.hasRole('gros con')).toBe(true);
 
 		await authorSelectModal.dismiss();
 	});
 
 	it('should remove a role', async () => {
 		await authorSelectModal.addRole('hangman');
-		await expect(authorSelectModal.hasRole('hangman')).toBe(true);
+		expect(await authorSelectModal.hasRole('hangman')).toBe(true);
 
 		await authorSelectModal.removeRole('hangman')
-		await expect(authorSelectModal.hasRole('hangman')).toBe(false);
+		expect(await authorSelectModal.hasRole('hangman')).toBe(false);
 
 		await authorSelectModal.dismiss();
 	});

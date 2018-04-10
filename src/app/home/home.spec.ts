@@ -28,23 +28,23 @@ describe('Home Page', () => {
 	});
 
 	it('should be in initial state', async () => {
-		await expect(homePage.noResult.isDisplayed()).not.toBeTruthy();
-		await expect(homePage.panelTitle.isDisplayed()).not.toBeTruthy();
+		expect(await homePage.noResult.isDisplayed()).not.toBeTruthy();
+		expect(await homePage.panelTitle.isDisplayed()).not.toBeTruthy();
 	});
 
 	it('should search in games', async () => {
 		await homePage.search('qwert');
-		await expect(homePage.noResult.isDisplayed()).toBeTruthy();
-		await expect(homePage.getNoResult()).toEqual('No games found containing "qwert".');
+		expect(await homePage.noResult.isDisplayed()).toBeTruthy();
+		expect(await homePage.getNoResult()).toEqual('No games found containing "qwert".');
 		await homePage.clearSearch();
-		await expect(homePage.noResult.isDisplayed()).not.toBeTruthy();
+		expect(await homePage.noResult.isDisplayed()).not.toBeTruthy();
 	});
 
 	it('should expand the info panel', async () => {
 		await homePage.togglePanel();
-		await expect(homePage.panelTitle.isDisplayed()).toBeTruthy();
+		expect(await homePage.panelTitle.isDisplayed()).toBeTruthy();
 		await homePage.closePanel();
-		await expect(homePage.panelTitle.isDisplayed()).not.toBeTruthy();
+		expect(await homePage.panelTitle.isDisplayed()).not.toBeTruthy();
 	});
 
 });

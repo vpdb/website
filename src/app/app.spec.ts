@@ -19,6 +19,8 @@
 
 import { AppPage } from './app.page';
 
+process.on('unhandledRejection', r => console.log(r));
+
 describe('App', () => {
 
 	const appPage = new AppPage();
@@ -27,22 +29,19 @@ describe('App', () => {
 		await appPage.get();
 	});
 
-	afterEach(async () => {
-		await appPage.waitUtilFinished();
-	});
 
 	describe('as anonymous', () => {
 
 		it('should open the login modal when clicking on login', async () => {
 			await appPage.openLoginModal();
-			await expect(appPage.loginModal.element.isDisplayed()).toBeTruthy();
+			expect(await appPage.loginModal.element.isDisplayed()).toBeTruthy();
 			await appPage.loginModal.dismiss();
 		});
 
 		it('should be able to login as a pre-defined user', async () => {
 			await appPage.loginAs('contributor');
-			await expect(appPage.loginModal.element.isPresent()).not.toBeTruthy();
-			await expect(appPage.getLoggedUsername()).toEqual('contributor');
+			expect(await appPage.loginModal.element.isPresent()).not.toBeTruthy();
+			expect(await appPage.getLoggedUsername()).toEqual('contributor');
 			await appPage.logout();
 		});
 	});
@@ -51,7 +50,7 @@ describe('App', () => {
 
 		beforeAll(async () => {
 			await appPage.loginAs('contributor');
-			await expect(appPage.uploadButton.isDisplayed()).toBeTruthy();
+			expect(await appPage.uploadButton.isDisplayed()).toBeTruthy();
 		});
 
 		afterAll(async () => {
@@ -61,9 +60,9 @@ describe('App', () => {
 		it('should be able to access the upload menu for game, release and backglass.', async () => {
 
 			await appPage.uploadButton.click();
-			await expect(appPage.uploadGameButton.isDisplayed()).toBeTruthy();
-			await expect(appPage.uploadReleaseButton.isDisplayed()).toBeTruthy();
-			await expect(appPage.uploadBackglassButton.isDisplayed()).toBeTruthy();
+			expect(await appPage.uploadGameButton.isDisplayed()).toBeTruthy();
+			expect(await appPage.uploadReleaseButton.isDisplayed()).toBeTruthy();
+			expect(await appPage.uploadBackglassButton.isDisplayed()).toBeTruthy();
 			await appPage.uploadButton.click();
 		});
 	});

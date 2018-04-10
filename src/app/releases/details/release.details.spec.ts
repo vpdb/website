@@ -53,20 +53,20 @@ describe('View details of a release', () => {
 
 		it('should show a 404 page for a pending release', async () => {
 			await releaseDetailsPage.get(pendingRelease);
-			await expect(releaseDetailsPage.doesExist()).toBeFalsy();
+			expect(await releaseDetailsPage.doesExist()).toBeFalsy();
 		});
 
 		it('should show an approved release', async () => {
 			await releaseDetailsPage.get(approvedRelease);
-			await expect(releaseDetailsPage.doesExist()).toBeTruthy();
-			await expect(releaseDetailsPage.hasNewCommentForm()).toBeFalsy();
+			expect(await releaseDetailsPage.doesExist()).toBeTruthy();
+			expect(await releaseDetailsPage.hasNewCommentForm()).toBeFalsy();
 		});
 
 		it('should toggle between file names and flavors', async () => {
 			await releaseDetailsPage.get(approvedRelease);
-			await expect(releaseDetailsPage.hasFilenamesToggled()).toBeFalsy();
+			expect(await releaseDetailsPage.hasFilenamesToggled()).toBeFalsy();
 			await releaseDetailsPage.toggleFilenames();
-			await expect(releaseDetailsPage.hasFilenamesToggled()).toBeTruthy();
+			expect(await releaseDetailsPage.hasFilenamesToggled()).toBeTruthy();
 			await releaseDetailsPage.toggleFilenames();
 		});
 
@@ -90,20 +90,20 @@ describe('View details of a release', () => {
 			});
 
 			it('should show the new comment form', async () => {
-				await expect(releaseDetailsPage.hasNewCommentForm()).toBeTruthy();
+				expect(await releaseDetailsPage.hasNewCommentForm()).toBeTruthy();
 			});
 
 			it('should show the author zone but not the moderation zone', async () => {
-				await expect(releaseDetailsPage.hasAdminZone()).toBeTruthy();
-				await expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
+				expect(await releaseDetailsPage.hasAdminZone()).toBeTruthy();
+				expect(await releaseDetailsPage.hasModerationZone()).toBeFalsy();
 			});
 
 			it('should toggle the moderation zone', async () => {
-				await expect(releaseDetailsPage.hasModerationZoneToggle()).toBeTruthy();
+				expect(await releaseDetailsPage.hasModerationZoneToggle()).toBeTruthy();
 				await releaseDetailsPage.toggleModerationZone();
-				await expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
+				expect(await releaseDetailsPage.hasModerationZone()).toBeTruthy();
 				await releaseDetailsPage.toggleModerationZone();
-				await expect(releaseDetailsPage.hasModerationZone()).toBeFalsy();
+				expect(await releaseDetailsPage.hasModerationZone()).toBeFalsy();
 			});
 
 		});
@@ -115,14 +115,14 @@ describe('View details of a release', () => {
 			});
 
 			it('should not show the new comment form', async () => {
-				await expect(releaseDetailsPage.hasNewCommentForm()).toBeFalsy();
+				expect(await releaseDetailsPage.hasNewCommentForm()).toBeFalsy();
 			});
 
 
 			it('should show the moderation zone', async () => {
-				await expect(releaseDetailsPage.hasAdminZone()).toBeTruthy();
-				await expect(releaseDetailsPage.hasModerationZone()).toBeTruthy();
-				await expect(releaseDetailsPage.hasModerationZoneToggle()).toBeFalsy();
+				expect(await releaseDetailsPage.hasAdminZone()).toBeTruthy();
+				expect(await releaseDetailsPage.hasModerationZone()).toBeTruthy();
+				expect(await releaseDetailsPage.hasModerationZoneToggle()).toBeFalsy();
 			});
 		});
 	});

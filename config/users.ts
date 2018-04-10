@@ -1,5 +1,6 @@
 import { User } from '../src/test/models/User';
 
+// these are the test users.
 export const root: User = {
 	username: 'root',
 	password: 'cVVQr53f5TCZtHcR',

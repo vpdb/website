@@ -42,7 +42,7 @@ export class LoginModalPage extends BasePage {
 	public successMessage = this.element.element(by.css('.modal-body > .alert-success[ng-show="vm.message"]'));
 
 	async toggle(): Promise<void> {
-		return await this.toggleButton.click();
+		await this.toggleButton.click();
 	}
 
 	async toggleRegister() {
