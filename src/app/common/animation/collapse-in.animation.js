@@ -37,7 +37,7 @@ export default function collapseInAnimation($timeout) {
 		enter(element, done) {
 			$timeout(function() {
 				// save height for later
-				height = element.get(0).offsetHeight;
+				height = element[0].offsetHeight;
 
 				// outer: measure, then set height to 0 (not animated)
 				element.css('height', '0px');

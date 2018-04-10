@@ -128,7 +128,7 @@ export default class HomeCtrl {
 			query.q = this.q;
 		}
 
-		query = Object.extend(query, queryOverride);
+		query = Object.assign(query, queryOverride);
 
 		// refresh if changes
 		if (!isEqual(this.lastReqParams, query)) {

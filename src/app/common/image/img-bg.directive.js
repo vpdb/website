@@ -33,6 +33,11 @@ import imagesLoaded from 'imagesloaded';
 class BackgroundImageDirective {
 
 	/**
+	 * Class constructor.
+	 *
+	 * Note: Injection must be done manually for directive classes. See bottom!
+	 *
+	 * @param $log
 	 * @param $parse
 	 * @param {AuthService} AuthService
 	 * @param {NetworkService} NetworkService
@@ -129,13 +134,13 @@ class BackgroundImageDirective {
 	 * @param NetworkService
 	 * @return {BackgroundImageDirective}
 	 */
-	static directiveFactory($parse, AuthService, NetworkService) {
-		BackgroundImageDirective.instance = new BackgroundImageDirective($parse, AuthService, NetworkService);
+	static directiveFactory($parse, $log, AuthService, NetworkService) {
+		BackgroundImageDirective.instance = new BackgroundImageDirective($parse, $log, AuthService, NetworkService);
 		return BackgroundImageDirective.instance;
 	}
 }
 // need to manually inject this :/
-BackgroundImageDirective.directiveFactory.$inject = ['$parse', 'AuthService', 'NetworkService'];
+BackgroundImageDirective.directiveFactory.$inject = ['$parse', '$log', 'AuthService', 'NetworkService'];
 
 export { BackgroundImageDirective };
 
