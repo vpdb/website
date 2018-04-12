@@ -17,10 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { resolve } from 'path';
+import { WebElement } from 'selenium-webdriver';
 
 export class BasePage {
+
+	protected async dragAndDrop(source:WebElement, target:WebElement) {
+		await browser.driver.actions().mouseMove(source).perform();
+		await browser.driver.actions().mouseDown().perform();
+		await browser.driver.actions().mouseMove(target).perform();
+		await browser.driver.actions().mouseUp().perform();
+	}
 
 	/**
 	 * Returns true if a node has a given class.

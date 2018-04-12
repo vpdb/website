@@ -20,7 +20,6 @@
 import { browser } from 'protractor';
 import { company } from 'faker';
 import { Games } from '../../../../test/backend/Games';
-import { Releases } from '../../../../test/backend/Releases';
 import { Users } from '../../../../test/backend/Users';
 import { Game } from '../../../../test/models/Game';
 import { AppPage } from '../../../app.page';
@@ -33,24 +32,20 @@ describe('Add new release', () => {
 	const releaseAddPage = new ReleaseAddPage();
 	const games:Games = new Games(browser.params.vpdb);
 	const users:Users = new Users(browser.params.vpdb);
-	const releases:Releases = new Releases(browser.params.vpdb);
 	let game:Game;
 
 	beforeAll(async () => {
-		return users.authenticateOrCreateUser('rlsaddauthor')
-			.then(() => games.createGame())
-			.then((createdGame:Game) =>  {
-				game = createdGame;
-				releaseAddPage.get(game)
-			});
+		await users.authenticateOrCreateUser('rlsaddauthor');
+		const game = await games.createGame();
+		await releaseAddPage.get(game);
 	});
 
 	afterEach(async () => {
-		browser.executeScript('window.scrollTo(0,0);');
+		await browser.executeScript('window.scrollTo(0,0);');
 	});
 
 	afterAll(async () => {
-		appPage.logout();
+		await appPage.logout();
 	});
 
 	it('should display validation errors when no file uploaded', async () => {
@@ -98,7 +93,7 @@ describe('Add new release', () => {
 		await releaseAddPage.reset();
 	});
 
-	it('should be able to add an existing tag', async () => {
+	fit('should be able to add an existing tag', async () => {
 		await releaseAddPage.selectTag('HD');
 		expect(await releaseAddPage.hasAvailableTag('HD')).toBe(false);
 		expect(await releaseAddPage.hasSelectedTag('HD')).toBe(true);

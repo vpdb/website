@@ -338,9 +338,9 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 
 			// if it's an array, those area displayed below
 			if (scope.errors && scope.errors.versions && !isArray(scope.errors.versions[0].files)) {
-				scope.filesError = scope.errors.versions[0].files;
+				this.filesError = scope.errors.versions[0].files;
 			} else {
-				scope.filesError = null;
+				this.filesError = null;
 			}
 		}, (scope, response) => {
 

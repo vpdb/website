@@ -126,7 +126,8 @@ module.exports  = function(options) {
 						enforce: true
 					}
 				}
-			}
+			},
+			minimize: false
 		},
 		output: {
 			path: options.outputPath,

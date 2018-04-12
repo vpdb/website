@@ -34,8 +34,8 @@ export class ReleaseBasePage extends BasePage {
 	private addAuthorButton = element(by.id('add-author-btn'));
 	private availableTags = element(by.id('available-tags'));
 	private selectedTags = element(by.id('selected-tags'));
-	private tagsSelected = this.selectedTags.all(by.css('*[ng-repeat]'));
-	private tagsAvailable = this.availableTags.all(by.css('*[ng-repeat]'));
+	private tagsSelected = this.selectedTags.all(by.css('*[draggable-item]'));
+	private tagsAvailable = this.availableTags.all(by.css('*[draggable-item]'));
 	private addTagButton = element(by.id('add-tag-btn'));
 	private newLinkLabel = element(by.id('link-label'));
 	private newLinkUrl = element(by.id('link-url'));
@@ -50,7 +50,7 @@ export class ReleaseBasePage extends BasePage {
 
 	async uploadPlayfield(tableFileName:string, imageFileName:string) {
 		const panel = this.parentWithText('media', tableFileName, 'span', 'ng-scope');
-		const uploadPanel = panel
+		const uploadPanel = await panel
 			.all(by.className('playfield--image'))
 			.filter(el => el.getAttribute('id').then(id => id.startsWith('playfield-image')))
 			.first();
@@ -108,7 +108,7 @@ export class ReleaseBasePage extends BasePage {
 	}
 
 	async clearAuthors() {
-		this.authors.each(async author => {
+		await this.authors.each(async author => {
 			await browser.actions().mouseMove(author).perform();
 			const delButton = author.element(by.css('[ng-click="vm.removeAuthor(author)"]'));
 			await delButton.click();
@@ -142,7 +142,7 @@ export class ReleaseBasePage extends BasePage {
 
 	async selectTag(name:string) {
 		const tag = this.tagsAvailable.filter(el => el.getText().then(text => text === name)).first();
-		await browser.actions().dragAndDrop(tag, this.selectedTags).mouseUp().perform();
+		await this.dragAndDrop(tag, this.selectedTags);
 		await browser.wait(() => this.hasSelectedTag(name), 5000);
 	}
 
@@ -152,18 +152,16 @@ export class ReleaseBasePage extends BasePage {
 
 	async removeTagByDrag(name:string) {
 		const tag = this.findSelectedTag(name).first().element(by.className('badge'));
-		await browser.actions().dragAndDrop(tag, this.availableTags).mouseUp().perform();
+		await this.dragAndDrop(tag, this.availableTags);
 		await browser.wait(() => this.hasAvailableTag(name), 5000);
 	}
 
 	async hasAvailableTag(name:string) {
-		const els = await this.tagsAvailable.filter(el => el.getText().then(text => text === name));
-		return els.length === 1;
+		return (await this.tagsAvailable.filter(el => el.getText().then(text => text === name)).count()) === 1;
 	}
 
 	async hasSelectedTag(name:string) {
-		const els = await this.findSelectedTag(name);
-		return els.length === 1;
+		return (await this.findSelectedTag(name).count()) === 1;
 	}
 
 	private findSelectedTag(name:string): ElementArrayFinder {

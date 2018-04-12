@@ -32,6 +32,7 @@ export default class AppCtrl {
 	 * @param $state
 	 * @param $localStorage
 	 * @param $uibModal
+	 * @param $log
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {Config} Config
@@ -127,13 +128,13 @@ export default class AppCtrl {
 		}
 		if (this.BuildConfig.production && 'serviceWorker' in navigator && !this.serviceWorkerInstalled) {
 			this.$log.debug('Installing service worker.');
-			navigator.serviceWorker.register('/sw.js').then(function(reg) {
+			navigator.serviceWorker.register('/sw.js').then(reg => {
 				// updatefound is fired if service-worker.js changes.
-				reg.onupdatefound = function() {
+				reg.onupdatefound = () => {
 					// The updatefound event implies that reg.installing is set; see
 					// https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#service-worker-container-updatefound-event
 					let installingWorker = reg.installing;
-					installingWorker.onstatechange = function() {
+					installingWorker.onstatechange = () => {
 						switch (installingWorker.state) {
 							case 'installed':
 								if (navigator.serviceWorker.controller) {
@@ -155,8 +156,8 @@ export default class AppCtrl {
 						}
 					};
 				};
-			}).catch(function(e) {
-				this.$log.error('Error during service worker registration:', e);
+			}).catch(err => {
+				this.$log.error('Error during service worker registration:', err);
 			});
 		}
 		this.serviceWorkerInstalled = true;
