@@ -34,7 +34,7 @@ export class ReleaseBasePage extends BasePage {
 	private addAuthorButton = element(by.id('add-author-btn'));
 	private availableTags = element(by.id('available-tags'));
 	private selectedTags = element(by.id('selected-tags'));
-	private tagsSelected = this.selectedTags.all(by.css('*[draggable-item]'));
+	private tagsSelected = this.selectedTags.all(by.css('*[ng-repeat]'));
 	private tagsAvailable = this.availableTags.all(by.css('*[draggable-item]'));
 	private addTagButton = element(by.id('add-tag-btn'));
 	private newLinkLabel = element(by.id('link-label'));

@@ -36,7 +36,7 @@ describe('Add new release', () => {
 
 	beforeAll(async () => {
 		await users.authenticateOrCreateUser('rlsaddauthor');
-		const game = await games.createGame();
+		game = await games.createGame();
 		await releaseAddPage.get(game);
 	});
 
@@ -93,7 +93,7 @@ describe('Add new release', () => {
 		await releaseAddPage.reset();
 	});
 
-	fit('should be able to add an existing tag', async () => {
+	it('should be able to add an existing tag', async () => {
 		await releaseAddPage.selectTag('HD');
 		expect(await releaseAddPage.hasAvailableTag('HD')).toBe(false);
 		expect(await releaseAddPage.hasSelectedTag('HD')).toBe(true);

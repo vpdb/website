@@ -30,7 +30,7 @@ export class AuthorSelectModalPage extends BasePage {
 	private addedRoles = element.all(by.repeater('r in vm.roles'));
 
 	async search(name: string) {
-		this.searchBox.sendKeys(name);
+		await this.searchBox.sendKeys(name);
 	}
 
 	async hasSearchResults(): Promise<boolean> {

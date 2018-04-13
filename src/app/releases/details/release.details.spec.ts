@@ -49,7 +49,7 @@ describe('View details of a release', () => {
 		await browser.executeScript('window.scrollTo(0,0);');
 	});
 
-	describe('as anonymous', async () => {
+	describe('as anonymous', () => {
 
 		it('should show a 404 page for a pending release', async () => {
 			await releaseDetailsPage.get(pendingRelease);
