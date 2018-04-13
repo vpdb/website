@@ -66,6 +66,7 @@ export default function($parse, DraggableService) {
 				DraggableService.stopDrag(attrs['draggableItem'], element);
 				element.css('pointer-events', 'all');
 			});
+			draggie.on('dragMove', (event, pointer) => DraggableService.moveDrag(attrs['draggableItem'], pointer));
 		}
 	};
 }
