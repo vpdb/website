@@ -17,11 +17,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { ReleaseBasePage } from '../release.base.page';
 
 export class ReleaseEditVersionModalPage extends ReleaseBasePage {
 
+	private modalWindow = element(by.css('[uib-modal-window]'));
 	private changelog = element(by.id('changelog'));
 	private releaseDate = element(by.id('version-release-date'));
 	private releaseTime = element(by.id('version-release-time'));

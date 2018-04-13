@@ -56,6 +56,8 @@ describe('Edit an existing version of a release', () => {
 		await versionEditModal.clearCompatibility(tableFilename);
 		await versionEditModal.rotatePlayfieldImage(tableFilename);
 		await versionEditModal.submit();
+		await browser.waitForAngular();
+		await browser.sleep(1000); // FIXME
 		expect(await versionEditModal.hasCompatibilityValidationError(tableFilename)).toBeTruthy();
 		expect(await versionEditModal.hasPlayfieldImageValidationError(tableFilename)).toBeTruthy();
 		await versionEditModal.close();

@@ -53,9 +53,9 @@ export class EditorDirectivePage extends BasePage {
 	}
 
 	async togglePreview(): Promise<void> {
-		const mustToggle = this.isEditToggled();
+		const mustToggle = await this.isEditToggled();
 		if (mustToggle) {
-			this.previewTab.click();
+			await this.previewTab.click();
 		}
 	}
 
