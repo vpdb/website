@@ -26,11 +26,17 @@ jobs:
       - run: npm install
       - run: npm run build:prod
       - run:
-         name: "Checking Versions"
+         name: "Build Size"
          command: |
            mkdir buildsize
            cp dist/*.bundle-*.js buildsize
            cp dist/*.css buildsize
            npm --version
+      - run:
+         name: "Bundle Size"
+         command: |
+           npm install buildsize
+           bundlesize
+      -
       - store_artifacts:
           path: ./buildsize
