@@ -1,7 +1,6 @@
 /* eslint-disable */
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
-const join = require('path').join;
 
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
@@ -24,17 +23,15 @@ module.exports = function(options) {
 				}
 			}),
 
-			new WorkboxPlugin({
-				cacheId: 'vpdb',
-				globDirectory: options.outputPath,
-				globPatterns: ['**/*.{html,js,css,jpg,png,eot,svg,ttf,woff}', 'manifest.json'],
-				globIgnores: ['sprite.svg', '**/glyphicons-*'],
-				swDest: join(options.outputPath, 'sw.js'),
-				clientsClaim: true,
+			new WorkboxPlugin.GenerateSW({
+				swDest: 'sw.js',
+				importWorkboxFrom: 'local',
+				exclude: [ /^sprite\.svg/, /\.map$/, /ipdb-index\.json/ ],
 				skipWaiting: true,
-				dontCacheBustUrlsMatching: /-([0-9a-f]{12}|[0-9A-Za-z]{8})\./,
+				clientsClaim: true,
 				navigateFallback: options.websiteUrl + 'index.html',
 				ignoreUrlParametersMatching: [/^utm_/, /^_$/],
+				cacheId: 'vpdb',
 				runtimeCaching: [{
 					urlPattern: new RegExp('^' + regexEscape(options.apiUrl)),
 					handler: 'networkFirst',
@@ -50,7 +47,7 @@ module.exports = function(options) {
 					handler: 'cacheFirst',
 					options: {
 						cacheName: 'storage-cache',
-						cacheExpiration: {
+						expiration: {
 							maxAgeSeconds: 3600 * 24 * 7 // cache storage one week
 						}
 					}
@@ -59,7 +56,7 @@ module.exports = function(options) {
 					handler: 'cacheFirst',
 					options: {
 						cacheName: 'p-typekit-cache',
-						cacheExpiration: {
+						expiration: {
 							maxAgeSeconds: 3600 * 24 * 7 // one week
 						}
 					}
@@ -68,7 +65,7 @@ module.exports = function(options) {
 					handler: 'cacheFirst',
 					options: {
 						cacheName: 'use-typekit-cache',
-						cacheExpiration: {
+						expiration: {
 							maxAgeSeconds: 3600 * 24 * 7 // one week
 						},
 						cacheableResponse: {
