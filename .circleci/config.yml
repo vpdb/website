@@ -35,8 +35,7 @@ jobs:
       - run:
          name: "Bundle Size"
          command: |
-           npm install buildsize
-           bundlesize
-      -
+           npm install bundlesize
+           npx bundlesize
       - store_artifacts:
           path: ./buildsize
