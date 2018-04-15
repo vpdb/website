@@ -27,8 +27,6 @@ module.exports = function(options) {
 				swDest: 'sw.js',
 				importWorkboxFrom: 'local',
 				exclude: [ /^sprite\.svg/, /\.map$/, /ipdb-index\.json/ ],
-				skipWaiting: true,
-				clientsClaim: true,
 				navigateFallback: options.websiteUrl + 'index.html',
 				ignoreUrlParametersMatching: [/^utm_/, /^_$/],
 				cacheId: 'vpdb',
