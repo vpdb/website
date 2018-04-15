@@ -62,4 +62,4 @@ include ../template/_mixins
 		button.btn.btn-default.pull-left(ng-click="vm.edit(backglass)", ng-show="vm.AuthService.hasPermission('backglasses/update') || (vm.AuthService.isAuthor(vm.backglass) && vm.AuthService.hasPermission('backglasses/update-own'))")
 			+icon('edit').space-right
 			| Edit
-		button.btn.btn-primary(ng-click="vm.download(file)") Download
+		button.btn.btn-primary(ng-click="vm.download(vm.file)") Download
