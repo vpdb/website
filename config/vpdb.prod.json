@@ -18,7 +18,7 @@
 		"port": 443
 	},
 	"ga": {
-		"enabled": false,
+		"enabled": true,
 		"id": "UA-85212794-1"
 	},
 	"authProviders": {
