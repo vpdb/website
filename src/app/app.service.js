@@ -67,12 +67,6 @@ export default class App {
 
 		// download file on event
 		$rootScope.$on('downloadFile', (event, file) => $injector.get('DownloadService').downloadFile(file));
-
-		// hard-refresh when app updates
-		$rootScope.$on('appUpdated', () => {
-			console.log('Application updated, reloading.');
-			window.location.reload(true);
-		});
 	}
 
 	/**

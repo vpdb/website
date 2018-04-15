@@ -129,6 +129,7 @@ export default class AppCtrl {
 		if (this.BuildConfig.production && 'serviceWorker' in navigator && !this.serviceWorkerInstalled) {
 			this.$log.debug('Installing service worker.');
 			navigator.serviceWorker.register('/sw.js').then(reg => {
+				this.$log.debug('Service worker update found, pulling in changes...');
 				// updatefound is fired if service-worker.js changes.
 				reg.onupdatefound = () => {
 					// The updatefound event implies that reg.installing is set; see
@@ -142,11 +143,12 @@ export default class AppCtrl {
 									// have been added to the cache.
 									// It's the perfect time to display a "New content is available; please refresh."
 									// message in the page's interface.
-									this.$log.warn('New or updated content is available.');
+									this.$log.info('App updated, reloading.');
+									window.location.reload(true);
 								} else {
 									// At this point, everything has been precached.
 									// It's the perfect time to display a "Content is cached for offline use." message.
-									this.$log.info('Content is now available offline!');
+									this.$log.info('App is now available offline!');
 								}
 								break;
 
