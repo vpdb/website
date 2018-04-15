@@ -35,12 +35,10 @@ export default class MediumInfoModalCtrl {
 		this.medium = params.medium;
 		this.game = params.game;
 
-		if (this.medium.file.variations.full) {
-			this.shot = {
-				thumbUrl: App.img(this.medium.file, 'medium-2x'),
-				url: this.medium.file.variations.full ? App.img(this.medium.file, 'full') : undefined
-			};
-		}
+		this.shot = {
+			thumbUrl: App.img(this.medium.file, 'medium-2x'),
+			url: this.medium.file.variations.full ? App.img(this.medium.file, 'full') : undefined
+		};
 	}
 
 	download(file) {

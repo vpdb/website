@@ -5,7 +5,7 @@ include ../../template/_mixins
 
 		//-- IMAGE
 		//---------------------------------------------------------------------
-		a.a(ng-click="vm.Lightbox.openModal([vm.shot], 0)", ng-class="{ nopointer: !vm.shot.url }")
+		a.a(ng-click="vm.shot.url && vm.Lightbox.openModal([vm.shot], 0)", ng-class="{ nopointer: !vm.shot.url }")
 			img.img.img--rounded.loaded.padder-bottom.fullwidth(ng-src="{{ vm.shot.thumbUrl }}")
 
 		//-- STATS
