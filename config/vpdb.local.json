@@ -20,6 +20,9 @@
 	"ga": {
 		"enabled": false
 	},
+	"rum": {
+		"uptimia": null
+	},
 	"authProviders": {
 		"local": true,
 		"google": true,

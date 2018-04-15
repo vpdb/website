@@ -81,7 +81,7 @@ module.exports  = function(options) {
 				inject: false,
 				// see https://github.com/filamentgroup/loadCSS
 				loadCss: UglifyJS.minify(readFileSync('./node_modules/fg-loadcss/src/cssrelpreload.js').toString()).code,
-				ga: options.websiteConfig.ga,
+				config: options.websiteConfig,
 				preConnect: preConnect,
 				preLoad: preLoad
 			}),

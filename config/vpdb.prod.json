@@ -21,6 +21,9 @@
 		"enabled": true,
 		"id": "UA-85212794-1"
 	},
+	"rum": {
+		"uptimia": null
+	},
 	"authProviders": {
 		"local": true,
 		"google": false,
