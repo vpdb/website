@@ -169,7 +169,7 @@ export default class App {
 		this.$rootScope.downloadToken = token || '';
 		this.$rootScope.downloadBody = body || '';
 		this.$timeout(() => {
-			angular.element('#downloadForm').submit();
+			angular.element(document.getElementById('downloadForm')).submit();
 			if (callback) {
 				callback();
 			}
