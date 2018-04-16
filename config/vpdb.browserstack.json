@@ -1,4 +1,5 @@
 {
+	"name": "browserstack",
 	"authHeader": "Authorization",
 	"apiUri": {
 		"protocol": "http",
@@ -16,6 +17,9 @@
 		"protocol": "http",
 		"hostname": "localhost",
 		"port": 7357
+	},
+	"raygun": {
+		"enabled": false
 	},
 	"ga": {
 		"enabled": false

@@ -14,6 +14,7 @@ const srcContext = resolve(__dirname, '../src');
 const appContext = resolve(__dirname, '../src/app');
 const staticContext = resolve(__dirname, '../src/static');
 const iconsContext = resolve(__dirname, '../src/icons');
+const pkg = require('../package');
 
 module.exports  = function(options) {
 	const isProd = options.env === 'prod';
@@ -108,13 +109,9 @@ module.exports  = function(options) {
 				shorthands: true
 			}),
 
-			// new webpack.ProvidePlugin({
-			// 	'window.jQuery': 'jquery'
-			// }),
-
 			new webpack.DefinePlugin({
 				WEBSITE_CONFIG: JSON.stringify(options.websiteConfig),
-				BUILD_CONFIG: JSON.stringify({ revision: options.revision, production: isProd })
+				BUILD_CONFIG: JSON.stringify({ revision: options.revision, production: isProd, version: pkg.version })
 			}),
 		],
 		optimization: {

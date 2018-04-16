@@ -94,6 +94,16 @@ export default class AuthService {
 		}
 		this.saveToken(result.token);
 		this.saveUser(result.user);
+
+		if (this.Config.raygun && this.Config.raygun.enabled) {
+			// eslint-disable-next-line
+			rg4js('setUser', {
+				identifier: result.user.id,
+				isAnonymous: false,
+				email: result.user.email,
+				firstName: result.user.name
+			});
+		}
 	}
 
 	/**

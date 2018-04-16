@@ -41,7 +41,8 @@ export class GameRatingResource {
 	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/v1/games/:gameId/rating'), {}, {
-			'update': { method: 'PUT' }
+			get: { method: 'GET', noError: [ 404 ] },
+			update: { method: 'PUT' }
 		});
 	}
 }
@@ -53,7 +54,9 @@ export class GameStarResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/v1/games/:gameId/star'), {}, {});
+		return $resource(ConfigService.apiUri('/v1/games/:gameId/star'), {}, {
+			get: { method: 'GET', noError: [ 404 ] }
+		});
 	}
 }
 

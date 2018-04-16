@@ -22,5 +22,6 @@
  * @ngInject
  */
 export default function($httpProvider) {
-	$httpProvider.interceptors.push('AuthInterceptorService');
+	$httpProvider.interceptors.push('HttpGlobalInterceptor');
+	$httpProvider.interceptors.push('HttpAuthInterceptor');
 }

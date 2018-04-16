@@ -18,39 +18,34 @@
  */
 
 /**
- * A service which adds the bearer token to backend API requests.
+ * An interceptor which adds the bearer token to backend API requests.
  *
  * The logic is the following:
  *
- * 	- If the request is hitting the VPDB backend
- * 	   - If there is an auth token in local storage
- * 	     - Then add the token to the header
- * 	   - Elseif there is an (auto)login token in local storage
- * 	      - Then retrieve an auth token first and add it to the header
- * 	   - If there is currently an authentication request going on
- * 	     - Subscribe to it and add the token to the header on result
+ *    - If the request is hitting the VPDB backend
+ *       - If there is an auth token in local storage
+ *         - Then add the token to the header
+ *       - Elseif there is an (auto)login token in local storage
+ *          - Then retrieve an auth token first and add it to the header
+ *       - If there is currently an authentication request going on
+ *         - Subscribe to it and add the token to the header on result
  *
  * This interceptor also checks the `x-token-refresh` header and updates
  * the token accordingly.
  *
+ * @param $injector
+ * @param $log
+ * @param $q
+ * @param {ConfigService} ConfigService
+ * @ngInject
  * @see https://stackoverflow.com/questions/28638600/angularjs-http-interceptor-class-es6-loses-binding-to-this
  * @author freezy <freezy@vpdb.io>
  */
-export default class AuthInterceptorService {
+export default function($injector, $log, $q, ConfigService) {
 
-	/**
-	 * @param $injector
-	 * @param $log
-	 * @param $q
-	 * @param {ConfigService} ConfigService
-	 * @ngInject
-	 */
-	constructor($injector, $log, $q, ConfigService) {
+	return {
 
-		this.$log = $log;
-
-		// noinspection JSUnusedGlobalSymbols
-		this.request = (config) => {
+		request: config => {
 
 			return $q((resolve, reject) => {
 
@@ -65,7 +60,7 @@ export default class AuthInterceptorService {
 					// check for valid token
 					if (AuthService.hasToken()) {
 						config.headers[AuthService.getAuthHeader()] = 'Bearer ' + AuthService.getToken();
-						this.$log.debug('AuthInterceptor: Adding available auth token, resolving.');
+						$log.debug('AuthInterceptor: Adding available auth token, resolving.');
 						resolve(config);
 
 					// check for auto login token
@@ -73,7 +68,7 @@ export default class AuthInterceptorService {
 
 						// if already authenticating, don't do launch another request but wait for the other to finish
 						if (AuthService.isAuthenticating) {
-							this.$log.warn('AuthInterceptor: Got autologin token, but there already seems to be a request. Adding to callback.');
+							$log.warn('AuthInterceptor: Got autologin token, but there already seems to be a request. Adding to callback.');
 
 							// this will be executed when the other request finishes
 							AuthService.authCallbacks.push((err, result) => {
@@ -128,10 +123,10 @@ export default class AuthInterceptorService {
 					resolve(config);
 				}
 			});
-		};
+		},
 
-		// noinspection JSUnusedGlobalSymbols
-		this.response = (response) => {
+		response: response => {
+
 			if (response.status === 401 || response.status === 403) {
 				return response;
 			}
@@ -145,12 +140,12 @@ export default class AuthInterceptorService {
 				if (dirty > 0) {
 					// force user update
 					AuthService.tokenReceived(token);
-					this.$log.info(response.config.url + ' ' + response.status + ' Got dirty flag ' + response.headers('x-user-dirty') + ', updating local user (' + token + ')');
+					$log.info(response.config.url + ' ' + response.status + ' Got dirty flag ' + response.headers('x-user-dirty') + ', updating local user (' + token + ')');
 				} else {
 					AuthService.tokenUpdated(token);
 				}
 			}
 			return response;
-		};
-	}
+		}
+	};
 }

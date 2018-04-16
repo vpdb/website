@@ -48,8 +48,6 @@ import { TagResource } from './backend/tag.resource';
 import ApiHelper from './backend/apihelper.service';
 import AuthCallbackCtrl from './auth/auth.callback.ctrl';
 import AuthService from './auth/auth.service';
-import AuthInterceptorService from './auth/auth.interceptor.service';
-import AuthInterceptorConfig from './auth/auth.interceptor.config';
 import BootstrapPatcher from './util/bootstrap.patcher';
 import ConfigService from './config/config.service';
 import DownloadService from './backend/download.service';
@@ -59,6 +57,7 @@ import Flavors from './config/flavors.constant';
 import GameSystems from './games/game.systems.constant';
 import GameSelectModalCtrl from './games/game.select.modal.ctrl';
 import GameRequestModalCtrl from './games/game.request.modal.ctrl';
+
 import LoginModalCtrl from './auth/login.modal.ctrl';
 import LoginService from './auth/login.service';
 import ModalCtrl from './modal/modal.ctrl';
@@ -82,6 +81,9 @@ import focusOn from './util/focus-on.directive';
 import hashPrefixFilter from './util/hash-prefix.filter';
 import heightAnimation from './animation/height.animation';
 import hexFilter from './util/hex.filter';
+import httpAuthInterceptor from './backend/http.auth.interceptor';
+import httpGlobalInterceptor from './backend/http.global.interceptor';
+import httpInterceptorConfig from './backend/http.interceptor.config';
 import { BackgroundImageDirective } from './image/img-bg.directive';
 import imgSrc from './image/img-src.directive';
 import jsonLd from './util/json-ld.directive';
@@ -90,8 +92,9 @@ import makeLoaded from './image/make-loaded.directive';
 import sort from './util/sort.directive';
 import ratingFormatFilter from './games/rating.format.filter';
 import userInfo from './user/user.info.directive';
-import globalInterceptorConfig from './backend/global.interceptor.config';
-import globalInterceptor from './backend/global.interceptor';
+
+
+
 
 /**
  * These are global components that are or can be used on any page,
@@ -108,12 +111,10 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 
 	// auth
 	.service('AuthService', AuthService)
-	.service('AuthInterceptorService', AuthInterceptorService)
 	.service('LoginService', LoginService)
 	.controller('AuthCallbackCtrl', AuthCallbackCtrl)
 	.controller('LoginModalCtrl', LoginModalCtrl)
 	.controller('EmailConfirmationCtrl', EmailConfirmationCtrl)
-	.config(AuthInterceptorConfig)
 
 	// backend
 	.service('ApiHelper', ApiHelper)
@@ -149,8 +150,9 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.service('UserResource', UserResource)
 	.service('UserConfirmationResource', UserConfirmationResource)
 	.service('UserStarResource', UserStarResource)
-	.factory('GlobalInterceptor', globalInterceptor)
-	.config(globalInterceptorConfig)
+	.factory('HttpAuthInterceptor', httpAuthInterceptor)
+	.factory('HttpGlobalInterceptor', httpGlobalInterceptor)
+	.config(httpInterceptorConfig)
 
 	// config
 	.service('ConfigService', ConfigService)

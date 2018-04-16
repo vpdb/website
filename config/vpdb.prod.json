@@ -1,4 +1,5 @@
 {
+	"name": "production",
 	"authHeader": "Authorization",
 	"apiUri": {
 		"protocol": "https",
@@ -16,6 +17,11 @@
 		"protocol": "https",
 		"hostname": "vpdb.io",
 		"port": 443
+	},
+	"raygun": {
+		"enabled": true,
+		"apiKey": "Q9/FOsioZStDU+9puDyj3g==",
+		"enableCrashReporting": true
 	},
 	"ga": {
 		"enabled": true,

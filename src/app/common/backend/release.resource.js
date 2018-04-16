@@ -51,6 +51,7 @@ export class ReleaseRatingResource {
 	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/v1/releases/:releaseId/rating'), {}, {
+			get: { method: 'GET', noError: [ 404 ] },
 			update: { method: 'PUT' }
 		});
 	}

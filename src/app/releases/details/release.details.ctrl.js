@@ -96,9 +96,7 @@ export default class ReleaseDetailsCtrl {
 
 		// ratings
 		if (this.AuthService.hasPermission('releases/rate')) {
-			this.ReleaseRatingResource.get({ releaseId: this.releaseId }).$promise.then(rating => {
-				this.releaseRating = rating.value;
-			}, $log.error);
+			this.ReleaseRatingResource.get({ releaseId: this.releaseId }, data => this.releaseRating = data.value);
 		}
 
 		this.fetchData();

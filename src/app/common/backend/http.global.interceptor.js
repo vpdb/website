@@ -18,23 +18,55 @@
  */
 
 /**
- * @param $rootScope
  * @param $q
+ * @param {Config} Config
  * @param {NetworkService} NetworkService
  * @return {{response: response}}
  * @ngInject
  */
-export default function($rootScope, $q, NetworkService) {
+export default function($q, Config, NetworkService) {
 	return {
-		request: function(config) {
+		request: config => {
 			NetworkService.onRequestStarted(config.url);
 			return config || $q.when(config);
 		},
-		response: function(response) {
+		response: response => {
 			NetworkService.onRequestFinished(response.config.url);
 			return response || $q.when(response);
 		},
+		requestError: rejection => {
+			if (Config.raygun && Config.raygun.enabled) {
+				// eslint-disable-next-line
+				rg4js('send', { error: new Error('Failed $http request', rejection) } );
+			}
+			return $q.reject(rejection);
+		},
 		responseError: function(response) {
+
+			// sometimes we expect non 2xx codes and we stil want to resolve.
+			if (response.config.noError && response.config.noError.includes(response.status)) {
+				return $q.resolve(response);
+			}
+
+			if (Config.raygun && Config.raygun.enabled) {
+				// eslint-disable-next-line
+				rg4js('send', {
+					error: new Error(response.config.method + ' ' + response.config.url, response),
+					tags: [ 'api' ],
+					customData: {
+						request: {
+							method: response.config.method,
+							url: response.config.url,
+							headers: response.config.headers,
+							data: response.config.data
+						},
+						response: {
+							status: response.status + ' ' + response.statusText,
+							data: response.data
+						}
+					}
+				});
+			}
 			NetworkService.onRequestFinished(response.config.url);
 			return $q.reject(response);
 		}

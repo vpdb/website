@@ -189,14 +189,12 @@ export default class GameDetailsCtrl {
 
 		// RATINGS
 		if (this.AuthService.hasPermission('games/rate')) {
-			this.GameRatingResource.get({gameId: this.gameId}).$promise.then(result => {
-				this.userGameRating = result.value;
-			}, console.error);
+			this.GameRatingResource.get({ gameId: this.gameId }, data => this.userGameRating = data.value);
 		}
 
 		// STARS
 		if (this.AuthService.hasPermission('games/star')) {
-			this.GameStarResource.get({ gameId: this.gameId }).$promise.then(() => this.gameStarred = true, () => this.gameStarred = false);
+			this.GameStarResource.get({ gameId: this.gameId }, data => this.gameStarred = !data.error);
 		}
 	}
 
