@@ -23,7 +23,7 @@ module.exports  = function(options) {
 
 	// pre-connect to api and storage on every page
 	if (options.websiteConfig.webUri.hostname !== options.websiteConfig.apiUri.hostname || options.websiteConfig.webUri.port !== options.websiteConfig.apiUri.port) {
-		preConnect.push(options.websiteConfig.apiUri.protocol + '://' + options.websiteConfig.storageUri.hostname + ([80, 443].includes(options.websiteConfig.storageUri.port) ? '' : ':' + options.websiteConfig.storageUri.port))
+		preConnect.push(options.websiteConfig.apiUri.protocol + '://' + options.websiteConfig.apiUri.hostname + ([80, 443].includes(options.websiteConfig.apiUri.port) ? '' : ':' + options.websiteConfig.apiUri.port))
 	}
 	if ((options.websiteConfig.webUri.hostname !== options.websiteConfig.storageUri.hostname || options.websiteConfig.webUri.port !== options.websiteConfig.storageUri.port) &&
 		(options.websiteConfig.apiUri.hostname !== options.websiteConfig.storageUri.hostname || options.websiteConfig.apiUri.port !== options.websiteConfig.storageUri.port)) {
@@ -90,8 +90,7 @@ module.exports  = function(options) {
 			new PreloadWebpackPlugin({
 				rel: 'preload',
 				include: 'allAssets',
-				// this leaves *.woff and background_blurred*.jpg
-				fileBlacklist: [ /^((?!((app|vendor)\.bundle-[a-f0-9]{12}\.js|background_blurred-[0-9a-zA-Z]{8}\.jpg|\.woff)).)*$/, /\.map$/ ],
+				fileWhitelist: [ /^(app|vendor)\.bundle-[a-f0-9]{12}\.js/, /background_blurred-[0-9a-zA-Z]{8}\.jpg/, /langdon.*?\.woff$/ ],
 				as(entry) {
 					if (/\.woff$/.test(entry)) return 'font';
 					if (/\.jpg/.test(entry)) return 'image';
