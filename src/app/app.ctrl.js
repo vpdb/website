@@ -127,7 +127,7 @@ export default class AppCtrl {
 			this.$log.warn('Not installing service worker in unsupported browser.');
 		}
 		if (this.BuildConfig.production && 'serviceWorker' in navigator && !this.serviceWorkerInstalled) {
-			this.$log.debug('Installing service worker.');
+			this.$log.debug('Registering service worker.');
 			navigator.serviceWorker.register('/sw.js').then(reg => {
 				// updatefound is fired if service-worker.js changes.
 				reg.onupdatefound = () => {
@@ -137,21 +137,24 @@ export default class AppCtrl {
 					let installingWorker = reg.installing;
 					installingWorker.onstatechange = () => {
 						switch (installingWorker.state) {
+							case 'installing':
+								this.$log.info('Installing service worker...');
+								break;
 							case 'installed':
 								if (navigator.serviceWorker.controller) {
-									// At this point, the old content will have been purged and the fresh content will
-									// have been added to the cache.
-									// It's the perfect time to display a "New content is available; please refresh."
-									// message in the page's interface.
-									this.$log.info('App updated, reloading.');
-									window.location.reload(true);
+									this.$log.info('Service worker installed.');
 								} else {
 									// At this point, everything has been precached.
 									// It's the perfect time to display a "Content is cached for offline use." message.
 									this.$log.info('App is now available offline!');
 								}
 								break;
-
+							case 'activating':
+								this.$log.info('Service worker activating...');
+								break;
+							case 'activated':
+								this.$log.info('Service worker activated.');
+								break;
 							case 'redundant':
 								this.$log.info('The installing service worker became redundant.');
 								break;
