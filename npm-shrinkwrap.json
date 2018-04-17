@@ -956,14 +956,14 @@
 			"dev": true
 		},
 		"angular": {
-			"version": "1.6.9",
-			"resolved": "https://registry.npmjs.org/angular/-/angular-1.6.9.tgz",
-			"integrity": "sha512-6igWH2GIsxV+J38wNWCh8oyjaZsrIPIDO35twloIUyjlF2Yit6UyLAWujHP05ma/LFxTsx4NtYibRoMNBXPR1A=="
+			"version": "1.6.10",
+			"resolved": "https://registry.npmjs.org/angular/-/angular-1.6.10.tgz",
+			"integrity": "sha512-PCZ5/hVdvPQiYyH0VwsPjrErPHRcITnaXxhksceOXgtJeesKHLA7KDu4X/yvcAi+1zdGgGF+9pDxkJvghXI9Wg=="
 		},
 		"angular-animate": {
-			"version": "1.6.9",
-			"resolved": "https://registry.npmjs.org/angular-animate/-/angular-animate-1.6.9.tgz",
-			"integrity": "sha512-3/fqrmT6mJgB2O6oDvXDlNP6AJVqUXLWZq/P87Xo7Wt0JjcSmhJSQ02Yp7gm0Pkd5SXMKHICLpn/iEJPyse9fg=="
+			"version": "1.6.10",
+			"resolved": "https://registry.npmjs.org/angular-animate/-/angular-animate-1.6.10.tgz",
+			"integrity": "sha512-RU9ZJbTspq0W0x675H5k1DeSgKbAFfp2aiYoNGdlD+wQNKvwwMR5ho+EkDKkx9zE02a5goe8Z6EhhYPQSff9dA=="
 		},
 		"angular-bootstrap-lightbox": {
 			"version": "0.12.0",
@@ -975,7 +975,7 @@
 			"resolved": "https://registry.npmjs.org/angular-elastic/-/angular-elastic-2.5.1.tgz",
 			"integrity": "sha1-6TirG9jHZBW4ymUUsV/jWTpd9TU=",
 			"requires": {
-				"angular": "1.6.9"
+				"angular": "1.6.10"
 			}
 		},
 		"angular-gravatar": {
@@ -983,31 +983,31 @@
 			"resolved": "https://registry.npmjs.org/angular-gravatar/-/angular-gravatar-0.4.2.tgz",
 			"integrity": "sha1-kfChhgCx4WuTjZR0dKiJBTrDP5c=",
 			"requires": {
-				"angular": "1.6.9"
+				"angular": "1.6.10"
 			}
 		},
 		"angular-resource": {
-			"version": "1.6.9",
-			"resolved": "https://registry.npmjs.org/angular-resource/-/angular-resource-1.6.9.tgz",
-			"integrity": "sha512-RNGjhQWGVz5EB1Z1miQNkpwhp2htcBgKRMxeXtNUZf53O1AxwrPy9HajDXi2Lub+tO72TPQOy4HOMW4xmGXz6g=="
+			"version": "1.6.10",
+			"resolved": "https://registry.npmjs.org/angular-resource/-/angular-resource-1.6.10.tgz",
+			"integrity": "sha512-jrYXUGPtpv/lTBlYZ6HZefIV6Lb+6e1HUavBPg9TSzW7s4zYRBWzMj6vMg8gZzVjWdH/nYBWfilV0qfnmZSI+A=="
 		},
 		"angular-sanitize": {
-			"version": "1.6.9",
-			"resolved": "https://registry.npmjs.org/angular-sanitize/-/angular-sanitize-1.6.9.tgz",
-			"integrity": "sha512-zWGQHWvmftkPTR0s6RCF9gx/pezR1V0swcVrkimMyBW3eK3ly7inG5BDDSt2oGExhWufV2VfnIv01T+tBUckNg=="
+			"version": "1.6.10",
+			"resolved": "https://registry.npmjs.org/angular-sanitize/-/angular-sanitize-1.6.10.tgz",
+			"integrity": "sha512-01i1Xoq9ykUrsoYQMSB6dWZmPp9Df5hfCqMAGGzJBWZ7L2WY0OtUphdI0YvR8ZF9lAsWtGNtsEFilObjq5nTgQ=="
 		},
 		"angular-timeago": {
 			"version": "0.4.6",
 			"resolved": "https://registry.npmjs.org/angular-timeago/-/angular-timeago-0.4.6.tgz",
 			"integrity": "sha512-7XaRPNDOYn8+6ZhT/CUugGXsxzqZ5FqOwvamgf1D0A53sdEyRxG0qAL5rDhpaXamk3QxHARygcavf+tdUOF1/A==",
 			"requires": {
-				"angular": "1.6.9"
+				"angular": "1.6.10"
 			}
 		},
 		"angular-touch": {
-			"version": "1.6.9",
-			"resolved": "https://registry.npmjs.org/angular-touch/-/angular-touch-1.6.9.tgz",
-			"integrity": "sha512-/JWk/NZ52pD85A3yvp2EaLfYHXqVaEwV0m78aq74GReokwV/reWv8JjYcmhO0dBQnsRwa7o06gVfMYgrtnBVJA=="
+			"version": "1.6.10",
+			"resolved": "https://registry.npmjs.org/angular-touch/-/angular-touch-1.6.10.tgz",
+			"integrity": "sha512-ZblW46aN5s7OOihpXDa0qzrJXdaVGE44jc+a8e1NpOjhCKZDQze+nBHh3xw3toAF1BIfDJIkRstadk4h2R/uLg=="
 		},
 		"angular-ui-bootstrap": {
 			"version": "2.5.6",
@@ -9115,11 +9115,6 @@
 			"resolved": "https://registry.npmjs.org/macaddress/-/macaddress-0.2.8.tgz",
 			"integrity": "sha1-WQTcU3w57G2+/q6QIycTX6hRHxI=",
 			"dev": true
-		},
-		"magnific-popup": {
-			"version": "1.1.0",
-			"resolved": "https://registry.npmjs.org/magnific-popup/-/magnific-popup-1.1.0.tgz",
-			"integrity": "sha1-PnNixb0Y9nhf6Z5Z0BPiCvM9MEk="
 		},
 		"make-dir": {
 			"version": "1.2.0",
