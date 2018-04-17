@@ -60,7 +60,7 @@ export default function($injector, $log, $q, ConfigService) {
 					// check for valid token
 					if (AuthService.hasToken()) {
 						config.headers[AuthService.getAuthHeader()] = 'Bearer ' + AuthService.getToken();
-						$log.debug('AuthInterceptor: Adding available auth token, resolving.');
+						//$log.debug('AuthInterceptor: Adding available auth token, resolving.');
 						resolve(config);
 
 					// check for auto login token
