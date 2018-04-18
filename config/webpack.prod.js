@@ -26,7 +26,7 @@ module.exports = function(options) {
 			new WorkboxPlugin.GenerateSW({
 				swDest: 'sw.js',
 				importWorkboxFrom: 'local',
-				exclude: [ /^sprite\.svg/, /\.map$/, /ipdb-index\.json/ ],
+				exclude: [ /^sprite\.svg/, /\.map$/, /ipdb-index\.json/, /robots\.txt/, /^favicon\// ],
 				navigateFallback: options.websiteUrl + 'index.html',
 				ignoreUrlParametersMatching: [/^utm_/, /^_$/],
 				cacheId: 'vpdb',
