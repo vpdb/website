@@ -25,7 +25,7 @@ const raygunConfig = WEBSITE_CONFIG.raygun;
 // eslint-disable-next-line
 if (raygunConfig && raygunConfig.enabled) {
 	// eslint-disable-next-line
-	rg4js('apiKey', 'Q9/FOsioZStDU+9puDyj3g==');
+	rg4js('apiKey', raygunConfig.apiKey);
 	// eslint-disable-next-line
 	rg4js('enableCrashReporting', true);
 	// eslint-disable-next-line
