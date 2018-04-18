@@ -40,7 +40,7 @@ export default class AppCtrl {
 	 * @ngInject
 	 */
 	constructor($rootScope, $state, $localStorage, $uibModal, $log, App, AuthService, Config, BuildConfig) {
-		this.waitCoolDown = 2000;
+		this.waitCoolDown = 500;
 
 		this.$rootScope = $rootScope;
 		this.$state = $state;

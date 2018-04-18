@@ -30,6 +30,8 @@ module.exports = function(options) {
 				navigateFallback: options.websiteUrl + 'index.html',
 				ignoreUrlParametersMatching: [/^utm_/, /^_$/],
 				cacheId: 'vpdb',
+				clientsClaim: true, // first install: take control of *uncontrolled* immediately
+				skipWaiting: false, // update: wait for browser to close all tabs before activating
 				runtimeCaching: [{
 					urlPattern: new RegExp('^' + regexEscape(options.apiUrl)),
 					handler: 'networkFirst',
