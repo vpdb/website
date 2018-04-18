@@ -44,7 +44,7 @@ module.exports = function(options) {
 					}
 				}, {
 					urlPattern: new RegExp('^' + regexEscape(options.storageUrl)),
-					handler: 'cacheFirst',
+					handler: 'staleWhileRevalidate',
 					options: {
 						cacheName: 'storage-cache',
 						expiration: {
@@ -52,8 +52,8 @@ module.exports = function(options) {
 						}
 					}
 				}, {
-					urlPattern: /https?:\/\/p\.typekit\.net/,
-					handler: 'cacheFirst',
+					urlPattern: /^https?:\/\/p\.typekit\.net/,
+					handler: 'staleWhileRevalidate',
 					options: {
 						cacheName: 'p-typekit-cache',
 						expiration: {
@@ -61,8 +61,8 @@ module.exports = function(options) {
 						}
 					}
 				}, {
-					urlPattern: /https?:\/\/use\.typekit\.net/,
-					handler: 'cacheFirst',
+					urlPattern: /^https?:\/\/use\.typekit\.net/,
+					handler: 'staleWhileRevalidate',
 					options: {
 						cacheName: 'use-typekit-cache',
 						expiration: {
@@ -72,8 +72,17 @@ module.exports = function(options) {
 							statuses: [200, 307],
 						},
 					}
+				}, {
+					urlPattern: new RegExp('^(' + [ 'https://www.google-analytics.com/analytics.js', 'https://cdn.raygun.io/raygun4js/raygun.min.js', 'https://cdn.uptimia.com/rum.min.js' ].map(regexEscape).join('|') + ')$'),
+					handler: 'staleWhileRevalidate',
+					options: {
+						cacheName: 'analytics-cache',
+						expiration: {
+							maxAgeSeconds: 3600 * 24 * 7 // one week
+						}
+					}
 				}]
-			})
+		})
 		],
 
 		output: {
