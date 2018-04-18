@@ -52,15 +52,16 @@ module.exports = function(options) {
 						}
 					}
 				}, {
-					urlPattern: /^https?:\/\/p\.typekit\.net/,
-					handler: 'staleWhileRevalidate',
-					options: {
-						cacheName: 'p-typekit-cache',
-						expiration: {
-							maxAgeSeconds: 3600 * 24 * 7 // one week
-						}
-					}
-				}, {
+				// need to ignore the "_" url parameter in order for this to be of any use
+				// 	urlPattern: /^https?:\/\/p\.typekit\.net/,
+				// 	handler: 'staleWhileRevalidate',
+				// 	options: {
+				// 		cacheName: 'p-typekit-cache',
+				// 		expiration: {
+				// 			maxAgeSeconds: 3600 * 24 * 7 // one week
+				// 		}
+				// 	}
+				// }, {
 					urlPattern: /^https?:\/\/use\.typekit\.net/,
 					handler: 'staleWhileRevalidate',
 					options: {
