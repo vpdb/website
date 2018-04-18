@@ -99,6 +99,12 @@ module.exports  = function(options) {
 				}
 			}),
 
+			new PreloadWebpackPlugin({
+				rel: 'prefetch',
+				include: 'asyncChunks',
+				fileBlacklist: [ /^(app|vendor)\.bundle-[a-f0-9]{12}\.js/, /\.map$/ ],
+			}),
+
 			new SpriteLoaderPlugin({
 				plainSprite: true
 			}),
