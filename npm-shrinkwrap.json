@@ -10665,9 +10665,9 @@
 			"dev": true
 		},
 		"pngjs": {
-			"version": "3.3.2",
-			"resolved": "https://registry.npmjs.org/pngjs/-/pngjs-3.3.2.tgz",
-			"integrity": "sha512-bVNd3LMXRzdo6s4ehr4XW2wFMu9cb40nPgHEjSSppm8/++Xc+g0b2QQb+SeDesgfANXbjydOr1or9YQ+pcCZPQ==",
+			"version": "3.3.3",
+			"resolved": "https://registry.npmjs.org/pngjs/-/pngjs-3.3.3.tgz",
+			"integrity": "sha512-1n3Z4p3IOxArEs1VRXnZ/RXdfEniAUS9jb68g58FIXMNkPJeZd+Qh4Uq7/e0LVxAQGos1eIUrqrt4FpjdnEd+Q==",
 			"dev": true
 		},
 		"portfinder": {
