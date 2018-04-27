@@ -23,6 +23,11 @@
 		"apiKey": "Q9/FOsioZStDU+9puDyj3g==",
 		"enableCrashReporting": true
 	},
+	"rollbar": {
+		"enabled": true,
+		"accessToken": "6c5229f3541d4d9585657a13716ec98c",
+		"environment": "production"
+	},
 	"ga": {
 		"enabled": true,
 		"id": "UA-85212794-1"

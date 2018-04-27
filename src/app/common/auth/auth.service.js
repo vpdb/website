@@ -95,9 +95,19 @@ export default class AuthService {
 		this.saveToken(result.token);
 		this.saveUser(result.user);
 
+		if (this.Config.rollbar && this.Config.rollbar.enabled) {
+			this.$window.Rollbar.configure({
+				payload: {
+					person: {
+						id: result.user.id,
+						username: result.user.name,
+						email: result.user.email
+					}
+				}
+			});
+		}
 		if (this.Config.raygun && this.Config.raygun.enabled) {
-			// eslint-disable-next-line
-			rg4js('setUser', {
+			this.$window.rg4js('setUser', {
 				identifier: result.user.id,
 				isAnonymous: false,
 				email: result.user.email,

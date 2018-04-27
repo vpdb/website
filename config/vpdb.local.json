@@ -23,6 +23,11 @@
 		"apiKey": "Q9/FOsioZStDU+9puDyj3g==",
 		"enableCrashReporting": true
 	},
+	"rollbar": {
+		"enabled": false,
+		"accessToken": "",
+		"environment": "local"
+	},
 	"ga": {
 		"enabled": false
 	},
@@ -45,6 +50,12 @@
 				"name": "Invision",
 				"icon": "offline",
 				"url": "/auth/ips43"
+			},
+			{
+				"id": "ips43-old",
+				"name": "4.3 and plugin",
+				"icon": "gameex",
+				"url": "/auth/ips43-old"
 			}
 		]
 	},

@@ -24,7 +24,7 @@
  * @return {{response: response}}
  * @ngInject
  */
-export default function($q, Config, NetworkService) {
+export default function($q, $window, Config, NetworkService) {
 	return {
 		request: config => {
 			NetworkService.onRequestStarted(config.url);
@@ -35,36 +35,42 @@ export default function($q, Config, NetworkService) {
 			return response || $q.when(response);
 		},
 		requestError: rejection => {
+			if (Config.rollbar && Config.rollbar.enabled) {
+				$window.Rollbar.error(Error('Failed $http request'), rejection);
+			}
 			if (Config.raygun && Config.raygun.enabled) {
-				// eslint-disable-next-line
-				rg4js('send', { error: new Error('Failed $http request', rejection) } );
+				$window.rg4js('send', { error: new Error('Failed $http request', rejection) } );
 			}
 			return $q.reject(rejection);
 		},
+
 		responseError: function(response) {
 
 			// sometimes we expect non 2xx codes and we stil want to resolve.
 			if (response.config.noError && response.config.noError.includes(response.status)) {
 				return $q.resolve(response);
 			}
-
+			const data = {
+				request: {
+					method: response.config.method,
+					url: response.config.url,
+					headers: response.config.headers,
+					data: response.config.data
+				},
+				response: {
+					status: response.status + ' ' + response.statusText,
+					data: response.data
+				}
+			};
+			const message = response.config.method + ' ' + response.config.url;
+			if (Config.rollbar && Config.rollbar.enabled) {
+				$window.Rollbar.error(Error(message), data);
+			}
 			if (Config.raygun && Config.raygun.enabled) {
-				// eslint-disable-next-line
-				rg4js('send', {
-					error: new Error(response.config.method + ' ' + response.config.url, response),
+				$window.rg4js('send', {
+					error: new Error(message, response),
 					tags: [ 'api' ],
-					customData: {
-						request: {
-							method: response.config.method,
-							url: response.config.url,
-							headers: response.config.headers,
-							data: response.config.data
-						},
-						response: {
-							status: response.status + ' ' + response.statusText,
-							data: response.data
-						}
-					}
+					customData: data
 				});
 			}
 			NetworkService.onRequestFinished(response.config.url);

@@ -21,6 +21,11 @@
 	"raygun": {
 		"enabled": false
 	},
+	"rollbar": {
+		"enabled": false,
+		"accessToken": "",
+		"environment": "test"
+	},
 	"ga": {
 		"enabled": false
 	},
