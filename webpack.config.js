@@ -9,6 +9,9 @@ if (!fs.existsSync(config)) {
 const websiteConfig = require(process.env.WEBSITE_CONFIG && fs.existsSync(process.env.WEBSITE_CONFIG)
 	? process.env.WEBSITE_CONFIG
 	: './config/vpdb.' + process.env.CONFIG + '.json');
+const buildConfig = require(process.env.BUILD_CONFIG && fs.existsSync(process.env.BUILD_CONFIG)
+	? process.env.BUILD_CONFIG
+	: './config/vpdb.prod.json');
 const outputPath = path.resolve(__dirname, 'dist');
 
 module.exports = require(config)({
@@ -18,6 +21,7 @@ module.exports = require(config)({
 	apiUrl: getUrl(websiteConfig.apiUri),
 	storageUrl: getUrl(websiteConfig.storageUri),
 	websiteConfig: websiteConfig,
+	buildConfig: buildConfig,
 	revision: getRevision()
 });
 

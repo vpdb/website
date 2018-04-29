@@ -23,7 +23,7 @@ repo_checkout_branch ${DIRNAME} ${BRANCH}
 
 # 2. install node packages
 npm_install_copy ${DIRNAME}
-npm_build ${DIRNAME} prod /var/www/website/staging/config.json
+npm_build ${DIRNAME} prod /var/www/website/staging/config.json /var/www/website/staging/build.json
 
 # 3. change symlink
 repo_link ${DIRNAME}

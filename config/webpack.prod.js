@@ -85,11 +85,12 @@ module.exports = function(options) {
 		})
 	];
 
-	if (options.websiteConfig.rollbar.enabled) {
+	if (options.websiteConfig.rollbar.enabled && options.buildConfig.rollbar.serverAccessToken) {
 		plugins.push(new RollbarSourceMapPlugin({
-			accessToken: options.websiteConfig.rollbar.accessToken,
+			accessToken: options.buildConfig.rollbar.serverAccessToken,
 			version: options.revision.hash,
-			publicPath: options.websiteUrl
+			publicPath: options.websiteUrl,
+			silent: false,
 		}));
 	}
 

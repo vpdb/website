@@ -97,7 +97,7 @@ npm_install_copy() {
 npm_build() {
 	echo Building...
 	cd ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
-	WEBSITE_CONFIG=$3 npm run build:$2
+	WEBSITE_CONFIG=$3 BUILD_CONFIG=$4 npm run build:$2
 	test $? -eq 0 || abort $1 "Failed to run npm install. Manually fix and relaunch deployment.".
 }
 
