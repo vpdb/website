@@ -74,6 +74,7 @@ import bytesFilter from './util/bytes.filter';
 import collapseInAnimation from './animation/collapse-in.animation';
 import gameTypeFilter from './games/game.type.filter';
 import escapeFilter from './util/escape.filter';
+import exceptionHandler from './util/exception-handler';
 import fallbackIcon from './util/fallback-icon.directive';
 import fileExtFilter from './util/file-ext.filter';
 import filterArray from './util/filter-array.directive';
@@ -92,8 +93,6 @@ import makeLoaded from './image/make-loaded.directive';
 import sort from './util/sort.directive';
 import ratingFormatFilter from './games/rating.format.filter';
 import userInfo from './user/user.info.directive';
-
-
 
 
 /**
@@ -152,6 +151,7 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.service('UserStarResource', UserStarResource)
 	.factory('HttpAuthInterceptor', httpAuthInterceptor)
 	.factory('HttpGlobalInterceptor', httpGlobalInterceptor)
+	.factory('$exceptionHandler', exceptionHandler)
 	.config(httpInterceptorConfig)
 
 	// config

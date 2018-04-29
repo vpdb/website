@@ -36,7 +36,7 @@ export default function($q, $window, Config, NetworkService) {
 		},
 		requestError: rejection => {
 			if (Config.rollbar && Config.rollbar.enabled) {
-				$window.Rollbar.error(Error('Failed $http request'), rejection);
+				$window.Rollbar.error('Failed $http request', rejection);
 			}
 			if (Config.raygun && Config.raygun.enabled) {
 				$window.rg4js('send', { error: new Error('Failed $http request', rejection) } );
@@ -64,7 +64,7 @@ export default function($q, $window, Config, NetworkService) {
 			};
 			const message = response.config.method + ' ' + response.config.url;
 			if (Config.rollbar && Config.rollbar.enabled) {
-				$window.Rollbar.error(Error(message), data);
+				$window.Rollbar.error(message, data);
 			}
 			if (Config.raygun && Config.raygun.enabled) {
 				$window.rg4js('send', {
