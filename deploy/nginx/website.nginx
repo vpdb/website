@@ -44,7 +44,7 @@ server {
 	more_set_headers "X-XSS-Protection: 1; mode=block";
 
 	# more: http://www.html5rocks.com/en/tutorials/security/content-security-policy/#inline-code-considered-harmful
-	more_set_headers "Content-Security-Policy: default-src 'self' *.vpdb.io *.typekit.net *.google-analytics.com *.netdna-ssl.com api.raygun.io cdn.raygun.io cdn.uptimia.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' ssl.google-analytics.com use.typekit.net cdn.uptimia.com cdn.raygun.io; img-src * data:; style-src 'self' 'unsafe-inline' use.typekit.net; font-src 'self' use.typekit.net fonts.typekit.net; frame-src 'none'; object-src 'none'";
+	more_set_headers "Content-Security-Policy: default-src 'self' *.vpdb.io *.typekit.net *.google-analytics.com *.netdna-ssl.com api.raygun.io cdn.raygun.io cdn.uptimia.com api.rollbar.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' ssl.google-analytics.com use.typekit.net cdn.uptimia.com cdn.raygun.io cdnjs.cloudflare.com; img-src * data:; style-src 'self' 'unsafe-inline' use.typekit.net; font-src 'self' use.typekit.net fonts.typekit.net; frame-src 'none'; object-src 'none'";
 
 	# cache config
 	set $cache_dynamic "no-cache";
