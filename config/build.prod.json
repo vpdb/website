@@ -1,5 +1,11 @@
 {
 	"rollbar": {
 		"serverAccessToken": ""
+	},
+	"cloudflare": {
+		"enabled": false,
+		"zoneId": "",
+		"authKey": "",
+		"authEmail": "deployer@vpdb.io"
 	}
 }

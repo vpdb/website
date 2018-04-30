@@ -18,7 +18,6 @@
  */
 
 const { existsSync } = require('fs');
-const { execSync } = require('child_process');
 const axios = require('axios');
 
 const websiteConfig = require(process.env.WEBSITE_CONFIG && existsSync(process.env.WEBSITE_CONFIG)
@@ -29,26 +28,28 @@ const buildConfig = require(process.env.BUILD_CONFIG && existsSync(process.env.B
 	? process.env.BUILD_CONFIG
 	: '../config/build.prod.json');
 
-if (websiteConfig.rollbar && websiteConfig.rollbar.enabled && buildConfig.rollbar && buildConfig.rollbar.serverAccessToken) {
+if (buildConfig.cloudflare && buildConfig.cloudflare.enabled && buildConfig.cloudflare.authKey) {
 	(async () => {
 		try {
-			const client = axios.create({ baseURL: 'https://api.rollbar.com/api/1' });
-			const gitHash = execSync('git rev-parse HEAD').toString().trim();
-			await client.post('/deploy', {
-				access_token: buildConfig.rollbar.serverAccessToken,
-				environment: websiteConfig.rollbar.environment,
-				revision: gitHash,
-				local_username: process.env.USER || 'freezy'
+			const client = axios.create({ baseURL: 'https://api.cloudflare.com/client/v4' });
+
+			// purge cache
+			await client.post('/zones/' + buildConfig.cloudflare.zoneId + '/purge_cache', {
+				hosts: [ websiteConfig.webUri.hostname ]
 			}, {
-				headers: { 'Content-Type': 'application/json' }
+				headers: {
+					'X-Auth-Key': buildConfig.cloudflare.authKey,
+					'X-Auth-Email': buildConfig.cloudflare.authEmail,
+					'Content-Type': 'application/json'
+				}
 			});
 			// eslint-disable-next-line no-console
-			console.log('Rollbar deployment successful.');
+			console.log('Purge Cloudflare cache for %s.', websiteConfig.webUri.hostname);
 			process.exit(0);
 
 		} catch (err) {
 			// eslint-disable-next-line no-console
-			console.error('Rollbar error: %s', JSON.stringify(err));
+			console.error('Cloudflare error: %s', JSON.stringify(err));
 			process.exit(1);
 		}
 	})();
