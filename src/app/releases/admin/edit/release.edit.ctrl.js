@@ -106,7 +106,7 @@ export default class ReleaseEditCtrl {
 			} else {
 				this.updatedRelease.authors.push(newAuthor);
 			}
-		});
+		}).catch(angular.noop);
 	}
 
 	/**
@@ -128,7 +128,7 @@ export default class ReleaseEditCtrl {
 		}).result.then(newTag => {
 			this.tags.push(newTag);
 			this.availableTags.push(newTag);
-		});
+		}).catch(angular.noop);
 	}
 
 	/**
@@ -187,7 +187,7 @@ export default class ReleaseEditCtrl {
 			}
 		}).result.then(updatedVersion => {
 			Object.assign(this.release.versions.find(version => version.version === updatedVersion.version), updatedVersion);
-		});
+		}).catch(angular.noop);
 	}
 
 	/**

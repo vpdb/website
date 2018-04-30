@@ -20,6 +20,7 @@
 import { orderBy, cloneDeep, isEmpty, isArray } from 'lodash';
 import ReleaseSelectPlayfieldModalTpl from './release.select.playfield.modal.pug';
 import ReleaseBaseCtrl from '../release.base.ctrl';
+import angular from 'angular';
 
 export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 
@@ -126,7 +127,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 				this.meta.mediaLinks[playfieldImageKey].offset = -90;
 			}
 			file._playfield_image = playfieldImage.id;
-		});
+		}).catch(angular.noop);
 	}
 
 	canSelectPlayfield(file) {

@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
 import { isArray, cloneDeep } from 'lodash';
 import BuildAddModalTpl from './build/build.add.modal.pug';
 
@@ -120,7 +121,7 @@ export default class ReleaseBaseCtrl {
 		}).result.then(newBuild => {
 			// todo
 			console.log(newBuild);
-		});
+		}).catch(angular.noop);
 	}
 
 	/**

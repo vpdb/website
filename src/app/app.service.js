@@ -187,6 +187,6 @@ export default class App {
 			controllerAs: 'vm',
 			windowClass: 'theme-light',
 			resolve: { opts: () => opts }
-		});
+		}).result.catch(angular.noop);
 	}
 }

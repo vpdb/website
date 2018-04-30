@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
 import { debounce } from 'lodash';
 
 import UserEditAdminModalTpl from './user.edit.admin.modal.pug';
@@ -78,7 +79,7 @@ export default class UserListAdminCtrl {
 				user: () => user,
 				roles: () => this.roles
 			}
-		});
+		}).result.catch(angular.noop);
 	}
 
 	refresh() {

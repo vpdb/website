@@ -34,6 +34,7 @@ import UploadsBackglassModerateAdminModalCtrl from './uploads/uploads.backglass.
 import UploadsReleaseModerateAdminModalCtrl from './uploads/uploads.release.moderate.admin.modal.ctrl';
 import UploadsBackglassListAdminCtrl from './uploads/uploads.backglass.admin.list.ctrl';
 import TokenCreateAdminModalCtrl from './tokens/token.create.admin.modal.ctrl';
+import UserEditAdminModalCtrl from './users/user.edit.admin.modal.ctrl';
 import UploadHelper from './uploads/uploads.helper.service';
 import TokenListAdminComponent from './tokens/token.list.admin.component';
 import filterRole from './users/user.filter-role.directive';
@@ -47,12 +48,13 @@ const ADMIN_MODULE = angular
 	.component('tokenListAdminComponent', new TokenListAdminComponent())
 	.controller('BuildAddAdminModalCtrl', BuildAddAdminModalCtrl)
 	.controller('BuildEditAdminModalCtrl', BuildEditAdminModalCtrl)
+	.controller('TokenCreateAdminModalCtrl', TokenCreateAdminModalCtrl)
 	.controller('UploadsListAdminCtrl', UploadsListAdminCtrl)
 	.controller('UploadsBackglassListAdminCtrl', UploadsBackglassListAdminCtrl)
 	.controller('UploadsBackglassModerateAdminModalCtrl', UploadsBackglassModerateAdminModalCtrl)
 	.controller('UploadsReleaseListAdminCtrl', UploadsReleaseListAdminCtrl)
 	.controller('UploadsReleaseModerateAdminModalCtrl', UploadsReleaseModerateAdminModalCtrl)
-	.controller('TokenCreateAdminModalCtrl', TokenCreateAdminModalCtrl)
+	.controller('UserEditAdminModalCtrl', UserEditAdminModalCtrl)
 	.directive('filterRole', filterRole);
 
 export { ADMIN_MODULE };

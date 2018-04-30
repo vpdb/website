@@ -20,6 +20,7 @@
 import { pick, omit } from 'lodash';
 
 import TokenCreateModalTpl from './token.create.modal.pug';
+import angular from 'angular';
 
 export default class ProfileSettingsCtrl {
 
@@ -197,7 +198,8 @@ export default class ProfileSettingsCtrl {
 			this.tokens.unshift(token);
 			this.hasAppTokens = true;
 			this.showTokenAlert = true;
-		});
+
+		}).catch(angular.noop);
 	}
 
 	toggleToken(token) {

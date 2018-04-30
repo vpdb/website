@@ -370,7 +370,7 @@ export default class GameDetailsCtrl {
 					};
 				}
 			}
-		});
+		}).result.catch(angular.noop);
 	}
 
 	static isSetObject(val) {

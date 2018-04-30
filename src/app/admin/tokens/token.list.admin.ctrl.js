@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
 import TokenCreateAdminModalTpl from './token.create.admin.modal.pug';
 
 export default class TokenListAdminCtrl {
@@ -63,7 +64,8 @@ export default class TokenListAdminCtrl {
 			this.tokens.unshift(this.addDisplayData(token));
 			this.hasAppTokens = true;
 			this.showTokenAlert = true;
-		});
+
+		}).catch(angular.noop);
 	}
 
 	editToken(token) {
@@ -75,7 +77,8 @@ export default class TokenListAdminCtrl {
 
 		}).result.then(updatedToken => {
 			token = Object.assign(token, this.addDisplayData(updatedToken));
-		});
+
+		}).catch(angular.noop);
 	}
 
 	toggleToken(token) {

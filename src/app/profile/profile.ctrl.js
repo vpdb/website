@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
+
 export default class ProfileCtrl {
 
 	/**
@@ -33,6 +35,6 @@ export default class ProfileCtrl {
 	}
 
 	changeAvatar () {
-		this.$uibModal.open({ templateUrl: 'modal/change-avatar.html' });
+		this.$uibModal.open({ templateUrl: 'modal/change-avatar.html' }).result.catch(angular.noop);
 	}
 }

@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
 import { isArray, cloneDeep, flatten } from 'lodash';
 
 import ReleaseBaseCtrl from '../release.base.ctrl';
@@ -208,7 +209,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 			} else {
 				this.release.authors.push(authorRef);
 			}
-		});
+		}).catch(angular.noop);
 	}
 
 	/**
@@ -230,7 +231,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		}).result.then(newTag => {
 			this.availableTags.push(newTag);
 			this.tags.push(newTag);
-		});
+		}).catch(angular.noop);
 	}
 
 	/**

@@ -18,6 +18,7 @@
  */
 
 import GameSelectModalTpl from './common/games/game.select.modal.pug';
+import angular from 'angular';
 
 /**
  * The application controller manages parts of the page that is common to
@@ -98,7 +99,7 @@ export default class AppCtrl {
 			}
 		}).result.then(game => {
 			this.$state.go('addRelease', { id: game.id });
-		});
+		}).catch(angular.noop);
 	}
 
 	uploadBackglass() {
@@ -117,7 +118,7 @@ export default class AppCtrl {
 			}
 		}).result.then(game => {
 			this.$state.go('addBackglass', { id: game.id });
-		});
+		}).catch(angular.noop);
 	}
 
 	installServiceWorker() {

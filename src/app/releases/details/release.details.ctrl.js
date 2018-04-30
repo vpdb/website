@@ -22,6 +22,7 @@ import { orderBy } from 'lodash';
 import ReleaseDownloadModalTpl from './release.download.modal.pug';
 import ReleaseFileValidationTpl from './release.file.validation.modal.pug';
 import imgPinDestruct from '../../../static/images/pindestruction.png';
+import angular from 'angular';
 
 /**
  * The release's detail view
@@ -239,7 +240,7 @@ export default class ReleaseDetailsCtrl {
 						};
 					}
 				}
-			});
+			}).result.catch(angular.noop);
 
 		} else {
 			this.App.login({ headMessage: 'In order to download this release, you need to be logged in. You can register for free just below.' });
@@ -283,6 +284,6 @@ export default class ReleaseDetailsCtrl {
 			if (validation) {
 				file.validation = validation;
 			}
-		}, this.$log.error);
+		}).catch(angular.noop);
 	}
 }
