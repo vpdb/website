@@ -74,7 +74,7 @@ export default class ModalService {
 			controllerAs: 'vm',
 			resolve: { data: () => this.ModalMarkdownFiddle },
 			size: 'lg'
-		}).result.catch(angular.noop);;
+		}).result.catch(angular.noop);
 	}
 
 
@@ -101,7 +101,7 @@ export default class ModalService {
 			controller: 'ModalCtrl',
 			controllerAs: 'vm',
 			resolve: { data: () => data }
-		}).result.catch(angular.noop);;
+		}).result.catch(angular.noop);
 	}
 
 
@@ -127,7 +127,7 @@ export default class ModalService {
 					controller: 'ModalCtrl',
 					controllerAs: 'vm',
 					resolve: { data: () => data }
-				}).result.catch(angular.noop);;
+				}).result.catch(angular.noop);
 			} catch (err) {
 				this.$log.error(err);
 			}

@@ -54,7 +54,7 @@ export default function userDetails($compile, $uibModal, $rootScope, AuthService
 								return element.html();
 							}
 						}
-					}).result.catch(angular.noop);;
+					}).result.catch(angular.noop);
 				}
 			});
 		}

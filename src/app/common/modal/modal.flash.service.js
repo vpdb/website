@@ -77,7 +77,7 @@ export default class ModalFlashService {
 				controller: 'ModalCtrl',
 				controllerAs: 'vm',
 				resolve: { data: () => data }
-			}).result.catch(angular.noop);;
+			}).result.catch(angular.noop);
 		}
 	}
 }

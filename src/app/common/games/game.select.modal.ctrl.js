@@ -56,6 +56,6 @@ export default class GameSelectModalCtrl {
 			templateUrl: GameRequestModalTpl,
 			controller: 'GameRequestModalCtrl',
 			controllerAs: 'vm',
-		}).result.catch(angular.noop);;
+		}).result.catch(angular.noop);
 	}
 }

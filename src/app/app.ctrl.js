@@ -33,13 +33,14 @@ export default class AppCtrl {
 	 * @param $localStorage
 	 * @param $uibModal
 	 * @param $log
+	 * @param {Window} $window
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {Config} Config
 	 * @param {BuildConfig} BuildConfig
 	 * @ngInject
 	 */
-	constructor($rootScope, $state, $localStorage, $uibModal, $log, App, AuthService, Config, BuildConfig) {
+	constructor($rootScope, $state, $localStorage, $uibModal, $log, $window, App, AuthService, Config, BuildConfig) {
 		this.waitCoolDown = 500;
 
 		this.$rootScope = $rootScope;
@@ -75,6 +76,13 @@ export default class AppCtrl {
 		this.waitTimeout = setTimeout(() => this.installServiceWorker(), this.waitCoolDown);
 
 		this.$log.info('Application controller loaded.');
+
+		// log error reporting
+		if (Config.rollbar && Config.rollbar.enabled && $window.Rollbar) {
+			this.$log.info('Rollbar enabled.');
+		} else {
+			this.$log.info('Rollbar disabled.');
+		}
 	}
 
 	login() {
