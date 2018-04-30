@@ -53,11 +53,11 @@ import ConfigService from './config/config.service';
 import DownloadService from './backend/download.service';
 import EmailConfirmationCtrl from './auth/email.confirmation.ctrl';
 import Error404Ctrl from './errors/error.404.ctrl';
+import ErrorReportingService from './util/error.reporting.service';
 import Flavors from './config/flavors.constant';
 import GameSystems from './games/game.systems.constant';
 import GameSelectModalCtrl from './games/game.select.modal.ctrl';
 import GameRequestModalCtrl from './games/game.request.modal.ctrl';
-
 import LoginModalCtrl from './auth/login.modal.ctrl';
 import LoginService from './auth/login.service';
 import ModalCtrl from './modal/modal.ctrl';
@@ -192,6 +192,7 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 
 	// util
 	.service('BootstrapPatcher', BootstrapPatcher)
+	.service('ErrorReportingService', ErrorReportingService)
 	.service('TrackerService', TrackerService)
 	.directive('fallbackIcon', fallbackIcon)
 	.directive('filterArray', filterArray)

@@ -20,9 +20,11 @@
 import { isString } from 'lodash';
 
 /**
+ * @param $log
+ * @param {ErrorReportingService} ErrorReportingService
  * @ngInject
  */
-export default function($log, $window, Config) {
+export default function($log, ErrorReportingService) {
 	return function exceptionHandler(exception, cause) {
 
 		const ignore = ['Possibly unhandled rejection: backdrop click', 'Possibly unhandled rejection: escape key press'];
@@ -30,11 +32,6 @@ export default function($log, $window, Config) {
 			return;
 		}
 		$log.error(exception, cause);
-		if (Config.rollbar && Config.rollbar.enabled && $window.Rollbar) {
-			$window.Rollbar.error(exception, { cause: cause });
-		}
-		if (Config.raygun && Config.raygun.enabled && $window.rg4js) {
-			$window.rg4js('send', { error: exception });
-		}
+		ErrorReportingService.reportError(exception, { cause:cause });
 	};
 }

@@ -41,12 +41,13 @@ export default class AuthService {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {Config} Config
 	 * @param {ConfigService} ConfigService
+	 * @param {ErrorReportingService} ErrorReportingService
 	 * @param TokenResource
 	 * @param ProfileResource
 	 * @ngInject
 	 */
 	constructor($window, $localStorage, $rootScope, $location, $http, $state, $timeout, $log,
-				App, ApiHelper, Config, ConfigService, TokenResource, ProfileResource) {
+				App, ApiHelper, Config, ConfigService, ErrorReportingService, TokenResource, ProfileResource) {
 
 		this.$window = $window;
 		this.$localStorage = $localStorage;
@@ -62,6 +63,7 @@ export default class AuthService {
 		this.ConfigService = ConfigService;
 		this.TokenResource = TokenResource;
 		this.ProfileResource = ProfileResource;
+		this.ErrorReportingService = ErrorReportingService;
 
 		this.timeout = null;
 		this.isAuthenticating = false;
@@ -95,25 +97,7 @@ export default class AuthService {
 		this.saveToken(result.token);
 		this.saveUser(result.user);
 
-		if (this.Config.rollbar && this.Config.rollbar.enabled) {
-			this.$window.Rollbar.configure({
-				payload: {
-					person: {
-						id: result.user.id,
-						username: result.user.name,
-						email: result.user.email
-					}
-				}
-			});
-		}
-		if (this.Config.raygun && this.Config.raygun.enabled) {
-			this.$window.rg4js('setUser', {
-				identifier: result.user.id,
-				isAnonymous: false,
-				email: result.user.email,
-				firstName: result.user.name
-			});
-		}
+		this.ErrorReportingService.setUser(result.user);
 	}
 
 	/**

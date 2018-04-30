@@ -19,12 +19,14 @@
 
 /**
  * @param $q
+ * @param $window
  * @param {Config} Config
  * @param {NetworkService} NetworkService
+ * @param {ErrorReportingService} ErrorReportingService
  * @return {{response: response}}
  * @ngInject
  */
-export default function($q, $window, Config, NetworkService) {
+export default function($q, $window, Config, NetworkService, ErrorReportingService) {
 	return {
 		request: config => {
 			NetworkService.onRequestStarted(config.url);
@@ -35,12 +37,7 @@ export default function($q, $window, Config, NetworkService) {
 			return response || $q.when(response);
 		},
 		requestError: rejection => {
-			if (Config.rollbar && Config.rollbar.enabled) {
-				$window.Rollbar.error('Failed $http request', rejection);
-			}
-			if (Config.raygun && Config.raygun.enabled) {
-				$window.rg4js('send', { error: new Error('Failed $http request', rejection) } );
-			}
+			ErrorReportingService.reportError(rejection, 'Failed $http request.', ['api']);
 			return $q.reject(rejection);
 		},
 
@@ -63,16 +60,7 @@ export default function($q, $window, Config, NetworkService) {
 				}
 			};
 			const message = response.config.method + ' ' + response.config.url;
-			if (Config.rollbar && Config.rollbar.enabled) {
-				$window.Rollbar.error(message, data);
-			}
-			if (Config.raygun && Config.raygun.enabled) {
-				$window.rg4js('send', {
-					error: new Error(message, response),
-					tags: [ 'api' ],
-					customData: data
-				});
-			}
+			ErrorReportingService.reportError(message, data, ['api']);
 			NetworkService.onRequestFinished(response.config.url);
 			return $q.reject(response);
 		}

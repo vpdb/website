@@ -76,13 +76,6 @@ export default class AppCtrl {
 		this.waitTimeout = setTimeout(() => this.installServiceWorker(), this.waitCoolDown);
 
 		this.$log.info('Application controller loaded.');
-
-		// log error reporting
-		if (Config.rollbar && Config.rollbar.enabled && $window.Rollbar) {
-			this.$log.info('Rollbar enabled.');
-		} else {
-			this.$log.info('Rollbar disabled.');
-		}
 	}
 
 	login() {

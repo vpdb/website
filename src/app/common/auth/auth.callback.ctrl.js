@@ -35,10 +35,11 @@ export default class AuthCallbackCtrl {
 	 * @param $uibModal
 	 * @param {AuthService} AuthService
 	 * @param {ModalService} ModalService
+	 * @param {ErrorReportingService} ErrorReportingService
 	 * @param AuthResource
 	 * @ngInject
 	 */
-	constructor($state, $stateParams, $location, $localStorage, $uibModal, AuthService, ModalService, AuthResource) {
+	constructor($state, $stateParams, $location, $localStorage, $uibModal, AuthService, ModalService, ErrorReportingService, AuthResource) {
 
 		if ($location.search().code) {
 
@@ -69,10 +70,12 @@ export default class AuthCallbackCtrl {
 					}).result.catch(angular.noop);
 
 				} else {
+
+					ErrorReportingService.reportError('Error logging with OAuth.', err.data);
 					ModalService.error({
 						subtitle: 'Could not login.',
 						message: err.data.error
-					}).result.then(() => $state.go('home'), () => $state.go('home'));
+					}).result.then(() => $state.go('home'), () => $state.go('home')).catch(() => $state.go('home'));
 				}
 			});
 		} else {
