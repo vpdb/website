@@ -28,7 +28,10 @@ npm_build ${DIRNAME} prod /var/www/website/staging/config.json /var/www/website/
 # 3. change symlink
 repo_link ${DIRNAME}
 
-# 4. cleanup old deployment
+# 4. post scripts
+post_scripts ${DIRNAME} /var/www/website/staging/config.json /var/www/website/staging/build.json
+
+# 5. cleanup old deployment
 repo_cleanup "[a-z0-9_\\\\-]-[a-f0-9]{10}"
 
 echo ==================================================================

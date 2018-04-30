@@ -34,7 +34,6 @@ if (raygunConfig && raygunConfig.enabled) {
 	rg4js('withTags', ['env-' + WEBSITE_CONFIG.name, 'config-' + (BUILD_CONFIG.production ? 'prod' : 'dev')]);
 }
 
-
 /**
  * This is the entry point of the app.
  *
@@ -45,9 +44,11 @@ if (raygunConfig && raygunConfig.enabled) {
  * @see https://philipwalton.com/articles/loading-polyfills-only-when-needed/
  */
 if (browserSupportsAllFeatures()) {
+	// eslint-disable-next-line no-console
 	console.info('No polyfills necessary.');
 	bootstrap();
 } else {
+	// eslint-disable-next-line no-console
 	console.info('Loading polyfills before continuing...');
 	loadScript('https://cdn.polyfill.io/v2/polyfill.min.js', bootstrap);
 }
@@ -58,6 +59,7 @@ if (browserSupportsAllFeatures()) {
  */
 function bootstrap(err) {
 	if (err) {
+		// eslint-disable-next-line no-console
 		console.error('Error loading polyfills: %s', err.message);
 	}
 	angular.bootstrap(document, [ VPDB.name ], { strictDi: true });

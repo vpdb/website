@@ -11,7 +11,7 @@ const websiteConfig = require(process.env.WEBSITE_CONFIG && fs.existsSync(proces
 	: './config/vpdb.' + process.env.CONFIG + '.json');
 const buildConfig = require(process.env.BUILD_CONFIG && fs.existsSync(process.env.BUILD_CONFIG)
 	? process.env.BUILD_CONFIG
-	: './config/vpdb.prod.json');
+	: './config/build.prod.json');
 const outputPath = path.resolve(__dirname, 'dist');
 
 module.exports = require(config)({

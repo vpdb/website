@@ -116,6 +116,12 @@ repo_cleanup() {
 	(ls -t ${dir}|egrep ${regex}|head -n ${KEEP_DEPLOYMENTS};ls ${dir}|egrep ${regex})|sort|uniq -u|xargs -I {} rm ${dir}/{} -r
 }
 
+post_scripts() {
+	echo Executing post scripts...
+	cd ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
+	WEBSITE_CONFIG=$2 BUILD_CONFIG=$3 node scripts/rollbar-deploy.js
+}
+
 repo_last_tag() {
 	ref=`git for-each-ref refs/tags --sort=-*authordate --format='%(refname)' --count=1 | cut -d '/' -f 3`
 	test $? -eq 0 || abort "Failed to determine latest tag"
