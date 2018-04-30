@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
 import GameRequestModalTpl from './game.request.modal.pug';
 
 export default class GameSelectModalCtrl {
@@ -55,6 +56,6 @@ export default class GameSelectModalCtrl {
 			templateUrl: GameRequestModalTpl,
 			controller: 'GameRequestModalCtrl',
 			controllerAs: 'vm',
-		});
+		}).result.catch(angular.noop);;
 	}
 }

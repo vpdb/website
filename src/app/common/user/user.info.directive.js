@@ -18,6 +18,7 @@
  */
 
 import UserInfoModalTpl from './user.info.modal.pug';
+import angular from 'angular';
 
 /**
  * Users linked in markdown will get highlighted with this.
@@ -53,7 +54,7 @@ export default function userDetails($compile, $uibModal, $rootScope, AuthService
 								return element.html();
 							}
 						}
-					});
+					}).result.catch(angular.noop);;
 				}
 			});
 		}

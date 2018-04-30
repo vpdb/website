@@ -200,6 +200,10 @@ export default class ReleaseDetailsCtrl {
 		});
 	}
 
+	openLightbox(index) {
+		this.Lightbox.openModal(this.shots, index);
+	}
+
 	addComment() {
 		this.ReleaseCommentResource.save({ releaseId: this.releaseId }, { message: this.newComment }, comment => {
 			this.comments.push(comment);

@@ -16,6 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
+import angular from 'angular';
 import UserMergeModalTpl from '../user/user.merge.modal.pug';
 
 /**
@@ -64,7 +66,7 @@ export default class AuthCallbackCtrl {
 						backdrop: 'static',
 						windowClass: 'theme-light',
 						resolve: { data: () => err.data.data }
-					});
+					}).result.catch(angular.noop);
 
 				} else {
 					ModalService.error({

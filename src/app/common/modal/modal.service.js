@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
 import { defaults } from 'lodash';
 
 import ModalQuestionTpl from './modal.question.pug';
@@ -73,7 +74,7 @@ export default class ModalService {
 			controllerAs: 'vm',
 			resolve: { data: () => this.ModalMarkdownFiddle },
 			size: 'lg'
-		});
+		}).result.catch(angular.noop);;
 	}
 
 
@@ -100,7 +101,7 @@ export default class ModalService {
 			controller: 'ModalCtrl',
 			controllerAs: 'vm',
 			resolve: { data: () => data }
-		});
+		}).result.catch(angular.noop);;
 	}
 
 
@@ -126,7 +127,7 @@ export default class ModalService {
 					controller: 'ModalCtrl',
 					controllerAs: 'vm',
 					resolve: { data: () => data }
-				});
+				}).result.catch(angular.noop);;
 			} catch (err) {
 				this.$log.error(err);
 			}

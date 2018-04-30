@@ -16,7 +16,7 @@ include ../../template/_mixins
 
 		.padder-horizontal(uib-carousel, active="slide.active", interval="60000")
 			div(uib-slide, ng-repeat="slide in vm.shots", index="slide.index")
-				a.image(ng-click="vm.Lightbox.openModal(vm.shots, $index)")
+				a.image(ng-click="vm.openLightbox($index)")
 					img(ng-src="{{ slide.thumbUrl }}")
 
 		//-- RELEASE RATING

@@ -17,17 +17,24 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import { isString } from 'lodash';
+
 /**
  * @ngInject
  */
 export default function($log, $window, Config) {
 	return function exceptionHandler(exception, cause) {
-		$log.warn(exception, cause);
-		if (Config.rollbar && Config.rollbar.enabled) {
-			$window.Rollbar.error(exception, cause);
+
+		const ignore = ['Possibly unhandled rejection: backdrop click', 'Possibly unhandled rejection: escape key press'];
+		if (isString(exception) && ignore.includes(exception)) {
+			return;
 		}
-		if (Config.raygun && Config.raygun.enabled) {
-			$window.rg4js('send', { error: exception } );
+		$log.error(exception, cause);
+		if (Config.rollbar && Config.rollbar.enabled && $window.Rollbar) {
+			$window.Rollbar.error(exception, { cause: cause });
+		}
+		if (Config.raygun && Config.raygun.enabled && $window.rg4js) {
+			$window.rg4js('send', { error: exception });
 		}
 	};
 }
