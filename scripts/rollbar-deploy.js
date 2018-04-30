@@ -37,7 +37,8 @@ if (websiteConfig.rollbar && websiteConfig.rollbar.enabled && buildConfig.rollba
 			await client.post('/1/deploy', {
 				access_token: buildConfig.rollbar.serverAccessToken,
 				environment: websiteConfig.rollbar.environment,
-				revision: gitHash
+				revision: gitHash,
+				local_username: process.env.USER || 'deployer'
 			}, {
 				headers: { 'Content-Type': 'application/json' }
 			});
