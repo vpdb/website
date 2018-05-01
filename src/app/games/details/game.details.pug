@@ -9,15 +9,15 @@ include ../../template/_mixins
 
 		//-- UPLOAD BUTTONS
 		//---------------------------------------------------------------------
-		.panel--rect-block(ng-show="(!vm.game.restrictions.release.mpu && vm.AuthService.hasPermission('releases/add')) || (!vm.game.restrictions.backglass.mpu && vm.AuthService.hasPermission('backglasses/add'))")
+		.panel--rect-block(ng-if="(!vm.game.restrictions.release.mpu && vm.AuthService.hasPermission('releases/add')) || (!vm.game.restrictions.backglass.mpu && vm.AuthService.hasPermission('backglasses/add'))")
 			h1.text-center UPLOAD
 
 			.center
 				ul.ul--no-list
-					li(ng-show="!vm.game.restrictions.release.mpu && vm.AuthService.hasPermission('releases/add')"): a.text-center(ui-sref="addRelease({ id: vm.game.id })")
+					li(ng-if="!vm.game.restrictions.release.mpu && vm.AuthService.hasPermission('releases/add')"): a.text-center(ui-sref="addRelease({ id: vm.game.id })")
 						+icon('plus-circle').space-right.shift-up
 						| Release
-					li(ng-show="!vm.game.restrictions.backglass.mpu && vm.AuthService.hasPermission('backglasses/add')"): a.text-center(ui-sref="addBackglass({ id: vm.game.id })")
+					li(ng-if="!vm.game.restrictions.backglass.mpu && vm.AuthService.hasPermission('backglasses/add')"): a.text-center(ui-sref="addBackglass({ id: vm.game.id })")
 						+icon('plus-circle').space-right.shift-up
 						| Direct B2S
 
@@ -28,7 +28,7 @@ include ../../template/_mixins
 		.title
 			h1.title-main.h--primary
 				span(property="v:itemreviewed") {{ vm.game.title }}
-				a(ng-show="vm.AuthService.hasPermission('games/update')", ui-sref="editGame({ id: vm.game.id })")
+				a(ng-if="vm.AuthService.hasPermission('games/update')", ui-sref="editGame({ id: vm.game.id })")
 					+icon('edit').space-left
 			h1.title-sub.h--small {{ vm.game.manufacturer }} &middot; {{ vm.game.year }}
 		hr

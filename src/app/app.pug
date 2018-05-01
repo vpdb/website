@@ -24,24 +24,24 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 					a(ui-sref="games", ng-click="navCollapsed = true") Games
 				li(ng-class="{ active: menu == 'releases' }")
 					a(ui-sref="releases", ng-click="navCollapsed = true") Releases
-				li.uib-dropdown(ng-class="{ active: menu == 'admin' }", ng-show="vm.AuthService.hasRole(['root', 'admin', 'moderator'])", uib-dropdown)
+				li.uib-dropdown(ng-class="{ active: menu == 'admin' }", ng-if="vm.AuthService.hasRole(['root', 'admin', 'moderator'])", uib-dropdown)
 					a.space-right.uib-dropdown-toggle(uib-dropdown-toggle)
 						span.space-right-2x Admin
 						+icon('angle-down').smaller.shift-up
 					ul.uib-dropdown-menu(role="menu", uib-dropdown-menu)
-						li(ng-show="vm.AuthService.hasPermission('*/moderate')")
+						li(ng-if="vm.AuthService.hasPermission('*/moderate')")
 							a(ui-sref="adminUploads", ng-click="navCollapsed = true")
 								+icon('upload').space-right.shift-up
 								span Uploads
-						li(ng-show="vm.AuthService.hasPermission('users/update')")
+						li(ng-if="vm.AuthService.hasPermission('users/update')")
 							a(ui-sref="adminUsers", ng-click="navCollapsed = true")
 								+icon('users').space-right.shift-up
 								span Users
-						li(ng-show="vm.AuthService.hasPermission('tokens/application-token')")
+						li(ng-if="vm.AuthService.hasPermission('tokens/application-token')")
 							a(ui-sref="adminTokens", ng-click="navCollapsed = true")
 								+icon('key').space-right.shift-up
 								span Tokens
-						li(ng-show="vm.AuthService.hasPermission('builds/update')")
+						li(ng-if="vm.AuthService.hasPermission('builds/update')")
 							a(ui-sref="adminBuilds", ng-click="navCollapsed = true")
 								+icon('package').space-right.shift-up
 								span Builds
@@ -50,7 +50,7 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 
 				//- upload menu
 				//-------------------------------------------
-				li.uib-dropdown(ng-show="(vm.AuthService.hasPermission('releases/add') || vm.AuthService.hasPermission('games/add') || vm.AuthService.hasPermission('backglasses/add')) && themeName === 'theme-dark'", uib-dropdown)
+				li.uib-dropdown(ng-if="(vm.AuthService.hasPermission('releases/add') || vm.AuthService.hasPermission('games/add') || vm.AuthService.hasPermission('backglasses/add')) && themeName === 'theme-dark'", uib-dropdown)
 					//a#upload-btn1.btn.btn-hollow.uib-dropdown-toggle(uib-dropdown-toggle) Upload
 					a#upload-btn.uib-dropdown-toggle(uib-dropdown-toggle)
 						span.hidden-sm.btn.btn-hollow Upload
@@ -58,13 +58,13 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 							span: +icon('upload-circle').svg-2x.shift-up.space-right
 							+icon('angle-down').smaller.shift-up
 					ul.uib-dropdown-menu(uib-dropdown-menu)
-						li(ng-show="vm.AuthService.hasPermission('games/add')")
+						li(ng-if="vm.AuthService.hasPermission('games/add')")
 							a#upload-game-btn(ui-sref="addGame", ng-click="navCollapsed = true")
 								span Game Data
-						li(ng-show="vm.AuthService.hasPermission('releases/add')")
+						li(ng-if="vm.AuthService.hasPermission('releases/add')")
 							a#upload-release-btn(ng-click="vm.uploadRelease(); navCollapsed = true")
 								span Recreation
-						li(ng-show="vm.AuthService.hasPermission('backglasses/add')")
+						li(ng-if="vm.AuthService.hasPermission('backglasses/add')")
 							a#upload-backglass-btn(ng-click="vm.uploadBackglass(); navCollapsed = true")
 								span Direct B2S
 
@@ -74,7 +74,7 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 					a#login-btn(ng-click="vm.login()")
 						+icon('lock').small.space-right.shift-up
 						span.space-right Login <small>or Register</small>
-				li.uib-dropdown(ng-show="vm.AuthService.isAuthenticated", uib-dropdown)
+				li.uib-dropdown(ng-if="vm.AuthService.isAuthenticated", uib-dropdown)
 					a#user-btn.space-right.uib-dropdown-toggle(uib-dropdown-toggle)
 						img.img-avatar.img-avatar--xsm.space-right(gravatar-src="vm.AuthService.user.gravatar_id", gravatar-default="retro")
 						span#logged-user.space-right-2x.hidden-sm {{ vm.AuthService.user.name }}

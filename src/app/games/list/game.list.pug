@@ -95,7 +95,7 @@ include ../../template/_mixins
 
 		//-- UPLOAD BUTTONS
 		//---------------------------------------------------------------------
-		.panel--rect-block.padder-top-2x(ng-show="vm.AuthService.hasPermission('games/add')")
+		.panel--rect-block.padder-top-2x(ng-if="vm.AuthService.hasPermission('games/add')")
 			h1.text-center UPLOAD
 			.center
 				ul.ul--no-list
