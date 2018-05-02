@@ -51,7 +51,7 @@ export default function sort() {
 					element.toggleClass('asc');
 					element.toggleClass('desc');
 				} else {
-					element.siblings().removeClass('selected');
+					element.parent().children().removeClass('selected');
 					element.addClass('selected');
 					element.addClass('asc');
 					if (attrs.sortDefault === 'asc') {
