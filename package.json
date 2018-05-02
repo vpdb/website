@@ -22,7 +22,7 @@
 		"selenium": "node_modules/.bin/webdriver-manager start --versions.chrome 2.35",
 		"selenium:edge": "MicrosoftWebDriver",
 		"build:clean": "rimraf ./dist",
-		"build:prod:run": "cross-env ENV=prod CONFIG=prod webpack --bail --progress --profile --json > stats.json",
+		"build:prod:run": "cross-env ENV=prod CONFIG=prod webpack --bail --progress --profile",
 		"build:local:run": "cross-env ENV=prod CONFIG=local webpack --bail --progress --profile --json > stats.json",
 		"build:test:run": "cross-env ENV=test CONFIG=test webpack --bail --progress --profile",
 		"build:browserstack:run": "cross-env ENV=prod CONFIG=browserstack webpack --bail --progress --profile",
