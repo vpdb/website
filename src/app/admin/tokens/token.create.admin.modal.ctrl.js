@@ -33,7 +33,7 @@ export default class TokenCreateAdminModalCtrl {
 		this.ApiHelper = ApiHelper;
 		this.TokenResource = TokenResource;
 
-		this.token = token || { type: 'application', scopes: [ 'service' ] };
+		this.token = token || { type: 'provider', scopes: [ 'service' ] };
 		this.scopes = [
 			{ id: 'community', name: 'Community', description: 'Rate, star, comment, basically anything visible on the site.' },
 			{ id: 'create', name: 'Create', description: 'All kind of uploads.' },

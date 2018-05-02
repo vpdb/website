@@ -7,7 +7,7 @@ include ../../template/_mixins
 		p Don't need to filter yet.
 
 	.col-sm-9.col--main
-		h1.h--primary Application Tokens
+		h1.h--primary Provider Tokens
 		hr.hr--primary
 
 		table.table.table-striped(ng-show="vm.tokens.length > 0")
@@ -34,7 +34,7 @@ include ../../template/_mixins
 					td.td--icon(title="Deactivate"): +icon("{{ token.is_active ? 'times' : 'check' }}")(ng-click="vm.toggleToken(token)").a.shift-up-less
 					td.td--icon(title="Delete"): +icon('trash')(ng-click="vm.deleteToken(token)").a.shift-up-less
 
-		span(ng-hide="vm.tokens.length > 0") There are no application tokens yet.
+		span(ng-hide="vm.tokens.length > 0") There are no provier tokens yet.
 
 		.clearfix
 		button.btn.btn-default.pull-right(ng-click="vm.createToken()")

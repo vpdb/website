@@ -3,7 +3,7 @@ include ../../template/_mixins
 	.modal-header
 		h1.h--no-margin.h--small
 			+icon('key').svg-3x.space-right
-			| &nbsp;{{ vm.token.id ? 'Edit' : 'Create' }} application access token
+			| &nbsp;{{ vm.token.id ? 'Edit' : 'Create' }} provider token
 	.modal-body
 		p(ng-if="!vm.token.id") This creates token that permits a service to authenticate as any user of the given provider.
 		form.form-horizontal(role="form")

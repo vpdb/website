@@ -48,7 +48,7 @@ export default class TokenListAdminCtrl {
 		TrackerService.trackPage();
 
 		this.providers = AuthService.getProviders();
-		this.TokenResource.query({ type: 'application' }, tokens => {
+		this.TokenResource.query({ type: 'provider' }, tokens => {
 			this.tokens = tokens.map(token => this.addDisplayData(token));
 		});
 	}
@@ -89,7 +89,7 @@ export default class TokenListAdminCtrl {
 
 	deleteToken(token) {
 		return this.ModalService.question({
-			title: 'Delete application token',
+			title: 'Delete provider token',
 			message: 'The application using this token will no longer be able to access the VPDB API. You cannot undo this action.',
 			question: 'Are you sure you want to delete this token?'
 		}).result.then(() => {
