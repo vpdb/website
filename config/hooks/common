@@ -2,7 +2,7 @@
 
 ################ config start ################
 
-	KEEP_DEPLOYMENTS=5
+KEEP_DEPLOYMENTS=5
 DEPLOY_ROOT=/var/www/website
 
 ################  config end  ################

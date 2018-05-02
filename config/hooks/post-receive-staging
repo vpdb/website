@@ -23,13 +23,13 @@ repo_checkout_branch ${DIRNAME} ${BRANCH}
 
 # 2. install node packages
 npm_install_copy ${DIRNAME}
-npm_build ${DIRNAME} prod /var/www/website/staging/config.json /var/www/website/staging/build.json
+npm_build ${DIRNAME} prod /var/www/website/${DEPLOY_ENV}/config.json /var/www/website/${DEPLOY_ENV}/build.json
 
 # 3. change symlink
 repo_link ${DIRNAME}
 
 # 4. post scripts
-post_scripts ${DIRNAME} /var/www/website/staging/config.json /var/www/website/staging/build.json
+post_scripts ${DIRNAME} /var/www/website/${DEPLOY_ENV}/config.json /var/www/website/${DEPLOY_ENV}/build.json
 
 # 5. cleanup old deployment
 repo_cleanup "[a-z0-9_\\\\-]-[a-f0-9]{10}"
