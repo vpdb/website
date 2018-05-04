@@ -20,13 +20,14 @@
 /**
  * @param $q
  * @param $window
+ * @param $log
  * @param {Config} Config
  * @param {NetworkService} NetworkService
  * @param {ErrorReportingService} ErrorReportingService
  * @return {{response: response}}
  * @ngInject
  */
-export default function($q, $window, Config, NetworkService, ErrorReportingService) {
+export default function($q, $window, $log, Config, NetworkService, ErrorReportingService) {
 	return {
 		request: config => {
 			NetworkService.onRequestStarted(config.url);
@@ -45,6 +46,9 @@ export default function($q, $window, Config, NetworkService, ErrorReportingServi
 
 			// sometimes we expect non 2xx codes and we stil want to resolve.
 			if (response.config.noError && response.config.noError.includes(response.status)) {
+				if (Config.name === 'local') {
+					$log.debug('Not reporting HTTP response.');
+				}
 				return $q.resolve(response);
 			}
 			const data = {

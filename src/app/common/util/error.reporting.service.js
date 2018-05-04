@@ -63,6 +63,9 @@ export default class ErrorReportingService {
 	 * @param {string[]} [tags] Optional tags
 	 */
 	reportError(error, data, tags) {
+		if (!this._isRollbarEnabled() && !this._isRaygunEnabled()) {
+			this.$log.debug('Reporting error: ', error, data);
+		}
 		if (this._isRollbarEnabled()) {
 			this.$window.Rollbar.error(error, data);
 		}
@@ -85,6 +88,9 @@ export default class ErrorReportingService {
 	 * @param user
 	 */
 	setUser(user) {
+		if (!this._isRollbarEnabled() && !this._isRaygunEnabled()) {
+			this.$log.debug('Reporting with user: ', user);
+		}
 		if (this._isRollbarEnabled()) {
 			this.$window.Rollbar.configure({
 				payload: {
