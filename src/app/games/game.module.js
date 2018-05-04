@@ -26,8 +26,8 @@ import FileUploadModule from '../shared/file-upload/file.upload.module';
 import MarkdownModule from '../shared/markdown/markdown.module';
 import RatingModule from '../shared/rating/rating.module';
 import BackglassModule from '../backglasses/backglass.module';
-import BackglassAdminModule from '../backglasses/admin/backglass.admin.module';
 import LightboxModule from '../shared/lightbox/lightbox.module';
+import { BACKGLASS_ADMIN_MODULE } from '../backglasses/admin/backglass.admin.module';
 
 import GameListComponent from './list/game.list.component';
 import GameDetailsComponent from './details/game.details.component';
@@ -44,7 +44,7 @@ const GAMES_MODULE = angular
 		LightboxModule.name,
 		FileUploadModule.name,
 		BackglassModule.name,
-		BackglassAdminModule.name,
+		BACKGLASS_ADMIN_MODULE.name,
 		MarkdownModule.name,
 		RatingModule.name
 	])

@@ -44,7 +44,7 @@ export default class UploadsBackglassModerateAdminModalCtrl {
 
 		this.files = [];
 		this.backglass = BackglassResource.get({ id: params.backglass.id, fields: 'moderation' }, backglass => {
-			this.history = backglass.moderation.history.map(UploadHelper.mapHistory);
+			this.backglass.moderation.history = (backglass.moderation.history || []).map(UploadHelper.mapHistory);
 		});
 	}
 

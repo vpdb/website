@@ -58,6 +58,7 @@ export default class BackglassAddCtrl {
 		this.BackglassResource = BackglassResource;
 
 		BootstrapPatcher.patchCalendar();
+		BootstrapPatcher.patchTimePicker();
 
 		this.gameId = $stateParams.id;
 		this.submitting = false;

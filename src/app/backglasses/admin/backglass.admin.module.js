@@ -17,13 +17,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import uiTimepicker from 'angular-ui-bootstrap/src/timepicker/index';
+import uiDatepickerPopup from 'angular-ui-bootstrap/src/datepickerPopup/index';
 
 import FileUploadModule from '../../shared/file-upload/file.upload.module';
 import EditorModule from '../../shared/editor/editor.module';
 import BackglassAddComponent from './backglass.add.component';
 import BackglassEditModalCtrl from './backglass.edit.modal.ctrl';
 
-export default angular
-	.module('vpdb.backglasses.admin', [ FileUploadModule.name, EditorModule.name ])
+const BACKGLASS_ADMIN_MODULE = angular
+	.module('vpdb.backglasses.admin', [ uiDatepickerPopup, uiTimepicker, FileUploadModule.name, EditorModule.name ])
 	.component('backglassAddComponent', new BackglassAddComponent())
 	.controller('BackglassEditModalCtrl', BackglassEditModalCtrl);
+
+export { BACKGLASS_ADMIN_MODULE };

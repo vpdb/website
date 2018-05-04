@@ -43,13 +43,12 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 		this.AuthService = AuthService;
 		this.ModalService = ModalService;
 		this.ReleaseModerationResource = ReleaseModerationResource;
-		this.ReleaseModerationCommentResource = ReleaseModerationCommentResource;
 		this.refresh = params.refresh;
 
 		this.files = [];
 		this.release = ReleaseResource.get({ release: params.release.id, fields: 'moderation' }, release => {
 			this.comments = ReleaseModerationCommentResource.query({ releaseId: release.id });
-			this.history = (release.moderation.history || []).map(UploadHelper.mapHistory);
+			this.release.moderation.history = (release.moderation.history || []).map(UploadHelper.mapHistory);
 			release.versions.forEach(version => {
 				version.files.forEach(file => {
 					file.blockmatches = FileBlockmatchResource.get({ id: file.file.id }, b => {
@@ -115,13 +114,6 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 			this.App.showNotification('Release "' + this.release.name + '" successfully set back to pending.');
 			this.refresh();
 
-		}, this.ApiHelper.handleErrors(this));
-	}
-
-	sendMessage() {
-		this.ReleaseModerationCommentResource.save({ releaseId: this.release.id }, { message: this.message }, comment => {
-			this.comments.unshift(comment);
-			this.message = '';
 		}, this.ApiHelper.handleErrors(this));
 	}
 }

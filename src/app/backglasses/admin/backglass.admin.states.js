@@ -22,7 +22,7 @@ function loadModule($transition$) {
 	return require.ensure([], () => {
 		// load whole module
 		const module = require('./backglass.admin.module');
-		$ocLazyLoad.load(module);
+		$ocLazyLoad.load(module.BACKGLASS_ADMIN_MODULE);
 	}, 'backglasses.admin');
 }
 
