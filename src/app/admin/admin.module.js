@@ -26,6 +26,7 @@ import 'ngclipboard';
 import BuildListAdminComponent from './builds/build.list.admin.component';
 import BuildAddAdminModalCtrl from './builds/build.add.admin.modal.ctrl';
 import BuildEditAdminModalCtrl from './builds/build.edit.admin.modal.ctrl';
+import EditorModule from '../shared/editor/editor.module';
 import UserListAdminComponent from './users/user.list.admin.component';
 import UploadsListAdminComponent from './uploads/uploads.list.admin.component';
 import UploadsReleaseListAdminCtrl from './uploads/uploads.release.admin.list.ctrl';
@@ -40,7 +41,7 @@ import TokenListAdminComponent from './tokens/token.list.admin.component';
 import filterRole from './users/user.filter-role.directive';
 
 const ADMIN_MODULE = angular
-	.module('vpdb.admin', [ uiDatepickerPopup, uiTooltip, uiProgressbar, uiAccordion, 'ngclipboard' ])
+	.module('vpdb.admin', [ uiDatepickerPopup, uiTooltip, uiProgressbar, uiAccordion, 'ngclipboard', EditorModule.name ])
 	.service('UploadHelper', UploadHelper)
 	.component('buildListAdminComponent', new BuildListAdminComponent())
 	.component('userListAdminComponent', new UserListAdminComponent())

@@ -49,7 +49,7 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 		this.files = [];
 		this.release = ReleaseResource.get({ release: params.release.id, fields: 'moderation' }, release => {
 			this.comments = ReleaseModerationCommentResource.query({ releaseId: release.id });
-			this.history = release.moderation.history.map(UploadHelper.mapHistory);
+			this.history = (release.moderation.history || []).map(UploadHelper.mapHistory);
 			release.versions.forEach(version => {
 				version.files.forEach(file => {
 					file.blockmatches = FileBlockmatchResource.get({ id: file.file.id }, b => {

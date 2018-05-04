@@ -10,14 +10,13 @@ include ./uploads.helper.mixins.pug
 		h3.h--shift-up.h--no-margin
 			| {{ vm.release.name }}
 			.pull-right
-				a.btn.shift-up(ui-sref="releaseDetails({ id: vm.release.game.id, releaseId: vm.release.id })")
+				a.btn.shift-up(ui-sref="releaseDetails({ id: vm.release.game.id, releaseId: vm.release.id })", ng-click="$dismiss()")
 					+icon('eye').space-right
 					| Details
 		+info('vm.release')
 		+authors('vm.release')
 		+blockmatches('vm', 'vm.release')
 		+history('vm.release')
-		+message('vm', 'vm.release', true)
 
 		.clearfix.padder-top
 	.modal-footer
