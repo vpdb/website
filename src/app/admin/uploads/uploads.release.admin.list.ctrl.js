@@ -45,7 +45,7 @@ export default class UploadsReleaseListAdminCtrl {
 			releases: {}
 		};
 
-		$scope.$on('refresh', this.refresh.bind(this));
+		$scope.$on('refresh', () => this.refresh());
 		this.refresh();
 	}
 

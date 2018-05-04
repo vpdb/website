@@ -38,7 +38,7 @@ export default class UploadsBackglassListAdminCtrl {
 		this.UploadHelper = UploadHelper;
 		this.BackglassResource = BackglassResource;
 
-		$scope.$on('refresh', this.refresh.bind(this));
+		$scope.$on('refresh', () => this.refresh());
 		this.refresh();
 	}
 
