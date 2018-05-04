@@ -41,6 +41,7 @@ export class UserStarResource {
 	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/v1/users/:userId/star'), {}, {
+			get: { method: 'GET', noError: [ 404 ] },
 		});
 	}
 }
