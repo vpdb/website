@@ -96,7 +96,7 @@ include ../../template/_mixins
 		//-- MODERATION ZONE
 		//---------------------------------------------------------------------
 		#moderation-zone.panel--rect-block.padder-top.shift-up-1px(ng-if="vm.showModeration")
-			h1.text-center(uib-tooltip="Only visible by moderators and the uploader. Will disappear when the release is approved.", tooltip-placement="bottom", tooltip-append-to-body="true", tooltip-popup-delay="200")
+			h1.padder-nobottom-only.text-center(uib-tooltip="Only visible by moderators and the uploader. Will disappear when the release is approved.", tooltip-placement="bottom", tooltip-append-to-body="true", tooltip-popup-delay="200")
 				+icon('forum').space-right
 				| Moderation Zone
 
