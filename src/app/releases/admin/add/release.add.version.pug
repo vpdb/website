@@ -78,7 +78,7 @@ include ../../../template/_mixins
 		p &nbsp;
 
 	.col-sm-3.col--menu
-		img.img--logo(ng-show="vm.game.logo.url", ng-src="{{ vm.App.img(vm.game.logo.variations, 'medium') }}")
+		img.img--logo(ng-show="vm.game.logo.url", ng-src="{{ vm.App.img(vm.game.logo, 'medium') }}")
 		h3.h--multiline.text-center {{ vm.game.title }}
 		.text-center {{ vm.release.name }}
 

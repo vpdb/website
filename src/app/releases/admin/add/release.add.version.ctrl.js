@@ -35,7 +35,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 	 * @param {AuthService} AuthService
 	 * @param {ModalService} ModalService
 	 * @param {ReleaseMeta} ReleaseMeta
-	 * @param {Flavors} Flavors
+	 * @param {object} Flavors
 	 * @param {BootstrapPatcher} BootstrapPatcher
 	 * @param BuildResource
 	 * @param FileResource
