@@ -62,7 +62,7 @@ export default class ProfileSettingsCtrl {
 		this.tokens = [];
 
 		$scope.$watch(() => this.AuthService.user, value => {
-			this.updatedUser = pick(value, 'name', 'location', 'email');
+			this.updatedUser = pick(value, [ 'name', 'location', 'email' ]);
 		});
 
 		this.fetchUser();

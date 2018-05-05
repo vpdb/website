@@ -56,7 +56,7 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 		this.releaseVersion = version;
 
 		/** The object posted to the server. **/
-		this.version = pick(version, 'released_at', 'changes');
+		this.version = pick(version, [ 'released_at', 'changes' ]);
 
 		this.meta.files = version.files.map(file => {
 			file._randomId = file.file.id;
