@@ -78,6 +78,7 @@ export default class ReleaseEditCtrl {
 	reset() {
 		this.updatedRelease = pick(angular.copy(this.release), [ 'name', 'description', 'tags', 'links', 'acknowledgements', 'authors' ]);
 		this.availableTags = this.tags.filter(tag => !this.updatedRelease.tags.map(t => t.id).includes(tag.id));
+		this.newLink = { url: '', label: '' };
 		this.errors = {};
 	}
 
@@ -171,7 +172,9 @@ export default class ReleaseEditCtrl {
 	 * @param {object} link
 	 */
 	removeLink(link) {
-		this.updatedRelease.links = this.updatedRelease.links.filter(l => l.label !== link.label || l.url !== link.url);
+		if (this.updatedRelease.links.indexOf(link) > -1) {
+			this.updatedRelease.links.splice(this.updatedRelease.links.indexOf(link), 1);
+		}
 	}
 
 	editVersion(version) {
@@ -209,6 +212,12 @@ export default class ReleaseEditCtrl {
 			});
 		} else {
 			delete release.authors;
+		}
+
+		// add link
+		release.links = release.links || [];
+		if (this.newLink.url && this.newLink.label) {
+			release.links.push(this.newLink);
 		}
 
 		this.ReleaseResource.update({ release: this.releaseId }, release, () => {
