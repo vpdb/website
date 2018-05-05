@@ -67,6 +67,8 @@ export class BasePage {
 	 * @return {ElementFinder}
 	 */
 	protected parentWithText(parentId:string, text:string, nodeElement:string='li', nodeClass:string='panel'): ElementFinder {
+		//*[@id='media']//*[contains(text(),'FS Back to the Future.vpt')]/ancestor::span[contains(concat(" ", @class, " "), " ng-scope ")]
+		//*[@id='compatibility']//*[contains(text(),'FS Back to the Future.vpt')]/ancestor::li[contains(concat(" ", @class, " "), " ng-scope ")]
 		return element(by.xpath(`//*[@id='${parentId}']//*[contains(text(),'${text}')]/ancestor::${nodeElement}[contains(concat(" ", @class, " "), " ${nodeClass} ")][1]`));
 	}
 

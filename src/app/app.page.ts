@@ -20,6 +20,7 @@
 import { browser, by, element, ExpectedConditions as until, protractor } from 'protractor';
 import { LoginModalPage } from './common/auth/login.modal.page';
 import { ModalErrorInfoPage } from "./common/modal/modal.error.info.page";
+import { debug } from 'util';
 
 export class AppPage {
 
@@ -65,7 +66,7 @@ export class AppPage {
 
 	async getLoggedUsername() {
 		// might be hidden in small viewports, so we need to retrieve it differently.
-		return await browser.driver.executeScript("return document.getElementById('logged-user').innerHTML");
+		return await browser.driver.executeScript("return document.getElementById('logged-user') ? document.getElementById('logged-user').innerHTML : null");
 	}
 
 	async getErrorInfoModal() {

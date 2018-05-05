@@ -39,7 +39,7 @@ include ../../../template/_mixins
 		span#files(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 			h2.h--primary.h--smaller
 				+icon('{{ file.icon }}').svg-2x.shift-up.space-right-less
-				| {{ file.name }}
+				span {{ file.name }}
 			hr.hr--primary.hr--shifted-up
 
 			h4.padder-top Compatibility

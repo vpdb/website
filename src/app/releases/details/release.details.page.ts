@@ -82,7 +82,7 @@ export class ReleaseDetailsPage extends BasePage {
 	}
 
 	async hasModerationZoneToggle() {
-		return await this.moderationToggleModeration.isDisplayed();
+		return await this.moderationToggleModeration.isPresent();
 	}
 
 	async hasFilenamesToggled() {
