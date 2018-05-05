@@ -87,16 +87,19 @@ export default class LoginModalCtrl {
 	login() {
 
 		this.setRedirect();
-		this.AuthResource.authenticate(this.userPass, result => {
-			this.errors = {};
-			this.error = null;
-			this.message2 = null;
-			this.AuthService.authenticated(result);
-			this.$uibModalInstance.close();
-			this.AuthService.runPostLoginActions();
-
-			if (this.$localStorage.rememberMe) {
-				this.AuthService.rememberMe();
+		this.AuthResource.authenticate(this.userPass, response => {
+			if (response.status >= 200 && response.status < 300) {
+				this.errors = {};
+				this.error = null;
+				this.message2 = null;
+				this.AuthService.authenticated(response.data);
+				this.$uibModalInstance.close();
+				this.AuthService.runPostLoginActions();
+				if (this.$localStorage.rememberMe) {
+					this.AuthService.rememberMe();
+				}
+			} else {
+				this.ApiHelper.handleErrors(this, () => { this.message2 = null; })(response);
 			}
 
 		}, this.ApiHelper.handleErrors(this, () => {

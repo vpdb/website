@@ -86,18 +86,30 @@ export default function($injector, $log, $q, ConfigService) {
 							AuthService.isAuthenticating = true;
 							const AuthResource = $injector.get('AuthResource');
 							// retrieving first auth token before continuing request (due to autologin)
-							AuthResource.authenticate({ token: AuthService.getLoginToken() }, result => {
+							AuthResource.authenticate({ token: AuthService.getLoginToken() }, response => {
 
-								config.headers[AuthService.getAuthHeader()] = 'Bearer ' + result.token;
-								AuthService.authenticated(result);
+								if (response.status >= 200 && response.status < 300) {
+									config.headers[AuthService.getAuthHeader()] = 'Bearer ' + response.data.token;
+									AuthService.authenticated(response.data);
 
-								// received token from autologin, continuing
-								resolve(config);
+									// received token from autologin, continuing
+									resolve(config);
 
-								// now notify subscribers
-								AuthService.isAuthenticating = false;
-								for (let i = 0; i < AuthService.authCallbacks.length; i++) {
-									AuthService.authCallbacks[i](null, result);
+									// now notify subscribers
+									AuthService.isAuthenticating = false;
+									for (let i = 0; i < AuthService.authCallbacks.length; i++) {
+										AuthService.authCallbacks[i](null, response.data);
+									}
+
+								} else {
+									AuthService.clearLoginToken(); // it failed, so no need to keep it around further.
+									reject(response);
+
+									// also notify subscribers
+									AuthService.isAuthenticating = false;
+									for (let i = 0; i < AuthService.authCallbacks.length; i++) {
+										AuthService.authCallbacks[i](response);
+									}
 								}
 								AuthService.authCallbacks = [];
 

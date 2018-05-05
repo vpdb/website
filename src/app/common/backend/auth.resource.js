@@ -25,7 +25,7 @@ export class AuthResource {
 	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/v1/authenticate/:strategy'), {}, {
-			authenticate: { method: 'POST' },
+			authenticate: { method: 'POST', noError: [ 401 ], interceptor: { response: res => res } },
 			authenticateCallback: { method: 'GET' }
 		});
 	}
