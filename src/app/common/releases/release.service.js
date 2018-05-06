@@ -97,7 +97,8 @@ export default class ReleaseService {
 				short: short
 			};
 		});
-		return orderBy(Object.values(flavorGrid), 'released_at', false);
+
+		return orderBy(Object.keys(flavorGrid).map(e => flavorGrid[e]), 'released_at', false);
 	}
 
 	getVersion(release, file) {

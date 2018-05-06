@@ -68,7 +68,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		this.ReleaseMeta = ReleaseMeta;
 
 		// define flavors and builds
-		this.flavors = Object.values(Flavors);
+		this.flavors = Object.keys(Flavors).map(e => Flavors[e]);
 		this.fetchBuilds();
 
 		// statuses

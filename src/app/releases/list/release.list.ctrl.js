@@ -69,7 +69,7 @@ export default class ReleaseListCtrl {
 		this.pagination = {};
 
 		// stuff we need in the view
-		this.flavors = Object.values(Flavors);
+		this.flavors = Object.keys(Flavors).map(e => Flavors[e]);
 		this.tags = TagResource.query();
 		this.builds = BuildResource.query();
 
