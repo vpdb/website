@@ -19,9 +19,9 @@ export let config: Config = merge(commonConfig, {
 	seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
 	capabilities: null,
 	multiCapabilities: [
-			{ browserName: 'Chrome', os: 'Windows', browser_version: '66' },
-			{ browserName: 'Firefox', os: 'Windows', browser_version: '59' },
-			{ browserName: 'Chrome', os: 'OS X', browser_version: '66' },
+			{ browserName: 'Chrome', os: 'Windows', browser_version: '66.0' },
+			{ browserName: 'Chrome', os: 'OS X', browser_version: '66.0' },
+			//{ browserName: 'Firefox', os: 'Windows', browser_version: '59.0' },
 			//{ browserName: 'Firefox', os: 'OS X' },
 			//{ browserName: 'Edge', browser_version: '16.0' },
 			//{ browserName: 'IE', browser_version: '11.0' },

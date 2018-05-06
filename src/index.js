@@ -34,6 +34,9 @@ if (raygunConfig && raygunConfig.enabled) {
 	rg4js('withTags', ['env-' + WEBSITE_CONFIG.name, 'config-' + (BUILD_CONFIG.production ? 'prod' : 'dev')]);
 }
 
+// disable dynamic styles that screw up layout: https://github.com/videojs/video.js/pull/3093
+window.VIDEOJS_NO_DYNAMIC_STYLE = true;
+
 /**
  * This is the entry point of the app.
  *

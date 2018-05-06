@@ -17054,9 +17054,9 @@
 			}
 		},
 		"video.js": {
-			"version": "6.8.0",
-			"resolved": "https://registry.npmjs.org/video.js/-/video.js-6.8.0.tgz",
-			"integrity": "sha512-Yig2ImqVQVaOidXUoKXh6tuVhRkHjeH9jMjBjwRQcsy07XDbGHzaJw9hjESHK1crIm2XnTnKXYdo24lbpNTENg==",
+			"version": "6.9.0",
+			"resolved": "https://registry.npmjs.org/video.js/-/video.js-6.9.0.tgz",
+			"integrity": "sha512-54s7ZZKiY8dTMxBM6IkGMUeG0Yjq8RfyOn7bdU88nL6eWw1I+zLPY4fUVEFwGtxNAzZxGj7VVhVsCM/38QM9GA==",
 			"requires": {
 				"babel-runtime": "6.26.0",
 				"global": "4.3.2",
@@ -17080,6 +17080,11 @@
 			"requires": {
 				"es5-shim": "4.5.10"
 			}
+		},
+		"videojs-sublime-skin": {
+			"version": "1.0.3",
+			"resolved": "https://registry.npmjs.org/videojs-sublime-skin/-/videojs-sublime-skin-1.0.3.tgz",
+			"integrity": "sha1-0/E75J71D/vb8ZUaNmuDw/YN088="
 		},
 		"videojs-vtt.js": {
 			"version": "0.12.6",

@@ -18,7 +18,7 @@
  */
 
 import { isObject } from 'lodash';
-import * as videojs from 'video.js';
+import videojs from 'video.js';
 
 /**
  * @todo Check what's wrong with https://github.com/LonnyGomes/vjs-video or use it
@@ -36,15 +36,15 @@ export default function($parse, $http, $timeout, AuthService) {
 			attrs.type = attrs.type || 'video/mp4';
 
 			const setup = {
-				techOrder: ['html5', 'flash'],
+				techOrder: ['html5'],
 				controls: true,
 				preload: 'metadata',
 				autoplay: false,
 				loop: true
 			};
 
-			const videoid = Math.round(Math.random() * 1000000);
-			attrs.id = 'videojs' + videoid;
+			const videoId = Math.round(Math.random() * 1000000);
+			attrs.id = 'videojs' + videoId;
 			element.attr('id', attrs.id);
 
 			let player = null;
