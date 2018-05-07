@@ -178,7 +178,7 @@ export default class App {
 
 	/**
 	 *
-	 * @param {{ postLogin:{action:string, params:any}, headMessage:string, topMessage:string }} [opts]
+	 * @param {{ postLogin:{action:string, params:object}, headMessage:string, topMessage:string }} [opts]
 	 */
 	login(opts) {
 		this.$uibModal.open({

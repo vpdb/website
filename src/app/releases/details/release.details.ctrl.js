@@ -37,6 +37,7 @@ export default class ReleaseDetailsCtrl {
 	 * @param $location
 	 * @param $localStorage
 	 * @param $log
+	 * @param $rootScope
 	 * @param $uibModal
 	 * @param {Lightbox} Lightbox
 	 * @param {App} App
@@ -52,7 +53,7 @@ export default class ReleaseDetailsCtrl {
 	 * @param ReleaseModerationCommentResource
 	 * @ngInject
 	 */
-	constructor($stateParams, $location, $localStorage, $log, $uibModal, Lightbox,
+	constructor($stateParams, $location, $localStorage, $log, $rootScope, $uibModal, Lightbox,
 				App, AuthService, ApiHelper, ReleaseService, TrackerService, BootstrapPatcher, GameResource,
 				ReleaseResource, ReleaseRatingResource, ReleaseCommentResource, ReleaseModerationCommentResource) {
 
@@ -99,6 +100,13 @@ export default class ReleaseDetailsCtrl {
 		if (this.AuthService.hasPermission('releases/rate')) {
 			this.ReleaseRatingResource.get({ releaseId: this.releaseId }, data => this.releaseRating = data.value);
 		}
+
+		// download release on event
+		$rootScope.$on('downloadRelease', (event, params) => {
+			if (params === this.releaseId) {
+				this._showDownloadModal();
+			}
+		});
 
 		this.fetchData();
 	}
@@ -221,29 +229,16 @@ export default class ReleaseDetailsCtrl {
 
 	/**
 	 * Opens the game download dialog
-	 *
-	 * @param game Game
 	 */
-	download(game) {
+	download() {
 		if (this.AuthService.isAuthenticated) {
-			this.$uibModal.open({
-				templateUrl: ReleaseDownloadModalTpl,
-				controller: 'ReleaseDownloadModalCtrl',
-				controllerAs: 'vm',
-				size: 'lg',
-				resolve: {
-					params: () => {
-						return {
-							game: game,
-							release: this.release,
-							latestVersion: this.latestVersion
-						};
-					}
-				}
-			}).result.catch(angular.noop);
+			this._showDownloadModal();
 
 		} else {
-			this.App.login({ headMessage: 'In order to download this release, you need to be logged in. You can register for free just below.' });
+			this.App.login({
+				headMessage: 'In order to download this release, you need to be logged in. You can register for free just below.',
+				postLogin: { action: 'downloadRelease', params: this.releaseId }
+			});
 		}
 	}
 
@@ -285,5 +280,27 @@ export default class ReleaseDetailsCtrl {
 				file.validation = validation;
 			}
 		}).catch(angular.noop);
+	}
+
+	/**
+	 * Shows the download dialog once we're sure we're authenticated.
+	 * @private
+	 */
+	_showDownloadModal() {
+		this.$uibModal.open({
+			templateUrl: ReleaseDownloadModalTpl,
+			controller: 'ReleaseDownloadModalCtrl',
+			controllerAs: 'vm',
+			size: 'lg',
+			resolve: {
+				params: () => {
+					return {
+						game: this.game,
+						release: this.release,
+						latestVersion: this.latestVersion
+					};
+				}
+			}
+		}).result.catch(angular.noop);
 	}
 }

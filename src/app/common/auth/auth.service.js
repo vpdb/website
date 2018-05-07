@@ -530,20 +530,41 @@ export default class AuthService {
 	 */
 	runPostLoginActions() {
 		if (Array.isArray(this.$localStorage.postLoginActions)) {
-			this.$localStorage.postLoginActions.forEach(postLoginAction => {
-				switch (postLoginAction.action) {
-					case 'redirect':
-						this.$state.go(postLoginAction.params.stateName, postLoginAction.params.stateParams);
-						break;
-					case 'downloadFile':
-						this.$rootScope.$broadcast('downloadFile', postLoginAction.params);
-						break;
-					default:
-						return;
-				}
-			});
+			const redirectAction = this.$localStorage.postLoginActions.find(a => a.action === 'redirect');
+			if (redirectAction) {
+				this.$localStorage.postLoginActions.splice(this.$localStorage.postLoginActions.indexOf(redirectAction), 1);
+				// navigate and execute other actions *afterwards*
+				this.$state.go(redirectAction.params.stateName, redirectAction.params.stateParams);
+
+				// if someone has a better idea how to trigger this at $viewContentLoaded, let me know. burned 2h on this.
+				this.$timeout(() => {
+					this.$localStorage.postLoginActions.forEach(action => this._executePostLoginAction(action));
+					this.$localStorage.postLoginActions = [];
+				}, 500);
+
+			} else {
+				this.$localStorage.postLoginActions.forEach(action => this._executePostLoginAction(action));
+			}
 		}
-		this.$localStorage.postLoginActions = [];
+
+	}
+
+	/**
+	 * Executes one given post login action.
+	 * @param postLoginAction
+	 * @private
+	 */
+	_executePostLoginAction(postLoginAction) {
+		switch (postLoginAction.action) {
+			case 'downloadFile':
+				return this.$rootScope.$broadcast('downloadFile', postLoginAction.params);
+
+			case 'downloadRelease':
+				return this.$rootScope.$broadcast('downloadRelease', postLoginAction.params);
+
+			default:
+				return;
+		}
 	}
 
 	/**
