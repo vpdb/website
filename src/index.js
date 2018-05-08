@@ -53,7 +53,7 @@ if (browserSupportsAllFeatures()) {
 } else {
 	// eslint-disable-next-line no-console
 	console.info('Loading polyfills before continuing...');
-	loadScript('https://cdn.polyfill.io/v2/polyfill.min.js', bootstrap);
+	loadScript('https://cdn.polyfill.io/v2/polyfill.min.js?features=es6', bootstrap);
 }
 
 /**
@@ -77,7 +77,7 @@ function bootstrap(err) {
  * @returns {boolean}
  */
 function browserSupportsAllFeatures() {
-	return ('Promise' in window && 'includes' in Array.prototype);
+	return ('Promise' in window && 'includes' in Array.prototype && 'find' in Array.prototype);
 }
 
 /**
