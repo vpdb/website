@@ -77,7 +77,7 @@ function bootstrap(err) {
  * @returns {boolean}
  */
 function browserSupportsAllFeatures() {
-	return ('Promise' in window);
+	return ('Promise' in window && 'includes' in Array.prototype);
 }
 
 /**
