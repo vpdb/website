@@ -24,13 +24,13 @@ repo_checkout_tag ${LAST_TAG}
 
 # 2. install node packages
 npm_install ${LAST_TAG}
-npm_build ${LAST_TAG} prod /var/www/website/${DEPLOY_ENV}/config.json /var/www/website/${DEPLOY_ENV}/build.json
+npm_build ${LAST_TAG} prod /var/www/website/production/config.json /var/www/website/production/build.json
 
 # 3. change symlink
 repo_link ${LAST_TAG}
 
 # 5. post scripts
-post_scripts ${LAST_TAG} /var/www/website/${DEPLOY_ENV}/config.json /var/www/website/${DEPLOY_ENV}/build.json
+post_scripts ${LAST_TAG} /var/www/website/production/config.json /var/www/website/production/build.json
 
 # 4. cleanup old deployment
 repo_cleanup "v[0-9]+\.[0-9]+\.[0-9]+"

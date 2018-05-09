@@ -31,25 +31,27 @@ const buildConfig = require(process.env.BUILD_CONFIG && existsSync(process.env.B
 if (buildConfig.cloudflare && buildConfig.cloudflare.enabled && buildConfig.cloudflare.authKey) {
 	(async () => {
 		try {
-			const client = axios.create({ baseURL: 'https://api.cloudflare.com/client/v4' });
-
-			// purge cache
-			await client.post('/zones/' + buildConfig.cloudflare.zoneId + '/purge_cache', {
-				hosts: [ websiteConfig.webUri.hostname ]
-			}, {
+			const client = axios.create({
+				baseURL: 'https://api.cloudflare.com/client/v4',
 				headers: {
 					'X-Auth-Key': buildConfig.cloudflare.authKey,
 					'X-Auth-Email': buildConfig.cloudflare.authEmail,
 					'Content-Type': 'application/json'
 				}
 			});
+
+			// purge cache
+			await client.post('/zones/' + buildConfig.cloudflare.zoneId + '/purge_cache', { purge_everything: true });
+
 			// eslint-disable-next-line no-console
-			console.log('Purge Cloudflare cache for %s.', websiteConfig.webUri.hostname);
+			console.log('Purged Cloudflare cache for %s.', websiteConfig.webUri.hostname);
 			process.exit(0);
 
 		} catch (err) {
 			// eslint-disable-next-line no-console
-			console.error('Cloudflare error: %s', JSON.stringify(err));
+			console.error('Cloudflare error: %s', err);
+			// eslint-disable-next-line no-console
+			console.error(err && err.response && err.response.data ? JSON.stringify(err.response.data, null,  '  ') : err);
 			process.exit(1);
 		}
 	})();
