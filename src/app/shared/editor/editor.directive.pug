@@ -18,7 +18,7 @@ div(ng-class="{ media: !!user }")
 					+icon('edit')
 					.panel-triangle(ng-show="user")
 				textarea.textarea--full.animate(
-					placeholder="{{ $parent.$parent.placeholder }}",
+					ng-attr-placeholder="{{ $parent.$parent.placeholder }}",
 					ng-attr-id="{{::textareaId}}"
 					ng-model="$parent.$parent.text",
 					ng-trim="false",
