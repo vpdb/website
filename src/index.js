@@ -23,15 +23,15 @@ import { VPDB } from './app';
 // eslint-disable-next-line
 const raygunConfig = WEBSITE_CONFIG.raygun;
 // eslint-disable-next-line
-if (raygunConfig && raygunConfig.enabled) {
+if (raygunConfig && raygunConfig.enabled && window.rg4js) {
 	// eslint-disable-next-line
-	rg4js('apiKey', raygunConfig.apiKey);
+	window.rg4js('apiKey', raygunConfig.apiKey);
 	// eslint-disable-next-line
-	rg4js('enableCrashReporting', true);
+	window.rg4js('enableCrashReporting', true);
 	// eslint-disable-next-line
-	rg4js('setVersion', BUILD_CONFIG.version);
+	window.rg4js('setVersion', BUILD_CONFIG.version);
 	// eslint-disable-next-line
-	rg4js('withTags', ['env-' + WEBSITE_CONFIG.name, 'config-' + (BUILD_CONFIG.production ? 'prod' : 'dev')]);
+	window.rg4js('withTags', ['env-' + WEBSITE_CONFIG.name, 'config-' + (BUILD_CONFIG.production ? 'prod' : 'dev')]);
 }
 
 // disable dynamic styles that screw up layout: https://github.com/videojs/video.js/pull/3093
@@ -59,7 +59,7 @@ if (browserSupportsAllFeatures()) {
 	} else {
 		// eslint-disable-next-line no-console
 		console.info('Loading polyfills before continuing...');
-		loadScript('https://cdn.polyfill.io/v2/polyfill.min.js?features=es6', bootstrap);
+		loadScript('https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,es7', bootstrap);
 	}
 }
 
