@@ -29,25 +29,27 @@ export default class TrackerService {
 	/**
 	 * @param $rootScope
 	 * @param $log
+	 * @param $window
 	 * @param {Config} Config
 	 * @param {AuthService} AuthService
 	 * @ngInject
 	 */
-	constructor($rootScope, $log, Config, AuthService) {
+	constructor($rootScope, $log, $window, Config, AuthService) {
 
 		this.$rootScope = $rootScope;
+		this.$window = $window;
 		this.Config = Config;
 
 		/* eslint-disable no-undef */
-		if (this.Config.ga && this.Config.ga.enabled) {
+		if (this.Config.ga && this.Config.ga.enabled && $window.ga) {
 			if (AuthService.user) {
-				ga('create', this.Config.ga.id, 'auto', { userId: AuthService.user.id });
+				$window.ga('create', this.Config.ga.id, 'auto', { userId: AuthService.user.id });
 			} else {
-				ga('create', this.Config.ga.id, 'auto');
+				$window.ga('create', this.Config.ga.id, 'auto');
 			}
 			this.$rootScope.$on('userUpdated', (event, user) => {
 				if (user) {
-					ga('set', 'userId', user.id);
+					$window.ga('set', 'userId', user.id);
 				}
 			});
 
@@ -60,8 +62,8 @@ export default class TrackerService {
 	 * Tracks a page view.
 	 */
 	trackPage() {
-		if (this.Config.ga && this.Config.ga.enabled) {
-			ga('send', 'pageview');
+		if (this.Config.ga && this.Config.ga.enabled && this.$window.ga) {
+			this.$window.ga('send', 'pageview');
 		}
 	}
 }
