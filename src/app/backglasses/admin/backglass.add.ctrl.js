@@ -64,7 +64,8 @@ export default class BackglassAddCtrl {
 		this.submitting = false;
 
 		// fetch game info
-		this.game = GameResource.get({ id: this.gameId }, () => {
+		GameResource.get({ id: this.gameId }, response => {
+			this.game = response.data;
 			this.backglass._game = this.game.id;
 			App.setTitle('Add Backglass - ' + this.game.title);
 			TrackerService.trackPage();

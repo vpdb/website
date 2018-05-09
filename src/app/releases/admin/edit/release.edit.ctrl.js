@@ -60,14 +60,13 @@ export default class ReleaseEditCtrl {
 		this.newLink = {};
 		this.canEditAuthors = false;
 
-		this.game = GameResource.get({ id: this.gameId });
-		this.release = ReleaseResource.get({ release: this.releaseId }, release => {
-
+		GameResource.get({ id: this.gameId }, response => this.game = response.data);
+		ReleaseResource.get({ release: this.releaseId }, response => {
+			this.release = response.data;
 			// retrieve available tags, then reset.
 			this.tags = TagResource.query(() => this.reset());
-
 			if (AuthService.isAuthenticated) {
-				this.canEditAuthors = AuthService.getUser().id === release.created_by.id;
+				this.canEditAuthors = AuthService.getUser().id === this.release.created_by.id;
 			}
 		});
 	}

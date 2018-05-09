@@ -96,7 +96,8 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 
 		// fetch game info
 		this.gameId = $stateParams.id;
-		this.game = GameResource.get({ id: this.gameId }, () => {
+		GameResource.get({ id: this.gameId }, response => {
+			this.game = response.data;
 			this.game.lastrelease = new Date(this.game.lastrelease).getTime();
 			this.release._game = this.game.id;
 			App.setTitle('Add Release - ' + this.game.title);

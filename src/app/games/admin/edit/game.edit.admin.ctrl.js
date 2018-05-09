@@ -61,7 +61,8 @@ export default class GameEditAdminCtrl {
 		this.systems = GameSystems;
 		this.arrays = {};
 
-		GameResource.get({ id: this.gameId }, game => {
+		GameResource.get({ id: this.gameId }, response => {
+			const game = response.data;
 			this.originalGame = cloneDeep(game);
 			this.reset(game);
 		});

@@ -50,7 +50,7 @@ export default class ApiHelper {
 	 * Creates a request.
 	 *
 	 * @param {function} query Function returning a query object
-	 * @param {Object}  status Object the status is written to
+	 * @param {Object|null}  status Object the status is written to
 	 * @param {boolean} status.loading If request is still active
 	 * @param {boolean} status.offline When connection broke
 	 * @param {string}  [status.error] Returned error message
@@ -89,18 +89,30 @@ export default class ApiHelper {
 	 */
 	paginatedRequest(query, status, pagination, opts) {
 		return this.$q((resolve, reject) => {
-			status.loading = true;
-			status.offline = false;
-			status.error = undefined;
+			if (status) {
+				status.success = false;
+				status.loading = true;
+				status.offline = false;
+				status.error = undefined;
+				status.statusCode = undefined;
+			}
 			return query().$promise.then(response => {
-				status.loading = false;
+				if (status) {
+					status.loading = false;
+					status.success = true;
+					status.statusCode = response.status;
+				}
 				if (pagination) {
 					this._handlePagination(response.headers, pagination);
 				}
 				resolve(response.data);
 
 			}).catch(response => {
-				status.loading = false;
+				if (status) {
+					status.loading = false;
+					status.success = false;
+					status.statusCode = response.status;
+				}
 				if (response.status === -1) {
 					status.offline = true;
 				} else {
@@ -148,19 +160,23 @@ export default class ApiHelper {
 			return;
 		}
 		this.logError('Request error:', response);
-		status.errors = { __count: 0 };
-		status.error = null;
+		if (status) {
+			status.errors = { __count: 0 };
+			status.error = null;
+		}
 		if (response.data.errors) {
 			if (opts.preFct) {
 				opts.preFct(response, status);
 			}
-			response.data.errors.forEach(err => {
-				const path = (opts.fieldPrefix || '') + err.field;
-				set(status.errors, path, err.message);
-				status.errors.__count++;
-			});
+			if (status) {
+				response.data.errors.forEach(err => {
+					const path = (opts.fieldPrefix || '') + err.field;
+					set(status.errors, path, err.message);
+					status.errors.__count++;
+				});
+			}
 		}
-		if (response.data.error) {
+		if (status && response.data.error) {
 			status.error = response.data.error;
 		}
 	}

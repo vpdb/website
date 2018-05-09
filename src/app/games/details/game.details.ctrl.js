@@ -101,6 +101,11 @@ export default class GameDetailsCtrl {
 			}
 		};
 
+		// setup statuses
+		this.status = {
+			game: { loading: false, offline: false }
+		};
+
 		// no clue what this is supposed to do
 		// $localStorage.game_meta = map(mapValues($localStorage.game_meta, obj => map(obj, GameDetailsCtrl.isSetObject)), GameDetailsCtrl.isSetObject);
 
@@ -124,9 +129,9 @@ export default class GameDetailsCtrl {
 	 */
 	fetchData() {
 
-		this.GameResource.get({ id: this.gameId }, result => {
+		this.ApiHelper.request(() => this.GameResource.get({ id: this.gameId }), this.status.game).then(game => {
 
-			this.game = result;
+			this.game = game;
 			this.pageLoading = false;
 			this.hasReleases = this.game.releases.length > 0;
 
@@ -186,7 +191,8 @@ export default class GameDetailsCtrl {
 				};
 			}
 			this.TrackerService.trackPage();
-		});
+
+		}).catch(() => this.game = null);
 
 		// RATINGS
 		if (this.AuthService.hasPermission('games/rate')) {

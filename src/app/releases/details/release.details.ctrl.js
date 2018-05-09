@@ -96,6 +96,12 @@ export default class ReleaseDetailsCtrl {
 		// setup comments
 		this.newComment = '';
 
+		// setup statuses
+		this.status = {
+			release: { loading: false, offline: false },
+			game: { loading: false, offline: false },
+		};
+
 		// ratings
 		if (this.AuthService.hasPermission('releases/rate')) {
 			this.ReleaseRatingResource.get({ releaseId: this.releaseId }, data => this.releaseRating = data.value);
@@ -114,10 +120,12 @@ export default class ReleaseDetailsCtrl {
 	fetchData() {
 
 		// GAME
-		this.game = this.GameResource.get({ id: this.gameId });
+		this.ApiHelper.request(() => this.GameResource.get({ id: this.gameId }), this.status.game)
+			.then(game => this.game = game)
+			.catch(() => this.game = null);
 
 		// RELEASE
-		this.ReleaseResource.get({ release: this.releaseId }, release => {
+		this.ApiHelper.request(() => this.ReleaseResource.get({ release: this.releaseId }), this.status.release).then(release => {
 
 			const title = release.game.title + ' · ' + release.name;
 			const meta = {
@@ -125,8 +133,6 @@ export default class ReleaseDetailsCtrl {
 				keywords: [release.game.title, release.name, 'Download', 'Visual Pinball'].join(','),  // TODO add FP when supported
 			};
 			this.release = release;
-			this.pageLoading = false;
-			this.found = true;
 			this.App.setTitle(title);
 
 			// moderation toggle
@@ -202,11 +208,7 @@ export default class ReleaseDetailsCtrl {
 			}
 			this.TrackerService.trackPage();
 
-		}, err => {
-			this.$log.error(err);
-			this.pageLoading = false;
-			this.found = false;
-		});
+		}).catch(() => this.release = null);
 	}
 
 	openLightbox(index) {

@@ -76,8 +76,11 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 		// fetch game info
 		this.gameId = $stateParams.id;
 		this.releaseId = $stateParams.releaseId;
-		this.release = ReleaseResource.get({ release: this.releaseId }, () => {
-			App.setTitle('Upload Files - ' + this.game.title + ' (' + this.release.name + ')');
+
+		ReleaseResource.get({ release: this.releaseId }, response => {
+			this.release = response.data;
+
+			App.setTitle('Upload Files - ' + this.release.game.title + ' (' + this.release.name + ')');
 			TrackerService.trackPage();
 
 			// populate versions
@@ -94,7 +97,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 				this.reset();
 			}
 		});
-		this.game = GameResource.get({ id: this.gameId });
+		GameResource.get({ id: this.gameId }, response => this.game = response.data);
 
 		// steps
 		this.step = {
