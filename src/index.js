@@ -51,9 +51,16 @@ if (browserSupportsAllFeatures()) {
 	console.info('No polyfills necessary.');
 	bootstrap();
 } else {
-	// eslint-disable-next-line no-console
-	console.info('Loading polyfills before continuing...');
-	loadScript('https://cdn.polyfill.io/v2/polyfill.min.js?features=es6', bootstrap);
+
+	// send IE <11 to hell
+	if (navigator.userAgent.indexOf('MSIE') > 0) {
+		window.location('https://browser-update.org/update.html');
+
+	} else {
+		// eslint-disable-next-line no-console
+		console.info('Loading polyfills before continuing...');
+		loadScript('https://cdn.polyfill.io/v2/polyfill.min.js?features=es6', bootstrap);
+	}
 }
 
 /**
