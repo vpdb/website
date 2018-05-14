@@ -84,7 +84,12 @@ function bootstrap(err) {
  * @returns {boolean}
  */
 function browserSupportsAllFeatures() {
-	return ('Promise' in window && 'includes' in Array.prototype && 'find' in Array.prototype);
+	return (
+		'Promise' in window &&
+		'from' in Array &&
+		'includes' in Array.prototype &&
+		'find' in Array.prototype
+	);
 }
 
 /**
