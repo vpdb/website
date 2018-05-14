@@ -17,10 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
 import { pick, omit } from 'lodash';
 
 import TokenCreateModalTpl from './token.create.modal.pug';
-import angular from 'angular';
 
 export default class ProfileSettingsCtrl {
 
@@ -185,7 +185,7 @@ export default class ProfileSettingsCtrl {
 				this.ApiHelper.clearErrors(this);
 				this.App.showNotification('Email is set back to <b>' + this.AuthService.user.email + '</b>.');
 			});
-		});
+		}).catch(angular.noop);
 	}
 
 	createToken() {
@@ -220,7 +220,8 @@ export default class ProfileSettingsCtrl {
 				this.App.showNotification('Token successfully deleted.');
 
 			}, this.ApiHelper.handleErrorsInDialog('Error deleting token.'));
-		}, console.error);
+
+		}).catch(angular.noop);
 	}
 
 	deleteLoginToken(token) {
@@ -239,7 +240,8 @@ export default class ProfileSettingsCtrl {
 				}
 
 			}, this.ApiHelper.handleErrorsInDialog('Error deleting token.'));
-		}, console.error);
+
+		}).catch(angular.noop);
 	}
 
 	onTokenCopied() {

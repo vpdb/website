@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
+
 export default class BackglassEditModalCtrl {
 	/**
 	 * @param $uibModalInstance
@@ -75,7 +77,7 @@ export default class BackglassEditModalCtrl {
 			this.BackglassResource.delete({ id: backglass.id }, () => {
 				this.$uibModalInstance.close(null);
 			}, this.ApiHelper.handleErrorsInDialog('Error removing backglass.'));
-		});
+		}).catch(angular.noop);
 	}
 
 	submit() {

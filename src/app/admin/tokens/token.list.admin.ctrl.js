@@ -99,7 +99,7 @@ export default class TokenListAdminCtrl {
 				this.App.showNotification('Token successfully deleted.');
 
 			}, this.ApiHelper.handleErrorsInDialog('Error deleting token.'));
-		});
+		}).catch(angular.noop);
 	}
 
 	addDisplayData(token) {

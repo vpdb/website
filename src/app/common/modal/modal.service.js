@@ -47,9 +47,11 @@ export default class ModalService {
 	 *     <li> `message`: body message
 	 *     <li> `close`: text of the close button
 	 * @param {boolean} [flash] If true, the dialog isn't displayed instantly but on the next page.
+	 * @param {function} onClose Executed when dialog is closed, noop if null.
+	 * @return {void}
 	 */
-	error(data, flash) {
-		return this._modal(data, { icon: 'warning', title: 'Ooops!', close: 'Close' }, flash);
+	error(data, flash, onClose) {
+		this._modal(data, { icon: 'warning', title: 'Ooops!', close: 'Close' }, flash, onClose);
 	}
 
 
@@ -95,13 +97,12 @@ export default class ModalService {
 			no: 'No'
 		};
 		data = defaults(data, deflt);
-
 		return this.$uibModal.open({
 			templateUrl: ModalQuestionTpl,
 			controller: 'ModalCtrl',
 			controllerAs: 'vm',
 			resolve: { data: () => data }
-		}).result.catch(angular.noop);
+		});
 	}
 
 
@@ -112,9 +113,11 @@ export default class ModalService {
 	 * @param {object} data Scope variables under `data`.
 	 * @param {object} defaultValues Default scope variables
 	 * @param {boolean} flash If true, the dialog isn't displayed instantly but on the next page.
+	 * @param {function} onClose If set, execute on close.
+	 * @return {void}
 	 * @private
 	 */
-	_modal(data, defaultValues, flash) {
+	_modal(data, defaultValues, flash, onClose) {
 
 		data = defaults(data, defaultValues);
 		if (flash) {
@@ -122,12 +125,14 @@ export default class ModalService {
 		} else {
 			// if connection broke and the html isn't cached, this will fail too
 			try {
-				return this.$uibModal.open({
+				onClose = onClose || angular.noop;
+				this.$uibModal.open({
 					templateUrl: ModalErrorInfoTpl,
 					controller: 'ModalCtrl',
 					controllerAs: 'vm',
 					resolve: { data: () => data }
-				}).result.catch(angular.noop);
+				}).result.then(onClose).catch(onClose);
+
 			} catch (err) {
 				this.$log.error(err);
 			}

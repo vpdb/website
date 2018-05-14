@@ -41,28 +41,32 @@ export default class ModalFlashService {
 
 	/**
 	 * Displays an error dialog on the next page.
-	 * @param {object} data Scope variables. Properties:
-	 *     - `icon`: title bar icon, default 'warning'
-	 *     - `title`: title in dialog bar, default ""
-	 *     - `subtitle`: body title
-	 *     - `message`: body message
-	 *     - `close`: text of the close button
+	 *
+	 * @param {object} data Scope variables.
+	 * @param {string} data.icon title bar icon, default 'warning'
+	 * @param {string} data.title title in dialog bar, default ""
+	 * @param {string} data.subtitle body title
+	 * @param {string} data.message body message
+	 * @param {string} data.close text of the close button
+	 * @return {void}
 	 */
 	error(data) {
-		return this.ModalService.error(data, true);
+		this.ModalService.error(data, true);
 	}
 
 	/**
 	 * Displays an info dialog on the next page.
-	 * @param {object} data Scope variables. Properties:
-	 *     - `icon`: title bar icon, default 'info'
-	 *     - `title`: title in dialog bar
-	 *     - `subtitle`: body title
-	 *     - `message`: body message
-	 *     - `close`: text of the close button, default "close".
+	 *
+	 * @param {object} data Scope variables.
+	 * @param {string} data.icon title bar icon, default 'info'
+	 * @param {string} data.title title in dialog bar
+	 * @param {string} data.subtitle body title
+	 * @param {string} data.message body message
+	 * @param {string} data.close text of the close button, default "close".
+	 * @return {void}
 	 */
 	info(data) {
-		return this.ModalService.info(data, true);
+		this.ModalService.info(data, true);
 	}
 
 	/**

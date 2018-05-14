@@ -327,8 +327,6 @@ export default class GameDetailsCtrl {
 					subtitle: 'Error starring game.',
 					message: err.data.error
 				});
-			} else {
-				console.error(err);
 			}
 		};
 		if (this.gameStarred) {
