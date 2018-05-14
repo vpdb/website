@@ -75,7 +75,7 @@ export default class AuthCallbackCtrl {
 					ModalService.error({
 						subtitle: 'Could not login.',
 						message: err.data.error
-					}).result.then(() => $state.go('home'), () => $state.go('home')).catch(() => $state.go('home'));
+					}, false, () => $state.go('home'));
 				}
 			});
 		} else {

@@ -53,8 +53,6 @@ export default class UserInfoModalCtrl {
 					subtitle: 'Error starring user.',
 					message: err.data.error
 				});
-			} else {
-				console.error(err);
 			}
 		};
 		if (this.starred) {
