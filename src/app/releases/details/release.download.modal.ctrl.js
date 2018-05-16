@@ -23,7 +23,6 @@ export default class ReleaseDownloadModalCtrl {
 
 	/**
 	 * @param $scope
-	 * @param $timeout
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {DownloadService} DownloadService
@@ -32,9 +31,8 @@ export default class ReleaseDownloadModalCtrl {
 	 * @param params
 	 * @ngInject
 	 */
-	constructor($scope, $timeout, $uibModalInstance, App, DownloadService, Flavors, RomResource, params) {
+	constructor($scope, $uibModalInstance, App, DownloadService, Flavors, RomResource, params) {
 
-		this.$timeout = $timeout;
 		this.$uibModalInstance = $uibModalInstance;
 		this.App = App;
 		this.DownloadService = DownloadService;
@@ -47,7 +45,7 @@ export default class ReleaseDownloadModalCtrl {
 		this.includeGameMedia = false;
 
 		this.gameMedia = this.game.media;
-		this.roms = RomResource.query({ id: this.game.id });
+		this.roms = this.RomResource.query({ id: this.game.id });
 
 		this.downloadFiles = {};
 		this.downloadRequest = {
