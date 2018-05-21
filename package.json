@@ -36,7 +36,7 @@
 	"author": "freezy <freezy@vpdb.io>",
 	"license": "GPL-2.0",
 	"dependencies": {
-		"@uirouter/angularjs": "1.0.16",
+		"@uirouter/angularjs": "1.0.18",
 		"angular": "1.6.10",
 		"angular-animate": "1.6.10",
 		"angular-bootstrap-lightbox": "0.12.0",

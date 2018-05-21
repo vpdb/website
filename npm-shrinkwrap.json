@@ -1,6 +1,6 @@
 {
 	"name": "vpdb-website",
-	"version": "1.0.0",
+	"version": "2.0.4-SNAPSHOT",
 	"lockfileVersion": 1,
 	"requires": true,
 	"dependencies": {
@@ -829,17 +829,17 @@
 			}
 		},
 		"@uirouter/angularjs": {
-			"version": "1.0.16",
-			"resolved": "https://registry.npmjs.org/@uirouter/angularjs/-/angularjs-1.0.16.tgz",
-			"integrity": "sha512-LqZ0YyVT4RzymKGGjECPbhlRYjD2XNMVm6hCE7SbPD6v492/QJL2nairrFumfUZIlwlut/1q9aEByyIbC5FSdQ==",
+			"version": "1.0.18",
+			"resolved": "https://registry.npmjs.org/@uirouter/angularjs/-/angularjs-1.0.18.tgz",
+			"integrity": "sha512-tswhwMMBDnbGOZnnCVpnA0pbd7dXkBck1HO0WY7fw8GO3dKbWAAc/rL0479dLypR89UDDGym5leTvZCLW4cJnA==",
 			"requires": {
-				"@uirouter/core": "5.0.18"
+				"@uirouter/core": "5.0.19"
 			}
 		},
 		"@uirouter/core": {
-			"version": "5.0.18",
-			"resolved": "https://registry.npmjs.org/@uirouter/core/-/core-5.0.18.tgz",
-			"integrity": "sha512-w2T2wYc6XEq7pkv3SFEXVq2IzuCrJytU21S/S9VggwOjnRHO712P+T+LLcSFLJJis2UE51mJXW9xBFSUmS3hhQ=="
+			"version": "5.0.19",
+			"resolved": "https://registry.npmjs.org/@uirouter/core/-/core-5.0.19.tgz",
+			"integrity": "sha512-wow+CKRThUAQkiTLNQCBsKQIU3NbH8GGH/w/TrcjKdvkZQA2jQB9QSqmmZxj7XNoZXY7QVcSSc4DWmxuSeAWmQ=="
 		},
 		"accepts": {
 			"version": "1.3.5",
