@@ -109,7 +109,7 @@
 		"style-loader": "0.21.0",
 		"stylus": "0.54.5",
 		"stylus-loader": "3.0.2",
-		"svg-sprite-loader": "3.7.3",
+		"svg-sprite-loader": "3.8.0",
 		"svgo": "1.0.5",
 		"svgo-loader": "2.1.0",
 		"typescript": "2.8.3",
