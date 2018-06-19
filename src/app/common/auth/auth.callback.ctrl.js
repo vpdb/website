@@ -42,13 +42,13 @@ export default class AuthCallbackCtrl {
 	constructor($state, $stateParams, $location, $localStorage, $uibModal, AuthService, ModalService, ErrorReportingService, AuthResource) {
 
 		if ($location.search().code) {
-
 			let query;
+			const params = $location.search();
 			if ($localStorage.mergeUserId) {
-				query = { code: $stateParams.code, strategy: $stateParams.strategy, merged_user_id: $localStorage.mergeUserId };
+				query = { code: params.code, strategy: $stateParams.strategy, merged_user_id: $localStorage.mergeUserId };
 				delete $localStorage.mergeUserId;
 			} else {
-				query = $stateParams;
+				query = Object.assign(params, { strategy: $stateParams.strategy });
 			}
 			AuthResource.authenticateCallback(query, result => {
 				AuthService.authenticated(result);
