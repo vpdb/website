@@ -39,7 +39,7 @@
 		"@uirouter/angularjs": "1.0.18",
 		"angular": "1.6.10",
 		"angular-animate": "1.6.10",
-		"angular-bootstrap-lightbox": "0.12.0",
+		"angular-bootstrap-lightbox": "github:dobavictor/angular-bootstrap-lightbox#patch-1",
 		"angular-elastic": "2.5.1",
 		"angular-gravatar": "0.4.2",
 		"angular-resource": "1.6.10",
