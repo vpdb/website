@@ -17,29 +17,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import timeago from 'timeago.js';
+
 /**
- * @param timeAgoSettings
+ * Formats a string as "...ago".
+ *
+ * Note this is only rendered once and doesn't update in time.
  * @ngInject
  */
-export default function timeAgoConfig(timeAgoSettings) {
-	timeAgoSettings.allowFuture = true;
-	timeAgoSettings.overrideLang = 'en_US';
-	timeAgoSettings.strings.en_US = {
-		prefixAgo: null,
-		prefixFromNow: 'in',
-		suffixAgo: 'ago',
-		suffixFromNow: null,
-		seconds: 'less than a minute',
-		minute: 'about a minute',
-		minutes: '%d minutes',
-		hour: 'about an hour',
-		hours: 'about %d hours',
-		day: 'a day',
-		days: '%d days',
-		month: 'about a month',
-		months: '%d months',
-		year: 'about a year',
-		years: '%d years',
-		numbers: []
-	};
+export default function timeAgoFilter() {
+	return date => timeago().format(date);
 }

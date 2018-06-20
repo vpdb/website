@@ -31,7 +31,6 @@ import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 // global third party modules
 import 'ngstorage';
 import 'angular-gravatar';
-import 'angular-timeago';
 import 'oclazyload';
 
 // app bootstrap
@@ -39,7 +38,6 @@ import AppCtrl from './app.ctrl';
 import AppTpl from './app.pug';
 import routes from './app.routes';
 import service from './app.service';
-import timeAgoConfig from './common/config/time-ago.config';
 
 // styles
 import './app.styles';
@@ -75,14 +73,12 @@ const VPDB = angular.module('vpdb', [
 	'oc.lazyLoad',
 	'ngStorage',
 	'ui.gravatar',
-	'yaru22.angular-timeago',
 
 	// global app modules
 	CommonModule.name,
 	HomeModule.name,
 ])
 	.config(routes)
-	.config(timeAgoConfig)
 	.service('App', service)
 	.directive('vpdb', () => {
 		return {

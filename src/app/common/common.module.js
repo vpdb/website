@@ -92,6 +92,7 @@ import onEnter from './util/on-enter.directive';
 import makeLoaded from './image/make-loaded.directive';
 import sort from './util/sort.directive';
 import ratingFormatFilter from './games/rating.format.filter';
+import timeAgoFilter from './util/time-ago.filter';
 import userInfo from './user/user.info.directive';
 
 
@@ -206,4 +207,5 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.filter('fileext', fileExtFilter)
 	.filter('hex', hexFilter)
 	.filter('sprite', hashPrefixFilter)
+	.filter('timeAgo', timeAgoFilter)
 	.filter('ratingFormat', ratingFormatFilter);

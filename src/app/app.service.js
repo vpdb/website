@@ -113,7 +113,7 @@ export default class App {
 	/**
 	 * Returns the URL of an image's variation.
 	 *
-	 * @param {{ variations:object }} image Image object
+	 * @param {{ url:string, variations:object }} image Image object
 	 * @param {string} variation Variation
 	 */
 	img(image, variation) {
@@ -127,7 +127,7 @@ export default class App {
 		const name = this.pixelSuffix(variation);
 		if (!image.variations[name]) {
 			this.$log.warn('No variation "%s" in ', variation, image);
-			return;
+			return image.url;
 		}
 		return image.variations[this.pixelSuffix(variation)].url;
 	}

@@ -44,7 +44,6 @@
 		"angular-gravatar": "0.4.2",
 		"angular-resource": "1.6.10",
 		"angular-sanitize": "1.6.10",
-		"angular-timeago": "0.4.6",
 		"angular-touch": "1.6.10",
 		"angular-ui-bootstrap": "2.5.6",
 		"bootstrap": "3.3.7",
@@ -59,6 +58,7 @@
 		"oclazyload": "1.1.0",
 		"parse-uri": "1.0.0",
 		"showdown": "1.8.6",
+		"timeago.js": "3.0.2",
 		"traverse": "0.6.6",
 		"video.js": "6.9.0",
 		"videojs-sublime-skin": "1.0.3"
