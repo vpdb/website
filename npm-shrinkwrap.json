@@ -770,6 +770,11 @@
 				"@types/jasmine": "*"
 			}
 		},
+		"@types/jquery": {
+			"version": "2.0.49",
+			"resolved": "https://registry.npmjs.org/@types/jquery/-/jquery-2.0.49.tgz",
+			"integrity": "sha512-/9xLnYmohN/vD2gDnLS4cym8TUmrJu7DvZa/LELKzZjdPsvWVJiedsdu2SXNtb/DA7FGimqL2g0IoyhbNKLl8g=="
+		},
 		"@types/lodash": {
 			"version": "4.14.110",
 			"resolved": "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.110.tgz",
@@ -783,9 +788,9 @@
 			"dev": true
 		},
 		"@types/pngjs": {
-			"version": "3.3.1",
-			"resolved": "https://registry.npmjs.org/@types/pngjs/-/pngjs-3.3.1.tgz",
-			"integrity": "sha512-kcYYpvggAVtJmVp8ojGWkYGi1Q2lJS787f16IOfd7/fUJ0yUasn9XnxIRWQ/gY8eID8MV9h4IgpJU3j/UNJ6QQ==",
+			"version": "3.3.2",
+			"resolved": "https://registry.npmjs.org/@types/pngjs/-/pngjs-3.3.2.tgz",
+			"integrity": "sha512-/SBsv93rVnjByzcau24rBwb+N7BHFp2LateaXz1e7m7M0Wzck/ymXTNdWVrCtkuMbwTHAnfdc3X/I/5szsTEAA==",
 			"dev": true,
 			"requires": {
 				"@types/node": "*"
@@ -1145,9 +1150,8 @@
 			"integrity": "sha512-RU9ZJbTspq0W0x675H5k1DeSgKbAFfp2aiYoNGdlD+wQNKvwwMR5ho+EkDKkx9zE02a5goe8Z6EhhYPQSff9dA=="
 		},
 		"angular-bootstrap-lightbox": {
-			"version": "0.12.0",
-			"resolved": "https://registry.npmjs.org/angular-bootstrap-lightbox/-/angular-bootstrap-lightbox-0.12.0.tgz",
-			"integrity": "sha1-Xc4ZcwvSB6TBhz40DDk6urULGSk="
+			"version": "github:dobavictor/angular-bootstrap-lightbox#a388c5f4407fec9600dca76dbde25ba24dc31d5e",
+			"from": "github:dobavictor/angular-bootstrap-lightbox#patch-1"
 		},
 		"angular-elastic": {
 			"version": "2.5.1",
@@ -1174,14 +1178,6 @@
 			"version": "1.6.10",
 			"resolved": "https://registry.npmjs.org/angular-sanitize/-/angular-sanitize-1.6.10.tgz",
 			"integrity": "sha512-01i1Xoq9ykUrsoYQMSB6dWZmPp9Df5hfCqMAGGzJBWZ7L2WY0OtUphdI0YvR8ZF9lAsWtGNtsEFilObjq5nTgQ=="
-		},
-		"angular-timeago": {
-			"version": "0.4.6",
-			"resolved": "https://registry.npmjs.org/angular-timeago/-/angular-timeago-0.4.6.tgz",
-			"integrity": "sha512-7XaRPNDOYn8+6ZhT/CUugGXsxzqZ5FqOwvamgf1D0A53sdEyRxG0qAL5rDhpaXamk3QxHARygcavf+tdUOF1/A==",
-			"requires": {
-				"angular": "^1.2.10"
-			}
 		},
 		"angular-touch": {
 			"version": "1.6.10",
@@ -4842,12 +4838,14 @@
 				"balanced-match": {
 					"version": "1.0.0",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"brace-expansion": {
 					"version": "1.1.11",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"balanced-match": "^1.0.0",
 						"concat-map": "0.0.1"
@@ -4862,17 +4860,20 @@
 				"code-point-at": {
 					"version": "1.1.0",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"concat-map": {
 					"version": "0.0.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"console-control-strings": {
 					"version": "1.1.0",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"core-util-is": {
 					"version": "1.0.2",
@@ -4989,7 +4990,8 @@
 				"inherits": {
 					"version": "2.0.3",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"ini": {
 					"version": "1.3.5",
@@ -5001,6 +5003,7 @@
 					"version": "1.0.0",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"number-is-nan": "^1.0.0"
 					}
@@ -5015,6 +5018,7 @@
 					"version": "3.0.4",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"brace-expansion": "^1.1.7"
 					}
@@ -5022,12 +5026,14 @@
 				"minimist": {
 					"version": "0.0.8",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"minipass": {
 					"version": "2.2.4",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"safe-buffer": "^5.1.1",
 						"yallist": "^3.0.0"
@@ -5046,6 +5052,7 @@
 					"version": "0.5.1",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"minimist": "0.0.8"
 					}
@@ -5126,7 +5133,8 @@
 				"number-is-nan": {
 					"version": "1.0.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"object-assign": {
 					"version": "4.1.1",
@@ -5138,6 +5146,7 @@
 					"version": "1.4.0",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"wrappy": "1"
 					}
@@ -5259,6 +5268,7 @@
 					"version": "1.0.2",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"code-point-at": "^1.0.0",
 						"is-fullwidth-code-point": "^1.0.0",
@@ -13787,6 +13797,14 @@
 			"resolved": "https://registry.npmjs.org/thunky/-/thunky-1.0.2.tgz",
 			"integrity": "sha1-qGLgGOP7HqLsP85dVWBc9X8kc3E=",
 			"dev": true
+		},
+		"timeago.js": {
+			"version": "3.0.2",
+			"resolved": "https://registry.npmjs.org/timeago.js/-/timeago.js-3.0.2.tgz",
+			"integrity": "sha1-MqZ+fA2IfqQspYjTquJvd95edsw=",
+			"requires": {
+				"@types/jquery": "^2.0.40"
+			}
 		},
 		"timers-browserify": {
 			"version": "2.0.10",
