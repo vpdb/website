@@ -1985,14 +1985,15 @@
 			}
 		},
 		"babel-loader": {
-			"version": "8.0.0-beta.2",
-			"resolved": "https://registry.npmjs.org/babel-loader/-/babel-loader-8.0.0-beta.2.tgz",
-			"integrity": "sha512-P1zch1DvQy3RGmp/1CH78uPg5gTPQQ01S9r6ipCOWVamO0UIC8gnrx7m7LsUsXa470yB6IOZxhtEEwIUclRLNw==",
+			"version": "8.0.0-beta.4",
+			"resolved": "https://registry.npmjs.org/babel-loader/-/babel-loader-8.0.0-beta.4.tgz",
+			"integrity": "sha512-fQMCj8jRpF/2CPuVnpFrOb8+8pRuquKqoC+tspy5RWBmL37/2qc104sLLLqpwWltrFzpYb30utPpKc3H6P3ETQ==",
 			"dev": true,
 			"requires": {
 				"find-cache-dir": "^1.0.0",
 				"loader-utils": "^1.0.2",
-				"mkdirp": "^0.5.1"
+				"mkdirp": "^0.5.1",
+				"util.promisify": "^1.0.0"
 			}
 		},
 		"babel-plugin-lodash": {
@@ -4829,7 +4830,8 @@
 				"ansi-regex": {
 					"version": "2.1.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"aproba": {
 					"version": "1.2.0",
@@ -5244,7 +5246,8 @@
 				"safe-buffer": {
 					"version": "5.1.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"safer-buffer": {
 					"version": "2.1.2",
@@ -5300,6 +5303,7 @@
 					"version": "3.0.1",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"ansi-regex": "^2.0.0"
 					}
@@ -5343,12 +5347,14 @@
 				"wrappy": {
 					"version": "1.0.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"yallist": {
 					"version": "3.0.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				}
 			}
 		},
