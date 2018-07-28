@@ -20,6 +20,9 @@ export let config: Config = {
 	SELENIUM_PROMISE_MANAGER: false,
 	baseUrl: webBaseUrl,
 	params: { vpdb: vpdbConfig },
+	jasmineNodeOpts: {
+		defaultTimeoutInterval: 30000
+	},
 	onPrepare: async () => {
 		setupReporter();
 		await setupUsers();
