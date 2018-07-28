@@ -1,4 +1,4 @@
-![vpdb][text-logo]
+<img src="https://raw.githubusercontent.com/vpdb/server/master/assets/vpdb-logo-text.svg?sanitize=true" alt="VPDB" width="250">
 
 *A database for Virtual Pinball tables.*
 
@@ -74,7 +74,7 @@ Before tests, code is linted using [ESLint](https://eslint.org/).
 
 ## Credits
 
-[![IntelliJ IDEA][idea-image]][idea-url]
+<a title="IntelliJ IDEA" href="https://www.jetbrains.com/idea/"><img src="https://raw.githubusercontent.com/vpdb/server/master/assets/intellij-logo-text.svg?sanitize=true" alt="IntelliJ IDEA" width="250"></a>
 
 Thanks to JetBrains for their awesome IDE and support of the Open Source Community!
 
@@ -90,6 +90,3 @@ Finally, huge thanks to BrowserStack for offering free end-to-end testing for th
 
 GPLv2, see [LICENSE](LICENSE).
 
-[text-logo]: https://github.com/vpdb/server/raw/master/gfx/text-logo.png
-[idea-image]: https://raw.githubusercontent.com/vpdb/backend/master/gfx/logo_IntelliJIDEA.png
-[idea-url]: https://www.jetbrains.com/idea/
