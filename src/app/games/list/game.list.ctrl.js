@@ -59,7 +59,7 @@ export default class GameListCtrl {
 			new Param({ name: 'filterDecades', defaultValue: [], reqName: 'decade' }),
 			new Param({ name: 'filterManufacturer', defaultValue: [], reqName: 'mfg' }),
 			new Param({ name: 'includeEmptyGames', defaultValue: false, urlName: 'show_empty', reqName: 'min_releases', fromUrl: v => !!v, toReq: v => v ? 0 : 1, toUrl: v => v ? 1 : 0 }),
-			new Param({ name: 'sort', defaultValue: 'released_at' }),
+			new Param({ name: 'sort', defaultValue: 'popularity' }),
 			new Param({ name: 'page', defaultValue: 1, fromUrl: page => parseInt(page, 10) }),
 			new Param({ name: 'perPage', defaultValue: 12, fromUrl: null })
 		]);
