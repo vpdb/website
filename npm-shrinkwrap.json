@@ -771,9 +771,9 @@
 			"integrity": "sha512-/9xLnYmohN/vD2gDnLS4cym8TUmrJu7DvZa/LELKzZjdPsvWVJiedsdu2SXNtb/DA7FGimqL2g0IoyhbNKLl8g=="
 		},
 		"@types/lodash": {
-			"version": "4.14.114",
-			"resolved": "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.114.tgz",
-			"integrity": "sha512-0yfTOvQd1ePadg9jAd/6sbE8+iFQOCGZe4Biyob0UeDTtXg0XafnRpIA0G9Zawj6OuvW2tw3CWH4hEoTZcJiEQ==",
+			"version": "4.14.116",
+			"resolved": "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.116.tgz",
+			"integrity": "sha512-lRnAtKnxMXcYYXqOiotTmJd74uawNWuPnsnPrrO7HiFuE3npE2iQhfABatbYDyxTNqZNuXzcKGhw37R7RjBFLg==",
 			"dev": true
 		},
 		"@types/node": {
@@ -4714,6 +4714,7 @@
 					"version": "2.2.4",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"safe-buffer": "^5.1.1",
 						"yallist": "^3.0.0"
@@ -4732,6 +4733,7 @@
 					"version": "0.5.1",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"minimist": "0.0.8"
 					}
@@ -4825,6 +4827,7 @@
 					"version": "1.4.0",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"wrappy": "1"
 					}
