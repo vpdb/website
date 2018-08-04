@@ -47,7 +47,7 @@ export default class UserMergeModalCtrl {
 		});
 
 		this.users = data.users.map(user => {
-			const providerNames = user.providers.map(p => p.provider);
+			const providerNames = Object.keys(user.providers);
 			if (user.is_local) {
 				providerNames.unshift('local');
 			}

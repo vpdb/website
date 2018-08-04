@@ -95,7 +95,7 @@ export default class ProfileSettingsCtrl {
 			for (i = 0; i < allProviders.length; i++) {
 				provider = allProviders[i];
 				if (this.AuthService.user.providers[provider.id] && this.AuthService.user.providers[provider.id].name) {
-					this.localCredentials.username = this.AuthService.user[provider.id].username;
+					this.localCredentials.username = this.AuthService.user.providers[provider.id].username;
 					break;
 				}
 			}

@@ -518,7 +518,7 @@ export default class AuthService {
 
 		if (user) {
 			return providers
-				.map(provider => Object.assign(provider, { user: user.providers.find(p => p.provider === provider.id) }))
+				.map(provider => Object.assign(provider, { user: user.providers && user.providers[provider.id] }))
 				.filter(provider => returnOthers ? !provider.user : !!provider.user);
 		} else {
 			return providers;
