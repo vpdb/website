@@ -78,11 +78,13 @@ export default class ProfileSettingsCtrl {
 			}
 
 			// personal tokens
-			this.TokenResource.query({ type: 'personal', scopes: [ 'all' ] }, tokens => {
-				this.tokens = tokens.map(token => this.addTokenIcon(token));
-				this.hasAppTokens = tokens.filter(token => token.scopes.includes('all')).length > 0;
-				this.hasLoginTokens = tokens.filter(token => token.scopes.includes('login')).length > 0;
-			});
+			if (this.AuthService.user.plan.app_tokens_enabled) {
+				this.TokenResource.query({ type: 'personal', scopes: ['all'] }, tokens => {
+					this.tokens = tokens.map(token => this.addTokenIcon(token));
+					this.hasAppTokens = tokens.filter(token => token.scopes.includes('all')).length > 0;
+					this.hasLoginTokens = tokens.filter(token => token.scopes.includes('login')).length > 0;
+				});
+			}
 			this.showTokenAlert = false;
 
 

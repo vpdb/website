@@ -150,7 +150,7 @@ include ../../template/_mixins
 .span(ng-show="vm.AuthService.user.provider === 'local'")
 	h1 Application Tokens
 	hr
-	p(ng-hide="vm.AuthService.user.plan.app_tokens_enabled") This allows you to give other applications such as VPDB Agent full access to the API without having to hand over your password. However, application tokens are currently disabled for your current plan.
+	p(ng-hide="vm.AuthService.user.plan.app_tokens_enabled") This allows you to give other applications such as VPDB Agent full access to the API without having to hand over your password. However, application tokens are disabled for your current plan.
 	p(ng-show="vm.AuthService.user.plan.app_tokens_enabled") This allows you to give other applications such as VPDB Agent full access to the API without having to hand over your password. You can delete or temporarily disable these tokens any time.
 
 	.alert.alert-success.padder-bottom(ng-show="vm.showTokenAlert")
@@ -247,7 +247,7 @@ p(ng-if="!vm.providers.length")
 div(ng-if="vm.unlinkedProviders.length > 0")
 	p Link account to:
 	span(ng-repeat="provider in vm.unlinkedProviders")
-		button.btn.btn-hollow.space-right(ng-click="vm.linkAccount(provider)")
+		button.btn.btn-hollow.padder-bottom.space-right(ng-click="vm.linkAccount(provider)")
 			+icon('{{ provider.icon }}').space-right
 			| {{ provider.name }}
 
