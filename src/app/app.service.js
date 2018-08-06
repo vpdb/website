@@ -124,12 +124,12 @@ export default class App {
 			this.$log.warn('No variations in ', image);
 			return;
 		}
-		const name = this.pixelSuffix(variation);
+		const name = /-\d+x$/.test(variation) ? variation : this.pixelSuffix(variation);
 		if (!image.variations[name]) {
 			this.$log.warn('No variation "%s" in ', variation, image);
 			return image.url;
 		}
-		return image.variations[this.pixelSuffix(variation)].url;
+		return image.variations[name].url;
 	}
 
 	/**
