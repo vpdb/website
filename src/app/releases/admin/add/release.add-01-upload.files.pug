@@ -13,7 +13,7 @@ p Drag and drop your files from the file explorer into the box below.
 					.block.text--large: strong {{ file.name }}
 					.block.text--large(ng-hide="file.uploading") {{ file.bytes | bytes }}
 					uib-progressbar.progress-striped.active(value="file.progress", ng-show="file.uploading")
-			+icon('trash')(ng-click="vm.removeFile(file)", ng-hide="file.uploading")
+			+icon('trash')(ng-click="$event.stopPropagation();vm.removeFile(file)", ng-hide="file.uploading")
 
 	label.center-block.text-center: small: i Drop your files in here.
 
