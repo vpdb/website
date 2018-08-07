@@ -134,7 +134,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 	}
 
 	canSelectPlayfield(file) {
-		return this.getCompatiblePlayfieldImages(this.release, file).length > 0;
+		return ReleaseAddVersionCtrl.getCompatiblePlayfieldImages(this.release, file).length > 0;
 	}
 
 	/** Resets all entered data */
@@ -242,7 +242,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 		}
 	}
 
-	getCompatiblePlayfieldImages(release, file) {
+	static getCompatiblePlayfieldImages(release, file) {
 		const images = [];
 		release.versions.forEach(version => {
 			version.files.forEach(f => {
