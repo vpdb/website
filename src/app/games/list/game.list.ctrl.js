@@ -94,7 +94,8 @@ export default class GameListCtrl {
 	 */
 	refresh() {
 		const reqParams = this.params.toRequest();
-		if (!isEqual(this.lastReqParams, reqParams)) {
+		const validQuery = !reqParams.q || reqParams.q.length > 2;
+		if (validQuery && !isEqual(this.lastReqParams, reqParams)) {
 			this.ApiHelper.paginatedRequest(() => this.GameResource.query(reqParams), this.status, this.pagination).then(games => {
 				this.games = games;
 				this.lastReqParams = reqParams;
