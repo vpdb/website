@@ -41,21 +41,15 @@
 		"ips": [
 			{
 				"id": "ips",
-				"name": "IPS Test",
+				"name": "IPS 4.2 Aquarium",
 				"icon": "gameex",
 				"url": "/auth/ips"
 			},
 			{
 				"id": "ips43",
-				"name": "Invision",
+				"name": "IPS 4.3 Winona",
 				"icon": "offline",
 				"url": "/auth/ips43"
-			},
-			{
-				"id": "ips43-old",
-				"name": "4.3 and plugin",
-				"icon": "gameex",
-				"url": "/auth/ips43-old"
 			}
 		]
 	},
