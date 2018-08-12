@@ -146,12 +146,6 @@ export default class ReleaseDetailsCtrl {
 			this.release = release;
 			this.App.setTitle(title);
 
-			// download dialog
-			if (this.showDownloadAfterFetch && !this.status.game.loading) {
-				this._showDownloadModal();
-				this.showDownloadAfterFetch = false;
-			}
-
 			// moderation toggle
 			if (this.$location.search()['show-moderation']) {
 				this.showModeration = true;
@@ -224,6 +218,12 @@ export default class ReleaseDetailsCtrl {
 				};
 			}
 			this.TrackerService.trackPage();
+
+			// download dialog
+			if (this.showDownloadAfterFetch && !this.status.game.loading) {
+				this._showDownloadModal();
+				this.showDownloadAfterFetch = false;
+			}
 
 		}).catch(() => this.release = null);
 	}
