@@ -33,12 +33,12 @@ module.exports  = function(options) {
 
 	// pre-load fonts
 	const preLoad = [
-		{ href: 'https://use.typekit.net/af/e4603e/0000000000000000000132e3/27/l?subset_id=2&fvd=n7&v=3', as: 'font' },
-		{ href: 'https://use.typekit.net/af/35c51c/0000000000000000000132e4/27/l?subset_id=2&fvd=i7&v=3', as: 'font' },
-		{ href: 'https://use.typekit.net/af/236da1/0000000000000000000132db/27/l?subset_id=2&fvd=n1&v=3', as: 'font' },
-		{ href: 'https://use.typekit.net/af/6a0e7c/0000000000000000000132dc/27/l?subset_id=2&fvd=i1&v=3', as: 'font' },
-		{ href: 'https://use.typekit.net/af/62b3d3/0000000000000000000132dd/27/l?subset_id=2&fvd=n3&v=3', as: 'font' },
-		{ href: 'https://use.typekit.net/af/6c39dc/0000000000000000000132de/27/l?subset_id=2&fvd=i3&v=3', as: 'font' },
+		{ href: 'https://use.typekit.net/af/8f4e31/0000000000000000000132e3/27/l?subset_id=2&fvd=n7&v=3', as: 'font' },
+		{ href: 'https://use.typekit.net/af/383ab4/0000000000000000000132e4/27/l?subset_id=2&fvd=i7&v=3', as: 'font' },
+		{ href: 'https://use.typekit.net/af/333a5f/0000000000000000000132db/27/l?subset_id=2&fvd=n1&v=3', as: 'font' },
+		{ href: 'https://use.typekit.net/af/919252/0000000000000000000132dc/27/l?subset_id=2&fvd=i1&v=3', as: 'font' },
+		{ href: 'https://use.typekit.net/af/2f8f3d/0000000000000000000132dd/27/l?subset_id=2&fvd=n3&v=3', as: 'font' },
+		{ href: 'https://use.typekit.net/af/9f8c97/0000000000000000000132de/27/l?subset_id=2&fvd=i3&v=3', as: 'font' },
 	];
 	return {
 		entry: {
