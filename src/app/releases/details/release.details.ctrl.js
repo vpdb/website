@@ -101,6 +101,7 @@ export default class ReleaseDetailsCtrl {
 			release: { loading: false, offline: false },
 			game: { loading: false, offline: false },
 		};
+		this.showDownloadAfterFetch = false;
 
 		// ratings
 		if (this.AuthService.hasPermission('releases/rate')) {
@@ -110,7 +111,11 @@ export default class ReleaseDetailsCtrl {
 		// download release on event
 		$rootScope.$on('downloadRelease', (event, params) => {
 			if (params === this.releaseId) {
-				this._showDownloadModal();
+				if (!this.status.release.loading && !this.status.game.loading) {
+					this._showDownloadModal();
+				} else {
+					this.showDownloadAfterFetch = true;
+				}
 			}
 		});
 
@@ -121,7 +126,13 @@ export default class ReleaseDetailsCtrl {
 
 		// GAME
 		this.ApiHelper.request(() => this.GameResource.get({ id: this.gameId }), this.status.game)
-			.then(game => this.game = game)
+			.then(game => {
+				this.game = game;
+				if (this.showDownloadAfterFetch && !this.status.release.loading) {
+					this._showDownloadModal();
+					this.showDownloadAfterFetch = false;
+				}
+			})
 			.catch(() => this.game = null);
 
 		// RELEASE
@@ -134,6 +145,12 @@ export default class ReleaseDetailsCtrl {
 			};
 			this.release = release;
 			this.App.setTitle(title);
+
+			// download dialog
+			if (this.showDownloadAfterFetch && !this.status.game.loading) {
+				this._showDownloadModal();
+				this.showDownloadAfterFetch = false;
+			}
 
 			// moderation toggle
 			if (this.$location.search()['show-moderation']) {
