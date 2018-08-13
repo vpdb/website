@@ -1,6 +1,6 @@
 {
 	"name": "vpdb-website",
-	"version": "2.0.4-SNAPSHOT",
+	"version": "2.0.6-SNAPSHOT",
 	"lockfileVersion": 1,
 	"requires": true,
 	"dependencies": {
@@ -1129,14 +1129,14 @@
 			"dev": true
 		},
 		"angular": {
-			"version": "1.7.2",
-			"resolved": "https://registry.npmjs.org/angular/-/angular-1.7.2.tgz",
-			"integrity": "sha512-JcKKJbBdybUsmQ6x1M3xWyTYQ/ioVKJhSByEAjqrhmlOfvMFdhfMqAx5KIo8rLGk4DFolYPcCSgssjgTVjCtRQ=="
+			"version": "1.7.3",
+			"resolved": "https://registry.npmjs.org/angular/-/angular-1.7.3.tgz",
+			"integrity": "sha512-hQRhU56shs72y88cS0Uy9g+UAMHoztJ3V+r+iF8o1AK/Bpu8ewmjFDk9j2LjSuN05a9mhxW1rOHnYKOwyTS/Zg=="
 		},
 		"angular-animate": {
-			"version": "1.7.2",
-			"resolved": "https://registry.npmjs.org/angular-animate/-/angular-animate-1.7.2.tgz",
-			"integrity": "sha512-/MQL2FEFXhdzFUKJ9AJq6gAYz3YGsh2xHTztuQKY5FkqjEBpF5YGypgprTz153P7t51T8nFqLsG8jwkpRdM6gg=="
+			"version": "1.7.3",
+			"resolved": "https://registry.npmjs.org/angular-animate/-/angular-animate-1.7.3.tgz",
+			"integrity": "sha512-RIYQhql+jUU13jwTrXemSMYTfbGuLBr7jh67R3UbR2yCQ8IOxcXHn2tx+hm8PwXX8agsFAQjWSPP5wam5ecuSg=="
 		},
 		"angular-bootstrap-lightbox": {
 			"version": "github:dobavictor/angular-bootstrap-lightbox#a388c5f4407fec9600dca76dbde25ba24dc31d5e",
@@ -1159,19 +1159,19 @@
 			}
 		},
 		"angular-resource": {
-			"version": "1.7.2",
-			"resolved": "https://registry.npmjs.org/angular-resource/-/angular-resource-1.7.2.tgz",
-			"integrity": "sha512-AEjn7DpRoXum49uYbUVr0fl9ZigjE6U3PwouclmNjCrspRzcal8UI8kaqqhFJFu+ZW5e5QdBY28BVfdW0pYmpA=="
+			"version": "1.7.3",
+			"resolved": "https://registry.npmjs.org/angular-resource/-/angular-resource-1.7.3.tgz",
+			"integrity": "sha512-kfdpoP/aQv3EtRiBrOUBsjvp7zxKEg/FEZZSHaOD56AwRb+FjDhRstgaiB5+6YJLr45WVJU6QyVUriwwpD+0VQ=="
 		},
 		"angular-sanitize": {
-			"version": "1.7.2",
-			"resolved": "https://registry.npmjs.org/angular-sanitize/-/angular-sanitize-1.7.2.tgz",
-			"integrity": "sha512-8XmhwhT+TwnLzz4VMq9kIqj9b2aBt4lgYWRw9s+Q8ysx0z/glDcnoPxMrlR/dXItlww8NM/1pscgO1bGVGdiXA=="
+			"version": "1.7.3",
+			"resolved": "https://registry.npmjs.org/angular-sanitize/-/angular-sanitize-1.7.3.tgz",
+			"integrity": "sha512-2t5BXXx0/4qGdGp54eCvT+1fM+yFP2ub5TnNFIpJDeSrPwlQD8ThesOWxEsBnr+3UVKTE/TzX2Q4g8qjQXhDzw=="
 		},
 		"angular-touch": {
-			"version": "1.7.2",
-			"resolved": "https://registry.npmjs.org/angular-touch/-/angular-touch-1.7.2.tgz",
-			"integrity": "sha512-xLuuc7Vo0XBsyMG0iAws+D3f5RuneKTqrW0ZxZ0TF2PuZOfQy/ND5HoXb3tP10pbcrE15CHV/Y6nWGLDHOv+pw=="
+			"version": "1.7.3",
+			"resolved": "https://registry.npmjs.org/angular-touch/-/angular-touch-1.7.3.tgz",
+			"integrity": "sha512-U0N70NL5MnqVRkja3Zsx4OgnqCYRKuA8SLNMZHzkRzorA4+X/SnLhNLx9gluVIussefkwIGz/4Rnfat16lFoCQ=="
 		},
 		"angular-ui-bootstrap": {
 			"version": "2.5.6",
@@ -4649,7 +4649,8 @@
 				"ansi-regex": {
 					"version": "2.1.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"aproba": {
 					"version": "1.2.0",
@@ -5064,7 +5065,8 @@
 				"safe-buffer": {
 					"version": "5.1.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"safer-buffer": {
 					"version": "2.1.2",
@@ -5120,6 +5122,7 @@
 					"version": "3.0.1",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"ansi-regex": "^2.0.0"
 					}
@@ -5163,12 +5166,14 @@
 				"wrappy": {
 					"version": "1.0.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"yallist": {
 					"version": "3.0.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				}
 			}
 		},
