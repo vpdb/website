@@ -53,7 +53,7 @@ include ../../template/_mixins
 
 //- LOCAL REGISTRATION
 //-----------------------------------------------------------------------------
-.span(ng-hide="vm.AuthService.user.provider === 'local'")
+.span(ng-if="!vm.AuthService.user.is_local")
 
 	h1 Local Credentials
 	hr
@@ -98,7 +98,7 @@ include ../../template/_mixins
 
 //- CHANGE PASSWORD
 //-----------------------------------------------------------------------------
-.span(ng-show="vm.AuthService.user.provider === 'local'")
+.span(ng-if="vm.AuthService.user.is_local")
 
 	h1 Change Password
 	hr
@@ -147,7 +147,7 @@ include ../../template/_mixins
 
 //- APPLICATION TOKENS
 //-----------------------------------------------------------------------------
-.span(ng-show="vm.AuthService.user.provider === 'local'")
+.span(ng-if="vm.AuthService.user.is_local")
 	h1 Application Tokens
 	hr
 	p(ng-hide="vm.AuthService.user.plan.app_tokens_enabled") This allows you to give other applications such as VPDB Agent full access to the API without having to hand over your password. However, application tokens are disabled for your current plan.
@@ -188,7 +188,7 @@ include ../../template/_mixins
 
 //- LOGIN TOKENS
 //-----------------------------------------------------------------------------
-.span(ng-show="vm.hasLoginTokens")
+.span(ng-if="vm.hasLoginTokens")
 	h1 Authenticated Browsers
 	hr
 	p These are browsers where you are automatically logged.
