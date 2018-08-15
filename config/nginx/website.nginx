@@ -51,8 +51,13 @@ server {
 	set $cache_forever "no-transform,public,max-age=31536000";
 	set $cache_favicon "no-transform,public,max-age=604800";
 
+	# staging protection
 	auth_basic "Restricted";
 	auth_basic_user_file /var/www/.htpasswd;
+
+	# logs
+	error_log /var/log/nginx/www-error.log;
+	access_log /var/log/nginx/www-access.log;
 
 	location ~ /.well-known {
 		root /etc/nginx/ssl/letsencrypt;
