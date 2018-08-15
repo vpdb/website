@@ -28,12 +28,14 @@ export default class DownloadService {
 	 * @param {App} App
 	 * @param {AuthService} AuthService
 	 * @param {ConfigService} ConfigService
+	 * @param {ErrorReportingService} ErrorReportingService
 	 * @ngInject
 	 */
-	constructor(App, AuthService, ConfigService) {
+	constructor(App, AuthService, ConfigService, ErrorReportingService) {
 		this.App = App;
 		this.AuthService = AuthService;
 		this.ConfigService = ConfigService;
+		this.ErrorReportingService = ErrorReportingService;
 	}
 
 	/**
@@ -73,7 +75,9 @@ export default class DownloadService {
 		const path = '/v1/releases/' + releaseId;
 		const url = this.ConfigService.storageUri(path);
 		this.AuthService.fetchUrlTokens(url, (err, tokens) => {
-			// todo treat error
+			if (err) {
+				return this.ErrorReportingService.reportError(new Error('Error fetching storage token for ' + url), err);
+			}
 			this.App.downloadLink(this.ConfigService.storageUri(path, true), tokens[url], JSON.stringify(downloadRequest), callback);
 		});
 	}
