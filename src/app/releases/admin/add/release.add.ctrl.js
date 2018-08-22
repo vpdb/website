@@ -315,9 +315,11 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		});
 
 		this.submitting = true;
+		this.App.setLoading(true);
 		this.ReleaseResource.save({ rotate: rotationParams.join(',') }, this.release, release => {
 			this.release.submitted = true;
 			this.submitting = false;
+			this.App.setLoading(false);
 			this.reset();
 
 			let moderationMsg = '';
@@ -337,6 +339,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 
 		}, this.ApiHelper.handleErrors(this, scope => {
 			this.submitting = false;
+			this.App.setLoading(false);
 
 			// if it's an array, those area displayed below
 			if (scope.errors && scope.errors.versions && !isArray(scope.errors.versions[0].files)) {
