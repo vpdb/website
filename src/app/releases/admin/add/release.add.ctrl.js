@@ -74,6 +74,8 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		// statuses
 		this.submitting = false;
 		this.showHelp = $localStorage.showInstructions.release_add;
+		this.gameId = $stateParams.id;
+
 		$scope.$watch(() => this.showHelp, () => $localStorage.showInstructions.release_add = this.showHelp);
 
 		// init data: either copy from local storage or reset.
@@ -95,7 +97,6 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		}
 
 		// fetch game info
-		this.gameId = $stateParams.id;
 		GameResource.get({ id: this.gameId }, response => {
 			this.game = response.data;
 			this.game.lastrelease = new Date(this.game.lastrelease).getTime();
@@ -308,9 +309,8 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 			if (!file._playfield_image) {
 				return;
 			}
-			const rotation = this.meta.mediaLinks[this.getMediaKey(file, 'playfield_image')].rotation;
-			const offset = this.meta.mediaLinks[this.getMediaKey(file, 'playfield_image')].offset;
-			const relativeRotation = rotation + offset;
+			const state = this.meta.mediaLinks[this.getMediaKey(file, 'playfield_image')];
+			const relativeRotation = state.rotation + state.offset;
 			rotationParams.push(file._playfield_image + ':' + relativeRotation);
 		});
 

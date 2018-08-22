@@ -27,7 +27,7 @@ export default function allowedFlavors() {
 		if (file) {
 			const ext = file.name.substr(file.name.lastIndexOf('.')).toLowerCase();
 			if (ext !== '.vpx') {
-				return omit(flavors, 'any');
+				return omit(flavors, ['any']);
 			}
 		}
 		return flavors;

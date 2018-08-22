@@ -109,7 +109,7 @@ export default class ProfileSettingsCtrl {
 	 */
 	updateUserProfile() {
 
-		const updatedUser = this.AuthService.user.email_status && this.AuthService.user.email_status.code === 'pending_update' ? omit(this.updatedUser, 'email') : this.updatedUser;
+		const updatedUser = this.AuthService.user.email_status && this.AuthService.user.email_status.code === 'pending_update' ? omit(this.updatedUser, ['email']) : this.updatedUser;
 		this.ProfileResource.patch(updatedUser, user => {
 
 			if (user.email_status && user.email_status.code === 'pending_update' && !this.AuthService.user.email_status) {

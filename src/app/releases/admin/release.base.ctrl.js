@@ -346,24 +346,44 @@ export default class ReleaseBaseCtrl {
 	 */
 	updateRotation(releaseFile, mediaFile) {
 
-		let rotation = 0;
+		/*
+		 * There's two variables:
+		 *
+		 * 1. The uploaded file can be any rotation, e.g. an FS shot is
+		 *    typically already rotated to WS.
+		 * 2. In order to display, we always use the landscape variation from
+		 *    the backend, which is displayed vertically for FS shots and hence
+		 *    needs to be rotated back in order to display.
+		 *
+		 * The `rotationDiff` variable is the angle the backend needs to apply
+		 * to rotate the image to its correct orientation.
+		 *
+		 * The `rotation` variable tells us how to *display* the image, and the
+		 * `offset` variable is used to calculate `rotationDiff` when posting
+		 * to the server.
+		 *
+		 * When the user rotates the image, the `rotation` variable is updated,
+		 * resulting in a potentially different rotation than before.
+		 */
+		let rotationDiff = 0;
 		let offset = 0;
+		const isPortrait = mediaFile.storage.metadata.size.width < mediaFile.storage.metadata.size.height;
 
 		// we use the landscape image from the backend, so if it's a portrait, set offset
-		if (mediaFile.storage.metadata.size.width < mediaFile.storage.metadata.size.height) {
+		if (isPortrait) {
 			offset = -90;
 		}
 
 		// if orientation of the release file is known to be desktop, don't rotate.
 		if (releaseFile.flavor && releaseFile.flavor.orientation === 'ws') {
-			rotation = 0;
+			rotationDiff = 0;
 
 		// otherwise, assume it's a fullscreen release and rotate accordingly.
-		} else if (mediaFile.storage.metadata.size.width > mediaFile.storage.metadata.size.height) {
-			rotation = 90;
+		} else if (!isPortrait) {
+			rotationDiff = 90;
 		}
 
-		this.meta.mediaLinks[mediaFile.key].rotation = rotation - offset;
+		this.meta.mediaLinks[mediaFile.key].rotation = rotationDiff - offset;
 		this.meta.mediaLinks[mediaFile.key].offset = offset;
 	}
 
