@@ -38,33 +38,11 @@ html#app(lang="en")
 		meta(name="msapplication-TileColor", content="#ec843d")
 		meta(name="msapplication-config", content="/favicon/browserconfig.xml")
 		meta(http-equiv="X-UA-Compatible", content="IE=Edge")
-		style.
-			@keyframes loading-spinner {
-				to {
-					transform: rotate(360deg)
-				}
-			}
-			html.wf-loading > body > vpdb > * {
-				display:none
-			}
-			html.wf-loading > body > vpdb > loading {
-				display:block
-			}
-			body {
-				background-color: #121110
-			}
-			loading > .logo {
-				margin: 0;
-				position: absolute;
-				top: 35%;
-				left: 50%;
-				transform: translate(-55%, -35%)
-			}
-			loading > .logo svg.svg-icon {
-				fill: #4d4b49;
-				position: absolute
-			}
 		base(href="/")
+
+		//- spinner style
+		style @keyframes loading-spinner{to{transform:rotate(360deg)}}html.wf-loading>body>vpdb>*{display:none}html.wf-loading>body>vpdb>loading{display:block}body{background-color:#121110}loading>.logo{margin:0;position:absolute;top:35%;left:50%;transform:translate(-55%,-35%)}loading>.logo svg.svg-icon{fill:#4d4b49;position:absolute}
+
 		//- styles
 		each cssFileName in htmlWebpackPlugin.files.css
 			link(rel="preload" href=cssFileName as="style" onload="this.onload=null;this.rel='stylesheet'")
@@ -85,7 +63,7 @@ html#app(lang="en")
 					div
 						svg.svg-icon(style='height:40px;width:40px;position:relative;left:11px')
 							use(xlink:href='#logo-vp')
-						svg.svg-icon(style='height:40px;width:40px;position:relative;left:6px')
+						svg.svg-icon(style='height:40px;width:40px;position:relative;left:10px')
 							use(xlink:href='#logo-db')
 
 		//- notifications

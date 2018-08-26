@@ -52,10 +52,10 @@ module.exports  = function(options) {
 					{ loader: 'babel-loader', options: { presets: ['@babel/preset-env'], plugins: [ 'lodash' ] } }
 				], include: srcContext },
 				{ test: /\.pug$/, oneOf: [
-					{ test: /index\.pug$/, use: [ { loader: 'pug-loader', options: { pretty: !isProd } } ] },
+					{ test: /index\.pug$/, use: [ { loader: 'pug-loader', options: { pretty: false } } ] },
 					{ use: [
 						{ loader: 'file-loader', options: { name: '[path][name]-[sha256:hash:base58:8].html', context: appContext } },
-						{ loader: 'pug-html-loader', options: { pretty: !isProd } }
+						{ loader: 'pug-html-loader', options: { pretty: false } }
 					] }
 				] },
 				{ test: /\.html$/, loader: 'raw-loader' },
