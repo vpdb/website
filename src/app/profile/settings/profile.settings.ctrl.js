@@ -168,7 +168,7 @@ export default class ProfileSettingsCtrl {
 		this.ProfileResource.patch({
 			username: this.localCredentials.username,
 			password: this.localCredentials.password1
-		}, function(user) {
+		}, user => {
 			this.AuthService.saveUser(user);
 			this.ApiHelper.clearErrors(this);
 			this.App.showNotification('Local credentials successfully created. You may login with username <strong>' + this.localCredentials.username + '</strong> now.', 5000);
