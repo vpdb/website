@@ -64,8 +64,8 @@
 		"videojs-sublime-skin": "1.0.3"
 	},
 	"devDependencies": {
-		"@babel/core": "7.0.0-rc.3",
-		"@babel/preset-env": "7.0.0-rc.3",
+		"@babel/core": "7.0.1",
+		"@babel/preset-env": "7.0.0",
 		"@types/axios": "0.14.0",
 		"@types/faker": "4.1.3",
 		"@types/jasmine": "2.8.8",
