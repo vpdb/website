@@ -8843,9 +8843,9 @@
 			}
 		},
 		"protractor-beautiful-reporter": {
-			"version": "1.2.3",
-			"resolved": "https://registry.npmjs.org/protractor-beautiful-reporter/-/protractor-beautiful-reporter-1.2.3.tgz",
-			"integrity": "sha512-s710QFEJ8cTMQQ3e4vsce4ueqoOp1rzvvtdr54jQc47Q/CaZ5+NlFwx9vygT06Xt4/VS7FdTMqFN5bRKWEUg7w==",
+			"version": "1.2.5",
+			"resolved": "https://registry.npmjs.org/protractor-beautiful-reporter/-/protractor-beautiful-reporter-1.2.5.tgz",
+			"integrity": "sha512-9yt1v5WPuppvet42xvTXVC2/Z2yZWMRevOLlScpHna9cigtfno56Afe+vL9dnrAKBRTgZOz5DqgTNliArYmkxA==",
 			"dev": true,
 			"requires": {
 				"circular-json": "^0.3.1",
@@ -8857,7 +8857,7 @@
 			"dependencies": {
 				"mkdirp": {
 					"version": "0.3.5",
-					"resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz",
+					"resolved": "http://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz",
 					"integrity": "sha1-3j5fiWHIjHh+4TaN+EmsRBPsqNc=",
 					"dev": true
 				}
