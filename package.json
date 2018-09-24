@@ -106,7 +106,7 @@
 		"raw-loader": "0.5.1",
 		"rollbar-sourcemap-webpack-plugin": "2.3.0",
 		"stream-to-array": "2.3.0",
-		"style-loader": "0.22.0",
+		"style-loader": "0.23.0",
 		"stylus": "0.54.5",
 		"stylus-loader": "3.0.2",
 		"svg-sprite-loader": "3.8.0",
