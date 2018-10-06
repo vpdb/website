@@ -27,7 +27,7 @@ import { orderBy, flatten } from 'lodash';
 export default class ReleaseService {
 
 	/**
-	 * @param {$log}
+	 * @param $log
 	 * @param {AuthService} AuthService
 	 * @param {Flavors} Flavors
 	 * @param {ModalService} ModalService

@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { orderBy } from 'lodash';
+import { flatten, orderBy } from 'lodash';
 
 import ReleaseDownloadModalTpl from './release.download.modal.pug';
 import ReleaseFileValidationTpl from './release.file.validation.modal.pug';
@@ -159,17 +159,19 @@ export default class ReleaseDetailsCtrl {
 			this.latestVersion = this.releaseVersions[0];
 
 			// get latest shots
-			this.shots = orderBy(this.latestVersion.files.map((file, index) => {
-				if (!file.playfield_image) {
-					return null;
+			this.shots = orderBy(flatten(this.latestVersion.files.map(file => {
+				if (!file.playfield_images) {
+					return [];
 				}
-				return {
-					index: index,
-					type: file.playfield_image.file_type,
-					thumbUrl: file.playfield_image.variations[this.App.pixelSuffix('medium')].url,
-					url: file.playfield_image.variations.full.url
-				};
-			}).filter(v => v), [ 'type' ], [ 'asc' ]);
+				return file.playfield_images.map(img => {
+					return {
+						type: img.file_type,
+						thumbUrl: this.App.img(img, 'medium'),
+						url: this.App.img(img, 'full'),
+					};
+				});
+			})), 'file_type', true);
+			this.shots.forEach((s, index) => s.index = index); // add indexes
 
 			// fetch comments
 			this.comments = this.ReleaseCommentResource.query({ releaseId: release.id });
