@@ -198,9 +198,13 @@ export default class ReleaseDetailsCtrl {
 			let playfieldImage;
 			release.versions.forEach(version => {
 				version.files.forEach(file => {
-					// prefer landscape shot
-					if (!playfieldImage || (file.playfield_image.file_type === 'playfield-ws' && playfieldImage.file_type !== 'playfield-ws')) {
-						playfieldImage = file.playfield_image;
+					if (file.playfield_images) {
+						file.playfield_images.forEach(image => {
+							// prefer landscape shot
+							if (!playfieldImage || (image.file_type === 'playfield-ws' && image !== 'playfield-ws')) {
+								playfieldImage = image;
+							}
+						});
 					}
 				});
 			});
