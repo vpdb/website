@@ -94,7 +94,7 @@ export class Releases {
 					{
 						files: [ {
 							_file: tableFile.id,
-							_playfield_image: playfieldImage.id,
+							_playfield_images: [ playfieldImage.id ],
 							_compatibility: [ '9.9.0' ],
 							flavor: { orientation: 'fs', lighting: 'night' }
 						} ],

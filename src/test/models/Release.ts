@@ -76,10 +76,10 @@ export interface Release {
 			released_at?: Date,
 			file?: File
 			_file?: string,
-			playfield_image?: File
-			_playfield_image?: string
-			playfield_video?: File,
-			_playfield_video?: string,
+			playfield_images?: File[];
+			_playfield_image?: string[];
+			playfield_videos?: File[],
+			_playfield_videos?: string[],
 			compatibility?: Build[],
 			_compatibility?: string[],
 			flavor: {

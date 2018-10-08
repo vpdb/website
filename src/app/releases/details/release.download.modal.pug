@@ -13,7 +13,7 @@ include ../../template/_mixins
 		.row
 			.col-sm-3(ng-repeat="file in vm.latestVersion.files | filter:tableFile")
 				.flavor-item(ng-class="{ active: vm.downloadFiles[file.file.id] }", ng-click="vm.toggleFile(file)")
-					img.img.img-responsive.img--rounded-more(img-src="{{ file.playfield_image.variations['square-2x'].url }}")
+					img.img.img-responsive.img--rounded-more(img-src="{{ file.playfield_images[0].variations['square-2x'].url }}")
 					.text-center.padder-top
 						label.label--block
 							strong {{ vm.Flavors.orientation.values[file.flavor.orientation].name }},
@@ -32,11 +32,13 @@ include ../../template/_mixins
 
 			.col-sm-6
 				p
-					input#includePlayfieldImage.checkbox--toggle(type="checkbox", ng-model="vm.downloadRequest.playfield_image")
+					//- todo show all images if more than one
+					input#includePlayfieldImage.checkbox--toggle(type="checkbox", ng-model="vm.downloadRequest.playfield_images[0]")
 					label(for="includePlayfieldImage")
 					label(for="includePlayfieldImage") Include playfield shots
 				p
-					input#includePlayfieldVideo.checkbox--toggle(type="checkbox", ng-model="vm.downloadRequest.playfield_video")
+					//- todo show all videos if more than one
+					input#includePlayfieldVideo.checkbox--toggle(type="checkbox", ng-model="vm.downloadRequest.playfield_video[0]")
 					label(for="includePlayfieldVideo")
 					label(for="includePlayfieldVideo") Include playfield videos
 

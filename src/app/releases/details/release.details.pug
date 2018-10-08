@@ -215,7 +215,7 @@ include ../../template/_mixins
 						a(ng-click="vm.validateFile(vm.release, flavor.version.version, flavor.file)", uib-tooltip="{{ flavor.file.validation | validationTooltip }}", tooltip-placement="right", tooltip-append-to-body="true", tooltip-popup-delay="500")
 							+icon('{{ "medal-" + (flavor.file.validation | validationStatus) }}')
 					td.td--img
-						img.img--rounded(ng-src="{{ vm.App.img(flavor.file.playfield_image, 'square') }}")
+						img.img--rounded(ng-src="{{ vm.App.img(flavor.file.playfield_images[0], 'square') }}")
 					td(ng-show="!vm.$localStorage.showFilenames")
 						| {{ flavor.orientation.name }} <br>
 						i {{ flavor.orientation.other }}
