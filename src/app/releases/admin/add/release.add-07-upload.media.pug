@@ -18,15 +18,15 @@ span#media(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 				//- rotate icons
 				.pull-right
 					a(ng-show="vm.canSelectPlayfield(vm.getReleaseFile(file))", ng-click="vm.selectPlayfield(vm.getReleaseFile(file))", title="Choose playfield from previous version"): +icon('history')
-					a(ng-show="vm.getReleaseFile(file)._playfield_image", ng-click="vm.rotate(file, 'playfield_image', 90)", title="Rotate left"): +icon('rotate-left')
-					a(ng-show="vm.getReleaseFile(file)._playfield_image", ng-click="vm.rotate(file, 'playfield_image', -90)", title="Rotate right"): +icon('rotate-right')
+					a(ng-show="vm.getReleaseFile(file)._playfield_images && vm.getReleaseFile(file)._playfield_images.length", ng-click="vm.rotate(file, 'playfield_image', 90)", title="Rotate left"): +icon('rotate-left')
+					a(ng-show="vm.getReleaseFile(file)._playfield_images && vm.getReleaseFile(file)._playfield_images.length", ng-click="vm.rotate(file, 'playfield_image', -90)", title="Rotate right"): +icon('rotate-right')
 
 			//- drop zone
 			.panel.panel--blank.playfield--image(
 				id="playfield-image-{{ file.storage.id }}-upload",
 				file-upload="{ controller: vm, type: 'playfield', key: vm.getMediaKey(file, 'playfield_image'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }",
 				ngf-drag-over-class="'panel--dragging'",
-				ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_image }"
+				ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_images[0] }"
 			)
 				.panel-body.a.a--darker
 					.img.img--ar-ws.loaded(
@@ -57,7 +57,7 @@ span#media(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 				id="playfield-video-{{ file.storage.id }}-upload",
 				file-upload="{ controller: vm, type: vm.getPlayfieldType(file), key: vm.getMediaKey(file, 'playfield_video'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['flv', 'f4v', 'mp4', 'avi'], allowMultipleFiles: false, disableSelect: true }",
 				ngf-drag-over-class="'panel--dragging'",
-				ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_video }",
+				ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_videos[0] }",
 				ng-show="loadingFinished",
 			)
 				.panel-body.a.a--darker
@@ -70,7 +70,7 @@ span#media(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 				id="playfield-video2-{{ file.storage.id }}-upload",
 				file-upload="{ controller: vm, type: vm.getPlayfieldType(file), key: vm.getMediaKey(file, 'playfield_video'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['flv', 'f4v', 'mp4', 'avi'], allowMultipleFiles: false }",
 				ngf-drag-over-class="'panel--dragging'",
-				ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_video }",
+				ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_videos[0] }",
 				ng-hide="loadingFinished"
 			)
 				.panel-body.a.a--darker
@@ -100,9 +100,9 @@ span#media(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 		+icon('warning').shift-up.space-right
 		i Pleased set the <b>orientation</b> of the file under 3. before uploading media.
 
-	.alert.alert-danger(ng-show="vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_image")
+	.alert.alert-danger(ng-show="vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_images")
 		+icon('warning').shift-up.space-right
-		| {{ vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_image }}
+		| {{ vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_images }}
 
 .text-center(ng-show="(vm.meta.files | fileext:['vpt','vpx']).length == 0")
 	+icon('warning').shift-up.space-right

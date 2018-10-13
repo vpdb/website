@@ -306,12 +306,12 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		// retrieve rotation parameters
 		const rotationParams = [];
 		flatten(this.release.versions.map(v => v.files)).forEach(file => {
-			if (!file._playfield_image) {
+			if (!file._playfield_images || !file._playfield_images.length) {
 				return;
 			}
 			const state = this.meta.mediaLinks[this.getMediaKey(file, 'playfield_image')];
 			const relativeRotation = state.rotation + state.offset;
-			rotationParams.push(file._playfield_image + ':' + relativeRotation);
+			rotationParams.push(file._playfield_images[0] + ':' + relativeRotation);
 		});
 
 		this.submitting = true;

@@ -180,7 +180,7 @@ include ../../../template/_mixins
 					td {{ version.version }}
 					td: .multiline-wrapper: img.img--rounded.img--ar-square.img--xs.pull-right.space-left(
 						ng-repeat="file in version.files | filter:tableFile",
-						ng-src="{{ file.playfield_image.variations['square'].url }}"
+						ng-src="{{ file.playfield_images[0].variations['square'].url }}"
 						uib-tooltip="{{ vm.Flavors.orientation.values[file.flavor.orientation].other }} / {{ vm.Flavors.lighting.values[file.flavor.lighting].name }} / {{ vm.flattenBuilds(file.compatibility) }}"
 						tooltip-append-to-body="true"
 					)

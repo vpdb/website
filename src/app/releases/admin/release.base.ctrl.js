@@ -76,9 +76,10 @@ export default class ReleaseBaseCtrl {
 	 * and sorts each by date.
 	 */
 	fetchBuilds() {
-		const builds = this.BuildResource.query(() => {
+		this.BuildResource.query(builds => {
 			this.builds = {};
 			const types = [];
+			// split into types
 			builds.forEach(build => {
 				if (!this.builds[build.type]) {
 					this.builds[build.type] = [];
@@ -87,6 +88,8 @@ export default class ReleaseBaseCtrl {
 				build.built_at = new Date(build.built_at);
 				this.builds[build.type].push(build);
 			});
+
+			// sort by release date
 			types.forEach(type => {
 				this.builds[type].sort((a, b) => a.built_at.getTime() === b.built_at.getTime() ? 0 : (a.built_at.getTime() > b.built_at.getTime() ? -1 : 1));
 			});
@@ -147,8 +150,8 @@ export default class ReleaseBaseCtrl {
 				_randomId: status.randomId,
 				flavor: {},
 				_compatibility: [],
-				_playfield_image: null,
-				_playfield_video: null
+				_playfield_images: [],
+				_playfield_videos: [],
 			});
 		}
 	}
@@ -223,7 +226,7 @@ export default class ReleaseBaseCtrl {
 		// add to release object
 		const releaseFile = this.getReleaseFileForMedia(status);
 		const mediaType = status.key.split(':')[0];
-		releaseFile['_' + mediaType] = status.storage.id;
+		releaseFile['_' + mediaType + 's'] = [status.storage.id];
 
 		// figure out rotation
 		if (/^image\//.test(status.mimeType)) {

@@ -92,7 +92,7 @@ include ../../../template/_mixins
 						id="playfield-image-{{ file.storage.id }}-upload",
 						file-upload="{ controller: vm, type: 'playfield', key: vm.getMediaKey(file, 'playfield_image'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }",
 						ngf-drag-over-class="'panel--dragging'",
-						ng-class="{ error: vm.errors.files[vm.meta.files.indexOf(file)]._playfield_image }"
+						ng-class="{ error: vm.errors.files[vm.meta.files.indexOf(file)]._playfield_images[0] }"
 					)
 						.panel-body.a.a--darker
 							.img.img--ar-ws.loaded(
@@ -123,7 +123,7 @@ include ../../../template/_mixins
 						id="playfield-video-{{ file.storage.id }}-upload",
 						file-upload="{ controller: vm, type: vm.getPlayfieldType(file), key: vm.getMediaKey(file, 'playfield_video'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['flv', 'f4v', 'mp4', 'avi'], allowMultipleFiles: false, disableSelect: true }",
 						ngf-drag-over-class="'panel--dragging'",
-						ng-class="{ error: vm.errors.files[vm.meta.files.indexOf(file)]._playfield_video }",
+						ng-class="{ error: vm.errors.files[vm.meta.files.indexOf(file)]._playfield_videos[0] }",
 						ng-show="loadingFinished"
 					)
 						.panel-body.a.a--darker
@@ -135,7 +135,7 @@ include ../../../template/_mixins
 					.panel.panel--blank.playfield--image(
 					file-upload="{ controller: vm, type: vm.getPlayfieldType(file), key: vm.getMediaKey(file, 'playfield_video'), status: vm.meta.mediaFiles, onSuccess: vm.onMediaUpload, onClear: vm.onMediaClear, allowedExtensions: ['flv', 'f4v', 'mp4', 'avi'], allowMultipleFiles: false }",
 						ngf-drag-over-class="'panel--dragging'",
-						ng-class="{ error: vm.errors.files[vm.meta.files.indexOf(file)]._playfield_video }",
+						ng-class="{ error: vm.errors.files[vm.meta.files.indexOf(file)]._playfield_videos[0] }",
 						ng-hide="loadingFinished"
 					)
 						.panel-body.a.a--darker
@@ -160,9 +160,9 @@ include ../../../template/_mixins
 										+icon('gear').svg-3x.svg-spin--slow
 										p Generating video thumbnail...
 
-			.alert.alert-danger.media(ng-show="vm.errors.files[vm.meta.files.indexOf(file)]._playfield_image")
+			.alert.alert-danger.media(ng-show="vm.errors.files[vm.meta.files.indexOf(file)]._playfield_images[0]")
 				+icon('warning').shift-up.space-right
-				| {{ vm.errors.files[vm.meta.files.indexOf(file)]._playfield_image }}
+				| {{ vm.errors.files[vm.meta.files.indexOf(file)]._playfield_images[0] }}
 
 
 	.modal-footer

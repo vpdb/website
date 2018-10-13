@@ -77,7 +77,7 @@ export interface Release {
 			file?: File
 			_file?: string,
 			playfield_images?: File[];
-			_playfield_image?: string[];
+			_playfield_images?: string[];
 			playfield_videos?: File[],
 			_playfield_videos?: string[],
 			compatibility?: Build[],

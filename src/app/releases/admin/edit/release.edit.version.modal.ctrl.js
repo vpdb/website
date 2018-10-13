@@ -62,14 +62,14 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 			file._randomId = file.file.id;
 			file.file._randomId = file.file.id;
 			const playfieldImageKey = this.getMediaKey(file.file, 'playfield_image');
-			this.meta.mediaFiles[playfieldImageKey] = this.createMeta(file.playfield_image, playfieldImageKey);
-			this.meta.mediaLinks[playfieldImageKey] = this.createLink(file.playfield_image, 'landscape');
-			if (file.playfield_video) {
+			this.meta.mediaFiles[playfieldImageKey] = this.createMeta(file.playfield_images[0], playfieldImageKey);
+			this.meta.mediaLinks[playfieldImageKey] = this.createLink(file.playfield_images[0], 'landscape');
+			if (file.playfield_videos && file.playfield_videos.length) {
 				const playfieldVideoKey = this.getMediaKey(file.file, 'playfield_video');
-				this.meta.mediaFiles[playfieldVideoKey] = this.createMeta(file.playfield_video);
-				this.meta.mediaLinks[playfieldVideoKey] = this.createLink(file.playfield_video, 'small-rotated');
+				this.meta.mediaFiles[playfieldVideoKey] = this.createMeta(file.playfield_videos[0]);
+				this.meta.mediaLinks[playfieldVideoKey] = this.createLink(file.playfield_videos[0], 'small-rotated');
 			}
-			if (file.playfield_image.file_type === 'playfield-fs') {
+			if (file.playfield_images[0].file_type === 'playfield-fs') {
 				this.meta.mediaLinks[playfieldImageKey].rotation = 90;
 			}
 			return Object.assign(this.createMeta(file.file, { _compatibility: file.compatibility.map(c => c.id) }));
@@ -108,14 +108,14 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 		// retrieve rotation parameters
 		const rotationParams = [];
 		this.releaseVersion.files.forEach(file => {
-			let playfield_image = file._playfield_image || file.playfield_image;
-			if (!playfield_image) {
+			let playfield_images = file._playfield_images || file.playfield_images;
+			if (!playfield_images || !playfield_images.length) {
 				return;
 			}
 			const rotation = this.meta.mediaLinks[this.getMediaKey(file.file, 'playfield_image')].rotation;
 			const offset = this.meta.mediaLinks[this.getMediaKey(file.file, 'playfield_image')].offset;
 			const relativeRotation = (rotation + offset + 360) % 360;
-			rotationParams.push((playfield_image.id || playfield_image) + ':' + relativeRotation);
+			rotationParams.push((playfield_images[0].id || playfield_images[0]) + ':' + relativeRotation);
 		});
 
 		// populate files
@@ -125,11 +125,11 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 				_file: file.file.id,
 				_compatibility: file._compatibility
 			};
-			if (file._playfield_image) {
-				releaseFile._playfield_image = file._playfield_image;
+			if (file._playfield_images) {
+				releaseFile._playfield_images = file._playfield_images;
 			}
-			if (file._playfield_video) {
-				releaseFile._playfield_video = file._playfield_video;
+			if (file._playfield_videos) {
+				releaseFile._playfield_videos = file._playfield_videos;
 			}
 			this.version.files.push(releaseFile);
 		});

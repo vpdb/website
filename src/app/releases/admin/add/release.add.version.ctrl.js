@@ -129,7 +129,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 				this.meta.mediaLinks[playfieldImageKey].rotation = 90;
 				this.meta.mediaLinks[playfieldImageKey].offset = -90;
 			}
-			file._playfield_image = playfieldImage.id;
+			file._playfield_images = [playfieldImage.id];
 		}).catch(angular.noop);
 	}
 
@@ -172,13 +172,13 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 		// retrieve rotation parameters
 		const rotationParams = [];
 		this.releaseVersion.files.forEach(file => {
-			if (!file._playfield_image) {
+			if (!file._playfield_images || !file._playfield_images.length) {
 				return;
 			}
 			const rotation = this.meta.mediaLinks[this.getMediaKey(file, 'playfield_image')].rotation;
 			const offset = this.meta.mediaLinks[this.getMediaKey(file, 'playfield_image')].offset || 0;
 			const relativeRotation = rotation + offset;
-			rotationParams.push(file._playfield_image + ':' + relativeRotation);
+			rotationParams.push(file._playfield_images[0] + ':' + relativeRotation);
 		});
 
 		// only post files
@@ -247,7 +247,8 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 		release.versions.forEach(version => {
 			version.files.forEach(f => {
 				if ((f.flavor.orientation === 'any' || f.flavor.orientation === file.flavor.orientation) && (f.flavor.lighting === 'any' || f.flavor.lighting === file.flavor.lighting)) {
-					images.push({ version: version, image: f.playfield_image });
+					// todo go through playfield images array as well
+					images.push({ version: version, image: f.playfield_images[0] });
 				}
 			});
 		});
