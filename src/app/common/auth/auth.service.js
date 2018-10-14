@@ -534,7 +534,7 @@ export default class AuthService {
 			if (redirectAction) {
 				this.$localStorage.postLoginActions.splice(this.$localStorage.postLoginActions.indexOf(redirectAction), 1);
 				// navigate and execute other actions *afterwards*
-				this.$state.go(redirectAction.params.stateName, redirectAction.params.stateParams);
+				this.$state.go(redirectAction.params.stateName, redirectAction.params.stateParams, { location: 'replace' });
 
 				// if someone has a better idea how to trigger this at $viewContentLoaded, let me know. burned 2h on this.
 				this.$timeout(() => {
