@@ -1,0 +1,13 @@
+include ../../template/_mixins
+.center-middle.center-middle-errorpage(ng-controller="Error403Ctrl as vm")
+	+icon('vpdb-o').svg-huge
+	h1 401
+	p You tried to access&nbsp;
+		code {{ vm.url }}
+		| &nbsp;but you I'm sorry but you don't have access to that page.
+
+	a(ui-sref="home")
+		+icon('arrow-left').shift-up-2x.space-right
+		|GO HOME
+
+	p.padder-bottom

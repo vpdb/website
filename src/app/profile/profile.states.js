@@ -26,10 +26,6 @@ function loadModule($transition$) {
 	}, 'profile');
 }
 
-// $stateProvider.state('profile.notifications',  { url: '/notifications', templateUrl: ProfileNotificationsTpl, controller: 'ProfileNotificationsCtrl', controllerAs: 'vm' });
-// $stateProvider.state('profile.stats',          { url: '/stats', templateUrl: ProfileStatsTpl, controller: 'ProfileStatsCtrl', controllerAs: 'vm' });
-
-
 const PROFILE_ROOT = {
 	name: 'profile',
 	url: '/profile',

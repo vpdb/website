@@ -17,31 +17,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import angular from 'angular';
-
-export default class ProfileCtrl {
+export default class Error403Ctrl {
 
 	/**
-	 * @param $state
-	 * @param $location
-	 * @param $uibModal
-	 * @param {AuthService} AuthService
+	 * @param $stateParams
 	 * @ngInject
 	 */
-	constructor($state, $location, $uibModal, AuthService) {
-
-		this.$state = $state;
-		this.$location = $location;
-		this.$uibModal = $uibModal;
-		this.AuthService = AuthService;
-
-		if (!this.AuthService.isAuthenticated) {
-			AuthService.addPostLoginAction('redirect', { stateName: $state.current.name, stateParams: $state.params });
-			this.$state.go('401', { url: this.$location.path() });
-		}
-	}
-
-	changeAvatar () {
-		this.$uibModal.open({ templateUrl: 'modal/change-avatar.html' }).result.catch(angular.noop);
+	constructor($stateParams, App) {
+		this.url = $stateParams.url;
+		this.App = App;
 	}
 }

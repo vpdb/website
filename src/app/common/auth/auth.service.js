@@ -35,6 +35,7 @@ export default class AuthService {
 	 * @param $location
 	 * @param $http
 	 * @param $state
+	 * @param $stateParams
 	 * @param $timeout
 	 * @param $log
 	 * @param {App} App
@@ -46,7 +47,7 @@ export default class AuthService {
 	 * @param ProfileResource
 	 * @ngInject
 	 */
-	constructor($window, $localStorage, $rootScope, $location, $http, $state, $timeout, $log,
+	constructor($window, $localStorage, $rootScope, $location, $http, $state, $stateParams, $timeout, $log,
 				App, ApiHelper, Config, ConfigService, ErrorReportingService, TokenResource, ProfileResource) {
 
 		this.$window = $window;
@@ -55,6 +56,7 @@ export default class AuthService {
 		this.$location = $location;
 		this.$http = $http;
 		this.$state = $state;
+		this.$stateParams = $stateParams;
 		this.$timeout = $timeout;
 		this.$log = $log;
 		this.App = App;
@@ -583,6 +585,8 @@ export default class AuthService {
 	 * Sets the login page to be redirected to the current page upon successful login.
 	 */
 	setPostLoginRedirect() {
-		this.addPostLoginAction('redirect', { stateName: this.$state.current.name, stateParams: this.$state.params });
+		if (!this.$localStorage.postLoginActions || !this.$localStorage.postLoginActions.find(a => a.action === 'redirect')) {
+			this.addPostLoginAction('redirect', { stateName: this.$state.current.name, stateParams: this.$state.params });
+		}
 	}
 }

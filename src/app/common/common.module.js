@@ -52,6 +52,8 @@ import BootstrapPatcher from './util/bootstrap.patcher';
 import ConfigService from './config/config.service';
 import DownloadService from './backend/download.service';
 import EmailConfirmationCtrl from './auth/email.confirmation.ctrl';
+import Error401Ctrl from './errors/error.401.ctrl';
+import Error403Ctrl from './errors/error.403.ctrl';
 import Error404Ctrl from './errors/error.404.ctrl';
 import ErrorReportingService from './util/error.reporting.service';
 import Flavors from './config/flavors.constant';
@@ -164,6 +166,8 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.constant('BuildConfig', BUILD_CONFIG)
 
 	// errors
+	.controller('Error401Ctrl', Error401Ctrl)
+	.controller('Error403Ctrl', Error403Ctrl)
 	.controller('Error404Ctrl', Error404Ctrl)
 
 	// image

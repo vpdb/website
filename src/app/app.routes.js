@@ -18,6 +18,8 @@
  */
 
 import HomeTpl from './home/home.pug';
+import Error401Tpl from './common/errors/error.401.pug';
+import Error403Tpl from './common/errors/error.403.pug';
 import Error404Tpl from './common/errors/error.404.pug';
 import ConfigService from './common/config/config.service';
 
@@ -85,6 +87,8 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state(CONTENT_PRIVACY);
 
 	// errors
+	$stateProvider.state('401',            { templateUrl: Error401Tpl, params: { url: null } });
+	$stateProvider.state('403',            { templateUrl: Error403Tpl, params: { url: null } });
 	$stateProvider.state('404',            { templateUrl: Error404Tpl, params: { url: null } });
 
 	$locationProvider.html5Mode({

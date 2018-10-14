@@ -1,0 +1,15 @@
+include ../../template/_mixins
+.center-middle.center-middle-errorpage(ng-controller="Error401Ctrl as vm")
+	+icon('vpdb-o').svg-huge
+	h1 401
+	p You tried to access&nbsp;
+		code {{ vm.url }}
+		| &nbsp;but you gotta be logged in to access that page.
+
+	a(ui-sref="home")
+		|GO HOME
+	span &nbsp;or&nbsp;
+	a(ng-click="vm.App.login()")
+		|LOGIN
+
+	p.padder-bottom
