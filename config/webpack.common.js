@@ -90,7 +90,7 @@ module.exports  = function(options) {
 			new PreloadWebpackPlugin({
 				rel: 'preload',
 				include: 'allAssets',
-				fileWhitelist: [ /^(app|vendor)\.bundle-[a-f0-9]{12}\.js/, /background_blurred-[0-9a-zA-Z]{8}\.jpg/, /langdon.*?\.woff$/ ],
+				fileWhitelist: [ /^(app|vendor)\.bundle-[a-f0-9]{12}\.js/, /langdon.*?\.woff$/ ],
 				as(entry) {
 					if (/\.woff$/.test(entry)) return 'font';
 					if (/\.jpg/.test(entry)) return 'image';
