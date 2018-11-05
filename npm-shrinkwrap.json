@@ -852,12 +852,12 @@
 			"dev": true
 		},
 		"@types/jasminewd2": {
-			"version": "2.0.3",
-			"resolved": "https://registry.npmjs.org/@types/jasminewd2/-/jasminewd2-2.0.3.tgz",
-			"integrity": "sha512-hYDVmQZT5VA2kigd4H4bv7vl/OhlympwREUemqBdOqtrYTo5Ytm12a5W5/nGgGYdanGVxj0x/VhZ7J3hOg/YKg==",
+			"version": "2.0.6",
+			"resolved": "https://registry.npmjs.org/@types/jasminewd2/-/jasminewd2-2.0.6.tgz",
+			"integrity": "sha512-2ZOKrxb8bKRmP/po5ObYnRDgFE4i+lQiEB27bAMmtMWLgJSqlIDqlLx6S0IRorpOmOPRQ6O80NujTmQAtBkeNw==",
 			"dev": true,
 			"requires": {
-				"@types/jasmine": "2.8.8"
+				"@types/jasmine": "*"
 			}
 		},
 		"@types/jquery": {
@@ -4353,7 +4353,8 @@
 				"ansi-regex": {
 					"version": "2.1.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"aproba": {
 					"version": "1.2.0",
@@ -4768,7 +4769,8 @@
 				"safe-buffer": {
 					"version": "5.1.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"safer-buffer": {
 					"version": "2.1.2",
@@ -4824,6 +4826,7 @@
 					"version": "3.0.1",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"ansi-regex": "2.1.1"
 					}
@@ -4867,12 +4870,14 @@
 				"wrappy": {
 					"version": "1.0.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"yallist": {
 					"version": "3.0.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				}
 			}
 		},
