@@ -46,7 +46,7 @@
 		"angular-sanitize": "1.7.4",
 		"angular-touch": "1.7.4",
 		"angular-ui-bootstrap": "2.5.6",
-		"bootstrap": "3.3.7",
+		"bootstrap": "3.4.0",
 		"draggabilly": "2.2.0",
 		"fg-loadcss": "2.0.1",
 		"imagesloaded": "4.1.4",
