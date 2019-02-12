@@ -6,7 +6,7 @@ include ../../template/_mixins
 			+icon('lock').space-right
 			| &nbsp;Login
 	.modal-body
-		div.alert.alert-warning.alert--modal-top-alert.padder-bottom(ng-show="vm.headMessage")
+		div.alert.alert--modal-top-alert.padder-bottom(ng-show="vm.headMessage")
 			+icon('info').space-right.shift-up-less
 			| {{ vm.headMessage }}
 
