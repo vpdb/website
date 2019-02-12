@@ -244,7 +244,7 @@ export default class GameDetailsCtrl {
 	 * Posts all uploaded ROM files to the API
 	 */
 	saveRoms() {
-		this.data().roms.forEach(rom => {
+		Object.values(this.data().roms).forEach(rom => {
 			if (isObject(rom.language)) {
 				rom.language = rom.language.value;
 			}
