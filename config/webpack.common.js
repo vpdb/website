@@ -18,7 +18,7 @@ const pkg = require('../package');
 
 module.exports  = function(options) {
 	const isProd = options.env === 'prod';
-	const cssLoader = { loader: 'css-loader', options: { sourceMap: true, minimize: isProd } };
+	const cssLoader = { loader: 'css-loader', options: { sourceMap: true } };
 	const preConnect = [];
 
 	// pre-connect to api and storage on every page
