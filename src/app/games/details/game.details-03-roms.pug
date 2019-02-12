@@ -86,7 +86,7 @@ table.table.table-double-striped(ng-show="vm.roms.length > 0")
 								td.code {{ file.modified_at | date:'yyyy-MM-dd HH:mm' }}
 								td.code 0x{{ file.crc | hex }}
 
-					button.btn.btn-primary.pull-right.space-right.padder-bottom(ng-click="vm.downloadRom(rom)")
+					button.btn.btn-primary.pull-right.space-right.padder-bottom(ng-if="vm.AuthService.isAuthenticated", ng-click="vm.downloadRom(rom)")
 						+icon('download').space-right
 						| Download
 					.clearfix
