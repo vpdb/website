@@ -274,7 +274,7 @@ export default class GameAddAdminCtrl {
 	}
 
 	searchOnIpdb() {
-		this.$window.open(angular.element('#ipdbLink').attr('href'));
+		this.$window.open(document.getElementById('ipdbLink').getAttribute('href'), '_blank');
 	}
 
 	selectGameRequest(gameRequest) {
