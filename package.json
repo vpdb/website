@@ -68,7 +68,7 @@
 		"@babel/preset-env": "7.3.1",
 		"@types/axios": "0.14.0",
 		"@types/faker": "4.1.5",
-		"@types/jasmine": "2.8.8",
+		"@types/jasmine": "2.8.16",
 		"@types/jasminewd2": "2.0.6",
 		"@types/lodash": "4.14.120",
 		"@types/pngjs": "3.3.2",
