@@ -105,5 +105,6 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 		'self', // Allow same origin resource loads.
 		ConfigService.uri(Config.apiUri) + '/**',
 		ConfigService.uri(Config.storageUri) + '/**',
+		ConfigService.uri(Config.previewUri) + '/**',
 	]);
 }

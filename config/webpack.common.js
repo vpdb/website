@@ -21,13 +21,13 @@ module.exports  = function(options) {
 	const cssLoader = { loader: 'css-loader', options: { sourceMap: true } };
 	const preConnect = [];
 
-	// pre-connect to api and storage on every page
+	// pre-connect to api and preview on every page
 	if (options.websiteConfig.webUri.hostname !== options.websiteConfig.apiUri.hostname || options.websiteConfig.webUri.port !== options.websiteConfig.apiUri.port) {
 		preConnect.push(options.websiteConfig.apiUri.protocol + '://' + options.websiteConfig.apiUri.hostname + ([80, 443].includes(options.websiteConfig.apiUri.port) ? '' : ':' + options.websiteConfig.apiUri.port))
 	}
-	if ((options.websiteConfig.webUri.hostname !== options.websiteConfig.storageUri.hostname || options.websiteConfig.webUri.port !== options.websiteConfig.storageUri.port) &&
-		(options.websiteConfig.apiUri.hostname !== options.websiteConfig.storageUri.hostname || options.websiteConfig.apiUri.port !== options.websiteConfig.storageUri.port)) {
-		preConnect.push(options.websiteConfig.storageUri.protocol + '://' + options.websiteConfig.storageUri.hostname + ([80, 443].includes(options.websiteConfig.storageUri.port) ? '' : ':' + options.websiteConfig.storageUri.port))
+	if ((options.websiteConfig.webUri.hostname !== options.websiteConfig.previewUri.hostname || options.websiteConfig.webUri.port !== options.websiteConfig.previewUri.port) &&
+		(options.websiteConfig.apiUri.hostname !== options.websiteConfig.previewUri.hostname || options.websiteConfig.apiUri.port !== options.websiteConfig.previewUri.port)) {
+		preConnect.push(options.websiteConfig.previewUri.protocol + '://' + options.websiteConfig.previewUri.hostname + ([80, 443].includes(options.websiteConfig.previewUri.port) ? '' : ':' + options.websiteConfig.previewUri.port))
 	}
 	preConnect.push('//www.gravatar.com');
 

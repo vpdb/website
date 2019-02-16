@@ -20,6 +20,7 @@ module.exports = require(config)({
 	websiteUrl: getUrl(websiteConfig.webUri),
 	apiUrl: getUrl(websiteConfig.apiUri),
 	storageUrl: getUrl(websiteConfig.storageUri),
+	previewUrl: getUrl(websiteConfig.previewUri),
 	websiteConfig: websiteConfig,
 	buildConfig: buildConfig,
 	revision: getRevision()

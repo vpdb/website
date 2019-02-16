@@ -13,6 +13,12 @@
 		"port": 443,
 		"pathname": ""
 	},
+	"previewUri": {
+		"protocol": "https",
+		"hostname": "preview.vpdb.io",
+		"port": 443,
+		"pathname": ""
+	},
 	"webUri": {
 		"protocol": "https",
 		"hostname": "vpdb.io",

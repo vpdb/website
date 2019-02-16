@@ -21,6 +21,7 @@ export interface VpdbConfig {
 	authHeader:string,
 	apiUri: VpdbHostConfig,
 	storageUri: VpdbHostConfig,
+	previewUri: VpdbHostConfig,
 	webUri: VpdbHostConfig,
 	ga: {
 		enabled:boolean

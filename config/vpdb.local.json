@@ -13,6 +13,12 @@
 		"port": 3000,
 		"pathname": "/storage"
 	},
+	"previewUri": {
+		"protocol": "http",
+		"hostname": "localhost",
+		"port": 3000,
+		"pathname": "/storage"
+	},
 	"webUri": {
 		"protocol": "http",
 		"hostname": "localhost",
