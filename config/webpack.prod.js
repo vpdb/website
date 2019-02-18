@@ -27,6 +27,7 @@ module.exports = function(options) {
 			importWorkboxFrom: 'local',
 			exclude: [ /^sprite\.svg/, /\.map$/, /ipdb-index\.json/, /robots\.txt/, /^favicon\// ],
 			navigateFallback: options.websiteUrl + 'index.html',
+			navigateFallbackWhitelist: '/sitemap.xml',
 			ignoreUrlParametersMatching: [/^utm_/, /^_$/],
 			cacheId: 'vpdb',
 			clientsClaim: true, // first install: take control of *uncontrolled* immediately
