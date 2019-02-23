@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import {isNumber, isString} from 'lodash';
+
 /**
  * @param $q
  * @param $window
@@ -45,7 +47,13 @@ export default function($q, $window, $log, Config, NetworkService, ErrorReportin
 		responseError: function(response) {
 
 			// sometimes we expect non 2xx codes and we stil want to resolve.
-			if (response.config.noError && response.config.noError.includes(response.status)) {
+			if (response.config.noError && (
+				response.config.noError.filter(isNumber).includes(response.status) || (
+					response.data &&
+					response.data.code &&
+					response.config.noError.filter(isString).includes(response.data.code))
+			)) {
+
 				if (Config.name === 'local') {
 					$log.debug('Not reporting HTTP response.');
 				}
