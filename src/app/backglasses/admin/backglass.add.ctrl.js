@@ -184,6 +184,7 @@ export default class BackglassAddCtrl {
 		this.$uibModal.open({
 			templateUrl: AuthorSelectModalTpl,
 			controller: 'AuthorSelectModalCtrl',
+			controllerAs: 'vm',
 			resolve: {
 				subject: () => this.backglass,
 				meta: () => this.meta,

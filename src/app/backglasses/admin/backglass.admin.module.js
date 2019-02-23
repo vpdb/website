@@ -20,13 +20,14 @@ import angular from 'angular';
 import uiTimepicker from 'angular-ui-bootstrap/src/timepicker/index';
 import uiDatepickerPopup from 'angular-ui-bootstrap/src/datepickerPopup/index';
 
+import AuthorSelectModule from '../../shared/author-select/author.select.module';
 import FileUploadModule from '../../shared/file-upload/file.upload.module';
 import EditorModule from '../../shared/editor/editor.module';
 import BackglassAddComponent from './backglass.add.component';
 import BackglassEditModalCtrl from './backglass.edit.modal.ctrl';
 
 const BACKGLASS_ADMIN_MODULE = angular
-	.module('vpdb.backglasses.admin', [ uiDatepickerPopup, uiTimepicker, FileUploadModule.name, EditorModule.name ])
+	.module('vpdb.backglasses.admin', [ uiDatepickerPopup, uiTimepicker, AuthorSelectModule.name, FileUploadModule.name, EditorModule.name ])
 	.component('backglassAddComponent', new BackglassAddComponent())
 	.controller('BackglassEditModalCtrl', BackglassEditModalCtrl);
 
