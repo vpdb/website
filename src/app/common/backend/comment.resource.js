@@ -17,14 +17,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-export class BuildResource {
+export class CommentResource {
 	/**
 	 * @param $resource
 	 * @param {ConfigService} ConfigService
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/v1/builds/:id'), {}, {
+		return $resource(ConfigService.apiUri('/v1/comments/:id'), {}, {
 			update: { method: 'PATCH' }
 		});
 	}

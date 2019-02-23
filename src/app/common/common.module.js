@@ -96,6 +96,7 @@ import sort from './util/sort.directive';
 import ratingFormatFilter from './games/rating.format.filter';
 import timeAgoFilter from './util/time-ago.filter';
 import userInfo from './user/user.info.directive';
+import {CommentResource} from "./backend/comment.resource";
 
 
 /**
@@ -125,6 +126,7 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.service('BackglassResource', BackglassResource)
 	.service('BackglassModerationResource', BackglassModerationResource)
 	.service('BuildResource', BuildResource)
+	.service('CommentResource', CommentResource)
 	.service('DownloadService', DownloadService)
 	.service('FileResource', FileResource)
 	.service('FileBlockmatchResource', FileBlockmatchResource)

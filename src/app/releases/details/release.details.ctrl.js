@@ -46,6 +46,7 @@ export default class ReleaseDetailsCtrl {
 	 * @param {ReleaseService} ReleaseService
 	 * @param {TrackerService} TrackerService
 	 * @param {BootstrapPatcher} BootstrapPatcher
+	 * @param CommentResource
 	 * @param GameResource
 	 * @param ReleaseResource
 	 * @param ReleaseRatingResource
@@ -54,8 +55,9 @@ export default class ReleaseDetailsCtrl {
 	 * @ngInject
 	 */
 	constructor($stateParams, $location, $localStorage, $log, $rootScope, $uibModal, Lightbox,
-				App, AuthService, ApiHelper, ReleaseService, TrackerService, BootstrapPatcher, GameResource,
-				ReleaseResource, ReleaseRatingResource, ReleaseCommentResource, ReleaseModerationCommentResource) {
+				App, AuthService, ApiHelper, ReleaseService, TrackerService, BootstrapPatcher, CommentResource,
+				GameResource, ReleaseResource, ReleaseRatingResource, ReleaseCommentResource,
+				ReleaseModerationCommentResource) {
 
 		App.theme('dark');
 		App.setTitle('Release Details');
@@ -74,6 +76,7 @@ export default class ReleaseDetailsCtrl {
 		this.ApiHelper = ApiHelper;
 		this.ReleaseService = ReleaseService;
 		this.TrackerService = TrackerService;
+		this.CommentResource = CommentResource;
 		this.GameResource = GameResource;
 		this.ReleaseResource = ReleaseResource;
 		this.ReleaseRatingResource = ReleaseRatingResource;
@@ -299,6 +302,13 @@ export default class ReleaseDetailsCtrl {
 				file.validation = validation;
 			}
 		}).catch(angular.noop);
+	}
+
+	moveComment(commentId, refName, refId) {
+		this.CommentResource.update({ id: commentId }, { _ref: { [refName]: refId }}, () => {
+			this.comments = this.ReleaseCommentResource.query({ releaseId: refId });
+			this.moderationComments = this.ReleaseModerationCommentResource.query({ releaseId: refId });
+		}, this.ApiHelper.handleErrors(this));
 	}
 
 	/**

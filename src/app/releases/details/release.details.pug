@@ -113,6 +113,12 @@ include ../../template/_mixins
 									label
 									strong {{ comment.from.name }}
 									| &nbsp;commented {{ comment.created_at | timeAgo }}
+									.pull-right(uib-dropdown, ng-if="vm.AuthService.hasPermission('releases/moderate')")
+										a(uib-dropdown-toggle): +icon('kebab-horizontal')
+										ul.comment-dropdown-menu(uib-dropdown-menu)
+											li
+												a(ng-click="vm.moveComment(comment.id, 'release', vm.release.id)") Move to public comments
+
 								.panel-body
 									div.markdown(markdown="comment.message")
 
@@ -245,6 +251,11 @@ include ../../template/_mixins
 							label
 							strong {{ comment.from.name }}
 							| &nbsp;commented {{ comment.created_at | timeAgo }}
+							.pull-right(uib-dropdown, ng-if="vm.AuthService.hasPermission('releases/moderate')")
+								a(uib-dropdown-toggle): +icon('kebab-horizontal')
+								ul.comment-dropdown-menu(uib-dropdown-menu)
+									li
+										a(ng-click="vm.moveComment(comment.id, 'release_moderation', vm.release.id)") Move to moderation comments
 						.panel-body
 							div.markdown(markdown="comment.message")
 
