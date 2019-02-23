@@ -66,7 +66,8 @@ export default class ReleaseEditCtrl {
 			// retrieve available tags, then reset.
 			this.tags = TagResource.query(() => this.reset());
 			if (AuthService.isAuthenticated) {
-				this.canEditAuthors = AuthService.getUser().id === this.release.created_by.id;
+				this.canEditAuthors = AuthService.hasPermission('releases/update')
+					|| AuthService.getUser().id === this.release.created_by.id;
 			}
 		});
 	}
