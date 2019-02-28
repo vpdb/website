@@ -35,7 +35,7 @@ export default class UploadsListAdminCtrl {
 		this.$scope = $scope;
 
 		this.$scope.filters = { status: 'pending' };
-		this.$scope.numItems = 5;
+		this.$scope.numItems = 30;
 	}
 
 	refresh() {
