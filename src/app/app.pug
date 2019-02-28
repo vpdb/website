@@ -104,18 +104,18 @@ div(ng-repeat="(id, notification) in notifications track by id")
 			a(ng-click="timeoutNoticeCollapsed = true")
 				+icon('times').small.shift-up.space-right
 
-	.alert.alert-info(ng-show="vm.showRulesUpdated")
-		| Hey, we've just updated our <a ui-sref="rules">site rules</a>.&nbsp;
+	.alert.alert-info(ng-if="vm.showRulesUpdated")
+		| Hey, we've just updated our <a class="top-notification" ui-sref="rules">site rules</a>.&nbsp;
 		span(ng-show="!vm.showPrivacyUpdated && !vm.showLegalUpdated") By continuing to browse the site you are agreeing to the changes.
 		.pull-right: a(ng-click="vm.showRulesUpdated = false"): +icon('times').small.shift-up-less.space-right
 
-	.alert.alert-info(ng-show="vm.showPrivacyUpdated")
-		| {{ vm.showRulesUpdated ? 'W' : 'Hey, w' }}e've {{ vm.showRulesUpdated ? 'also ' : '' }}updated our <a ui-sref="privacy">privacy policy</a>.&nbsp;
+	.alert.alert-info(ng-if="vm.showPrivacyUpdated")
+		| {{ vm.showRulesUpdated ? 'W' : 'Hey, w' }}e've {{ vm.showRulesUpdated ? 'also ' : '' }}updated our <a class="top-notification" ui-sref="privacy">privacy policy</a>.&nbsp;
 		span(ng-show="!vm.showLegalUpdated") By continuing to browse the site you are agreeing to {{ vm.showRulesUpdated ? 'all' : 'the' }} changes.
 		.pull-right: a(ng-click="vm.showPrivacyUpdated = false"): +icon('times').small.shift-up-less.space-right
 
-	.alert.alert-info(ng-show="vm.showLegalUpdated")
-		| {{ vm.showRulesUpdated || vm.showPrivacyUpdated ? 'W' : 'Hey, w' }}e've {{ vm.showRulesUpdated || vm.showPrivacyUpdated ? 'also ' : '' }}updated our <a ui-sref="legal">terms of use</a>.&nbsp;
+	.alert.alert-info(ng-if="vm.showLegalUpdated")
+		| {{ vm.showRulesUpdated || vm.showPrivacyUpdated ? 'W' : 'Hey, w' }}e've {{ vm.showRulesUpdated || vm.showPrivacyUpdated ? 'also ' : '' }}updated our <a class="top-notification" ui-sref="legal">terms of use</a>.&nbsp;
 		span By continuing to browse the site you are agreeing to {{ vm.showRulesUpdated || vm.showPrivacyUpdated ? 'all' : 'the' }} changes.
 		.pull-right: a(ng-click="vm.showLegalUpdated = false"): +icon('times').small.shift-up-less.space-right
 
