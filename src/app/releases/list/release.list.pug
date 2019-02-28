@@ -88,7 +88,7 @@ include ../../template/_mixins
 		.input-group.padder-bottom
 			span.input-group-addon.input-group-addon--search
 				+icon('search').smaller
-			input.form-control.input--search(ng-model="vm.q", type="text", placeholder="Search")
+			input.form-control.input--search(ng-model="vm.query.q", type="text", placeholder="Search")
 
 		// starred only
 		span(ng-show="vm.AuthService.isAuthenticated")

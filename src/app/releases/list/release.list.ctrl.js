@@ -121,9 +121,10 @@ export default class ReleaseListCtrl {
 	}
 
 	refresh() {
-		const reqParams = Object.assign(this.params.toRequest(), { thumb_format: this.thumbFormat });
+		const reqParams = Object.assign({}, this.params.toRequest(), { thumb_format: this.thumbFormat });
+		const validQuery = !reqParams.q || reqParams.q.length > 2;
 		// only refresh if query object changed
-		if (!isEqual(this.lastReqParams, reqParams)) {
+		if (validQuery && !isEqual(this.lastReqParams, reqParams)) {
 			this.ApiHelper.paginatedRequest(() => this.ReleaseResource.query(reqParams), this.status, this.pagination)
 				.then(releases => {
 					this.releases = releases;
