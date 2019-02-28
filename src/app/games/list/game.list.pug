@@ -43,6 +43,12 @@ include ../../template/_mixins
 							h1.h--small {{ game.title }}
 							label.label--subtitle {{ game.manufacturer }} &middot; {{ game.year }}
 
+		//- pagination
+		.pull-right(ng-show="vm.games.length > 6")
+			+paginator('vm.pagination', 'vm.paginate')
+		.clearfix(ng-if="vm.releases.length > 6")
+			.div.padder-top-less(ng-if="vm.releases.length > 6")
+
 		.content-end
 
 	//- right side menu

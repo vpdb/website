@@ -79,6 +79,11 @@ include ../../template/_mixins
 								div.small.oneliner by {{ release.authors[0].user.name }}
 							.clearfix
 
+		//- pagination
+		.pull-right(ng-if="vm.releases.length > 6")
+			+paginator('vm.pagination', 'vm.paginate')
+		.clearfix(ng-if="vm.releases.length > 6")
+		.div.padder-top-less(ng-if="vm.releases.length > 6")
 
 	.col-sm-3.col--menu
 		h1 Filter

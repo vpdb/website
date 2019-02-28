@@ -90,7 +90,7 @@ export default class ReleaseListCtrl {
 			new Param({ name: 'filterValidation', defaultValue: [], reqName: 'validation' }),
 			new Param({ name: 'sort', defaultValue: 'released_at' }),
 			new Param({ name: 'page', defaultValue: 1, fromUrl: page => parseInt(page, 10) }),
-			new Param({ name: 'perPage', defaultValue: 12, fromUrl: null })
+			new Param({ name: 'perPage', defaultValue: 12, fromUrl: null, reqName: 'per_page' })
 		]);
 		/** @type {{ q:string, starredOnly:boolean, filterBuilds, filterFlavor, filterTags, filterValidation, sort:string, page:number, perPage:number }} */
 		this.query = this.params.value;
