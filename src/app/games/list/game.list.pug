@@ -31,7 +31,6 @@ include ../../template/_mixins
 		//- no games
 		p(ng-show="!vm.games.length && !vm.status.loading && !vm.status.offline") No games found.
 
-
 		//- content
 		.row.ng-cloak
 			.fade2-animation
@@ -44,12 +43,9 @@ include ../../template/_mixins
 							label.label--subtitle {{ game.manufacturer }} &middot; {{ game.year }}
 
 		//- pagination
-		.pull-right(ng-show="vm.games.length > 6")
+		.pull-right(ng-if="vm.games.length > 6")
 			+paginator('vm.pagination', 'vm.paginate')
-		.clearfix(ng-if="vm.releases.length > 6")
-			.div.padder-top-less(ng-if="vm.releases.length > 6")
-
-		.content-end
+		.content-end &nbsp;
 
 	//- right side menu
 	.col-sm-3.col--menu
