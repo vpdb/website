@@ -37,8 +37,8 @@ export default class UserInfoModalCtrl {
 		UserResource.query({ name: this.username }, users => {
 			this.user = users.length ? users[0] : {};
 			if (this.user.id) {
-				UserStarResource.get({ userId: this.user.id }).$promise.then(() => {
-					this.starred = true;
+				UserStarResource.get({ userId: this.user.id }).$promise.then(res => {
+					this.starred = !res.error;
 				}, () => {
 					this.starred = false;
 				});
