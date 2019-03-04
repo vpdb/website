@@ -112,7 +112,7 @@
 		"svgo": "1.1.1",
 		"svgo-loader": "2.2.0",
 		"typescript": "3.3.3333",
-		"uglifyjs-webpack-plugin": "2.1.1",
+		"uglifyjs-webpack-plugin": "2.1.2",
 		"url-loader": "1.1.2",
 		"webpack": "4.29.5",
 		"webpack-bundle-analyzer": "3.0.4",
