@@ -21,9 +21,10 @@ import {
 	AmbientLight,
 	DirectionalLight,
 	GridHelper,
-	LoadingManager,
+	Matrix4, Mesh,
 	PerspectiveCamera,
-	Scene,
+	Raycaster,
+	Scene, Vector2,
 	Vector3,
 	WebGLRenderer
 } from 'three';
@@ -48,52 +49,61 @@ export class VptPreviewScene {
 		};
 		this.camera = null;
 		this.cameraTarget = this.cameraDefaults.posCameraTarget;
+
+		this.mouse = new Vector2();
+		this.primitives = [];
 	}
 
 	initGl() {
+
 		this.renderer = new WebGLRenderer({
-			canvas: this.canvas,
 			antialias: true,
 			autoClear: true,
 			alpha: true,
 		});
-
-		//this.renderer.setClearColor(0xff0000);
-
 		this.scene = new Scene();
-
 		this.camera = new PerspectiveCamera(this.cameraDefaults.fov, this.aspectRatio, this.cameraDefaults.near, this.cameraDefaults.far);
+		this._initLights();
 		this._resetCamera();
-		this.controls = new TrackballControls(this.camera, this.renderer.domElement);
+		this.canvas.appendChild(this.renderer.domElement);
 
-
-		const ambientLight = new AmbientLight(0x404040);
-		const directionalLight1 = new DirectionalLight(0xC0C090);
-		const directionalLight2 = new DirectionalLight(0xC0C090);
-
-		directionalLight1.position.set(-100, -50, 100);
-		directionalLight2.position.set(100, 50, -100);
-
-		this.scene.add(directionalLight1);
-		this.scene.add(directionalLight2);
-		this.scene.add(ambientLight);
-
-		const helper = new GridHelper(1200, 60, 0xFF4444, 0x404040);
-		this.scene.add(helper);
+		this.renderer.domElement.addEventListener('mousedown', this.onClicked.bind(this), false);
+		this.controls = new TrackballControls(this.camera);
 	}
 
-	initContent(data) {
+	initContent(vpTable) {
 
 		const loader = new OBJLoader();
-		for (const primitive of data.primitives) {
-			loader.load(primitive.mesh, loadedMesh => { /** @type {Object3D} */
-				loadedMesh.position.set(primitive.pos.x, primitive.pos.y, primitive.pos.z);
-				loadedMesh.scale.set(primitive.size.x, primitive.size.y, primitive.size.z);
-				loadedMesh.rotation.set(
-					this._toRadian(primitive.rot.x),
-					this._toRadian(primitive.rot.y),
-					this._toRadian(primitive.rot.z));
+		for (const primitive of vpTable.primitives) {
+			loader.load(primitive.mesh, obj => {
+
+				/** @var { Object3D } */
+				const loadedMesh = obj;
+				loadedMesh.name = primitive.name;
+
+
+				//sMatrix.scale(1.0f, 1.0f, m_ptable->m_BG_scalez[m_ptable->m_BG_current_set]);
+				//matrix = matrix.multiply(sMatrix);
+
+				if (primitive.name === 'Primitive36') {
+					loadedMesh.traverse(child => {
+						if (child instanceof Mesh) {
+							child.material.color.setHex(0xff0000);
+						}
+					});
+				} else {
+					loadedMesh.traverse(child => {
+						if (child instanceof Mesh) {
+							child.material.transparent = true;
+							child.material.opacity = 0.5;
+						}
+					});
+				}
+
+				this._update(loadedMesh, primitive);
+				//this._updateWithMatrix(loadedMesh, primitive, vpTable.game_data.table_height);
 				this.scene.add(loadedMesh);
+				this.primitives.push(loadedMesh);
 
 			}, xhr => {
 				if (xhr.lengthComputable) {
@@ -104,6 +114,65 @@ export class VptPreviewScene {
 				console.error(err);
 			});
 		}
+	}
+
+	/**
+	 *
+	 * @param {Object3D} loadedMesh
+	 * @param primitive
+	 * @private
+	 */
+	_update(loadedMesh, primitive) {
+		loadedMesh.scale.set(primitive.size.x, primitive.size.y, primitive.size.z);
+		loadedMesh.translateX(primitive.trans.x + primitive.pos.x);
+		loadedMesh.translateY(primitive.trans.y + primitive.pos.y);
+		loadedMesh.translateZ(primitive.trans.z + primitive.pos.z);
+		loadedMesh.rotateZ(this._toRadian(primitive.rot.z));
+		loadedMesh.rotateX(this._toRadian(primitive.rot.x));
+		loadedMesh.rotateY(this._toRadian(primitive.rot.y));
+		loadedMesh.rotateY(this._toRadian(primitive.obj_rot.z));
+		loadedMesh.rotateZ(this._toRadian(primitive.obj_rot.y));
+		loadedMesh.rotateX(this._toRadian(primitive.obj_rot.x));
+
+	}
+
+	_updateWithMatrix(loadedMesh, primitive, tableHeight) {
+
+		// scale matrix
+		const sMatrix = new Matrix4();
+		sMatrix.makeScale(primitive.size.x, primitive.size.y, primitive.size.z);
+
+		// translation matrix
+		const tMatrix = new Matrix4();
+		tMatrix.makeTranslation(primitive.pos.x, primitive.pos.y, primitive.pos.z);
+
+		// translation + rotation matrix
+		let rtMatrix = new Matrix4();
+		rtMatrix.makeTranslation(primitive.trans.x, primitive.trans.y, primitive.trans.z + tableHeight);
+
+		// rotation matrix
+		const rMatrix = new Matrix4();
+		rMatrix.makeRotationZ(this._toRadian(primitive.rot.z));
+		rtMatrix = rtMatrix.multiply(rMatrix);
+		rMatrix.makeRotationY(this._toRadian(primitive.rot.y));
+		rtMatrix = rtMatrix.multiply(rMatrix);
+		rMatrix.makeRotationX(this._toRadian(primitive.rot.x));
+		rtMatrix = rtMatrix.multiply(rMatrix);
+
+		rMatrix.makeRotationZ(this._toRadian(primitive.obj_rot.z));
+		rtMatrix = rtMatrix.multiply(rMatrix);
+		rMatrix.makeRotationY(this._toRadian(primitive.obj_rot.y));
+		rtMatrix = rtMatrix.multiply(rMatrix);
+		rMatrix.makeRotationX(this._toRadian(primitive.obj_rot.x));
+		rtMatrix = rtMatrix.multiply(rMatrix);
+
+		let matrix = new Matrix4();
+		matrix = matrix.multiply(sMatrix);
+		matrix = matrix.multiply(rtMatrix);
+		matrix = matrix.multiply(tMatrix);        // fullMatrix = Smatrix * RTmatrix * Tmatrix
+
+		loadedMesh.matrix = matrix;
+		loadedMesh.matrixAutoUpdate = false;
 	}
 
 	render() {
@@ -119,6 +188,25 @@ export class VptPreviewScene {
 		this._recalcAspectRatio();
 		this.renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight, false);
 		this._updateCamera();
+	}
+
+	onClicked(event) {
+		event.preventDefault();
+
+		const rect = this.renderer.domElement.getBoundingClientRect();
+
+		this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+		this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+		const raycaster = new Raycaster();
+		raycaster.setFromCamera(this.mouse, this.camera);
+		const intersects = raycaster.intersectObjects(this.primitives);
+
+		if (intersects.length > 0) {
+			console.log(intersects.map(i => i.object.name));
+		} else {
+			console.log('Clicked on empty!');
+		}
 	}
 
 	_recalcAspectRatio() {
@@ -140,5 +228,21 @@ export class VptPreviewScene {
 
 	_toRadian(deg) {
 		return deg * Math.PI / 180;
+	}
+
+	_initLights() {
+		const ambientLight = new AmbientLight(0x404040);
+		const directionalLight1 = new DirectionalLight(0xC0C090);
+		const directionalLight2 = new DirectionalLight(0xC0C090);
+
+		directionalLight1.position.set(-100, -50, 100);
+		directionalLight2.position.set(100, 50, -100);
+
+		this.scene.add(directionalLight1);
+		this.scene.add(directionalLight2);
+		this.scene.add(ambientLight);
+
+		const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);
+		this.scene.add(helper);
 	}
 }
