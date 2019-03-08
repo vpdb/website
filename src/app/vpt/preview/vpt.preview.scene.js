@@ -17,8 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import {AmbientLight, DirectionalLight, GridHelper, PerspectiveCamera, Scene, Vector3, WebGLRenderer} from 'three';
-import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
+import {
+	AmbientLight,
+	DirectionalLight,
+	GridHelper,
+	LoadingManager,
+	PerspectiveCamera,
+	Scene,
+	Vector3,
+	WebGLRenderer
+} from 'three';
+import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
+import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
 
 export class VptPreviewScene {
 
@@ -72,6 +82,30 @@ export class VptPreviewScene {
 		this.scene.add(helper);
 	}
 
+	initContent(data) {
+
+		const loader = new OBJLoader();
+		for (const primitive of data.primitives) {
+			loader.load(primitive.mesh, loadedMesh => { /** @type {Object3D} */
+				loadedMesh.position.set(primitive.pos.x, primitive.pos.y, primitive.pos.z);
+				loadedMesh.scale.set(primitive.size.x, primitive.size.y, primitive.size.z);
+				loadedMesh.rotation.set(
+					this._toRadian(primitive.rot.x),
+					this._toRadian(primitive.rot.y),
+					this._toRadian(primitive.rot.z));
+				this.scene.add(loadedMesh);
+
+			}, xhr => {
+				if (xhr.lengthComputable) {
+					//var percentComplete = xhr.loaded / xhr.total * 100;
+					//console.log('model ' + Math.round(percentComplete, 2) + '% downloaded');
+				}
+			}, err => {
+				console.error(err);
+			});
+		}
+	}
+
 	render() {
 		if (!this.renderer.autoClear) {
 			this.renderer.clear();
@@ -102,5 +136,9 @@ export class VptPreviewScene {
 		this.camera.aspect = this.aspectRatio;
 		this.camera.lookAt(this.cameraTarget);
 		this.camera.updateProjectionMatrix();
+	}
+
+	_toRadian(deg) {
+		return deg * Math.PI / 180;
 	}
 }
