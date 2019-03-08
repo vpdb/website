@@ -45,6 +45,8 @@ import { UserConfirmationResource, UserResource, UserStarResource } from './back
 import { RomResource } from './backend/rom.resource';
 import { IpdbResource } from './backend/ipdb.resource';
 import { TagResource } from './backend/tag.resource';
+import { CommentResource } from './backend/comment.resource';
+import { VpResource } from './backend/vp.resource';
 import ApiHelper from './backend/apihelper.service';
 import AuthCallbackCtrl from './auth/auth.callback.ctrl';
 import AuthService from './auth/auth.service';
@@ -96,7 +98,6 @@ import sort from './util/sort.directive';
 import ratingFormatFilter from './games/rating.format.filter';
 import timeAgoFilter from './util/time-ago.filter';
 import userInfo from './user/user.info.directive';
-import {CommentResource} from "./backend/comment.resource";
 
 
 /**
@@ -154,6 +155,7 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.service('UserResource', UserResource)
 	.service('UserConfirmationResource', UserConfirmationResource)
 	.service('UserStarResource', UserStarResource)
+	.service('VpResource', VpResource)
 	.factory('HttpAuthInterceptor', httpAuthInterceptor)
 	.factory('HttpGlobalInterceptor', httpGlobalInterceptor)
 	.factory('$exceptionHandler', exceptionHandler)

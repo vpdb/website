@@ -17,42 +17,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import {VptPreviewScene} from './vpt.preview.scene';
-
-export default class VptPreviewCtrl {
-
+export class VpResource {
 	/**
-	 *
-	 * @param $scope
-	 * @param $stateParams
-	 * @param {App} App
-	 * @param {ApiHelper} ApiHelper
-	 * @param {VpResource} VpResource
+	 * @param $resource
+	 * @param {ConfigService} ConfigService
 	 * @ngInject
 	 */
-	constructor($scope, $stateParams, App, ApiHelper, VpResource) {
-
-		App.theme('dark');
-		App.setTitle('VPT Preview');
-		App.setMenu('releases');
-
-		const fileId = $stateParams.fileId;
-
-		this.preview = new VptPreviewScene(document.getElementById('gl-canvas'));
-
-		this.preview.initGl();
-		this.preview.resizeDisplayGl();
-
-		VpResource.get({ fileId: fileId }, data => {
-			this.preview.initContent(data);
-			console.log(data);
-		}, ApiHelper.handleErrorsInDialog('3D Table Preview'));
-
-		this.render();
+	constructor($resource, ConfigService) {
+		return $resource(ConfigService.apiUri('/v1/vp/:fileId'), {}, {
+		});
 	}
-
-	render() {
-		requestAnimationFrame(this.render.bind(this));
-		this.preview.render();
-	};
 }
