@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import {VptPreviewScene} from './vpt.preview.scene';
+
 export default class VptPreviewCtrl {
 
 	/**
@@ -33,5 +35,18 @@ export default class VptPreviewCtrl {
 		App.theme('dark');
 		App.setTitle('VPT Preview');
 		App.setMenu('releases');
+
+		this.preview = new VptPreviewScene(document.getElementById('gl-canvas'));
+
+		this.preview.initGl();
+		this.preview.resizeDisplayGl();
+		//preview.initContent();
+
+		this.render();
 	}
+
+	render() {
+		requestAnimationFrame(this.render.bind(this));
+		this.preview.render();
+	};
 }
