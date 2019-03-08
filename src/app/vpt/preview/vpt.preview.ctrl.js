@@ -38,13 +38,13 @@ export default class VptPreviewCtrl {
 
 		const fileId = $stateParams.fileId;
 
-		this.preview = new VptPreviewScene(document.getElementById('gl-canvas'));
+		this.scene = new VptPreviewScene(document.getElementById('gl-view'));
 
-		this.preview.initGl();
-		this.preview.resizeDisplayGl();
+		this.scene.initGl();
+		this.scene.resizeDisplayGl();
 
 		VpResource.get({ fileId: fileId }, data => {
-			this.preview.initContent(data);
+			this.scene.initContent(data);
 			console.log(data);
 		}, ApiHelper.handleErrorsInDialog('3D Table Preview'));
 
@@ -53,6 +53,6 @@ export default class VptPreviewCtrl {
 
 	render() {
 		requestAnimationFrame(this.render.bind(this));
-		this.preview.render();
+		this.scene.render();
 	};
 }
