@@ -32,6 +32,7 @@ import { AUTH_CALLBACK, CONFIRM_TOKEN } from './common/common.states';
 import { PROFILE_DOWNLOADS, PROFILE_NOTIFICATIONS, PROFILE_ROOT, PROFILE_SETTINGS, PROFILE_STATS } from './profile/profile.states';
 import { ADMIN_BUILDS, ADMIN_USERS, ADMIN_UPLOADS, ADMIN_TOKENS } from './admin/admin.states';
 import { CONTENT_ABOUT, CONTENT_FAQ, CONTENT_LEGAL, CONTENT_PRIVACY, CONTENT_RULES } from './content/content.states';
+import {VPT_PREVIEW} from "./vpt/vpt.states";
 
 /**
  * @param $urlRouterProvider
@@ -85,6 +86,9 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state(CONTENT_FAQ);
 	$stateProvider.state(CONTENT_LEGAL);
 	$stateProvider.state(CONTENT_PRIVACY);
+
+	// 3d stuff
+	$stateProvider.state(VPT_PREVIEW);
 
 	// errors
 	$stateProvider.state('401',            { templateUrl: Error401Tpl, params: { url: null } });

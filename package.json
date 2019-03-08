@@ -5,6 +5,7 @@
 	"description": "The web application of https://vpdb.io.",
 	"main": "index.js",
 	"scripts": {
+		"serve": "npm run serve:dev:local",
 		"serve:prod": "cross-env ENV=prod CONFIG=prod webpack-dev-server --history-api-fallback --inline --progress",
 		"serve:dev:local": "cross-env ENV=dev CONFIG=local webpack-dev-server --history-api-fallback --inline --progress",
 		"serve:dev:prod": "cross-env ENV=dev CONFIG=prod webpack-dev-server --history-api-fallback --inline --progress",
@@ -58,6 +59,7 @@
 		"oclazyload": "1.1.0",
 		"parse-uri": "1.0.0",
 		"showdown": "1.9.0",
+		"three": "0.102.1",
 		"timeago.js": "3.0.2",
 		"traverse": "0.6.6",
 		"video.js": "6.9.0",

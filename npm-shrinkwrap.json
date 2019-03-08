@@ -1,6 +1,6 @@
 {
 	"name": "vpdb-website",
-	"version": "2.0.11-SNAPSHOT",
+	"version": "2.0.12-SNAPSHOT",
 	"lockfileVersion": 1,
 	"requires": true,
 	"dependencies": {
@@ -1929,9 +1929,9 @@
 			"dev": true
 		},
 		"bootstrap": {
-			"version": "3.4.0",
-			"resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.4.0.tgz",
-			"integrity": "sha512-F1yTDO9OHKH0xjl03DsOe8Nu1OWBIeAugGMhy3UTIYDdbbIPesQIhCEbj+HEr6wqlwweGAlP8F3OBC6kEuhFuw=="
+			"version": "3.4.1",
+			"resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.4.1.tgz",
+			"integrity": "sha512-yN5oZVmRCwe5aKwzRj6736nSmKDX7pLYwsXiCj/EYmo16hODaBiT4En5btW/jhBF/seV+XMx3aYwukYC3A49DA=="
 		},
 		"brace-expansion": {
 			"version": "1.1.11",
@@ -10678,6 +10678,11 @@
 			"resolved": "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz",
 			"integrity": "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=",
 			"dev": true
+		},
+		"three": {
+			"version": "0.102.1",
+			"resolved": "https://registry.npmjs.org/three/-/three-0.102.1.tgz",
+			"integrity": "sha512-btHBdww/Es4vdBkB2GjTE9mpj0vy8tgtxkX7ne7uxySXV8zoGxWJv1N88BydxnCqvAfmD4ZUTqPeESO7oDgeOQ=="
 		},
 		"through": {
 			"version": "2.3.8",
