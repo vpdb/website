@@ -20,11 +20,12 @@
 import {
 	AmbientLight,
 	DirectionalLight,
-	GridHelper,
-	Matrix4, Mesh,
+	GridHelper, Group,
+	Mesh,
 	PerspectiveCamera,
 	Raycaster,
-	Scene, Vector2,
+	Scene,
+	Vector2,
 	Vector3,
 	WebGLRenderer
 } from 'three';
@@ -34,6 +35,7 @@ import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
 export class VptPreviewScene {
 
 	constructor(canvasElement) {
+		this.highlight = 'Rails';
 		this.renderer = null;
 		this.canvas = canvasElement;
 		this.aspectRatio = 1;
@@ -41,13 +43,17 @@ export class VptPreviewScene {
 
 		this.scene = null;
 		this.cameraDefaults = {
-			posCamera: new Vector3(0.0, 175.0, 500.0),
+			posCamera: new Vector3(0.0, 500.0, 700.0),
 			posCameraTarget: new Vector3(0, 0, 0),
 			near: 0.1,
-			far: 10000,
-			fov: 45
+			far: 100000,
+			fov: 45,
 		};
+		/** @var Camera */
 		this.camera = null;
+		this.playfield = new Group();
+		this.body = new Group();
+		this.table = new Group();
 		this.cameraTarget = this.cameraDefaults.posCameraTarget;
 
 		this.mouse = new Vector2();
@@ -62,6 +68,7 @@ export class VptPreviewScene {
 			alpha: true,
 		});
 		this.scene = new Scene();
+		//this.camera = new OrthographicCamera(window.innerWidth / -1.5, window.innerWidth / 1.5, window.innerHeight / 1.5, window.innerHeight / -1.5, 1, 1000);
 		this.camera = new PerspectiveCamera(this.cameraDefaults.fov, this.aspectRatio, this.cameraDefaults.near, this.cameraDefaults.far);
 		this._initLights();
 		this._resetCamera();
@@ -69,9 +76,20 @@ export class VptPreviewScene {
 
 		this.renderer.domElement.addEventListener('mousedown', this.onClicked.bind(this), false);
 		this.controls = new TrackballControls(this.camera);
+
+		this.table.add(this.playfield);
+		this.table.add(this.body);
+		this.scene.add(this.table);
 	}
 
 	initContent(vpTable) {
+
+		this.table.rotateX(this._toRadian(90));
+		this.table.translateX(-250);
+		this.table.translateY(-500);
+		this.table.translateZ(-200);
+		this.table.scale.set(0.5, 0.5, 0.5);
+		this.playfield.rotateX(this._toRadian(6.5));
 
 		const loader = new OBJLoader();
 		for (const primitive of vpTable.primitives) {
@@ -85,7 +103,7 @@ export class VptPreviewScene {
 				//sMatrix.scale(1.0f, 1.0f, m_ptable->m_BG_scalez[m_ptable->m_BG_current_set]);
 				//matrix = matrix.multiply(sMatrix);
 
-				if (primitive.name === 'Primitive36') {
+				if (primitive.name === this.highlight) {
 					loadedMesh.traverse(child => {
 						if (child instanceof Mesh) {
 							child.material.color.setHex(0xff0000);
@@ -101,9 +119,13 @@ export class VptPreviewScene {
 				}
 
 				this._update(loadedMesh, primitive);
-				//this._updateWithMatrix(loadedMesh, primitive, vpTable.game_data.table_height);
-				this.scene.add(loadedMesh);
+				if (primitive.name !== 'Rails') {
+					this.playfield.add(loadedMesh);
+				} else {
+					this.body.add(loadedMesh);
+				}
 				this.primitives.push(loadedMesh);
+
 
 			}, xhr => {
 				if (xhr.lengthComputable) {
@@ -136,45 +158,6 @@ export class VptPreviewScene {
 
 	}
 
-	_updateWithMatrix(loadedMesh, primitive, tableHeight) {
-
-		// scale matrix
-		const sMatrix = new Matrix4();
-		sMatrix.makeScale(primitive.size.x, primitive.size.y, primitive.size.z);
-
-		// translation matrix
-		const tMatrix = new Matrix4();
-		tMatrix.makeTranslation(primitive.pos.x, primitive.pos.y, primitive.pos.z);
-
-		// translation + rotation matrix
-		let rtMatrix = new Matrix4();
-		rtMatrix.makeTranslation(primitive.trans.x, primitive.trans.y, primitive.trans.z + tableHeight);
-
-		// rotation matrix
-		const rMatrix = new Matrix4();
-		rMatrix.makeRotationZ(this._toRadian(primitive.rot.z));
-		rtMatrix = rtMatrix.multiply(rMatrix);
-		rMatrix.makeRotationY(this._toRadian(primitive.rot.y));
-		rtMatrix = rtMatrix.multiply(rMatrix);
-		rMatrix.makeRotationX(this._toRadian(primitive.rot.x));
-		rtMatrix = rtMatrix.multiply(rMatrix);
-
-		rMatrix.makeRotationZ(this._toRadian(primitive.obj_rot.z));
-		rtMatrix = rtMatrix.multiply(rMatrix);
-		rMatrix.makeRotationY(this._toRadian(primitive.obj_rot.y));
-		rtMatrix = rtMatrix.multiply(rMatrix);
-		rMatrix.makeRotationX(this._toRadian(primitive.obj_rot.x));
-		rtMatrix = rtMatrix.multiply(rMatrix);
-
-		let matrix = new Matrix4();
-		matrix = matrix.multiply(sMatrix);
-		matrix = matrix.multiply(rtMatrix);
-		matrix = matrix.multiply(tMatrix);        // fullMatrix = Smatrix * RTmatrix * Tmatrix
-
-		loadedMesh.matrix = matrix;
-		loadedMesh.matrixAutoUpdate = false;
-	}
-
 	render() {
 		if (!this.renderer.autoClear) {
 			this.renderer.clear();
@@ -200,12 +183,10 @@ export class VptPreviewScene {
 
 		const raycaster = new Raycaster();
 		raycaster.setFromCamera(this.mouse, this.camera);
-		const intersects = raycaster.intersectObjects(this.primitives);
+		const intersects = raycaster.intersectObjects(this.primitives, true);
 
 		if (intersects.length > 0) {
 			console.log(intersects.map(i => i.object.name));
-		} else {
-			console.log('Clicked on empty!');
 		}
 	}
 
@@ -222,6 +203,7 @@ export class VptPreviewScene {
 
 	_updateCamera() {
 		this.camera.aspect = this.aspectRatio;
+		//this.camera.setRotationFromEuler(new Euler(0, 0, this._toRadian(90), 'YXZ'));
 		this.camera.lookAt(this.cameraTarget);
 		this.camera.updateProjectionMatrix();
 	}
