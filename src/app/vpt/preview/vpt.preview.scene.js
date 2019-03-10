@@ -19,12 +19,15 @@
 
 import {
 	AmbientLight,
-	DirectionalLight,
-	GridHelper, Group, ImageLoader,
+	DirectionalLight, GridHelper,
+	Group,
+	ImageLoader,
 	Mesh,
+	MeshStandardMaterial,
 	PerspectiveCamera,
 	Raycaster,
-	Scene, Texture,
+	Scene,
+	Texture,
 	Vector2,
 	Vector3,
 	WebGLRenderer
@@ -35,7 +38,6 @@ import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
 export class VptPreviewScene {
 
 	constructor(canvasElement) {
-		this.highlight = 'Rails';
 		this.renderer = null;
 		this.canvas = canvasElement;
 		this.aspectRatio = 1;
@@ -43,7 +45,7 @@ export class VptPreviewScene {
 
 		this.scene = null;
 		this.cameraDefaults = {
-			posCamera: new Vector3(0.0, 500.0, 700.0),
+			posCamera: new Vector3(0.0, 600.0, 900.0),
 			posCameraTarget: new Vector3(0, 0, 0),
 			near: 0.1,
 			far: 100000,
@@ -53,12 +55,11 @@ export class VptPreviewScene {
 		this.camera = null;
 
 		this.playfield = new Group();
-		this.body = new Group();
-		this.table = new Group();
 		this.cameraTarget = this.cameraDefaults.posCameraTarget;
 
 		this.mouse = new Vector2();
-		this.primitives = [];
+		this.meshes = [];
+		this.vpTable = null;
 	}
 
 	initGl() {
@@ -78,52 +79,45 @@ export class VptPreviewScene {
 		this.renderer.domElement.addEventListener('mousedown', this.onClicked.bind(this), false);
 		this.controls = new TrackballControls(this.camera);
 
-		this.table.add(this.playfield);
-		this.table.add(this.body);
-		this.scene.add(this.table);
+		this.scene.add(this.playfield);
+
+		this.imageLoader = new ImageLoader();
+		this.objLoader = new OBJLoader();
 	}
 
 	initContent(vpTable) {
 
-		this.table.rotateX(this._toRadian(90));
-		this.table.translateX(-250);
-		this.table.translateY(-500);
-		this.table.translateZ(-200);
-		this.playfield.rotateX(this._toRadian(6.5));
-		this.playfield.translateZ(90);
-		this.table.scale.set(0.5, 0.5, 0.5);
+		this.vpTable = vpTable;
+		this.playfield.rotateX(this._toRadian(90));
+		this.playfield.translateX(-250);
+		this.playfield.translateY(-500);
+		this.playfield.scale.set(0.5, 0.5, 0.5);
 
-		const loader = new OBJLoader();
-		const imageLoader = new ImageLoader();
-
-		const primitives = vpTable.primitives; //.filter(p => p.name === 'Joker');
+		const primitives = this.vpTable.primitives; //.filter(p => p.name === 'Joker');
 		for (const primitive of primitives) {
 
-			const texture = new Texture();
-			const textureInfo = vpTable.textures[primitive.texture];
-			if (textureInfo && textureInfo.url) {
-				imageLoader.load(textureInfo.url,  image => {
-					texture.image = image;
-					texture.needsUpdate = true;
-				});
-			}
+			const material = this._getMaterial(primitive);
+			const texture = this._getTexture(primitive);
 
-			loader.load(primitive.mesh, obj => {
+			this.objLoader.load(primitive.mesh, group => {
 
 				/** @var { Object3D } */
-				const loadedMesh = obj;
-				loadedMesh.name = primitive.name;
+				const geometry = group.children[0].geometry;
+				geometry.center();
+				const mesh = new Mesh(geometry, material);
 
+				mesh.name = primitive.name;
 
-				//sMatrix.scale(1.0f, 1.0f, m_ptable->m_BG_scalez[m_ptable->m_BG_current_set]);
-				//matrix = matrix.multiply(sMatrix);
-
-				loadedMesh.traverse(function(child) {
-					if (child instanceof Mesh) {
-						child.material.transparent = true;
-						child.material.map = texture;
-					}
-				});
+				if (texture) {
+					mesh.traverse(function(child) {
+						if (child instanceof Mesh) {
+							if (texture) {
+								//child.material.transparent = true;
+								child.material.map = texture;
+							}
+						}
+					});
+				}
 
 				// if (primitive.name === this.highlight) {
 				// 	loadedMesh.traverse(child => {
@@ -140,14 +134,9 @@ export class VptPreviewScene {
 				// 	});
 				// }
 
-				this._update(loadedMesh, primitive);
-				if (primitive.name !== 'Rails') {
-					this.playfield.add(loadedMesh);
-				} else {
-					this.body.add(loadedMesh);
-				}
-				this.primitives.push(loadedMesh);
-
+				this._position(mesh, primitive);
+				this.playfield.add(mesh);
+				this.meshes.push(mesh);
 
 			}, xhr => {
 				if (xhr.lengthComputable) {
@@ -160,23 +149,82 @@ export class VptPreviewScene {
 		}
 	}
 
+	_getTexture(primitive) {
+		if (primitive.textureMap) {
+			const texture = new Texture();
+			const textureInfo = this.vpTable.textures[primitive.textureMap];
+			if (textureInfo && textureInfo.url) {
+				this.imageLoader.load(textureInfo.url, image => {
+					texture.image = image;
+					texture.needsUpdate = true;
+				});
+				return texture;
+			}
+		}
+	}
+
+	/**
+	 * @returns {Material}
+	 * @private
+	 */
+	_getMaterial(primitive) {
+
+		const params = {};
+		if (primitive.normalMap) {
+			params.normalMap = this.imageLoader.load(primitive.normalMap);
+			console.warn('Adding normal map to ', primitive);
+		}
+
+		if (primitive.material.toLowerCase().includes('metal')) {
+			return new MeshStandardMaterial(Object.assign(params, {
+
+				color: this._getColor(primitive),
+
+				roughness: 0.35,
+				metalness: 1,
+
+				// roughnessMap: roughnessMap,
+				// metalnessMap: metalnessMap,
+				//
+				// envMap: envMap, // important -- especially for metals!
+				// envMapIntensity: envMapIntensity
+
+			}));
+		}
+		return new MeshStandardMaterial(Object.assign(params, {
+			color: this._getColor(primitive),
+			opacity: 0.5,
+		}));
+	}
+
+	_getColor(primitive) {
+		switch (primitive.name) {
+			case 'Primitive8': return 0xff0000;
+			case 'Primitive6': return 0x00ff00;
+			case 'Primitive48': return 0x0000ff;
+			case 'Primitive20': return 0xff00ff;
+			case 'Primitive14': return 0x00ffff;
+			default: return 0xffffff;
+		}
+	}
+
 	/**
 	 *
 	 * @param {Object3D} loadedMesh
 	 * @param primitive
 	 * @private
 	 */
-	_update(loadedMesh, primitive) {
+	_position(loadedMesh, primitive) {
 		loadedMesh.scale.set(primitive.size.x, primitive.size.y, primitive.size.z);
 		loadedMesh.translateX(primitive.trans.x + primitive.pos.x);
 		loadedMesh.translateY(primitive.trans.y + primitive.pos.y);
-		loadedMesh.translateZ(primitive.trans.z + primitive.pos.z);
+		loadedMesh.translateZ(-primitive.trans.z - primitive.pos.z);
 		loadedMesh.rotateZ(this._toRadian(primitive.rot.z));
 		loadedMesh.rotateX(this._toRadian(primitive.rot.x));
 		loadedMesh.rotateY(this._toRadian(primitive.rot.y));
 		loadedMesh.rotateY(this._toRadian(primitive.obj_rot.z));
-		loadedMesh.rotateZ(this._toRadian(primitive.obj_rot.y));
 		loadedMesh.rotateX(this._toRadian(primitive.obj_rot.x));
+		loadedMesh.rotateZ(this._toRadian(primitive.obj_rot.y));
 
 	}
 
@@ -205,7 +253,7 @@ export class VptPreviewScene {
 
 		const raycaster = new Raycaster();
 		raycaster.setFromCamera(this.mouse, this.camera);
-		const intersects = raycaster.intersectObjects(this.primitives, true);
+		const intersects = raycaster.intersectObjects(this.meshes, true);
 
 		if (intersects.length > 0) {
 			console.log(intersects.map(i => i.object.name));
