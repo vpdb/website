@@ -109,7 +109,7 @@ export class VptPreviewScene {
 
 				//const mesh = group;
 				//const mesh = group.children[0];
-				const mesh = new Mesh(geometry, material);
+				let mesh = new Mesh(geometry, material);
 
 				mesh.name = primitive.name;
 
@@ -208,13 +208,14 @@ export class VptPreviewScene {
 		mesh.translateX(primitive.trans.x + primitive.pos.x);
 		mesh.translateY(primitive.trans.y + primitive.pos.y);
 		mesh.translateZ(-primitive.trans.z - primitive.pos.z);
-		mesh.rotateZ(this._toRadian(primitive.rot.z));
-		mesh.rotateX(this._toRadian(primitive.rot.x));
-		mesh.rotateY(this._toRadian(primitive.rot.y));
-		mesh.rotateY(this._toRadian(primitive.obj_rot.z));
-		mesh.rotateX(this._toRadian(primitive.obj_rot.x));
-		mesh.rotateZ(this._toRadian(primitive.obj_rot.y));
 
+		mesh.rotateX(this._toRadian(-primitive.rot.x));
+		mesh.rotateY(this._toRadian(-primitive.rot.y));
+		mesh.rotateZ(this._toRadian(primitive.rot.z));
+
+		mesh.rotateZ(this._toRadian(-primitive.obj_rot.x));
+		mesh.rotateX(this._toRadian(primitive.obj_rot.y));
+		mesh.rotateY(this._toRadian(-primitive.obj_rot.z));
 	}
 
 	render() {
