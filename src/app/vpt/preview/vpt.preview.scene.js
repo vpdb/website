@@ -22,7 +22,7 @@ import {
 	DirectionalLight, GridHelper,
 	Group,
 	ImageLoader,
-	Mesh,
+	Mesh, MeshPhongMaterial,
 	MeshStandardMaterial,
 	PerspectiveCamera,
 	Raycaster,
@@ -79,6 +79,11 @@ export class VptPreviewScene {
 		this.renderer.domElement.addEventListener('mousedown', this.onClicked.bind(this), false);
 		this.controls = new TrackballControls(this.camera);
 
+		// the playfield group
+		this.playfield.rotateX(this._toRadian(90));
+		this.playfield.translateX(-250);
+		this.playfield.translateY(-500);
+		this.playfield.scale.set(0.5, 0.5, 0.5);
 		this.scene.add(this.playfield);
 
 		this.imageLoader = new ImageLoader();
@@ -88,10 +93,7 @@ export class VptPreviewScene {
 	initContent(vpTable) {
 
 		this.vpTable = vpTable;
-		this.playfield.rotateX(this._toRadian(90));
-		this.playfield.translateX(-250);
-		this.playfield.translateY(-500);
-		this.playfield.scale.set(0.5, 0.5, 0.5);
+		window.vpt = vpTable;
 
 		const primitives = this.vpTable.primitives; //.filter(p => p.name === 'Joker');
 		for (const primitive of primitives) {
@@ -103,38 +105,26 @@ export class VptPreviewScene {
 
 				/** @var { Object3D } */
 				const geometry = group.children[0].geometry;
-				geometry.center();
+				//geometry.center();
+
+				//const mesh = group;
+				//const mesh = group.children[0];
 				const mesh = new Mesh(geometry, material);
 
 				mesh.name = primitive.name;
 
-				if (texture) {
-					mesh.traverse(function(child) {
-						if (child instanceof Mesh) {
-							if (texture) {
-								//child.material.transparent = true;
-								child.material.map = texture;
-							}
-						}
-					});
-				}
-
-				// if (primitive.name === this.highlight) {
-				// 	loadedMesh.traverse(child => {
+				// if (texture) {
+				// 	mesh.traverse(function(child) {
 				// 		if (child instanceof Mesh) {
-				// 			child.material.color.setHex(0xff0000);
-				// 		}
-				// 	});
-				// } else {
-				// 	loadedMesh.traverse(child => {
-				// 		if (child instanceof Mesh) {
-				// 			child.material.transparent = true;
-				// 			child.material.opacity = 0.5;
+				// 			if (texture) {
+				// 				child.material.transparent = true;
+				// 				child.material.map = texture;
+				// 			}
 				// 		}
 				// 	});
 				// }
 
-				this._position(mesh, primitive);
+				this._positionPrimitive(mesh, primitive);
 				this.playfield.add(mesh);
 				this.meshes.push(mesh);
 
@@ -169,32 +159,31 @@ export class VptPreviewScene {
 	 */
 	_getMaterial(primitive) {
 
-		const params = {};
-		if (primitive.normalMap) {
-			params.normalMap = this.imageLoader.load(primitive.normalMap);
-			console.warn('Adding normal map to ', primitive);
-		}
+		//const params = {};
+		// if (primitive.normalMap) {
+		// 	params.normalMap = this.imageLoader.load(primitive.normalMap);
+		// 	console.warn('Adding normal map to ', primitive);
+		// }
 
-		if (primitive.material.toLowerCase().includes('metal')) {
-			return new MeshStandardMaterial(Object.assign(params, {
-
-				color: this._getColor(primitive),
-
-				roughness: 0.35,
-				metalness: 1,
-
-				// roughnessMap: roughnessMap,
-				// metalnessMap: metalnessMap,
-				//
-				// envMap: envMap, // important -- especially for metals!
-				// envMapIntensity: envMapIntensity
-
-			}));
-		}
-		return new MeshStandardMaterial(Object.assign(params, {
-			color: this._getColor(primitive),
-			opacity: 0.5,
-		}));
+		// if (primitive.material.toLowerCase().includes('metal')) {
+		// 	return new MeshStandardMaterial(Object.assign(params, {
+		//
+		// 		color: this._getColor(primitive),
+		//
+		// 		roughness: 0.35,
+		// 		metalness: 1,
+		//
+		// 		// roughnessMap: roughnessMap,
+		// 		// metalnessMap: metalnessMap,
+		// 		//
+		// 		// envMap: envMap, // important -- especially for metals!
+		// 		// envMapIntensity: envMapIntensity
+		//
+		// 	}));
+		// }
+		return new MeshPhongMaterial();
+		// return new MeshStandardMaterial({
+		// });
 	}
 
 	_getColor(primitive) {
@@ -210,21 +199,21 @@ export class VptPreviewScene {
 
 	/**
 	 *
-	 * @param {Object3D} loadedMesh
+	 * @param {Object3D} mesh
 	 * @param primitive
 	 * @private
 	 */
-	_position(loadedMesh, primitive) {
-		loadedMesh.scale.set(primitive.size.x, primitive.size.y, primitive.size.z);
-		loadedMesh.translateX(primitive.trans.x + primitive.pos.x);
-		loadedMesh.translateY(primitive.trans.y + primitive.pos.y);
-		loadedMesh.translateZ(-primitive.trans.z - primitive.pos.z);
-		loadedMesh.rotateZ(this._toRadian(primitive.rot.z));
-		loadedMesh.rotateX(this._toRadian(primitive.rot.x));
-		loadedMesh.rotateY(this._toRadian(primitive.rot.y));
-		loadedMesh.rotateY(this._toRadian(primitive.obj_rot.z));
-		loadedMesh.rotateX(this._toRadian(primitive.obj_rot.x));
-		loadedMesh.rotateZ(this._toRadian(primitive.obj_rot.y));
+	_positionPrimitive(mesh, primitive) {
+		mesh.scale.set(primitive.size.x, primitive.size.y, primitive.size.z);
+		mesh.translateX(primitive.trans.x + primitive.pos.x);
+		mesh.translateY(primitive.trans.y + primitive.pos.y);
+		mesh.translateZ(-primitive.trans.z - primitive.pos.z);
+		mesh.rotateZ(this._toRadian(primitive.rot.z));
+		mesh.rotateX(this._toRadian(primitive.rot.x));
+		mesh.rotateY(this._toRadian(primitive.rot.y));
+		mesh.rotateY(this._toRadian(primitive.obj_rot.z));
+		mesh.rotateX(this._toRadian(primitive.obj_rot.x));
+		mesh.rotateZ(this._toRadian(primitive.obj_rot.y));
 
 	}
 
