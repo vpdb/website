@@ -20,11 +20,11 @@
 import {
 	AmbientLight,
 	DirectionalLight,
-	GridHelper, Group,
+	GridHelper, Group, ImageLoader,
 	Mesh,
 	PerspectiveCamera,
 	Raycaster,
-	Scene,
+	Scene, Texture,
 	Vector2,
 	Vector3,
 	WebGLRenderer
@@ -51,6 +51,7 @@ export class VptPreviewScene {
 		};
 		/** @var Camera */
 		this.camera = null;
+
 		this.playfield = new Group();
 		this.body = new Group();
 		this.table = new Group();
@@ -88,11 +89,25 @@ export class VptPreviewScene {
 		this.table.translateX(-250);
 		this.table.translateY(-500);
 		this.table.translateZ(-200);
-		this.table.scale.set(0.5, 0.5, 0.5);
 		this.playfield.rotateX(this._toRadian(6.5));
+		this.playfield.translateZ(90);
+		this.table.scale.set(0.5, 0.5, 0.5);
 
 		const loader = new OBJLoader();
-		for (const primitive of vpTable.primitives) {
+		const imageLoader = new ImageLoader();
+
+		const primitives = vpTable.primitives; //.filter(p => p.name === 'Joker');
+		for (const primitive of primitives) {
+
+			const texture = new Texture();
+			const textureInfo = vpTable.textures[primitive.texture];
+			if (textureInfo && textureInfo.url) {
+				imageLoader.load(textureInfo.url,  image => {
+					texture.image = image;
+					texture.needsUpdate = true;
+				});
+			}
+
 			loader.load(primitive.mesh, obj => {
 
 				/** @var { Object3D } */
@@ -103,20 +118,27 @@ export class VptPreviewScene {
 				//sMatrix.scale(1.0f, 1.0f, m_ptable->m_BG_scalez[m_ptable->m_BG_current_set]);
 				//matrix = matrix.multiply(sMatrix);
 
-				if (primitive.name === this.highlight) {
-					loadedMesh.traverse(child => {
-						if (child instanceof Mesh) {
-							child.material.color.setHex(0xff0000);
-						}
-					});
-				} else {
-					loadedMesh.traverse(child => {
-						if (child instanceof Mesh) {
-							child.material.transparent = true;
-							child.material.opacity = 0.5;
-						}
-					});
-				}
+				loadedMesh.traverse(function(child) {
+					if (child instanceof Mesh) {
+						child.material.transparent = true;
+						child.material.map = texture;
+					}
+				});
+
+				// if (primitive.name === this.highlight) {
+				// 	loadedMesh.traverse(child => {
+				// 		if (child instanceof Mesh) {
+				// 			child.material.color.setHex(0xff0000);
+				// 		}
+				// 	});
+				// } else {
+				// 	loadedMesh.traverse(child => {
+				// 		if (child instanceof Mesh) {
+				// 			child.material.transparent = true;
+				// 			child.material.opacity = 0.5;
+				// 		}
+				// 	});
+				// }
 
 				this._update(loadedMesh, primitive);
 				if (primitive.name !== 'Rails') {
