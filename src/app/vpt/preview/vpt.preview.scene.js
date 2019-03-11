@@ -19,21 +19,26 @@
 
 import {
 	AmbientLight,
-	DirectionalLight, GridHelper,
+	BoxGeometry,
+	Color,
+	DirectionalLight,
+	GridHelper,
 	Group,
 	ImageLoader,
-	Mesh, MeshPhongMaterial,
+	Mesh,
 	MeshStandardMaterial,
 	PerspectiveCamera,
 	Raycaster,
 	Scene,
 	Texture,
+	TextureLoader,
 	Vector2,
 	Vector3,
 	WebGLRenderer
 } from 'three';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
+import {MeshBasicMaterial} from 'three/src/materials/MeshBasicMaterial';
 
 export class VptPreviewScene {
 
@@ -87,6 +92,7 @@ export class VptPreviewScene {
 		this.scene.add(this.playfield);
 
 		this.imageLoader = new ImageLoader();
+		this.textureLoader = new TextureLoader();
 		this.objLoader = new OBJLoader();
 	}
 
@@ -94,6 +100,8 @@ export class VptPreviewScene {
 
 		this.vpTable = vpTable;
 		window.vpt = vpTable;
+
+		this.playfield.add(this._createPlayfieldFloor());
 
 		const primitives = this.vpTable.primitives; //.filter(p => p.name === 'Joker');
 		for (const primitive of primitives) {
@@ -113,16 +121,14 @@ export class VptPreviewScene {
 
 				mesh.name = primitive.name;
 
-				// if (texture) {
-				// 	mesh.traverse(function(child) {
-				// 		if (child instanceof Mesh) {
-				// 			if (texture) {
-				// 				child.material.transparent = true;
-				// 				child.material.map = texture;
-				// 			}
-				// 		}
-				// 	});
-				// }
+				if (texture) {
+					mesh.traverse(child => {
+						if (child instanceof Mesh) {
+							child.material.transparent = true;
+							child.material.map = texture;
+						}
+					});
+				}
 
 				this._positionPrimitive(mesh, primitive);
 				this.playfield.add(mesh);
@@ -159,31 +165,32 @@ export class VptPreviewScene {
 	 */
 	_getMaterial(primitive) {
 
-		//const params = {};
-		// if (primitive.normalMap) {
-		// 	params.normalMap = this.imageLoader.load(primitive.normalMap);
-		// 	console.warn('Adding normal map to ', primitive);
-		// }
+		const material = new MeshStandardMaterial();
+		if (!primitive.material) {
+			return material;
+		}
+		const materialInfo = this.vpTable.materials[primitive.material];
+		if (!material) {
+			console.warn('Primitive "%s" has unknown material "%s".', primitive.name, primitive.material);
+			return material;
+		}
 
-		// if (primitive.material.toLowerCase().includes('metal')) {
-		// 	return new MeshStandardMaterial(Object.assign(params, {
-		//
-		// 		color: this._getColor(primitive),
-		//
-		// 		roughness: 0.35,
-		// 		metalness: 1,
-		//
-		// 		// roughnessMap: roughnessMap,
-		// 		// metalnessMap: metalnessMap,
-		// 		//
-		// 		// envMap: envMap, // important -- especially for metals!
-		// 		// envMapIntensity: envMapIntensity
-		//
-		// 	}));
-		// }
-		return new MeshPhongMaterial();
-		// return new MeshStandardMaterial({
-		// });
+		material.color = new Color(materialInfo.base_color);
+		material.roughness = 1 - materialInfo.roughness;
+		material.metalness = materialInfo.is_metal ? 0.7 : 0.0;
+
+		if (primitive.normalMap) {
+			const normalMap = this.vpTable.textures[primitive.normalMap];
+			if (normalMap) {
+				this.textureLoader.load(normalMap.url, map => {
+					map.anisotropy = 16;
+					material.normalMap = map;
+				});
+			} else {
+				console.warn('Unknown normal map "%s" for primitive "%s".', primitive.normalMap, primitive.name);
+			}
+		}
+		return material;
 	}
 
 	_getColor(primitive) {
@@ -286,5 +293,25 @@ export class VptPreviewScene {
 
 		const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);
 		this.scene.add(helper);
+	}
+
+	_createPlayfieldFloor() {
+		const playfieldGeometry = new BoxGeometry(this.vpTable.game_data.size.width, this.vpTable.game_data.size.height, 10);
+		const playfieldMaterial = this._getMaterial(this.vpTable.game_data);
+		const playfieldTexture = this._getTexture(this.vpTable.game_data);
+		const playfield = new Mesh(playfieldGeometry, playfieldMaterial);
+		if (playfieldTexture) {
+			playfield.traverse(child => {
+				if (child instanceof Mesh) {
+					child.material.opacity = 0.1;
+					child.material.transparent = true;
+					child.material.map = playfieldTexture;
+				}
+			});
+		}
+		playfield.translateX(this.vpTable.game_data.size.width / 2);
+		playfield.translateY(this.vpTable.game_data.size.height / 2);
+		playfield.translateZ(5);
+		return playfield;
 	}
 }
