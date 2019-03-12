@@ -289,6 +289,7 @@ export class VptPreviewScene {
 
 		directionalLight1.position.set(-100, -50, 100);
 		directionalLight2.position.set(100, 50, -100);
+		directionalLight2.intensity = 5;
 
 		this.scene.add(directionalLight1);
 		this.scene.add(directionalLight2);
