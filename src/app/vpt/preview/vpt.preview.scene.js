@@ -38,7 +38,6 @@ import {
 } from 'three';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
-import {MeshBasicMaterial} from 'three/src/materials/MeshBasicMaterial';
 
 export class VptPreviewScene {
 
@@ -179,6 +178,10 @@ export class VptPreviewScene {
 		material.roughness = 1 - materialInfo.roughness;
 		material.metalness = materialInfo.is_metal ? 0.7 : 0.0;
 
+		if (materialInfo.is_opacity_enabled) {
+			material.opacity = materialInfo.opacity;
+		}
+
 		if (primitive.normalMap) {
 			const normalMap = this.vpTable.textures[primitive.normalMap];
 			if (normalMap) {
@@ -291,8 +294,8 @@ export class VptPreviewScene {
 		this.scene.add(directionalLight2);
 		this.scene.add(ambientLight);
 
-		const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);
-		this.scene.add(helper);
+		// const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);
+		// this.scene.add(helper);
 	}
 
 	_createPlayfieldFloor() {
@@ -303,8 +306,7 @@ export class VptPreviewScene {
 		if (playfieldTexture) {
 			playfield.traverse(child => {
 				if (child instanceof Mesh) {
-					child.material.opacity = 0.1;
-					child.material.transparent = true;
+					child.material.transparent = false;
 					child.material.map = playfieldTexture;
 				}
 			});
@@ -312,6 +314,7 @@ export class VptPreviewScene {
 		playfield.translateX(this.vpTable.game_data.size.width / 2);
 		playfield.translateY(this.vpTable.game_data.size.height / 2);
 		playfield.translateZ(5);
+		playfield.rotateZ(Math.PI);
 		return playfield;
 	}
 }
