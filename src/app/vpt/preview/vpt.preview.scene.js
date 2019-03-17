@@ -17,27 +17,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import {
-	AmbientLight,
-	BoxGeometry,
-	Color,
-	DirectionalLight,
-	GridHelper,
-	Group,
-	ImageLoader,
-	Mesh,
-	MeshStandardMaterial,
-	PerspectiveCamera,
-	Raycaster,
-	Scene,
-	Texture,
-	TextureLoader,
-	Vector2,
-	Vector3,
-	WebGLRenderer
-} from 'three';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
-import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
+import {PCFSoftShadowMap} from 'three/src/constants';
+import {Vector3} from 'three/src/math/Vector3';
+import {Vector2} from 'three/src/math/Vector2';
+import {WebGLRenderer} from 'three/src/renderers/WebGLRenderer';
+import {Scene} from 'three/src/scenes/Scene';
+import {PerspectiveCamera} from 'three/src/cameras/PerspectiveCamera';
+import {AmbientLight} from 'three/src/lights/AmbientLight';
+import {DirectionalLight} from 'three/src/lights/DirectionalLight';
+import {Raycaster} from 'three/src/core/Raycaster';
+import {VptLoader} from './vpt.loader';
 
 export class VptPreviewScene {
 
@@ -49,21 +39,18 @@ export class VptPreviewScene {
 
 		this.scene = null;
 		this.cameraDefaults = {
-			posCamera: new Vector3(0.0, 600.0, 900.0),
-			posCameraTarget: new Vector3(0, 0, 0),
+			posCamera: new Vector3(0, 1500.0, 2500.0),
+			posCameraTarget: new Vector3(0, -1500, 0),
 			near: 0.1,
 			far: 100000,
 			fov: 45,
 		};
 		/** @var Camera */
 		this.camera = null;
-
-		this.playfield = new Group();
 		this.cameraTarget = this.cameraDefaults.posCameraTarget;
 
 		this.mouse = new Vector2();
 		this.meshes = [];
-		this.vpTable = null;
 	}
 
 	initGl() {
@@ -73,8 +60,10 @@ export class VptPreviewScene {
 			autoClear: true,
 			alpha: true,
 		});
+		this.renderer.shadowMapEnabled = true;
+		this.renderer.shadowMap.type = PCFSoftShadowMap;
+
 		this.scene = new Scene();
-		//this.camera = new OrthographicCamera(window.innerWidth / -1.5, window.innerWidth / 1.5, window.innerHeight / 1.5, window.innerHeight / -1.5, 1, 1000);
 		this.camera = new PerspectiveCamera(this.cameraDefaults.fov, this.aspectRatio, this.cameraDefaults.near, this.cameraDefaults.far);
 		this._initLights();
 		this._resetCamera();
@@ -82,150 +71,18 @@ export class VptPreviewScene {
 
 		this.renderer.domElement.addEventListener('mousedown', this.onClicked.bind(this), false);
 		this.controls = new TrackballControls(this.camera);
-
-		// the playfield group
-		this.playfield.rotateX(this._toRadian(90));
-		this.playfield.translateX(-250);
-		this.playfield.translateY(-500);
-		this.playfield.scale.set(0.5, 0.5, 0.5);
-		this.scene.add(this.playfield);
-
-		this.imageLoader = new ImageLoader();
-		this.textureLoader = new TextureLoader();
-		this.objLoader = new OBJLoader();
+		this.controls.target = this.cameraDefaults.posCameraTarget;
 	}
 
 	initContent(vpTable) {
 
-		this.vpTable = vpTable;
-		window.vpt = vpTable;
+		window.vpt = vpTable; // for easier debugging
 
-		this.playfield.add(this._createPlayfieldFloor());
-
-		const primitives = this.vpTable.primitives; //.filter(p => p.name === 'Joker');
-		for (const primitive of primitives) {
-
-			const material = this._getMaterial(primitive);
-			const texture = this._getTexture(primitive);
-
-			this.objLoader.load(primitive.mesh, group => {
-
-				/** @var { Object3D } */
-				const geometry = group.children[0].geometry;
-				//geometry.center();
-
-				//const mesh = group;
-				//const mesh = group.children[0];
-				let mesh = new Mesh(geometry, material);
-
-				mesh.name = primitive.name;
-
-				if (texture) {
-					mesh.traverse(child => {
-						if (child instanceof Mesh) {
-							child.material.transparent = true;
-							child.material.map = texture;
-						}
-					});
-				}
-
-				this._positionPrimitive(mesh, primitive);
-				this.playfield.add(mesh);
-				this.meshes.push(mesh);
-
-			}, xhr => {
-				if (xhr.lengthComputable) {
-					//var percentComplete = xhr.loaded / xhr.total * 100;
-					//console.log('model ' + Math.round(percentComplete, 2) + '% downloaded');
-				}
-			}, err => {
-				console.error(err);
-			});
-		}
-	}
-
-	_getTexture(primitive) {
-		if (primitive.textureMap) {
-			const texture = new Texture();
-			const textureInfo = this.vpTable.textures[primitive.textureMap];
-			if (textureInfo && textureInfo.url) {
-				this.imageLoader.load(textureInfo.url, image => {
-					texture.image = image;
-					texture.needsUpdate = true;
-				});
-				return texture;
-			}
-		}
-	}
-
-	/**
-	 * @returns {Material}
-	 * @private
-	 */
-	_getMaterial(primitive) {
-
-		const material = new MeshStandardMaterial();
-		if (!primitive.material) {
-			return material;
-		}
-		const materialInfo = this.vpTable.materials[primitive.material];
-		if (!material) {
-			console.warn('Primitive "%s" has unknown material "%s".', primitive.name, primitive.material);
-			return material;
-		}
-
-		material.color = new Color(materialInfo.base_color);
-		material.roughness = 1 - materialInfo.roughness;
-		material.metalness = materialInfo.is_metal ? 0.7 : 0.0;
-
-		if (materialInfo.is_opacity_enabled) {
-			material.opacity = materialInfo.opacity;
-		}
-
-		if (primitive.normalMap) {
-			const normalMap = this.vpTable.textures[primitive.normalMap];
-			if (normalMap) {
-				this.textureLoader.load(normalMap.url, map => {
-					map.anisotropy = 16;
-					material.normalMap = map;
-				});
-			} else {
-				console.warn('Unknown normal map "%s" for primitive "%s".', primitive.normalMap, primitive.name);
-			}
-		}
-		return material;
-	}
-
-	_getColor(primitive) {
-		switch (primitive.name) {
-			case 'Primitive8': return 0xff0000;
-			case 'Primitive6': return 0x00ff00;
-			case 'Primitive48': return 0x0000ff;
-			case 'Primitive20': return 0xff00ff;
-			case 'Primitive14': return 0x00ffff;
-			default: return 0xffffff;
-		}
-	}
-
-	/**
-	 *
-	 * @param {Object3D} mesh
-	 * @param primitive
-	 * @private
-	 */
-	_positionPrimitive(mesh, primitive) {
-		mesh.scale.set(primitive.size.x, primitive.size.y, primitive.size.z);
-		mesh.translateX(primitive.trans.x + primitive.pos.x);
-		mesh.translateY(primitive.trans.y + primitive.pos.y);
-		mesh.translateZ(-primitive.trans.z - primitive.pos.z);
-
-		mesh.rotateX(this._toRadian(-primitive.rot.x));
-		mesh.rotateY(this._toRadian(-primitive.rot.y));
-		mesh.rotateZ(this._toRadian(primitive.rot.z));
-
-		mesh.rotateZ(this._toRadian(-primitive.obj_rot.x));
-		mesh.rotateX(this._toRadian(primitive.obj_rot.y));
-		mesh.rotateY(this._toRadian(-primitive.obj_rot.z));
+		const loader = new VptLoader(vpTable);
+		const playfield = loader.getPlayfield();
+		playfield.translateX(-vpTable.game_data.size.width / 2);
+		playfield.rotateX(Math.PI / 2);
+		this.scene.add(playfield);
 	}
 
 	render() {
@@ -278,44 +135,19 @@ export class VptPreviewScene {
 		this.camera.updateProjectionMatrix();
 	}
 
-	_toRadian(deg) {
-		return deg * Math.PI / 180;
-	}
 
 	_initLights() {
 		const ambientLight = new AmbientLight(0x404040);
-		const directionalLight1 = new DirectionalLight(0xC0C090);
-		const directionalLight2 = new DirectionalLight(0xC0C090);
 
-		directionalLight1.position.set(-100, -50, 100);
-		directionalLight2.position.set(100, 50, -100);
-		directionalLight2.intensity = 5;
+		const directionalLight = new DirectionalLight(0xC0C0C0);
+		directionalLight.position.set(0, 500, 500);
+		directionalLight.intensity = 0.5;
+		directionalLight.castShadow = true;
 
-		this.scene.add(directionalLight1);
-		this.scene.add(directionalLight2);
+		this.scene.add(directionalLight);
 		this.scene.add(ambientLight);
 
 		// const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);
 		// this.scene.add(helper);
-	}
-
-	_createPlayfieldFloor() {
-		const playfieldGeometry = new BoxGeometry(this.vpTable.game_data.size.width, this.vpTable.game_data.size.height, 10);
-		const playfieldMaterial = this._getMaterial(this.vpTable.game_data);
-		const playfieldTexture = this._getTexture(this.vpTable.game_data);
-		const playfield = new Mesh(playfieldGeometry, playfieldMaterial);
-		if (playfieldTexture) {
-			playfield.traverse(child => {
-				if (child instanceof Mesh) {
-					child.material.transparent = false;
-					child.material.map = playfieldTexture;
-				}
-			});
-		}
-		playfield.translateX(this.vpTable.game_data.size.width / 2);
-		playfield.translateY(this.vpTable.game_data.size.height / 2);
-		playfield.translateZ(5);
-		playfield.rotateZ(Math.PI);
-		return playfield;
 	}
 }
