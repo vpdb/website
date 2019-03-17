@@ -17,18 +17,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import {
+	AmbientLight, DirectionalLight, GridHelper,
+	PCFSoftShadowMap,
+	PerspectiveCamera,
+	Raycaster,
+	Scene,
+	Vector2,
+	Vector3,
+	WebGLRenderer
+} from 'three';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
-import {PCFSoftShadowMap} from 'three/src/constants';
-import {Vector3} from 'three/src/math/Vector3';
-import {Vector2} from 'three/src/math/Vector2';
-import {WebGLRenderer} from 'three/src/renderers/WebGLRenderer';
-import {Scene} from 'three/src/scenes/Scene';
-import {PerspectiveCamera} from 'three/src/cameras/PerspectiveCamera';
-import {AmbientLight} from 'three/src/lights/AmbientLight';
-import {DirectionalLight} from 'three/src/lights/DirectionalLight';
-import {Raycaster} from 'three/src/core/Raycaster';
+
 import {VptLoader} from './vpt.loader';
-import {GridHelper} from 'three/src/helpers/GridHelper';
 
 const showGridHelper = false;
 
@@ -87,6 +88,12 @@ export class VptPreviewScene {
 		playfield.translateX(-vpTable.game_data.size.width * scale / 2);
 		playfield.rotateX(Math.PI / 2);
 		playfield.scale.set(scale, scale, scale);
+
+		playfield.traverse(obj => {
+			obj.castShadow = true;
+			obj.receiveShadow = true;
+		});
+
 		this.scene.add(playfield);
 	}
 

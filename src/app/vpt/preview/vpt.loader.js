@@ -17,16 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import {
+	BoxGeometry,
+	Color,
+	Group,
+	ImageLoader,
+	Mesh,
+	MeshStandardMaterial,
+	PointLight,
+	Texture,
+	TextureLoader
+} from 'three';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
-import {PointLight} from 'three/src/lights/PointLight';
-import {ImageLoader} from 'three/src/loaders/ImageLoader';
-import {TextureLoader} from 'three/src/loaders/TextureLoader';
-import {Mesh} from 'three/src/objects/Mesh';
-import {Texture} from 'three/src/textures/Texture';
-import {MeshStandardMaterial} from 'three/src/materials/MeshStandardMaterial';
-import {Color} from 'three/src/math/Color';
-import {BoxGeometry} from 'three/src/geometries/BoxGeometry';
-import {Group} from 'three/src/objects/Group';
 
 export class VptLoader {
 
