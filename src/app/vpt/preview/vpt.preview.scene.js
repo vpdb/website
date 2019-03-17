@@ -28,6 +28,9 @@ import {AmbientLight} from 'three/src/lights/AmbientLight';
 import {DirectionalLight} from 'three/src/lights/DirectionalLight';
 import {Raycaster} from 'three/src/core/Raycaster';
 import {VptLoader} from './vpt.loader';
+import {GridHelper} from 'three/src/helpers/GridHelper';
+
+const showGridHelper = false;
 
 export class VptPreviewScene {
 
@@ -39,8 +42,8 @@ export class VptPreviewScene {
 
 		this.scene = null;
 		this.cameraDefaults = {
-			posCamera: new Vector3(0, 1500.0, 2500.0),
-			posCameraTarget: new Vector3(0, -1500, 0),
+			posCamera: new Vector3(0, 150.0, 250.0),
+			posCameraTarget: new Vector3(0, -150, 0),
 			near: 0.1,
 			far: 100000,
 			fov: 45,
@@ -78,11 +81,12 @@ export class VptPreviewScene {
 
 		window.vpt = vpTable; // for easier debugging
 
-		const loader = new VptLoader(vpTable);
+		const scale = 0.1;
+		const loader = new VptLoader(vpTable, scale);
 		const playfield = loader.getPlayfield();
-		playfield.translateX(-vpTable.game_data.size.width / 2);
+		playfield.translateX(-vpTable.game_data.size.width * scale / 2);
 		playfield.rotateX(Math.PI / 2);
-		//playfield.scale.set(0.1, 0.1, 0.1)
+		playfield.scale.set(scale, scale, scale);
 		this.scene.add(playfield);
 	}
 
@@ -140,13 +144,14 @@ export class VptPreviewScene {
 
 		const directionalLight = new DirectionalLight(0xC0C0C0);
 		directionalLight.position.set(0, 500, 500);
-		directionalLight.intensity = 0.5;
-		directionalLight.castShadow = true;
+		directionalLight.intensity = 1.5;
 
 		this.scene.add(directionalLight);
 		this.scene.add(ambientLight);
 
-		// const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);
-		// this.scene.add(helper);
+		if (showGridHelper) {
+			const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);
+			this.scene.add(helper);
+		}
 	}
 }
