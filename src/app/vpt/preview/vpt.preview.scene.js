@@ -82,6 +82,7 @@ export class VptPreviewScene {
 		const playfield = loader.getPlayfield();
 		playfield.translateX(-vpTable.game_data.size.width / 2);
 		playfield.rotateX(Math.PI / 2);
+		//playfield.scale.set(0.1, 0.1, 0.1)
 		this.scene.add(playfield);
 	}
 
@@ -130,11 +131,9 @@ export class VptPreviewScene {
 
 	_updateCamera() {
 		this.camera.aspect = this.aspectRatio;
-		//this.camera.setRotationFromEuler(new Euler(0, 0, this._toRadian(90), 'YXZ'));
 		this.camera.lookAt(this.cameraTarget);
 		this.camera.updateProjectionMatrix();
 	}
-
 
 	_initLights() {
 		const ambientLight = new AmbientLight(0x404040);
