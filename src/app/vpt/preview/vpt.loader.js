@@ -30,8 +30,9 @@ import {Group} from 'three/src/objects/Group';
 
 export class VptLoader {
 
-	constructor(vpTable) {
+	constructor(vpTable, scale) {
 		this.vpTable = vpTable;
+		this.scale = scale;
 		this.playfield = new Group();
 		this.playfield.receiveShadow = true;
 		this.playfield.castShadow = true;
@@ -104,11 +105,8 @@ export class VptLoader {
 			// 	mesh.scale.set(lightInfo.meshRadius, lightInfo.meshRadius, lightInfo.meshRadius);
 			// 	this.playfield.add(mesh);
 			// });
-			const light = new PointLight(lightInfo.color, lightInfo.intensity, lightInfo.falloff);
+			const light = new PointLight(lightInfo.color, lightInfo.intensity, lightInfo.falloff * this.scale);
 			light.castShadow = true;
-			light.shadowCameraVisible = true;
-			light.shadow.camera.far = 10000;
-
 			light.position.set(lightInfo.center.x, lightInfo.center.y, -10);
 			this.playfield.add(light);
 		}
@@ -143,8 +141,8 @@ export class VptLoader {
 		material.color = new Color(materialInfo.base_color);
 		material.roughness = 1 - materialInfo.roughness;
 		material.metalness = materialInfo.is_metal ? 0.7 : 0.0;
-		// material.emissive = new Color(materialInfo.glossy_color);
-		// material.emissiveIntensity = 0.5;
+		material.emissive = new Color(materialInfo.glossy_color);
+		material.emissiveIntensity = 0.1;
 
 		if (materialInfo.is_opacity_enabled) {
 			material.transparent = true;
@@ -181,7 +179,9 @@ export class VptLoader {
 	}
 
 	_loadFloor() {
-		const floorGeometry = new BoxGeometry(this.vpTable.game_data.size.width, this.vpTable.game_data.size.height, 10);
+		const width = this.vpTable.game_data.size.width;
+		const height = this.vpTable.game_data.size.height;
+		const floorGeometry = new BoxGeometry(width, height, 10);
 		const floorMaterial = this._getMaterial(this.vpTable.game_data);
 		const floorTexture = this._getTexture(this.vpTable.game_data);
 		const floor = new Mesh(floorGeometry, floorMaterial);
@@ -194,8 +194,8 @@ export class VptLoader {
 				}
 			});
 		}
-		floor.translateX(this.vpTable.game_data.size.width / 2);
-		floor.translateY(this.vpTable.game_data.size.height / 2);
+		floor.translateX(width / 2);
+		floor.translateY(height / 2);
 		floor.translateZ(5);
 		floor.rotateZ(Math.PI);
 		this.playfield.add(floor);
