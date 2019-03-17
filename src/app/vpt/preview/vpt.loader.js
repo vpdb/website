@@ -33,6 +33,8 @@ export class VptLoader {
 	constructor(vpTable) {
 		this.vpTable = vpTable;
 		this.playfield = new Group();
+		this.playfield.receiveShadow = true;
+		this.playfield.castShadow = true;
 
 		this.imageLoader = new ImageLoader();
 		this.textureLoader = new TextureLoader();
@@ -48,48 +50,47 @@ export class VptLoader {
 	}
 
 	_loadPrimitives() {
-		const primitives = this.vpTable.primitives; //.filter(p => p.name === 'Joker');
+		const primitives = this.vpTable.primitives;
 		for (const primitive of primitives) {
-
-			const material = this._getMaterial(primitive);
-			const texture = this._getTexture(primitive);
-
-			this.objLoader.load(primitive.mesh, group => {
-
-				/** @var { Object3D } */
-				const geometry = group.children[0].geometry;
-				//geometry.center();
-
-				//const mesh = group;
-				//const mesh = group.children[0];
-				let mesh = new Mesh(geometry, material);
-
-				mesh.name = primitive.name;
-				mesh.castShadow = true;
-				mesh.receiveShadow = true;
-
-				if (texture) {
-					mesh.traverse(child => {
-						if (child instanceof Mesh) {
-							child.material.transparent = true;
-							child.material.map = texture;
-						}
-					});
-				}
-
-				this._positionPrimitive(mesh, primitive);
-				this.playfield.add(mesh);
-				//this.meshes.push(mesh);
-
-			}, xhr => {
-				if (xhr.lengthComputable) {
-					//var percentComplete = xhr.loaded / xhr.total * 100;
-					//console.log('model ' + Math.round(percentComplete, 2) + '% downloaded');
-				}
-			}, err => {
-				console.error(err);
-			});
+			this._loadPrimitive(primitive);
 		}
+	}
+
+	_loadPrimitive(primitive) {
+		const material = this._getMaterial(primitive);
+		const texture = this._getTexture(primitive);
+
+		this.objLoader.load(primitive.mesh, group => {
+
+			/** @var { Geometry } */
+			const geometry = group.children[0].geometry;
+			const mesh = new Mesh(geometry, material);
+
+			mesh.name = primitive.name;
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
+
+			if (texture) {
+				mesh.traverse(child => {
+					if (child instanceof Mesh) {
+						child.material.transparent = true;
+						child.material.map = texture;
+					}
+				});
+			}
+
+			this._positionPrimitive(mesh, primitive);
+			this.playfield.add(mesh);
+			//this.meshes.push(mesh);
+
+		}, xhr => {
+			if (xhr.lengthComputable) {
+				//var percentComplete = xhr.loaded / xhr.total * 100;
+				//console.log('model ' + Math.round(percentComplete, 2) + '% downloaded');
+			}
+		}, err => {
+			console.error(err);
+		});
 	}
 
 	_loadLights() {
@@ -105,6 +106,9 @@ export class VptLoader {
 			// });
 			const light = new PointLight(lightInfo.color, lightInfo.intensity, lightInfo.falloff);
 			light.castShadow = true;
+			light.shadowCameraVisible = true;
+			light.shadow.camera.far = 10000;
+
 			light.position.set(lightInfo.center.x, lightInfo.center.y, -10);
 			this.playfield.add(light);
 		}
