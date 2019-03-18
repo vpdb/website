@@ -74,8 +74,8 @@ export class VptLoader {
 			const mesh = new Mesh(geometry, material);
 
 			mesh.name = primitive.name;
-			mesh.castShadow = true;
-			mesh.receiveShadow = true;
+			// mesh.castShadow = true;
+			// mesh.receiveShadow = true;
 
 			if (loadTextures && texture) {
 				mesh.traverse(child => {
@@ -104,7 +104,9 @@ export class VptLoader {
 		if (!loadLights) {
 			return;
 		}
-		for (const lightInfo of this.vpTable.lights/*.filter(l => l.name === 'Light12')*/) {
+		for (const lightInfo of this.vpTable.lights.filter(l => l.mesh)) {
+
+			console.log('Adding light %s...', lightInfo.name);
 
 			// this.objLoader.load(lightInfo.mesh, group => {
 			//
@@ -115,7 +117,7 @@ export class VptLoader {
 			// 	this.playfield.add(mesh);
 			// });
 			const light = new PointLight(lightInfo.color, lightInfo.intensity, lightInfo.falloff * this.scale);
-			light.castShadow = true;
+			light.castShadow = false;
 			light.position.set(lightInfo.center.x, lightInfo.center.y, -10);
 			this.playfield.add(light);
 		}

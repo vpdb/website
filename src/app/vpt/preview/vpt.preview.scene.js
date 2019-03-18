@@ -19,7 +19,6 @@
 
 import {
 	AmbientLight, DirectionalLight, GridHelper,
-	PCFSoftShadowMap,
 	PerspectiveCamera,
 	Raycaster,
 	Scene,
@@ -64,8 +63,9 @@ export class VptPreviewScene {
 			autoClear: true,
 			alpha: true,
 		});
-		this.renderer.shadowMapEnabled = true;
-		this.renderer.shadowMap.type = PCFSoftShadowMap;
+
+		//this.renderer.shadowMapEnabled = true;
+		//this.renderer.shadowMap.type = PCFSoftShadowMap;
 
 		this.scene = new Scene();
 		this.camera = new PerspectiveCamera(this.cameraDefaults.fov, this.aspectRatio, this.cameraDefaults.near, this.cameraDefaults.far);
