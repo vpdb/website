@@ -30,6 +30,10 @@ import {
 } from 'three';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
 
+const loadTextures = true;
+const loadMaterials = true;
+const loadLights = true;
+
 export class VptLoader {
 
 	constructor(vpTable, scale) {
@@ -73,7 +77,7 @@ export class VptLoader {
 			mesh.castShadow = true;
 			mesh.receiveShadow = true;
 
-			if (texture) {
+			if (loadTextures && texture) {
 				mesh.traverse(child => {
 					if (child instanceof Mesh) {
 						child.material.transparent = true;
@@ -97,6 +101,9 @@ export class VptLoader {
 	}
 
 	_loadLights() {
+		if (!loadLights) {
+			return;
+		}
 		for (const lightInfo of this.vpTable.lights/*.filter(l => l.name === 'Light12')*/) {
 
 			// this.objLoader.load(lightInfo.mesh, group => {
@@ -131,7 +138,7 @@ export class VptLoader {
 	_getMaterial(primitive) {
 
 		const material = new MeshStandardMaterial();
-		if (!primitive.material) {
+		if (!loadMaterials || !primitive.material) {
 			return material;
 		}
 		const materialInfo = this.vpTable.materials[primitive.material];
@@ -171,13 +178,13 @@ export class VptLoader {
 		mesh.translateY(primitive.trans.y + primitive.pos.y);
 		mesh.translateZ(-primitive.trans.z - primitive.pos.z);
 
+		mesh.rotateY(this._toRadian(-primitive.obj_rot.x));
+		mesh.rotateX(this._toRadian(primitive.obj_rot.y));
+		mesh.rotateZ(this._toRadian(primitive.obj_rot.z));
+
 		mesh.rotateX(this._toRadian(-primitive.rot.x));
 		mesh.rotateY(this._toRadian(-primitive.rot.y));
 		mesh.rotateZ(this._toRadian(primitive.rot.z));
-
-		mesh.rotateZ(this._toRadian(-primitive.obj_rot.x));
-		mesh.rotateX(this._toRadian(primitive.obj_rot.y));
-		mesh.rotateY(this._toRadian(-primitive.obj_rot.z));
 	}
 
 	_loadFloor() {
@@ -188,7 +195,7 @@ export class VptLoader {
 		const floorTexture = this._getTexture(this.vpTable.game_data);
 		const floor = new Mesh(floorGeometry, floorMaterial);
 
-		if (floorTexture) {
+		if (loadTextures && floorTexture) {
 			floor.traverse(child => {
 				if (child instanceof Mesh) {
 					child.material.transparent = false;
