@@ -19,7 +19,7 @@
 
 import {
 	BoxGeometry,
-	Color,
+	Color, DoubleSide,
 	Group,
 	ImageLoader,
 	Mesh,
@@ -48,7 +48,8 @@ export class VptLoader {
 		this.objLoader = new OBJLoader();
 
 		this._loadFloor();
-		this._loadPrimitives();
+		//this._loadPrimitives();
+		this._loadRubbers();
 		this._loadLights();
 	}
 
@@ -60,6 +61,12 @@ export class VptLoader {
 		const primitives = this.vpTable.primitives;
 		for (const primitive of primitives) {
 			this._loadPrimitive(primitive);
+		}
+	}
+
+	_loadRubbers() {
+		for (const rubber of this.vpTable.rubbers.filter(r => r.name === 'LSling1')) {
+			this._loadRubber(rubber);
 		}
 	}
 
@@ -89,6 +96,28 @@ export class VptLoader {
 			this._positionPrimitive(mesh, primitive);
 			this.playfield.add(mesh);
 			//this.meshes.push(mesh);
+
+		}, xhr => {
+			if (xhr.lengthComputable) {
+				//var percentComplete = xhr.loaded / xhr.total * 100;
+				//console.log('model ' + Math.round(percentComplete, 2) + '% downloaded');
+			}
+		}, err => {
+			console.error(err);
+		});
+	}
+
+	_loadRubber(rubber) {
+		const material = this._getMaterial(rubber);
+
+		this.objLoader.load(rubber.mesh, group => {
+
+			/** @var { Geometry } */
+			const geometry = group.children[0].geometry;
+			const mesh = new Mesh(geometry, material);
+
+			mesh.name = 'Rubber-' + rubber.name;
+			this.playfield.add(mesh);
 
 		}, xhr => {
 			if (xhr.lengthComputable) {
@@ -144,7 +173,7 @@ export class VptLoader {
 			return material;
 		}
 		const materialInfo = this.vpTable.materials[primitive.material];
-		if (!material) {
+		if (!materialInfo) {
 			console.warn('Primitive "%s" has unknown material "%s".', primitive.name, primitive.material);
 			return material;
 		}
@@ -170,6 +199,10 @@ export class VptLoader {
 			} else {
 				console.warn('Unknown normal map "%s" for primitive "%s".', primitive.normalMap, primitive.name);
 			}
+		}
+
+		if (primitive.material) {
+			material.side = DoubleSide;
 		}
 		return material;
 	}
