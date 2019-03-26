@@ -30,7 +30,7 @@ import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
 
 import {VptLoader} from './vpt.loader';
 
-const showGridHelper = false;
+const showGridHelper = true;
 
 export class VptPreviewScene {
 
@@ -42,8 +42,8 @@ export class VptPreviewScene {
 
 		this.scene = null;
 		this.cameraDefaults = {
-			posCamera: new Vector3(0, 150.0, 250.0),
-			posCameraTarget: new Vector3(0, -150, 0),
+			posCamera: new Vector3(0, 70.0, 70.0),
+			posCameraTarget: new Vector3(0, -10, 0),
 			near: 0.1,
 			far: 100000,
 			fov: 45,
@@ -82,17 +82,17 @@ export class VptPreviewScene {
 
 		window.vpt = vpTable; // for easier debugging
 
-		const scale = 0.1;
+		const scale = 1;
 		const loader = new VptLoader(vpTable, scale);
 		const playfield = loader.getPlayfield();
-		playfield.translateX(-vpTable.game_data.size.width * scale / 2);
-		playfield.rotateX(Math.PI / 2);
-		playfield.scale.set(scale, scale, scale);
-
-		playfield.traverse(obj => {
-			obj.castShadow = true;
-			obj.receiveShadow = true;
-		});
+		// playfield.translateX(-vpTable.game_data.size.width * scale / 2);
+		// playfield.rotateX(Math.PI / 2);
+		// playfield.scale.set(scale, scale, scale);
+		//
+		// playfield.traverse(obj => {
+		// 	obj.castShadow = true;
+		// 	obj.receiveShadow = true;
+		// });
 
 		this.scene.add(playfield);
 	}
