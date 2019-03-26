@@ -29,6 +29,7 @@ import {
 	TextureLoader
 } from 'three';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 
 const loadTextures = true;
 const loadMaterials = true;
@@ -46,11 +47,22 @@ export class VptLoader {
 		this.imageLoader = new ImageLoader();
 		this.textureLoader = new TextureLoader();
 		this.objLoader = new OBJLoader();
+		this.glftLoader = new GLTFLoader();
 
-		this._loadFloor();
-		//this._loadPrimitives();
-		this._loadRubbers();
-		this._loadLights();
+		this.glftLoader.load(vpTable.meshGltf, gltf => {
+			this.playfield.add(gltf.scene);
+
+		}, xhr => {
+			console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+		}, error => {
+			console.error('Error loading GLB: ', error);
+		});
+
+		// this._loadFloor();
+		// this._loadPrimitives();
+		// this._loadRubbers();
+		// this._loadLights();
 	}
 
 	getPlayfield() {
@@ -65,7 +77,7 @@ export class VptLoader {
 	}
 
 	_loadRubbers() {
-		for (const rubber of this.vpTable.rubbers.filter(r => r.name === 'LSling1')) {
+		for (const rubber of this.vpTable.rubbers) {
 			this._loadRubber(rubber);
 		}
 	}
