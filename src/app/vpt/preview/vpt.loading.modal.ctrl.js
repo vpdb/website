@@ -16,15 +16,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-import angular from 'angular';
-import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
 
-import VptPreviewComponent from './preview/vpt.preview.component';
-import VptLoadingModalCtrl from './preview/vpt.loading.modal.ctrl';
+export default class VptLoadingModalCtrl {
 
-const VPT_MODULE = angular
-	.module('vpdb.vpt', [ uiProgressbar ])
-	.controller('vptLoadingModalCtrl', VptLoadingModalCtrl)
-	.component('vptPreviewComponent', new VptPreviewComponent());
+	/**
+	 * @param $scope
+	 * @param $uibModalInstance
+	 * @param {App} App
+	 * @param {DownloadService} DownloadService
+	 * @param {Flavors} Flavors
+	 * @param RomResource
+	 * @param params
+	 * @ngInject
+	 */
+	constructor($scope, $uibModalInstance, params) {
 
-export { VPT_MODULE };
+		this.$scope = $scope;
+		this.$uibModalInstance = $uibModalInstance;
+		this.progress = 0;
+
+		params.scene.notify(xhr => {
+			this.progress = Math.round(xhr.loaded / xhr.total * 1000) / 10;
+			$scope.$apply();
+
+		}, () => {
+			$uibModalInstance.dismiss();
+		});
+	}
+
+	close() {
+		this.$uibModalInstance.dismiss();
+	}
+}

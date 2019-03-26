@@ -30,11 +30,15 @@ include ../../template/_mixins
 				rating-action="vm.rateRelease($rating)",
 				rating-readonly="{{ !vm.AuthService.hasPermission('releases/rate') }}")
 
-		//-- DOWNLOAD BUTTON
+		//-- DOWNLOAD / 3D BUTTON
 		//---------------------------------------------------------------------
 		.text-center: button.btn.btn-primary.padder-top.padder-bottom.text-center(ng-click="vm.download()")
 			+icon('download-circle').space-right.hidden-sm.hidden-md
 			| Download
+
+		.text-center: button.btn.btn-primary.padder-top.padder-bottom.text-center(ui-sref="vptPreview({fileId: vm.release.versions[0].files[0].file.id})")
+			+icon('cube').space-right.hidden-sm.hidden-md
+			| 3D View
 
 
 		//-- STATS
