@@ -18,23 +18,27 @@
  */
 
 import {
-	AmbientLight, DirectionalLight, GridHelper,
+	AmbientLight,
+	DirectionalLight,
+	GridHelper,
 	PerspectiveCamera,
 	Raycaster,
 	Scene,
 	Vector2,
 	Vector3,
-	WebGLRenderer
+	WebGLRenderer,
 } from 'three';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 
-import {VptLoader} from './vpt.loader';
-
-const showGridHelper = true;
+const showGridHelper = false;
 
 export class VptPreviewScene {
 
 	constructor(canvasElement) {
+
+		this.onProgress = xhr => console.info(xhr.loaded / xhr.total * 100) + '% loaded';
+		this.onError = console.error;
 		this.renderer = null;
 		this.canvas = canvasElement;
 		this.aspectRatio = 1;
@@ -42,8 +46,8 @@ export class VptPreviewScene {
 
 		this.scene = null;
 		this.cameraDefaults = {
-			posCamera: new Vector3(0, 70.0, 70.0),
-			posCameraTarget: new Vector3(0, -10, 0),
+			posCamera: new Vector3(0, 170.0, 250.0),
+			posCameraTarget: new Vector3(0, -20, 0),
 			near: 0.1,
 			far: 100000,
 			fov: 45,
@@ -78,23 +82,19 @@ export class VptPreviewScene {
 		this.controls.target = this.cameraDefaults.posCameraTarget;
 	}
 
-	initContent(vpTable) {
+	initContent(vpTable, done) {
+		const glftLoader = new GLTFLoader();
+		glftLoader.load(vpTable.meshGlb, gltf => {
+			if (done) {
+				done();
+			}
+			this.scene.add(gltf.scene);
+		}, this.onProgress, this.onError);
+	}
 
-		window.vpt = vpTable; // for easier debugging
-
-		const scale = 1;
-		const loader = new VptLoader(vpTable, scale);
-		const playfield = loader.getPlayfield();
-		// playfield.translateX(-vpTable.game_data.size.width * scale / 2);
-		// playfield.rotateX(Math.PI / 2);
-		// playfield.scale.set(scale, scale, scale);
-		//
-		// playfield.traverse(obj => {
-		// 	obj.castShadow = true;
-		// 	obj.receiveShadow = true;
-		// });
-
-		this.scene.add(playfield);
+	notify(onProgress, onError) {
+		this.onProgress = onProgress;
+		this.onError = onError;
 	}
 
 	render() {
@@ -149,12 +149,24 @@ export class VptPreviewScene {
 	_initLights() {
 		const ambientLight = new AmbientLight(0x404040);
 
-		const directionalLight = new DirectionalLight(0xC0C0C0);
-		directionalLight.position.set(0, 500, 500);
-		directionalLight.intensity = 1.5;
+		const directionalLightBack = new DirectionalLight(0xC0C0C0);
+		directionalLightBack.position.set(0, 100, 0);
+		directionalLightBack.target.position.set(0, 0, -200);
+		directionalLightBack.target.updateMatrixWorld();
+		directionalLightBack.intensity = 4;
 
-		this.scene.add(directionalLight);
+		const directionalLightFront = new DirectionalLight(0xC0C0C0);
+		directionalLightFront.position.set(0, 100, 150);
+		directionalLightFront.target.position.set(0, 0, 50);
+		directionalLightFront.target.updateMatrixWorld();
+		directionalLightFront.intensity = 4;
+		this.scene.add(directionalLightBack);
 		this.scene.add(ambientLight);
+
+		// const lightHelper1 = new DirectionalLightHelper(directionalLightBack, 5);
+		// const lightHelper2 = new DirectionalLightHelper(directionalLightFront, 5);
+		// this.scene.add(lightHelper1);
+		// this.scene.add(lightHelper2);
 
 		if (showGridHelper) {
 			const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);

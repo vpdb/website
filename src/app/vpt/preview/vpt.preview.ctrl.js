@@ -18,6 +18,7 @@
  */
 
 import {VptPreviewScene} from './vpt.preview.scene';
+import VptLoadingModalTpl from './vpt.loading.modal.pug';
 
 export default class VptPreviewCtrl {
 
@@ -30,7 +31,7 @@ export default class VptPreviewCtrl {
 	 * @param {VpResource} VpResource
 	 * @ngInject
 	 */
-	constructor($scope, $stateParams, App, ApiHelper, VpResource) {
+	constructor($scope, $stateParams, $uibModal, App, ApiHelper, VpResource) {
 
 		App.theme('dark');
 		App.setTitle('VPT Preview');
@@ -43,9 +44,22 @@ export default class VptPreviewCtrl {
 		this.scene.initGl();
 		this.scene.resizeDisplayGl();
 
+		const modal = $uibModal.open({
+			templateUrl: VptLoadingModalTpl,
+			controller: 'vptLoadingModalCtrl',
+			controllerAs: 'vm',
+			size: 'sm',
+			resolve: {
+				params: () => {
+					return {
+						scene: this.scene,
+					};
+				}
+			}
+		});
+
 		VpResource.get({ fileId: fileId }, data => {
-			this.scene.initContent(data);
-			console.log(data);
+			this.scene.initContent(data, () => modal.close());
 		}, ApiHelper.handleErrorsInDialog('3D Table Preview'));
 
 		this.render();
