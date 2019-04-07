@@ -28,7 +28,7 @@ function loadModule($transition$) {
 
 const VPT_PREVIEW = {
 	name: 'vptPreview',
-	url: '/vpt/:fileId',
+	url: '/games/:gameId/releases/:releaseId/:version/:fileId/preview',
 	component: 'vptPreviewComponent',
 	lazyLoad: loadModule
 };

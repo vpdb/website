@@ -46,8 +46,8 @@ export class VptPreviewScene {
 
 		this.scene = null;
 		this.cameraDefaults = {
-			posCamera: new Vector3(0, 170.0, 250.0),
-			posCameraTarget: new Vector3(0, -20, 0),
+			posCamera: new Vector3(0, 56.0, 83.0),
+			posCameraTarget: new Vector3(0, -7, 0),
 			near: 0.1,
 			far: 100000,
 			fov: 45,
@@ -82,9 +82,9 @@ export class VptPreviewScene {
 		this.controls.target = this.cameraDefaults.posCameraTarget;
 	}
 
-	initContent(vpTable, done) {
+	initContent(glbUrl, done) {
 		const glftLoader = new GLTFLoader();
-		glftLoader.load(vpTable.meshGlb, gltf => {
+		glftLoader.load(glbUrl, gltf => {
 			if (done) {
 				done();
 			}
