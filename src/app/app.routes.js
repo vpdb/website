@@ -26,13 +26,13 @@ import ConfigService from './common/config/config.service';
 import { GAME_LIST, GAME_DETAILS } from './games/game.states';
 import { GAME_ADMIN_ADD, GAME_ADMIN_EDIT } from './games/admin/game.admin.states';
 import { RELEASE_LIST, RELEASE_DETAILS } from './releases/release.states';
+import { VPT_PREVIEW } from './releases/details/vpt/vpt.states';
 import { RELEASE_ADD, RELEASE_VERSION_ADD, RELEASE_EDIT } from './releases/admin/release.admin.states';
 import { BACKGLASS_ADD } from './backglasses/admin/backglass.admin.states';
 import { AUTH_CALLBACK, CONFIRM_TOKEN } from './common/common.states';
 import { PROFILE_DOWNLOADS, PROFILE_NOTIFICATIONS, PROFILE_ROOT, PROFILE_SETTINGS, PROFILE_STATS } from './profile/profile.states';
 import { ADMIN_BUILDS, ADMIN_USERS, ADMIN_UPLOADS, ADMIN_TOKENS } from './admin/admin.states';
 import { CONTENT_ABOUT, CONTENT_FAQ, CONTENT_LEGAL, CONTENT_PRIVACY, CONTENT_RULES } from './content/content.states';
-import {VPT_PREVIEW} from "./vpt/vpt.states";
 
 /**
  * @param $urlRouterProvider
@@ -60,6 +60,9 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state(RELEASE_VERSION_ADD);
 	$stateProvider.state(RELEASE_EDIT);
 
+	// 3d view
+	$stateProvider.state(VPT_PREVIEW);
+
 	// backglasses (lazy loaded)
 	$stateProvider.state(BACKGLASS_ADD);
 
@@ -86,9 +89,6 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	$stateProvider.state(CONTENT_FAQ);
 	$stateProvider.state(CONTENT_LEGAL);
 	$stateProvider.state(CONTENT_PRIVACY);
-
-	// 3d stuff
-	$stateProvider.state(VPT_PREVIEW);
 
 	// errors
 	$stateProvider.state('401',            { templateUrl: Error401Tpl, params: { url: null } });
