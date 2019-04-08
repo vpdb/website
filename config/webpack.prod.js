@@ -2,7 +2,7 @@
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const RollbarSourceMapPlugin = require('rollbar-sourcemap-webpack-plugin');
 
@@ -10,16 +10,8 @@ module.exports = function(options) {
 
 	const plugins = [
 
-		new UglifyJSPlugin({
+		new TerserPlugin({
 			sourceMap: true,
-			uglifyOptions: {
-				mangle: true,
-				compress: true,
-				output: {
-					beautify: false,
-					comments: false
-				}
-			}
 		}),
 
 		new WorkboxPlugin.GenerateSW({
