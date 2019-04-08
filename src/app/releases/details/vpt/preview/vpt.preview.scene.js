@@ -19,23 +19,29 @@
 
 import {
 	AmbientLight,
-	DirectionalLight,
 	GridHelper,
 	PerspectiveCamera,
 	Raycaster,
 	Scene,
+	SpotLight,
 	Vector2,
 	Vector3,
 	WebGLRenderer,
 } from 'three';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+import {DRACOLoader} from './lib/DRACOLoader';
 
 const showGridHelper = false;
 
 export class VptPreviewScene {
 
 	constructor(canvasElement) {
+
+		DRACOLoader.setDecoderPath('/lib/');
+		DRACOLoader.getDecoderModule();
+
+		this.playfieldScale = 0.5;
 
 		this.onProgress = xhr => console.info(xhr.loaded / xhr.total * 100) + '% loaded';
 		this.onError = console.error;
@@ -46,8 +52,8 @@ export class VptPreviewScene {
 
 		this.scene = null;
 		this.cameraDefaults = {
-			posCamera: new Vector3(0, 56.0, 83.0),
-			posCameraTarget: new Vector3(0, -7, 0),
+			posCamera: new Vector3(0, 25.0, 40.0),
+			posCameraTarget: new Vector3(0, -3, 0),
 			near: 0.1,
 			far: 100000,
 			fov: 45,
@@ -83,11 +89,13 @@ export class VptPreviewScene {
 	}
 
 	initContent(glbUrl, done) {
-		const glftLoader = new GLTFLoader();
-		glftLoader.load(glbUrl, gltf => {
+		const gltfLoader = new GLTFLoader();
+		gltfLoader.setDRACOLoader(new DRACOLoader());
+		gltfLoader.load(glbUrl, gltf => {
 			if (done) {
 				done();
 			}
+			gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
 			this.scene.add(gltf.scene);
 		}, this.onProgress, this.onError);
 	}
@@ -147,26 +155,26 @@ export class VptPreviewScene {
 	}
 
 	_initLights() {
-		const ambientLight = new AmbientLight(0x404040);
+		const ambientLight = new AmbientLight(0x404040, 1);
 
-		const directionalLightBack = new DirectionalLight(0xC0C0C0);
-		directionalLightBack.position.set(0, 100, 0);
-		directionalLightBack.target.position.set(0, 0, -200);
-		directionalLightBack.target.updateMatrixWorld();
-		directionalLightBack.intensity = 4;
+		// const spotLightBack = new SpotLight(0xffffff, 5, 50, M.degToRad(30));
+		// spotLightBack.position.set(0, 30, 0);
+		// spotLightBack.target.position.set(0, 0, -20);
+		// spotLightBack.target.updateMatrixWorld();
 
-		const directionalLightFront = new DirectionalLight(0xC0C0C0);
-		directionalLightFront.position.set(0, 100, 150);
-		directionalLightFront.target.position.set(0, 0, 50);
+		const directionalLightFront = new SpotLight(0xffffff);
+		directionalLightFront.position.set(0, 30, 20);
+		directionalLightFront.target.position.set(0, 0, 0);
 		directionalLightFront.target.updateMatrixWorld();
-		directionalLightFront.intensity = 4;
-		this.scene.add(directionalLightBack);
+		directionalLightFront.intensity = 0.7;
+		//this.scene.add(spotLightBack);
+		this.scene.add(directionalLightFront);
 		this.scene.add(ambientLight);
 
-		// const lightHelper1 = new DirectionalLightHelper(directionalLightBack, 5);
-		// const lightHelper2 = new DirectionalLightHelper(directionalLightFront, 5);
-		// this.scene.add(lightHelper1);
-		// this.scene.add(lightHelper2);
+		//const lightHelper1 = new SpotLightHelper(spotLightBack);
+		//const lightHelper2 = new DirectionalLightHelper(directionalLightFront, 5);
+		//this.scene.add(lightHelper1);
+		//this.scene.add(lightHelper2);
 
 		if (showGridHelper) {
 			const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);
