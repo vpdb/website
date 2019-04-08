@@ -4,6 +4,7 @@ const { readFileSync } = require('fs');
 const UglifyJS = require('uglify-js');
 
 const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
@@ -13,6 +14,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const srcContext = resolve(__dirname, '../src');
 const appContext = resolve(__dirname, '../src/app');
 const staticContext = resolve(__dirname, '../src/static');
+const staticJsContext = resolve(__dirname, '../src/static/js');
 const iconsContext = resolve(__dirname, '../src/icons');
 const pkg = require('../package');
 
@@ -49,7 +51,8 @@ module.exports  = function(options) {
 			rules: [
 				{ test: /\.js$/, use: [
 					{ loader: 'ng-annotate-loader', options: { ngAnnotate: 'ng-annotate-patched', es6: false, explicitOnly: false } },
-					{ loader: 'babel-loader', options: { presets: [ [ '@babel/preset-env', { modules: 'commonjs' } ] ], plugins: [ 'lodash' ] } } ], include: srcContext },
+					{ loader: 'babel-loader', options: { presets: [ [ '@babel/preset-env', { modules: 'commonjs' } ] ], plugins: [ 'lodash' ] } }
+				], include: srcContext, exclude: /draco_decoder/ },
 				{ test: /\.pug$/, oneOf: [
 					{ test: /index\.pug$/, use: [ { loader: 'pug-loader', options: { pretty: false } } ] },
 					{ use: [
@@ -58,7 +61,10 @@ module.exports  = function(options) {
 					] }
 				] },
 				{ test: /\.html$/, loader: 'raw-loader' },
-				{ test: /\.(eot|woff|woff2|ttf|otf|png|svg|jpg|swf)$/, loader: { loader: 'file-loader', options: { name: '[path][name]-[sha256:hash:base58:8].[ext]', context: staticContext } }, exclude: iconsContext },
+				{ test: /\.(eot|woff|woff2|ttf|otf|png|svg|jpg|swf)$/, loader: {
+					loader: 'file-loader',
+					options: { name: '[path][name]-[sha256:hash:base58:8].[ext]', context: staticContext }
+				}, exclude: [ iconsContext, staticJsContext ] },
 				{ test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: cssLoader}) },
 				{ test: /\.styl$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ cssLoader, 'stylus-loader?sourceMap=true'] }) },
 				{ test: /\.less$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ cssLoader, 'postcss-loader', 'less-loader'] }) },
@@ -107,6 +113,10 @@ module.exports  = function(options) {
 			new LodashModuleReplacementPlugin({
 				shorthands: true
 			}),
+
+			new CopyPlugin([
+				{ from: 'lib', to: 'lib' }
+			]),
 
 			new webpack.DefinePlugin({
 				WEBSITE_CONFIG: JSON.stringify(options.websiteConfig),
