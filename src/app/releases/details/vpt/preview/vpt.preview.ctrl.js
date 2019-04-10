@@ -102,12 +102,9 @@ export default class VptPreviewCtrl {
 						//postLogin: { action: 'downloadFile', params: file }
 					});
 				}
+			} else {
+				this.scene.initContent(gltf.url, () => modal.close());
 			}
-			// if (gltf.is_protected) {
-			// 	AuthService.addUrlToken(gltf.url,url => this.scene.initContent(url, () => modal.close()));
-			// } else {
-			// 	this.scene.initContent(gltf.url, () => modal.close());
-			// }
 
 			const title = release.game.title + ' · ' + release.name + ' · 3D Preview';
 			const meta = {
@@ -141,6 +138,8 @@ export default class VptPreviewCtrl {
 			TrackerService.trackPage();
 
 		}).catch(() => this.release = null);
+
+		window.addEventListener( 'resize', () => this.scene.resizeDisplayGl(), false );
 
 		this.render();
 	}

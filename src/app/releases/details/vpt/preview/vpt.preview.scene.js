@@ -43,7 +43,7 @@ export class VptPreviewScene {
 
 		this.playfieldScale = 0.5;
 
-		this.onProgress = xhr => console.info(xhr.loaded / xhr.total * 100) + '% loaded';
+		this.onProgress = xhr => console.info(xhr.loaded / xhr.total * 100) + '% loaded'; // default progress callback
 		this.onError = console.error;
 		this.renderer = null;
 		this.canvas = canvasElement;
