@@ -4,9 +4,9 @@ include ../../../../template/_mixins
 
 .preview-controls
 	.row
-		.col-xs-5.col-xs-offset-1
+		.col-xs-11.col-sm-5.col-xs-offset-1.text-nowrap
 			+icon('sun')
 			rzslider(rz-slider-model="vm.scene.globalLightsIntensity", rz-slider-options="vm.scene.globalLightsSliderOptions")
-		.col-xs-5
+		.col-xs-11.col-xs-offset-1.col-sm-offset-0.col-sm-5.text-nowrap
 			+icon('lightbulb')
 			rzslider(rz-slider-model="vm.scene.bulbLightsIntensity", rz-slider-options="vm.scene.bulbLightsSliderOptions")
