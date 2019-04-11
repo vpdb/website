@@ -23,12 +23,14 @@ import VptLoadingModalTpl from './vpt.loading.modal.pug';
 export default class VptPreviewCtrl {
 
 	/**
-	 *
 	 * @param $scope
 	 * @param $stateParams
+	 * @param $uibModal
 	 * @param {App} App
+	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
 	 * @param {ReleaseResource} ReleaseResource
+	 * @param {TrackerService} TrackerService
 	 * @ngInject
 	 */
 	constructor($scope, $stateParams, $uibModal, App, AuthService, ApiHelper, ReleaseResource, TrackerService) {

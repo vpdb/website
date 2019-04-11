@@ -1653,6 +1653,11 @@
 			"resolved": "https://registry.npmjs.org/angular-ui-bootstrap/-/angular-ui-bootstrap-2.5.6.tgz",
 			"integrity": "sha512-yzcHpPMLQl0232nDzm5P4iAFTFQ9dMw0QgFLuKYbDj9M0xJ62z0oudYD/Lvh1pWfRsukiytP4Xj6BHOSrSXP8A=="
 		},
+		"angularjs-slider": {
+			"version": "7.0.0",
+			"resolved": "https://registry.npmjs.org/angularjs-slider/-/angularjs-slider-7.0.0.tgz",
+			"integrity": "sha512-qNWPARWEktSthHj0/SAMVhy+3AIRnyVCXRK58gXT+3uRORXu/3QJ2L9MjCZvA9yeZxFceEYMOrtK8sSsTKobUw=="
+		},
 		"ansi-colors": {
 			"version": "3.2.3",
 			"resolved": "https://registry.npmjs.org/ansi-colors/-/ansi-colors-3.2.3.tgz",
