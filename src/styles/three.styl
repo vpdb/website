@@ -17,11 +17,52 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+@import 'variables';
+
 #gl-view
-	width: 100%;
-	height: 90vh;
-	min-width: 640px;
-	min-height: 360px;
+	height: 94vh;
+	min-width: 320px;
+	min-height: 160px;
 	position: relative;
+	margin-left -15px
+	margin-right -15px
+	margin-top -50px
 	overflow: hidden;
 	z-index: 0;
+
+
+.preview-controls
+	position absolute
+	bottom 50px
+	left 0
+	right 0
+	height 50px
+	border-top 1px solid $color-primary;
+
+.rzslider
+	width 90%
+	margin-left 15px
+	margin-top 20px
+
+	.rz-pointer
+		width 20px
+		height 20px
+		background-color $color-primary
+		top -9px
+		&:after
+			top 6px
+			left 6px
+			background transparent
+		&.rz-active:after
+			background transparent
+		&:hover:after
+			background transparent
+
+		&:focus
+			outline none
+
+	.rz-bar
+		background-color $color-darker
+
+
+

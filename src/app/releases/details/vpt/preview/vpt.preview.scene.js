@@ -19,16 +19,16 @@
 
 import {
 	AmbientLight,
+	DirectionalLight,
 	GridHelper,
 	PerspectiveCamera,
 	Raycaster,
 	Scene,
-	SpotLight,
 	Vector2,
 	Vector3,
 	WebGLRenderer,
 } from 'three';
-import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import {DRACOLoader} from './lib/DRACOLoader';
 
@@ -42,6 +42,33 @@ export class VptPreviewScene {
 		DRACOLoader.getDecoderModule();
 
 		this.playfieldScale = 0.5;
+
+		this.bulbLights = [];
+		this.bulbLightsIntensity = 1;
+		this.globalLightsIntensity = 0.5;
+
+		const sliderOptions = {
+			step: 0.001,
+			floor: 0,
+			ceil: 3,
+			precision: 1,
+			hidePointerLabels: true,
+			hideLimitLabels: true,
+		};
+
+		this.globalLightsSliderOptions = Object.assign({}, sliderOptions, {
+			onChange: () => {
+				this.directionalLightFront.intensity = this.globalLightsIntensity;
+				this.directionalLightBack.intensity = this.globalLightsIntensity;
+			},
+		});
+		this.bulbLightsSliderOptions = Object.assign({}, sliderOptions, {
+			onChange: () => {
+				this.bulbLights.forEach((bl, i) => {
+					bl.intensity = this.bulbLightIntensities[i] * this.bulbLightsIntensity;
+				});
+			}
+		});
 
 		this.onProgress = xhr => console.info(xhr.loaded / xhr.total * 100) + '% loaded'; // default progress callback
 		this.onError = console.error;
@@ -84,8 +111,12 @@ export class VptPreviewScene {
 		this.canvas.appendChild(this.renderer.domElement);
 
 		this.renderer.domElement.addEventListener('mousedown', this.onClicked.bind(this), false);
-		this.controls = new TrackballControls(this.camera);
+		this.controls = new OrbitControls(this.camera);
 		this.controls.target = this.cameraDefaults.posCameraTarget;
+		this.controls.enableDamping = true;
+		this.controls.dampingFactor = 0.1;
+		this.controls.rotateSpeed = 0.1;
+		this.controls.panSpeed = 0.2;
 	}
 
 	initContent(glbUrl, done) {
@@ -95,6 +126,11 @@ export class VptPreviewScene {
 			if (done) {
 				done();
 			}
+			const playfield = gltf.scene.children.find(node => node.name === 'playfield');
+			const lights = playfield ? playfield.children.find(c => c.name === 'lights') : null;
+			this.bulbLights = lights ? lights.children : [];
+			this.bulbLightIntensities = this.bulbLights.map(bl => bl.intensity);
+
 			gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
 			this.scene.add(gltf.scene);
 		}, this.onProgress, this.onError);
@@ -114,7 +150,6 @@ export class VptPreviewScene {
 	}
 
 	resizeDisplayGl() {
-		this.controls.handleResize();
 		this._recalcAspectRatio();
 		this.renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight, false);
 		this._updateCamera();
@@ -155,26 +190,31 @@ export class VptPreviewScene {
 	}
 
 	_initLights() {
-		const ambientLight = new AmbientLight(0x404040, 1);
 
-		// const spotLightBack = new SpotLight(0xffffff, 5, 50, M.degToRad(30));
-		// spotLightBack.position.set(0, 30, 0);
-		// spotLightBack.target.position.set(0, 0, -20);
-		// spotLightBack.target.updateMatrixWorld();
-
-		const directionalLightFront = new SpotLight(0xffffff);
-		directionalLightFront.position.set(0, 30, 20);
-		directionalLightFront.target.position.set(0, 0, 0);
-		directionalLightFront.target.updateMatrixWorld();
-		directionalLightFront.intensity = 0.7;
-		//this.scene.add(spotLightBack);
-		this.scene.add(directionalLightFront);
+		// ambient light
+		const ambientLight = new AmbientLight(0xffffff, 0.3);
 		this.scene.add(ambientLight);
 
-		//const lightHelper1 = new SpotLightHelper(spotLightBack);
-		//const lightHelper2 = new DirectionalLightHelper(directionalLightFront, 5);
-		//this.scene.add(lightHelper1);
-		//this.scene.add(lightHelper2);
+		// front
+		this.directionalLightFront = new DirectionalLight(0xffffff);
+		this.directionalLightFront.position.set(0, 30, 20);
+		this.directionalLightFront.target.position.set(0, 0, 0);
+		this.directionalLightFront.target.updateMatrixWorld();
+		this.directionalLightFront.intensity = this.globalLightsIntensity;
+		this.scene.add(this.directionalLightFront);
+
+		// front
+		this.directionalLightBack = new DirectionalLight(0xffffff);
+		this.directionalLightBack.position.set(0, 30, -30);
+		this.directionalLightBack.target.position.set(0, 0, -10);
+		this.directionalLightBack.target.updateMatrixWorld();
+		this.directionalLightBack.intensity = this.globalLightsIntensity;
+		this.scene.add(this.directionalLightBack);
+
+		// const lightHelper1 = new DirectionalLightHelper(this.directionalLightBack, 5);
+		// const lightHelper2 = new DirectionalLightHelper(this.directionalLightFront, 5);
+		// this.scene.add(lightHelper1);
+		// this.scene.add(lightHelper2);
 
 		if (showGridHelper) {
 			const helper = new GridHelper(1200, 60, 0xec843d, 0x404040);

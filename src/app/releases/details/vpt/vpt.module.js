@@ -17,13 +17,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
+import rzSlider from 'angularjs-slider';
 import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
+import 'angularjs-slider/dist/rzslider.min.css';
 
 import VptPreviewComponent from './preview/vpt.preview.component';
 import VptLoadingModalCtrl from './preview/vpt.loading.modal.ctrl';
 
 const VPT_MODULE = angular
-	.module('vpdb.vpt', [ uiProgressbar ])
+	.module('vpdb.vpt', [ uiProgressbar, rzSlider ])
 	.controller('vptLoadingModalCtrl', VptLoadingModalCtrl)
 	.component('vptPreviewComponent', new VptPreviewComponent());
 
