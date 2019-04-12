@@ -18,7 +18,6 @@
  */
 
 import {VptPreviewScene} from './vpt.preview.scene';
-import VptLoadingModalTpl from './vpt.loading.modal.pug';
 
 export default class VptPreviewCtrl {
 
@@ -39,11 +38,16 @@ export default class VptPreviewCtrl {
 		App.setTitle('VPT Preview');
 		App.setMenu('releases');
 
+		this.$scope = $scope;
 		this.gameId = $stateParams.gameId;
 		this.releaseId = $stateParams.releaseId;
 		this.version = $stateParams.version;
 		this.fileId = $stateParams.fileId;
 
+		this.percentLoaded = 0;
+		this.isLoaded = false;
+		this.errorTitle = null;
+		this.errorMessage = null;
 		this.scene = new VptPreviewScene(document.getElementById('gl-view'));
 
 		this.scene.initGl();
@@ -60,20 +64,6 @@ export default class VptPreviewCtrl {
 			'@context': 'http://schema.org/',
 			'@type': 'Product'
 		};
-
-		const modal = $uibModal.open({
-			templateUrl: VptLoadingModalTpl,
-			controller: 'vptLoadingModalCtrl',
-			controllerAs: 'vm',
-			size: 'sm',
-			resolve: {
-				params: () => {
-					return {
-						scene: this.scene,
-					};
-				}
-			}
-		});
 
 		ApiHelper.request(() => ReleaseResource.get({ release: this.releaseId }), this.status.release).then(release => {
 
@@ -94,24 +84,26 @@ export default class VptPreviewCtrl {
 			if (gltf.is_protected) {
 				if (AuthService.isAuthenticated) {
 					AuthService.fetchUrlTokens(gltf.url, (err, tokens) => {
-						// todo treat error
-						this.scene.initContent(gltf.url + '?token=' + tokens[gltf.url], () => modal.close());
+						if (err) {
+							this.errorTitle = 'Authentication error';
+							this.errorMessage = err.message;
+							return;
+						}
+						this.scene.loadContent(gltf.url + '?token=' + tokens[gltf.url], this.onLoaded.bind(this), this.onProgress.bind(this), this.onError.bind(this));
 					});
 
 				} else {
-					App.login({
-						headMessage: 'You gotta be logged to see 3D models of this release.',
-						//postLogin: { action: 'downloadFile', params: file }
-					});
+					this.errorTitle = 'Sorry!';
+					throw new Error('You gotta be logged to see this 3D model.');
 				}
 			} else {
-				this.scene.initContent(gltf.url, () => modal.close());
+				this.scene.loadContent(gltf.url, this.onLoaded.bind(this), this.onProgress.bind(this), this.onError.bind(this));
 			}
 
 			const title = release.game.title + ' · ' + release.name + ' · 3D Preview';
 			const meta = {
 				description: `${release.game.title} (${release.game.manufacturer} ${release.game.year}) - ${release.name} ${release.versions[0].version} by ${release.authors.map(a => a.user.name).join(', ')}`,
-				keywords: [release.game.title, release.name, '3D', 'GLTF', 'GLB'].join(','),
+				keywords: [release.game.title, release.name, '3D', '3D Model', 'GLTF', 'GLB'].join(','),
 			};
 			this.release = release;
 			App.setTitle(title);
@@ -123,27 +115,46 @@ export default class VptPreviewCtrl {
 			}
 			this.ldRelease.brand = release.authors.map(a => a.user.name).join(', ');
 
-			let playfieldImage;
-			release.versions.forEach(version => {
-				version.files.forEach(file => {
-					// prefer landscape shot
-					if (!playfieldImage || (file.playfield_image.file_type === 'playfield-ws' && playfieldImage.file_type !== 'playfield-ws')) {
-						playfieldImage = file.playfield_image;
-					}
-				});
-			});
-			if (playfieldImage) {
-				this.ldRelease.image = playfieldImage.variations['medium'].url;
-				meta.thumbnail = playfieldImage.variations['medium'].url;
-			}
 			App.setMeta(meta);
 			TrackerService.trackPage();
 
-		}).catch(() => this.release = null);
+		}).catch(err => {
+			this.errorTitle = this.errorTitle || 'Error retrieving release';
+			this.errorMessage = err.message;
+			this.release = null;
+		});
 
 		window.addEventListener( 'resize', () => this.scene.resizeDisplayGl(), false );
 
 		this.render();
+	}
+
+	onLoaded() {
+		console.log('onLoaded: ', arguments);
+		if (!this.errorMessage) {
+			this.isLoaded = true;
+			this.scene.globalLightsSliderOptions.disabled = false;
+			this.scene.bulbLightsSliderOptions.disabled = false;
+			this.$scope.$apply();
+		}
+	}
+
+	onProgress(progress) {
+		console.log('onProgress: ', arguments);
+		this.percentLoaded = progress.loaded / progress.total * 100;
+		this.$scope.$apply();
+	}
+
+	onError(err) {
+		console.log('onError: ', arguments);
+		this.errorTitle = 'Error loading model';
+		if (err.currentTarget) {
+			this.errorMessage = err.currentTarget.status + ' ' + err.currentTarget.statusText + '.';
+		} else {
+			this.errorMessage = err && err.message ? err.message : (err ? err : 'Something went wrong!');
+		}
+
+		this.$scope.$apply();
 	}
 
 	render() {

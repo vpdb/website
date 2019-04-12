@@ -22,11 +22,9 @@ import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
 import 'angularjs-slider/dist/rzslider.min.css';
 
 import VptPreviewComponent from './preview/vpt.preview.component';
-import VptLoadingModalCtrl from './preview/vpt.loading.modal.ctrl';
 
 const VPT_MODULE = angular
 	.module('vpdb.vpt', [ uiProgressbar, rzSlider ])
-	.controller('vptLoadingModalCtrl', VptLoadingModalCtrl)
 	.component('vptPreviewComponent', new VptPreviewComponent());
 
 export { VPT_MODULE };

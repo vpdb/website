@@ -1,5 +1,19 @@
 include ../../../../template/_mixins
 
+.info-block(ng-class="{ 'info-block--error': !!vm.errorMessage }", ng-if="!vm.isLoaded")
+	div
+		h3
+			+icon('{{ vm.errorMessage ? "warning" : "cube" }}').shift-up.space-right-2x
+			span.space-left-2x {{ vm.errorMessage ? vm.errorTitle : 'Loading...' }}
+		div(ng-show="!vm.errorMessage")
+			uib-progressbar.active(value="vm.percentLoaded", max="100")
+		div(ng-show="vm.errorMessage")
+			p {{ vm.errorMessage }}
+			hr.padder-top-2x
+			a(ui-sref="releaseDetails({id: vm.gameId, releaseId: vm.releaseId})")
+				+icon('arrow-left').shift-up-less.space-right-2x
+				| Back to release
+
 #gl-view
 
 .preview-controls

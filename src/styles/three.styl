@@ -30,13 +30,43 @@
 	overflow: hidden;
 	z-index: 0;
 
+.info-block
+	z-index 1
+	position absolute
+	margin-top 30%
+	width 100%
+	left 0
+	text-align center
+	& > div
+		width 50%
+		text-align left
+		border-radius $border-radius-large
+		background-color $color-darkest
+		display inline-block
+		padding 30px
+		h3
+			margin-top 0
+			margin-bottom 30px
+
+		.progress
+			margin-top 15px
+			margin-bottom 0
+			.progress-bar
+				background-color $color-darker
+	&.info-block--error > div
+		border 2px solid $color-danger-dark
+		h3
+			color $color-danger-dark
+			svg.svg-icon
+				fill $color-danger-dark
+
 
 .preview-controls
 	position absolute
 	bottom 50px
 	left 0
 	right 0
-	height 50px
+	height 52px
 	border-top 1px solid $color-primary;
 	@media (max-width: $bootstrap-screen-sm-min)
 		height 120px
