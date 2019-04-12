@@ -20,7 +20,7 @@
 import {
 	AmbientLight,
 	DirectionalLight,
-	GridHelper,
+	GridHelper, LoadingManager,
 	PerspectiveCamera,
 	Raycaster,
 	Scene,
@@ -47,6 +47,8 @@ export class VptPreviewScene {
 		this.bulbLightsIntensity = 1;
 		this.globalLightsIntensity = 0.5;
 
+		this.loadingManager = new LoadingManager();
+
 		const sliderOptions = {
 			step: 0.001,
 			floor: 0,
@@ -54,6 +56,7 @@ export class VptPreviewScene {
 			precision: 1,
 			hidePointerLabels: true,
 			hideLimitLabels: true,
+			disabled: true,
 		};
 
 		this.globalLightsSliderOptions = Object.assign({}, sliderOptions, {
@@ -70,8 +73,6 @@ export class VptPreviewScene {
 			}
 		});
 
-		this.onProgress = xhr => console.info(xhr.loaded / xhr.total * 100) + '% loaded'; // default progress callback
-		this.onError = console.error;
 		this.renderer = null;
 		this.canvas = canvasElement;
 		this.aspectRatio = 1;
@@ -80,7 +81,7 @@ export class VptPreviewScene {
 		this.scene = null;
 		this.cameraDefaults = {
 			posCamera: new Vector3(0, 40.0, 50.0),
-			posCameraTarget: new Vector3(0, -3, 0),
+			posCameraTarget: new Vector3(0, -8, 0),
 			near: 0.1,
 			far: 100000,
 			fov: 45,
@@ -119,13 +120,11 @@ export class VptPreviewScene {
 		this.controls.panSpeed = 0.2;
 	}
 
-	initContent(glbUrl, done) {
-		const gltfLoader = new GLTFLoader();
-		gltfLoader.setDRACOLoader(new DRACOLoader());
+	loadContent(glbUrl, onDone, onProgress, onError) {
+		const gltfLoader = new GLTFLoader(this.loadingManager);
+		gltfLoader.setDRACOLoader(new DRACOLoader(this.loadingManager));
 		gltfLoader.load(glbUrl, gltf => {
-			if (done) {
-				done();
-			}
+			onDone();
 			const playfield = gltf.scene.children.find(node => node.name === 'playfield');
 			const lights = playfield ? playfield.children.find(c => c.name === 'lights') : null;
 			this.bulbLights = lights ? lights.children : [];
@@ -133,12 +132,7 @@ export class VptPreviewScene {
 
 			gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
 			this.scene.add(gltf.scene);
-		}, this.onProgress, this.onError);
-	}
-
-	notify(onProgress, onError) {
-		this.onProgress = onProgress;
-		this.onError = onError;
+		}, onProgress, onError);
 	}
 
 	render() {
