@@ -20,7 +20,7 @@
 import {
 	AmbientLight,
 	DirectionalLight,
-	GridHelper, LoadingManager,
+	GridHelper,
 	PerspectiveCamera,
 	Raycaster,
 	Scene,
@@ -46,8 +46,6 @@ export class VptPreviewScene {
 		this.bulbLights = [];
 		this.bulbLightsIntensity = 1;
 		this.globalLightsIntensity = 0.5;
-
-		this.loadingManager = new LoadingManager();
 
 		const sliderOptions = {
 			step: 0.001,
@@ -80,8 +78,8 @@ export class VptPreviewScene {
 
 		this.scene = null;
 		this.cameraDefaults = {
-			posCamera: new Vector3(0, 40.0, 50.0),
-			posCameraTarget: new Vector3(0, -8, 0),
+			posCamera: new Vector3(-10, 40.0, 50.0),
+			posCameraTarget: new Vector3(0, -5, 0),
 			near: 0.1,
 			far: 100000,
 			fov: 45,
