@@ -16,7 +16,7 @@ include ../../../../template/_mixins
 
 #gl-view
 
-.preview-controls
+.preview-controls(ng-class="{ loaded: vm.isLoaded }")
 	.row
 		.col-xs-11.col-sm-5.col-xs-offset-1.text-nowrap
 			+icon('sun')

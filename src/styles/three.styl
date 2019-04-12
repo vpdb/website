@@ -68,8 +68,16 @@
 	right 0
 	height 52px
 	border-top 1px solid $color-primary;
+	svg.svg-icon
+		fill  $color-darker
+	&.loaded
+		svg.svg-icon
+			fill $color-lightish
+
 	@media (max-width: $bootstrap-screen-sm-min)
 		height 120px
+
+
 
 .rzslider
 	width 90%
@@ -96,5 +104,6 @@
 	.rz-bar
 		background-color $color-darker
 
-
-
+	&[disabled] .rz-pointer
+		cursor default
+		background-color #403f3d
