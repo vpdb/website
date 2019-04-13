@@ -48,6 +48,7 @@ export default class VptPreviewCtrl {
 
 		this.percentLoaded = 0;
 		this.isLoaded = false;
+		this.loadingTitle = 'Loading...';
 		this.errorTitle = null;
 		this.errorMessage = null;
 		this.glView = document.getElementById('gl-view');
@@ -149,6 +150,9 @@ export default class VptPreviewCtrl {
 
 	onProgress(progress) {
 		this.percentLoaded = progress.loaded / progress.total * 100;
+		if (this.percentLoaded === 100) {
+			this.loadingTitle = 'Rendering...';
+		}
 		this.$scope.$apply();
 	}
 
