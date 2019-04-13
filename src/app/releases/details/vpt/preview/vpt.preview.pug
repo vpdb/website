@@ -38,6 +38,10 @@ include ../../../../template/_mixins
 				label.a(for="showGates")
 				label.a.a--light.padder-bottom(for="showGates") Gates
 			.row
+				input#showSpinners.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('spinners', $event)", checked)
+				label.a(for="showSpinners")
+				label.a.a--light.padder-bottom(for="showGates") Spinners
+			.row
 				input#showHitTargets.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('hitTargets', $event)", checked)
 				label.a(for="showHitTargets")
 				label.a.a--light.padder-bottom(for="showHitTargets") Hit Targets
