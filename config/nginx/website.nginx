@@ -19,13 +19,9 @@ server {
 	set $cache_forever "no-transform,public,max-age=31536000";
 	set $cache_favicon "no-transform,public,max-age=604800";
 
-	# staging protection
-	auth_basic "Restricted";
-	auth_basic_user_file /var/www/.htpasswd;
-
 	# logs
-	error_log /var/log/nginx/www-error.log;
-	access_log /var/log/nginx/www-access.log;
+	error_log /var/log/nginx/www.vpdb.io-error.log;
+	access_log /var/log/nginx/www.vpdb.io-access.log;
 
 	# letsencrypt challenge
 	include /etc/nginx/snippets/letsencrypt.nginx;
@@ -38,7 +34,8 @@ server {
 	# site map
 	location = /sitemap.xml {
 		add_header Cache-Control $cache_dynamic;
-		proxy_pass http://localhost:3000/api/sitemap;
+
+		proxy_pass http://localhost:4004/api/v1/sitemap?url=https://vpdb.io;
 		proxy_http_version 1.1;
 		proxy_set_header Upgrade $http_upgrade;
 		proxy_set_header Connection 'upgrade';
@@ -58,6 +55,10 @@ server {
 
 	location ~ sw\.js$ {
 		add_header Cache-Control $cache_dynamic;
+	}
+
+	location ~ ^\/workbox- {
+		add_header Cache-Control $cache_forever;
 	}
 
 	# map root to index
@@ -80,6 +81,6 @@ server {
 # redirect to https
 server {
 	listen 80;
-	server_name vpdb.io;
+	server_name vpdb.io www.vpdb.io;
 	return 301 https://vpdb.io$request_uri;
 }
