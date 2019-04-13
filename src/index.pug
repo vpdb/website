@@ -2,7 +2,7 @@ include app/template/_mixins
 doctype html
 block root
 //- to debug injections, add ng-strict-di to <html> element and run in dev mode!
-html#app(lang="en")
+html#app(lang="en", ng-class="{ 'hide-scrollbars' : hideScrollbars }")
 	head
 		title(ng-bind="pageTitle") VPDB
 		//- pre-load fonts
