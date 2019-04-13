@@ -154,7 +154,11 @@ export default class VptPreviewCtrl {
 	onError(err) {
 		this.errorTitle = 'Error loading model';
 		if (err.currentTarget) {
-			this.errorMessage = err.currentTarget.status + ' ' + err.currentTarget.statusText + '.';
+			if (!err.currentTarget.status && !err.currentTarget.statusText) {
+				this.errorMessage = 'Request blocked. Probably a CORS issue, check the console and report!';
+			} else {
+				this.errorMessage = err.currentTarget.status + ' ' + err.currentTarget.statusText + '.';
+			}
 		} else {
 			this.errorMessage = err && err.message ? err.message : (err ? err : 'Something went wrong!');
 		}
