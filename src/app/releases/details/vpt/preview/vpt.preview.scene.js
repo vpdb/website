@@ -124,6 +124,8 @@ export class VptPreviewScene {
 		this.controls.dampingFactor = 0.1;
 		this.controls.rotateSpeed = 0.1;
 		this.controls.panSpeed = 0.2;
+
+		return this.renderer;
 	}
 
 	toggleContent(groupName, clickEvent) {
