@@ -47,6 +47,11 @@ export class VptPreviewScene {
 		this.bulbLightsIntensity = 1;
 		this.globalLightsIntensity = 0.5;
 
+		this.config = {
+			showPrimitives: true,
+			showPlayfield: true,
+		};
+
 		const sliderOptions = {
 			step: 0.001,
 			floor: 0,
@@ -56,6 +61,9 @@ export class VptPreviewScene {
 			hideLimitLabels: true,
 			disabled: true,
 		};
+
+		this.sceneGroups = { };
+		this.sceneGroupsVisible = { };
 
 		this.globalLightsSliderOptions = Object.assign({}, sliderOptions, {
 			onChange: () => {
@@ -118,6 +126,12 @@ export class VptPreviewScene {
 		this.controls.panSpeed = 0.2;
 	}
 
+	toggleContent(groupName, clickEvent) {
+		if (this.sceneGroups[groupName]) {
+			this.sceneGroups[groupName].visible = clickEvent.target.checked;
+		}
+	}
+
 	loadContent(glbUrl, onDone, onProgress, onError) {
 		const gltfLoader = new GLTFLoader(this.loadingManager);
 		gltfLoader.setDRACOLoader(new DRACOLoader(this.loadingManager));
@@ -125,9 +139,12 @@ export class VptPreviewScene {
 			onDone();
 			const playfield = gltf.scene.children.find(node => node.name === 'playfield');
 			const lights = playfield ? playfield.children.find(c => c.name === 'lights') : null;
+			for (const group of playfield.children) {
+				this.sceneGroups[group.name] = group;
+				this.sceneGroupsVisible[group.name] = true;
+			}
 			this.bulbLights = lights ? lights.children : [];
 			this.bulbLightIntensities = this.bulbLights.map(bl => bl.intensity);
-
 			gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
 			this.scene.add(gltf.scene);
 		}, onProgress, onError);

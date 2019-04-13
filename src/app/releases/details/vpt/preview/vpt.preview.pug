@@ -1,26 +1,79 @@
 include ../../../../template/_mixins
 
-.info-block(ng-class="{ 'info-block--error': !!vm.errorMessage }", ng-if="!vm.isLoaded")
-	div
-		h3
-			+icon('{{ vm.errorMessage ? "warning" : "cube" }}').shift-up.space-right-2x
-			span.space-left-2x {{ vm.errorMessage ? vm.errorTitle : 'Loading...' }}
-		div(ng-show="!vm.errorMessage")
-			uib-progressbar.active(value="vm.percentLoaded", max="100")
-		div(ng-show="vm.errorMessage")
-			p {{ vm.errorMessage }}
-			hr.padder-top-2x
-			a(ui-sref="releaseDetails({id: vm.gameId, releaseId: vm.releaseId})")
-				+icon('arrow-left').shift-up-less.space-right-2x
-				| Back to release
+.gl-container
+	.info-block(ng-class="{ 'info-block--error': !!vm.errorMessage }", ng-if="!vm.isLoaded")
+		div
+			h3
+				+icon('{{ vm.errorMessage ? "warning" : "cube" }}').shift-up.space-right-2x
+				span.space-left-2x {{ vm.errorMessage ? vm.errorTitle : 'Loading...' }}
+			div(ng-show="!vm.errorMessage")
+				uib-progressbar.active(value="vm.percentLoaded", max="100")
+			div(ng-show="vm.errorMessage")
+				p {{ vm.errorMessage }}
+				hr.padder-top-2x
+				a(ui-sref="releaseDetails({id: vm.gameId, releaseId: vm.releaseId})")
+					+icon('arrow-left').shift-up-less.space-right-2x
+					| Back to release
 
-#gl-view
+	#gl-view
 
-.preview-controls(ng-class="{ loaded: vm.isLoaded }")
-	.row
-		.col-xs-11.col-sm-5.col-xs-offset-1.text-nowrap
-			+icon('sun')
-			rzslider(rz-slider-model="vm.scene.globalLightsIntensity", rz-slider-options="vm.scene.globalLightsSliderOptions")
-		.col-xs-11.col-xs-offset-1.col-sm-offset-0.col-sm-5.text-nowrap
-			+icon('lightbulb')
-			rzslider(rz-slider-model="vm.scene.bulbLightsIntensity", rz-slider-options="vm.scene.bulbLightsSliderOptions")
+	.option-block(ng-show="vm.optionsToggled")
+		.container
+			.row
+				h4 Show
+			.row
+				input#showPrimitives.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('primitives', $event)", checked)
+				label.a(for="showPrimitives")
+				label.a.a--light.padder-bottom(for="showPrimitives") Primitives
+			.row
+				input#showPlayfield.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('playfield', $event)", checked)
+				label.a(for="showPlayfield")
+				label.a.a--light.padder-bottom(for="showPlayfield") Playfield
+			.row
+				input#showTriggers.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('triggers', $event)", checked)
+				label.a(for="showTriggers")
+				label.a.a--light.padder-bottom(for="showTriggers") Triggers
+			.row
+				input#showGates.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('gates', $event)", checked)
+				label.a(for="showGates")
+				label.a.a--light.padder-bottom(for="showGates") Gates
+			.row
+				input#showHitTargets.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('hitTargets', $event)", checked)
+				label.a(for="showHitTargets")
+				label.a.a--light.padder-bottom(for="showHitTargets") Hit Targets
+			.row
+				input#showFlippers.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('flippers', $event)", checked)
+				label.a(for="showFlippers")
+				label.a.a--light.padder-bottom(for="showFlippers") Flippers
+			.row
+				input#showBumpers.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('bumpers', $event)", checked)
+				label.a(for="showBumpers")
+				label.a.a--light.padder-bottom(for="showBumpers") Bumpers
+			.row
+				input#showRamps.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('ramps', $event)", checked)
+				label.a(for="showRamps")
+				label.a.a--light.padder-bottom(for="showRamps") Ramps
+			.row
+				input#showSurfaces.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('surfaces', $event)", checked)
+				label.a(for="showSurfaces")
+				label.a.a--light.padder-bottom(for="showSurfaces") Surfaces
+			.row
+				input#showRubbers.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('rubbers', $event)", checked)
+				label.a(for="showRubbers")
+				label.a.a--light.padder-bottom(for="showRubbers") Rubbers
+			.row
+				input#showLightBulbs.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('lightsBulbs', $event)", checked)
+				label.a(for="showLightBulbs")
+				label.a.a--light.padder-bottom(for="showLightBulbs") Light Bulbs
+
+	.preview-controls(ng-class="{ loaded: vm.isLoaded }")
+		.row
+			.col-xs-10.col-sm-5.col-xs-offset-1.text-nowrap
+				+icon('sun')
+				rzslider(rz-slider-model="vm.scene.globalLightsIntensity", rz-slider-options="vm.scene.globalLightsSliderOptions")
+			.col-xs-10.col-xs-offset-1.col-sm-offset-0.col-sm-5.text-nowrap
+				+icon('lightbulb')
+				rzslider(rz-slider-model="vm.scene.bulbLightsIntensity", rz-slider-options="vm.scene.bulbLightsSliderOptions")
+			.col-sm-1
+				a(ng-click="vm.optionsToggled = !vm.optionsToggled")
+					+icon('gear').shift-down

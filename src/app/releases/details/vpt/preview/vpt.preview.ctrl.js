@@ -48,7 +48,8 @@ export default class VptPreviewCtrl {
 		this.isLoaded = false;
 		this.errorTitle = null;
 		this.errorMessage = null;
-		this.scene = new VptPreviewScene(document.getElementById('gl-view'));
+		this.glView = document.getElementById('gl-view');
+		this.scene = new VptPreviewScene(this.glView);
 
 		this.scene.initGl();
 		this.scene.resizeDisplayGl();
