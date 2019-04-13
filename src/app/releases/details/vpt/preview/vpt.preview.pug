@@ -5,7 +5,7 @@ include ../../../../template/_mixins
 		div
 			h3
 				+icon('{{ vm.errorMessage ? "warning" : "cube" }}').shift-up.space-right-2x
-				span.space-left-2x {{ vm.errorMessage ? vm.errorTitle : 'Loading...' }}
+				span.space-left-2x {{ vm.errorMessage ? vm.errorTitle : vm.loadingTitle }}
 			div(ng-show="!vm.errorMessage")
 				uib-progressbar.active(value="vm.percentLoaded", max="100")
 			div(ng-show="vm.errorMessage")
