@@ -40,7 +40,7 @@ include ../../../../template/_mixins
 			.row
 				input#showSpinners.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('spinners', $event)", checked)
 				label.a(for="showSpinners")
-				label.a.a--light.padder-bottom(for="showGates") Spinners
+				label.a.a--light.padder-bottom(for="showSpinners") Spinners
 			.row
 				input#showHitTargets.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('hitTargets', $event)", checked)
 				label.a(for="showHitTargets")
@@ -65,6 +65,10 @@ include ../../../../template/_mixins
 				input#showRubbers.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('rubbers', $event)", checked)
 				label.a(for="showRubbers")
 				label.a.a--light.padder-bottom(for="showRubbers") Rubbers
+			.row
+				input#showKickers.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('kickers', $event)", checked)
+				label.a(for="showKickers")
+				label.a.a--light.padder-bottom(for="showKickers") Kickers
 			.row
 				input#showLightBulbs.checkbox--toggle(type="checkbox", ng-click="vm.scene.toggleContent('lightsBulbs', $event)", checked)
 				label.a(for="showLightBulbs")
