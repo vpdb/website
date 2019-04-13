@@ -101,6 +101,10 @@ export default class App {
 		this.$rootScope.themeName = 'theme-' + theme;
 	}
 
+	enableScrollbars(value) {
+		this.$rootScope.hideScrollbars = !value;
+	}
+
 	/**
 	 * Returns the pixel suffix for bitmap images.
 	 * @param name Name of the bitmap
