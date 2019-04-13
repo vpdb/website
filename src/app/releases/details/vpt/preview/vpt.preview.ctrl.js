@@ -51,7 +51,13 @@ export default class VptPreviewCtrl {
 		this.glView = document.getElementById('gl-view');
 		this.scene = new VptPreviewScene(this.glView);
 
-		this.scene.initGl();
+		const renderer = this.scene.initGl();
+		renderer.context.canvas.addEventListener('webglcontextlost', function(event) {
+			event.preventDefault();
+			this.errorTitle = 'Rendering Failed.';
+			this.errorMessage = 'WebGL context was lost, this can happen on low-end devices.';
+			cancelAnimationFrame(this.animationId);
+		}, false);
 		this.scene.resizeDisplayGl();
 
 		// setup statuses
@@ -131,7 +137,6 @@ export default class VptPreviewCtrl {
 	}
 
 	onLoaded() {
-		console.log('onLoaded: ', arguments);
 		if (!this.errorMessage) {
 			this.isLoaded = true;
 			this.scene.globalLightsSliderOptions.disabled = false;
@@ -141,13 +146,11 @@ export default class VptPreviewCtrl {
 	}
 
 	onProgress(progress) {
-		console.log('onProgress: ', arguments);
 		this.percentLoaded = progress.loaded / progress.total * 100;
 		this.$scope.$apply();
 	}
 
 	onError(err) {
-		console.log('onError: ', arguments);
 		this.errorTitle = 'Error loading model';
 		if (err.currentTarget) {
 			this.errorMessage = err.currentTarget.status + ' ' + err.currentTarget.statusText + '.';
@@ -159,7 +162,7 @@ export default class VptPreviewCtrl {
 	}
 
 	render() {
-		requestAnimationFrame(this.render.bind(this));
+		this.animationId = requestAnimationFrame(this.render.bind(this));
 		this.scene.render();
 	}
 }
