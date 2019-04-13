@@ -19,8 +19,11 @@
 
 @import 'variables';
 
+.gl-container
+	position relative
+
 #gl-view
-	height: 94vh;
+	height: 92vh;
 	min-width: 320px;
 	min-height: 160px;
 	position: relative;
@@ -63,9 +66,9 @@
 
 .preview-controls
 	position absolute
-	bottom 50px
-	left 0
-	right 0
+	bottom -8px
+	left -15px
+	right -15px
 	height 52px
 	border-top 1px solid $color-primary;
 	svg.svg-icon
@@ -74,10 +77,27 @@
 		svg.svg-icon
 			fill $color-lightish
 
+	ul.dropdown-menu
+		bottom 71px
+		position relative
+		left auto
+		right 89px
+
 	@media (max-width: $bootstrap-screen-sm-min)
 		height 120px
 
 
+.option-block
+	h4
+		margin-bottom 20px
+	border: 1px solid $color-primary;
+	right -15px
+	bottom 0
+	position absolute
+	width 175px
+	height 575px
+	background-color  $color-navbar
+	padding 15px
 
 .rzslider
 	width 90%
