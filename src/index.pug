@@ -48,7 +48,7 @@ html#app(lang="en")
 			link(rel="preload" href=cssFileName as="style" onload="this.onload=null;this.rel='stylesheet'")
 		script !{htmlWebpackPlugin.options.loadCss}
 
-	body#top(ng-class="themeName || 'theme-dark'")
+	body#top(ng-class="(themeName || 'theme-dark') + (hideScrollbars ? ' hide-scrollbars' : '')")
 
 		//- the app
 		vpdb

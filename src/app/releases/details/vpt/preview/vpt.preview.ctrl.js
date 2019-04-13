@@ -37,6 +37,7 @@ export default class VptPreviewCtrl {
 		App.theme('dark');
 		App.setTitle('VPT Preview');
 		App.setMenu('releases');
+		App.enableScrollbars(false);
 
 		this.$scope = $scope;
 		this.gameId = $stateParams.gameId;
