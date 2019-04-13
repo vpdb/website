@@ -56,6 +56,12 @@
 			margin-bottom 0
 			.progress-bar
 				background-color $color-darker
+
+		@media (max-width: $bootstrap-screen-sm-min)
+			width 85%
+			h3
+				font-size 32px
+
 	&.info-block--error > div
 		border 2px solid $color-danger-dark
 		h3
