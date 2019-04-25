@@ -41,16 +41,8 @@ export class VptPreviewScene {
 		DRACOLoader.setDecoderPath('/lib/');
 		DRACOLoader.getDecoderModule();
 
+		this.initScene();
 		this.playfieldScale = 0.5;
-
-		this.bulbLights = [];
-		this.bulbLightsIntensity = 1;
-		this.globalLightsIntensity = 0.5;
-
-		this.config = {
-			showPrimitives: true,
-			showPlayfield: true,
-		};
 
 		const sliderOptions = {
 			step: 0.001,
@@ -61,9 +53,6 @@ export class VptPreviewScene {
 			hideLimitLabels: true,
 			disabled: true,
 		};
-
-		this.sceneGroups = { };
-		this.sceneGroupsVisible = { };
 
 		this.globalLightsSliderOptions = Object.assign({}, sliderOptions, {
 			onChange: () => {
@@ -100,6 +89,16 @@ export class VptPreviewScene {
 		this.meshes = [];
 	}
 
+	initScene() {
+
+		this.bulbLights = [];
+		this.bulbLightsIntensity = 1;
+		this.globalLightsIntensity = 0.5;
+
+		this.sceneGroups = { };
+		this.sceneGroupsVisible = { };
+	}
+
 	initGl() {
 
 		this.renderer = new WebGLRenderer({
@@ -134,22 +133,18 @@ export class VptPreviewScene {
 		}
 	}
 
-	loadContent(glbUrl, onDone, onProgress, onError) {
-		const gltfLoader = new GLTFLoader(this.loadingManager);
-		gltfLoader.setDRACOLoader(new DRACOLoader(this.loadingManager));
-		gltfLoader.load(glbUrl, gltf => {
-			onDone();
-			const playfield = gltf.scene.children.find(node => node.name === 'playfield');
-			const lights = playfield ? playfield.children.find(c => c.name === 'lights') : null;
-			for (const group of playfield.children) {
-				this.sceneGroups[group.name] = group;
-				this.sceneGroupsVisible[group.name] = true;
-			}
-			this.bulbLights = lights ? lights.children : [];
-			this.bulbLightIntensities = this.bulbLights.map(bl => bl.intensity);
-			gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
-			this.scene.add(gltf.scene);
-		}, onProgress, onError);
+	loadUrl(glbUrl, onDone, onProgress, onError) {
+		const gltfLoader = new GLTFLoader();
+		gltfLoader.setDRACOLoader(new DRACOLoader());
+		gltfLoader.load(glbUrl, this._onLoaded(onDone), onProgress, onError);
+	}
+
+	loadFile(glbData, onDone, onProgress, onError) {
+		this.initScene();
+		console.log('loading file!');
+		const gltfLoader = new GLTFLoader();
+		gltfLoader.setDRACOLoader(new DRACOLoader());
+		gltfLoader.parse(glbData, '', this._onLoaded(onDone), onError);
 	}
 
 	render() {
@@ -181,6 +176,24 @@ export class VptPreviewScene {
 		if (intersects.length > 0) {
 			console.log(intersects.map(i => i.object.name));
 		}
+	}
+
+	_onLoaded(onDone) {
+		return gltf => {
+			onDone();
+			const playfield = gltf.scene.children.find(node => node.name === 'playfield');
+			const lights = playfield ? playfield.children.find(c => c.name === 'lights') : null;
+			for (const group of playfield.children) {
+				this.sceneGroups[group.name] = group;
+				this.sceneGroupsVisible[group.name] = true;
+			}
+			this.bulbLights = lights ? lights.children : [];
+			this.bulbLightIntensities = this.bulbLights.map(bl => bl.intensity);
+			gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
+			this._clearScene();
+			this.scene.add(gltf.scene);
+			console.debug('Scene loaded.');
+		};
 	}
 
 	_recalcAspectRatio() {
@@ -233,22 +246,9 @@ export class VptPreviewScene {
 		}
 	}
 
-	_destroyMaterial(material) {
-		material.dispose();
-
-		// dispose textures
-		for (const key of Object.keys(material)) {
-			const value = material[key];
-			if (value && typeof value === 'object' && 'minFilter' in value) {
-				value.dispose();
-			}
-		}
-	}
-
-	destroy() {
-		const now = Date.now();
+	_clearScene() {
 		this.scene.traverse(object => {
-			if (!object.isMesh){
+			if (!object.isMesh) {
 				return;
 			}
 			object.geometry.dispose();
@@ -261,10 +261,27 @@ export class VptPreviewScene {
 					this._destroyMaterial(material);
 				}
 			}
+			this.scene.remove(object);
 		});
+	}
+
+	destroyScene() {
+		this._clearScene();
 		this.renderer.dispose();
 		this.renderer = null;
 		this.scene = null;
+	}
+
+	_destroyMaterial(material) {
+		material.dispose();
+
+		// dispose textures
+		for (const key of Object.keys(material)) {
+			const value = material[key];
+			if (value && typeof value === 'object' && 'minFilter' in value) {
+				value.dispose();
+			}
+		}
 	}
 
 }

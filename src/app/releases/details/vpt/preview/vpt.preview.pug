@@ -1,6 +1,9 @@
 include ../../../../template/_mixins
 
-.gl-container
+#gl-container(
+		ngf-drop="vm.loadLocalGltf($files)"
+		ngf-drag-over-class="'dragover'"
+	)
 	.info-block(ng-class="{ 'info-block--error': !!vm.errorMessage }", ng-if="!vm.isLoaded")
 		div
 			h3
