@@ -232,4 +232,39 @@ export class VptPreviewScene {
 			this.scene.add(helper);
 		}
 	}
+
+	_destroyMaterial(material) {
+		material.dispose();
+
+		// dispose textures
+		for (const key of Object.keys(material)) {
+			const value = material[key];
+			if (value && typeof value === 'object' && 'minFilter' in value) {
+				value.dispose();
+			}
+		}
+	}
+
+	destroy() {
+		const now = Date.now();
+		this.scene.traverse(object => {
+			if (!object.isMesh){
+				return;
+			}
+			object.geometry.dispose();
+
+			if (object.material.isMaterial) {
+				this._destroyMaterial(object.material);
+			} else {
+				// an array of materials
+				for (const material of object.material) {
+					this._destroyMaterial(material);
+				}
+			}
+		});
+		this.renderer.dispose();
+		this.renderer = null;
+		this.scene = null;
+	}
+
 }
