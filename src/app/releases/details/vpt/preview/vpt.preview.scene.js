@@ -107,6 +107,10 @@ export class VptPreviewScene {
 			alpha: true,
 		});
 
+		this.renderer.setPixelRatio(window.devicePixelRatio);
+		this.renderer.gammaFactor = 1.3;
+		this.renderer.gammaOutput = true;
+
 		//this.renderer.shadowMapEnabled = true;
 		//this.renderer.shadowMap.type = PCFSoftShadowMap;
 
