@@ -40,7 +40,7 @@ export default class VptPreviewCtrl {
 		App.enableScrollbars(false);
 		$scope.$on('$destroy', () => {
 			App.enableScrollbars(true);
-			this.scene.destroy();
+			this.scene.destroyScene();
 		});
 
 		this.$scope = $scope;
@@ -102,7 +102,7 @@ export default class VptPreviewCtrl {
 							this.errorMessage = err.message;
 							return;
 						}
-						this.scene.loadContent(gltf.url + '?token=' + tokens[gltf.url], this.onLoaded.bind(this), this.onProgress.bind(this), this.onError.bind(this));
+						this.scene.loadUrl(gltf.url + '?token=' + tokens[gltf.url], this.onLoaded.bind(this), this.onProgress.bind(this), this.onError.bind(this));
 					});
 
 				} else {
@@ -110,7 +110,7 @@ export default class VptPreviewCtrl {
 					throw new Error('You gotta be logged to see this 3D model.');
 				}
 			} else {
-				this.scene.loadContent(gltf.url, this.onLoaded.bind(this), this.onProgress.bind(this), this.onError.bind(this));
+				this.scene.loadUrl(gltf.url, this.onLoaded.bind(this), this.onProgress.bind(this), this.onError.bind(this));
 			}
 
 			const title = release.game.title + ' · ' + release.name + ' · 3D Preview';
@@ -177,5 +177,14 @@ export default class VptPreviewCtrl {
 	render() {
 		this.animationId = requestAnimationFrame(this.render.bind(this));
 		this.scene.render();
+	}
+
+	loadLocalGltf(files) {
+		const reader = new FileReader();
+		reader.onload = event => {
+			const data = event.currentTarget.result;
+			this.scene.loadFile(data, this.onLoaded.bind(this), this.onProgress.bind(this), this.onError.bind(this));
+		};
+		reader.readAsArrayBuffer(files[0]);
 	}
 }

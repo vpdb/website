@@ -20,12 +20,13 @@
 import angular from 'angular';
 import rzSlider from 'angularjs-slider';
 import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
+import ngFileUpload from 'ng-file-upload';
 import 'angularjs-slider/dist/rzslider.min.css';
 
 import VptPreviewComponent from './preview/vpt.preview.component';
 
 const VPT_MODULE = angular
-	.module('vpdb.vpt', [ uiProgressbar, rzSlider ])
+	.module('vpdb.vpt', [ uiProgressbar, rzSlider, ngFileUpload ])
 	.component('vptPreviewComponent', new VptPreviewComponent());
 
 export { VPT_MODULE };
