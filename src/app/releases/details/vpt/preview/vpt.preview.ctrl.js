@@ -38,7 +38,10 @@ export default class VptPreviewCtrl {
 		App.setTitle('VPT Preview');
 		App.setMenu('releases');
 		App.enableScrollbars(false);
-		$scope.$on('$destroy', () => App.enableScrollbars(true));
+		$scope.$on('$destroy', () => {
+			App.enableScrollbars(true);
+			this.scene.destroy();
+		});
 
 		this.$scope = $scope;
 		this.gameId = $stateParams.gameId;
