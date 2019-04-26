@@ -57,6 +57,12 @@ export default class VptPreviewCtrl {
 		this.glView = document.getElementById('gl-view');
 		this.scene = new VptPreviewScene(this.glView);
 
+		if (!this.scene.isWebGLAvailable()) {
+			this.errorTitle = 'Sorry!';
+			this.errorMessage = this.scene.getErrorMessage(1);
+			return;
+		}
+
 		const renderer = this.scene.initGl();
 		renderer.context.canvas.addEventListener('webglcontextlost', function(event) {
 			event.preventDefault();
@@ -138,7 +144,6 @@ export default class VptPreviewCtrl {
 		});
 
 		window.addEventListener( 'resize', () => this.scene.resizeDisplayGl(), false );
-
 		this.render();
 	}
 
