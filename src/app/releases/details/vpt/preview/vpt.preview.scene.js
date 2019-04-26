@@ -45,16 +45,17 @@ export class VptPreviewScene {
 		this.playfieldScale = 0.5;
 
 		const sliderOptions = {
-			step: 0.001,
+			step: 0.0002,
 			floor: 0,
 			ceil: 3,
-			precision: 1,
+			precision: 10,
 			hidePointerLabels: true,
 			hideLimitLabels: true,
 			disabled: true,
 		};
 
 		this.globalLightsSliderOptions = Object.assign({}, sliderOptions, {
+			ceil: 2,
 			onChange: () => {
 				this.directionalLightFront.intensity = this.globalLightsIntensity;
 				this.directionalLightBack.intensity = this.globalLightsIntensity;
@@ -91,7 +92,7 @@ export class VptPreviewScene {
 
 		this.bulbLights = [];
 		this.bulbLightsIntensity = 1;
-		this.globalLightsIntensity = 0.5;
+		this.globalLightsIntensity = 0.2;
 
 		this.sceneGroups = { };
 		this.sceneGroupsVisible = { };
@@ -149,9 +150,11 @@ export class VptPreviewScene {
 	}
 
 	animate() {
-		requestAnimationFrame(this.animate.bind(this));
-		this.controls.update();
-		this.render();
+		if (this.renderer) {
+			requestAnimationFrame(this.animate.bind(this));
+			this.controls.update();
+			this.render();
+		}
 	}
 
 	render() {
@@ -219,7 +222,7 @@ export class VptPreviewScene {
 	_initLights() {
 
 		// ambient light
-		const ambientLight = new AmbientLight(0xffffff, 0.3);
+		const ambientLight = new AmbientLight(0xffffff, 0.1);
 		this.scene.add(ambientLight);
 
 		// front
