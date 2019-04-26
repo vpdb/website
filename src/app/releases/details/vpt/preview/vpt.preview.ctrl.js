@@ -165,8 +165,8 @@ export default class VptPreviewCtrl {
 	}
 
 	onProgress(progress) {
-		this.percentLoaded = progress.loaded / progress.total * 100;
-		if (this.percentLoaded === 100) {
+		this.percentLoaded = progress;
+		if (this.percentLoaded >= 90) {
 			this.loadingTitle = 'Rendering...';
 		}
 		this.$scope.$apply();
@@ -183,6 +183,7 @@ export default class VptPreviewCtrl {
 		} else {
 			this.errorMessage = err && err.message ? err.message : (err ? err : 'Something went wrong!');
 		}
+		console.error(err);
 
 		this.$scope.$apply();
 	}

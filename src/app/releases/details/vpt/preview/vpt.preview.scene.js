@@ -20,9 +20,10 @@
 import {
 	AmbientLight,
 	DirectionalLight,
-	GridHelper,
+	GridHelper, LoadingManager,
 	PerspectiveCamera,
-	Raycaster, RGBAFormat,
+	Raycaster,
+	RGBAFormat,
 	Scene,
 	Vector2,
 	Vector3,
@@ -129,10 +130,53 @@ export class VptPreviewScene {
 		return this.renderer;
 	}
 
+	/**
+	 * Progress calculation is a bit weird here.
+	 *
+	 * Basically we have progress from GLTFLoader, which should make about half
+	 * of the time. Then we have the mesh decompression etc, which we manage
+	 * with a LoadingManager.
+	 *
+	 * To the client we send back the average of both minus a threshold so it
+	 * doesn't get blocked at the end while it's rendering.
+	 *
+	 * @param glbUrl
+	 * @param onDone
+	 * @param onProgress
+	 * @param onError
+	 */
 	loadUrl(glbUrl, onDone, onProgress, onError) {
-		const gltfLoader = new GLTFLoader();
-		gltfLoader.setDRACOLoader(new DRACOLoader());
-		gltfLoader.load(glbUrl, this._onLoaded(onDone), onProgress, onError);
+		const manager = new LoadingManager();
+		const stopBefore = 10;
+		let progress1 = 0;
+		let progress2 = 0;
+		let loaded1 = false;
+		let loaded2 = false;
+		manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+			progress2 = itemsLoaded / itemsTotal * 100;
+			onProgress((progress1 + progress2) / 2 - stopBefore);
+		};
+		manager.onLoad = () => {
+			if (loaded1) {
+				onDone();
+			} else {
+				loaded2 = true;
+			}
+		};
+
+		const gltfLoader = new GLTFLoader(manager);
+		gltfLoader.setDRACOLoader(new DRACOLoader(manager));
+		gltfLoader.load(glbUrl, gltf => {
+			if (loaded2) {
+				onDone();
+			} else {
+				loaded1 = true;
+			}
+			this._onLoaded(gltf);
+		}, progress => {
+			progress1 = progress.loaded / progress.total * 100;
+			onProgress((progress1 + progress2) / 2 - stopBefore);
+		}, onError);
 	}
 
 	loadFile(glbData, onDone, onProgress, onError) {
@@ -140,7 +184,10 @@ export class VptPreviewScene {
 
 		const gltfLoader = new GLTFLoader();
 		gltfLoader.setDRACOLoader(new DRACOLoader());
-		gltfLoader.parse(glbData, '', this._onLoaded(onDone), onError);
+		gltfLoader.parse(glbData, '', gltf => {
+			this._onLoaded(gltf);
+			onDone();
+		}, onError);
 	}
 
 	resizeDisplayGl() {
@@ -184,40 +231,37 @@ export class VptPreviewScene {
 		}
 	}
 
-	_onLoaded(onDone) {
-		return gltf => {
-			const playfield = gltf.scene.children.find(node => node.name === 'playfield');
-			const lights = playfield ? playfield.children.find(c => c.name === 'lights') : null;
-			for (const group of playfield.children) {
-				this.sceneGroups[group.name] = group;
-				this.sceneGroupsVisible[group.name] = true;
+	_onLoaded(gltf) {
+		const playfield = gltf.scene.children.find(node => node.name === 'playfield');
+		const lights = playfield ? playfield.children.find(c => c.name === 'lights') : null;
+		for (const group of playfield.children) {
+			this.sceneGroups[group.name] = group;
+			this.sceneGroupsVisible[group.name] = true;
+		}
+
+		this.bulbLights = lights ? lights.children : [];
+		this.bulbLightIntensities = this.bulbLights.map(bl => bl.intensity);
+		gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
+
+		// "fix" overlapping faces (https://stackoverflow.com/questions/11165345/three-js-webgl-transparent-planes-hiding-other-planes-behind-them/13741468#13741468)
+		gltf.scene.traverse(object => {
+			if (!object.isMesh) {
+				return;
 			}
-
-			this.bulbLights = lights ? lights.children : [];
-			this.bulbLightIntensities = this.bulbLights.map(bl => bl.intensity);
-			gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
-
-			// "fix" overlapping faces (https://stackoverflow.com/questions/11165345/three-js-webgl-transparent-planes-hiding-other-planes-behind-them/13741468#13741468)
-			gltf.scene.traverse(object => {
-				if (!object.isMesh) {
-					return;
+			if (object.material) {
+				if (object.material.map && object.material.map.format === RGBAFormat) {
+					object.material.alphaTest = 0.5;
 				}
-				if (object.material) {
-					if (object.material.map && object.material.map.format === RGBAFormat) {
-						object.material.alphaTest = 0.5;
-					}
-				}
-			});
-
-			if (this.gltfScene) {
-				this.scene.remove(this.gltfScene);
 			}
+		});
 
-			this.gltfScene = gltf.scene;
-			this.scene.add(gltf.scene);
-			this.resizeDisplayGl();
-			onDone();
-		};
+		if (this.gltfScene) {
+			this.scene.remove(this.gltfScene);
+		}
+
+		this.gltfScene = gltf.scene;
+		this.scene.add(gltf.scene);
+		this.resizeDisplayGl();
 	}
 
 	_recalcAspectRatio() {
