@@ -250,7 +250,7 @@ export class VptPreviewScene {
 			}
 			if (object.material) {
 				if (object.material.map && object.material.map.format === RGBAFormat) {
-					object.material.alphaTest = 0.5;
+					object.material.alphaTest = 0.1;
 				}
 			}
 		});
