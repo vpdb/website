@@ -57,20 +57,29 @@ export default class VptPreviewCtrl {
 		this.glView = document.getElementById('gl-view');
 		this.scene = new VptPreviewScene(this.glView);
 
+		// check for webgl availability
 		if (!this.scene.isWebGLAvailable()) {
 			this.errorTitle = 'Sorry!';
 			this.errorMessage = this.scene.getErrorMessage(1);
 			return;
 		}
 
+		// create renderer
 		const renderer = this.scene.initGl();
+
+		// handle lost context
 		renderer.context.canvas.addEventListener('webglcontextlost', function(event) {
 			event.preventDefault();
 			this.errorTitle = 'Rendering Failed.';
 			this.errorMessage = 'WebGL context was lost, this can happen on low-end devices.';
 			cancelAnimationFrame(this.animationId);
 		}, false);
+
+		// resize now and on window resize
 		this.scene.resizeDisplayGl();
+		window.addEventListener('resize', () => this.scene.resizeDisplayGl(), false );
+
+		this.scene.animate();
 
 		// setup statuses
 		this.status = {
@@ -143,7 +152,6 @@ export default class VptPreviewCtrl {
 			this.release = null;
 		});
 
-		window.addEventListener( 'resize', () => this.scene.resizeDisplayGl(), false );
 		this.render();
 	}
 
@@ -180,7 +188,7 @@ export default class VptPreviewCtrl {
 	}
 
 	render() {
-		this.animationId = requestAnimationFrame(this.render.bind(this));
+		//this.animationId = requestAnimationFrame(this.render.bind(this));
 		this.scene.render();
 	}
 

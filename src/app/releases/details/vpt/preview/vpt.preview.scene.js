@@ -68,9 +68,7 @@ export class VptPreviewScene {
 			}
 		});
 
-		this.renderer = null;
 		this.canvas = canvasElement;
-		this.aspectRatio = 1;
 		this._recalcAspectRatio();
 
 		this.scene = null;
@@ -110,17 +108,11 @@ export class VptPreviewScene {
 		this.renderer.setPixelRatio(window.devicePixelRatio);
 		this.renderer.gammaFactor = 1.3;
 		this.renderer.gammaOutput = true;
-
-		//this.renderer.shadowMapEnabled = true;
-		//this.renderer.shadowMap.type = PCFSoftShadowMap;
+		this.renderer.domElement.addEventListener('mousedown', this.onClicked.bind(this), false);
 
 		this.scene = new Scene();
 		this.camera = new PerspectiveCamera(this.cameraDefaults.fov, this.aspectRatio, this.cameraDefaults.near, this.cameraDefaults.far);
-		this._initLights();
-		this._resetCamera();
-		this.canvas.appendChild(this.renderer.domElement);
 
-		this.renderer.domElement.addEventListener('mousedown', this.onClicked.bind(this), false);
 		this.controls = new OrbitControls(this.camera);
 		this.controls.target = this.cameraDefaults.posCameraTarget;
 		this.controls.enableDamping = true;
@@ -128,13 +120,12 @@ export class VptPreviewScene {
 		this.controls.rotateSpeed = 0.1;
 		this.controls.panSpeed = 0.2;
 
-		return this.renderer;
-	}
+		this._initLights();
+		this._resetCamera();
 
-	toggleContent(groupName, clickEvent) {
-		if (this.sceneGroups[groupName]) {
-			this.sceneGroups[groupName].visible = clickEvent.target.checked;
-		}
+		this.canvas.appendChild(this.renderer.domElement);
+
+		return this.renderer;
 	}
 
 	loadUrl(glbUrl, onDone, onProgress, onError) {
@@ -151,18 +142,20 @@ export class VptPreviewScene {
 		gltfLoader.parse(glbData, '', this._onLoaded(onDone), onError);
 	}
 
-	render() {
-		if (!this.renderer.autoClear) {
-			this.renderer.clear();
-		}
-		this.controls.update();
-		this.renderer.render(this.scene, this.camera);
-	}
-
 	resizeDisplayGl() {
 		this._recalcAspectRatio();
-		this.renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight, false);
 		this._updateCamera();
+		this.renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight, false);
+	}
+
+	animate() {
+		requestAnimationFrame(this.animate.bind(this));
+		this.controls.update();
+		this.render();
+	}
+
+	render() {
+		this.renderer.render(this.scene, this.camera);
 	}
 
 	onClicked(event) {
@@ -173,18 +166,23 @@ export class VptPreviewScene {
 		this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
 		this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
-		const raycaster = new Raycaster();
-		raycaster.setFromCamera(this.mouse, this.camera);
-		const intersects = raycaster.intersectObjects(this.meshes, true);
+		const rayCaster = new Raycaster();
+		rayCaster.setFromCamera(this.mouse, this.camera);
+		const intersects = rayCaster.intersectObjects(this.meshes, true);
 
 		if (intersects.length > 0) {
 			console.log(intersects.map(i => i.object.name));
 		}
 	}
 
+	toggleContent(groupName, clickEvent) {
+		if (this.sceneGroups[groupName]) {
+			this.sceneGroups[groupName].visible = clickEvent.target.checked;
+		}
+	}
+
 	_onLoaded(onDone) {
 		return gltf => {
-			onDone();
 			const playfield = gltf.scene.children.find(node => node.name === 'playfield');
 			const lights = playfield ? playfield.children.find(c => c.name === 'lights') : null;
 			for (const group of playfield.children) {
@@ -196,7 +194,8 @@ export class VptPreviewScene {
 			gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
 			this._clearScene();
 			this.scene.add(gltf.scene);
-			console.debug('Scene loaded.');
+			this.resizeDisplayGl();
+			onDone();
 		};
 	}
 
