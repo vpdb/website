@@ -76,8 +76,8 @@ export class VptPreviewScene {
 		this.cameraDefaults = {
 			posCamera: new Vector3(-10, 40.0, 50.0),
 			posCameraTarget: new Vector3(0, -5, 0),
-			near: 0.1,
-			far: 100000,
+			near: 1,
+			far: 500,
 			fov: 45,
 		};
 		/** @var Camera */
