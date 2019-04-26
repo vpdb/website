@@ -137,7 +137,7 @@ export class VptPreviewScene {
 
 	loadFile(glbData, onDone, onProgress, onError) {
 		this.initScene();
-		console.log('loading file!');
+
 		const gltfLoader = new GLTFLoader();
 		gltfLoader.setDRACOLoader(new DRACOLoader());
 		gltfLoader.parse(glbData, '', this._onLoaded(onDone), onError);
@@ -209,7 +209,11 @@ export class VptPreviewScene {
 				}
 			});
 
-			this._clearScene();
+			if (this.gltfScene) {
+				this.scene.remove(this.gltfScene);
+			}
+
+			this.gltfScene = gltf.scene;
 			this.scene.add(gltf.scene);
 			this.resizeDisplayGl();
 			onDone();
