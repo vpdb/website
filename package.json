@@ -141,7 +141,7 @@
 		},
 		{
 			"path": "./dist/vendors*.js",
-			"maxSize": "75 kB"
+			"maxSize": "175 kB"
 		}
 	]
 }
