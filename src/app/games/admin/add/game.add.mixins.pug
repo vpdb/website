@@ -1,0 +1,180 @@
+
+// title
+//-----------------------------------------------------------------
+mixin title(title)
+	h1 #{title}
+	hr
+	.form-group(ng-class="{ error: vm.errors.title }")
+		input#title.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.game.title", on-enter="vm.searchOnIpdb()")
+		.alert.alert-danger(ng-show="vm.errors.title")
+			+icon('warning').shift-up.space-right
+			| {{ vm.errors.title }}
+		span.help-block No year, manufacturer or anything else, just the title. Example: <i>The Addams Family</i>.
+
+//- form for original games
+//-----------------------------------------------------------------
+mixin originalGameInfo()
+
+	p(ng-show="vm.game.origin == 'originalGame'") Provide some more information about your table.
+
+	.form-horizontal(ng-show="vm.game.origin == 'originalGame'")
+
+		.form-group(ng-class="{ error: vm.errors.id }")
+			label.col-sm-3.control-label(for="gameId2") Game ID
+			.col-sm-6
+				.input-group
+					input#gameId2.form-control(type="text", ng-model="vm.game.id", placeholder="Common Abbreviation", ng-change="vm.game.data.idValidated = false")
+					span.input-group-addon(ng-class="{ transparent: !vm.game.data.idValidated }")
+						+icon('check').small(ng-show="vm.game.data.idValid")
+						+icon('times').small(ng-hide="vm.game.data.idValid")
+				span.help-block Must be unique and contain only letters and dashes.
+			.col-sm-3
+				button.btn.btn-default.btn--width-med.pull-right(ng-click="vm.check()", ng-disabled="vm.game.data.idValidated")
+					+icon('check').space-right
+					| Check
+
+		.alert.alert-danger.alert--shifted-up-2x(ng-show="vm.errors.id")
+			.row
+				.col-sm-9.col-sm-offset-3
+					+icon('warning').shift-up.space-right
+					| {{ vm.errors.id }}
+
+		.form-group
+			label.col-sm-3.control-label(for='author', ng-class="{ error: vm.errors.manufacturer }") Author
+			.col-sm-6
+				input#author.form-control(type="text", ng-model="vm.game.manufacturer", placeholder="Your name, nick name or pen name", ng-class="{ error: vm.errors.manufacturer }")
+				span.help-block This will show up as manufacturer.
+			label.col-sm-1.control-label.text-right(for='year2', ng-class="{ error: vm.errors.year }") Year
+			.col-sm-2.form-subgroup
+				input#year2.form-control(type="text", ng-model="vm.game.year", ng-class="{ error: vm.errors.year }")
+
+		.alert.alert-danger.alert--shifted-up(ng-show="vm.errors.manufacturer")
+			.row
+				.col-sm-9.col-sm-offset-3
+					+icon('warning').shift-up.space-right
+					| {{ vm.errors.manufacturer }}
+
+		.alert.alert-danger.alert--shifted-up(ng-show="vm.errors.year")
+			.row
+				.col-sm-9.col-sm-offset-3
+					+icon('warning').shift-up.space-right
+					| {{ vm.errors.year }}
+
+		.form-group
+			label.col-sm-3.control-label Description
+			.col-sm-9
+				editor.tabset--light(ng-model="vm.game.description", placeholder="Description of the original table", markdown-text="Markdown enabled.")
+
+		.form-group
+			label.col-sm-3.control-label Instructions
+			.col-sm-9
+				editor.tabset--light(ng-model="vm.game.instructions", placeholder="Put game instructions here", markdown-text="Markdown enabled.")
+
+	//- URLs (let's do that another time)
+		.clearfix
+		h4
+			+icon('link').space-right
+			| Links
+		hr.hr--light
+
+		.col-sm-3: label Type
+		.col-sm-8: label URL
+
+		.form-group(ng-repeat="link in game.links")
+
+			.col-sm-3
+				select.form-control
+					option -- Select --
+					option Wikipedia
+					option WIP Thread
+					option Discussion Thread
+					option Pinside Link
+					option Table Homepage
+			.col-sm-8
+				input.form-control(type="text", placeholder="http://...", ng-model="link.url")
+			.col-sm-1
+				+icon('trash')(ng-click="removeLink(link)")
+
+		button.btn.btn-secondary.padder-top-2x.padder-bottom
+			+icon('plus-circle').space-right
+			| Add Another
+
+
+// media upload
+//-----------------------------------------------------------------
+mixin mediaUpload(title)
+	h1 #{title}
+	hr
+	p Upload high quality artwork here. The backglass is mandatory but also the logo is strongly recommended.
+		| Please check the image guidelines if you haven’t done so yet. Note that the images you upload here
+		| are only used on the site to enhance the user experience. Media users download in media packs or
+		| individually can be added in later step.
+
+	//- backglass
+	.row.padder-top
+		.col-sm-6
+			#backglass-upload.panel.panel--blank(
+				file-upload="{ controller: vm, type: 'backglass', key: 'backglass', status: vm.game.mediaFile, onSuccess: vm.onBackglassUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }"
+				ngf-drag-over-class="'panel--dragging'"
+			)
+				.panel-body.a.a--darker
+					.img.img--ar-bg.loaded(img-bg="vm.game.mediaFile.backglass.variations['medium-2x']")
+						.text-center.vertical-center--100
+							uib-progressbar.progress--fixed-absolute.progress-striped.active(
+								value="vm.game.mediaFile.backglass.progress", ng-show="vm.game.mediaFile.backglass.uploading")
+							.span(ng-show="!img.url")
+								+icon('photo').svg-4x(ng-class="{ transparent: vm.game.mediaFile.backglass.uploading }")
+								p {{ vm.mediaFile.backglass.uploadText }}
+							.span(ng-show="img.loading")
+								+icon('gear').svg-3x.svg-spin--slow
+								p Generating thumbnails...
+
+		.col-sm-6
+			h4.h--large.h--no-margin Backglass
+			i A few guidelines:
+			ul
+				li The aspect ratio should be <code>5:4</code> (or <code>1:1.25</code>)
+				li Recommended resolution is <i>1280&times;1024</i>.
+				li The DMD area should be cut off.
+				li The image must not be stretched or upscaled.
+
+			// info boxes
+			.alert.alert-success.alert--inverted.alert--shifted-up.padder-top(ng-show="vm.backglass.test == 'optimal'")
+				+icon('check-circle').shift-up.space-right
+				| Dimensions are {{ vm.backglass.dimensions }}, which is optimal.
+			.alert.alert-warning.alert--inverted.alert--shifted-up.padder-top(ng-show="vm.backglass.test == 'warning'")
+				+icon('warning').shift-up.space-right
+				| Dimensions are {{ vm.backglass.dimensions }}, where the aspect ratio is <code>1:{{ vm.backglass.ar }}</code> and {{ vm.backglass.arDiff }}% off the ideal <code>1:1.25</code>. Some content will be cropped off.
+			.alert.alert-danger.alert--inverted.alert--shifted-up.padder-top(ng-show="vm.backglass.test == 'error'")
+				+icon('warning').shift-up.space-right
+				| Dimensions are {{ vm.backglass.dimensions }}, where the aspect ratio is <code>1:{{ vm.backglass.ar }}</code> and <strong>{{ vm.backglass.arDiff }}%</strong> off the ideal <code>1:1.25</code>. Please crop the image and try again.
+
+	.alert.alert-danger.alert--shifted-up(ng-show="vm.errors['_backglass']")
+		+icon('warning').shift-up.space-right
+		| {{ vm.errors['_backglass'] }}
+
+	//- logo
+	.row.padder-top
+		.col-sm-6
+			#logo-upload.panel.panel--blank(
+				file-upload="{ controller: vm, type: 'logo', key: 'logo', status: vm.game.mediaFile, onSuccess: vm.onLogoUpload, onClear: vm.onMediaClear, allowedExtensions: ['jpg', 'png'], allowMultipleFiles: false }"
+				ngf-drag-over-class="'panel--dragging'"
+			)
+				.panel-body.a.a--darker
+					.img.img--ar-logo.img--fit.loaded(img-bg="vm.game.mediaFile.logo")
+						.text-center.vertical-center--100
+							uib-progressbar.progress--fixed-absolute.progress-striped.active(
+								value="vm.game.mediaFile.logo.progress", ng-show="vm.game.mediaFile.logo.uploading")
+							.span(ng-show="!img.url")
+								+icon('photo').svg-4x(ng-class="{ transparent: vm.game.mediaFile.logo.uploading }")
+								p {{ vm.mediaFile.logo.uploadText }}
+							.span(ng-show="img.loading")
+								+icon('gear').svg-3x.svg-spin--slow
+								p Generating thumbnails...
+
+		.col-sm-6
+			h4.h--large.h--no-margin Logo
+			ul
+				li Use the PNG format
+				li Background should be transparent
+				li There should be enough contrast on white as well as on black background.

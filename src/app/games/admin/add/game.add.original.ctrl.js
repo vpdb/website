@@ -17,34 +17,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-function loadModule($transition$) {
-	const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
-	return require.ensure([], () => {
-		// load whole module
-		const module = require('./game.admin.module');
-		$ocLazyLoad.load(module.GAMES_ADMIN_MODULE);
-	}, 'games.admin');
+import GameAddCtrl from './game.add.ctrl';
+
+export default class GameAddOriginalCtrl extends GameAddCtrl {
+
+	/**
+	 * @param $scope
+	 * @param $window
+	 * @param $localStorage
+	 * @param $state
+	 * @param {App} App
+	 * @param {ApiHelper} ApiHelper
+	 * @param {AuthService} AuthService
+	 * @param {ModalService} ModalService
+	 * @param {TrackerService} TrackerService
+	 * @param GameResource
+	 * @param FileResource
+	 * @ngInject
+	 */
+	constructor($scope, $window, $localStorage, $state,
+				App, ApiHelper, AuthService, ModalService, TrackerService,
+				GameResource, FileResource) {
+
+		super($scope, $window, $localStorage, $state, App, ApiHelper, AuthService, ModalService, TrackerService, GameResource, FileResource);
+
+		App.setTitle('Add Original Game');
+	}
 }
-
-const GAME_ORIGINAL_ADD = {
-	name: 'addOriginalGame',
-	url: '/add-original-game',
-	component: 'gameAddOriginalComponent',
-	lazyLoad: loadModule
-};
-
-const GAME_ADMIN_ADD = {
-	name: 'addGame',
-	url: '/add-game',
-	component: 'gameAddAdminComponent',
-	lazyLoad: loadModule
-};
-
-const GAME_ADMIN_EDIT = {
-	name: 'editGame',
-	url: '/games/:id/edit',
-	component: 'gameEditAdminComponent',
-	lazyLoad: loadModule
-};
-
-export { GAME_ADMIN_ADD, GAME_ADMIN_EDIT, GAME_ORIGINAL_ADD };

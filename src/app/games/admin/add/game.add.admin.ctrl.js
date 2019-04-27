@@ -18,8 +18,9 @@
  */
 
 import { omit } from 'lodash';
+import GameAddCtrl from './game.add.ctrl';
 
-export default class GameAddAdminCtrl {
+export default class GameAddAdminCtrl extends GameAddCtrl {
 
 	/**
 	 * @param $scope
@@ -41,63 +42,16 @@ export default class GameAddAdminCtrl {
 				App, ApiHelper, AuthService, ModalService, TrackerService,
 				IpdbResource, GameResource, FileResource, GameRequestResource) {
 
-		App.theme('light');
+		super($scope, $window, $localStorage, $state, App, ApiHelper, AuthService, ModalService, TrackerService, GameResource, FileResource);
+
 		App.setTitle('Add Game');
-		App.setMenu('games');
-		TrackerService.trackPage();
 
-		this.$scope = $scope;
-		this.$state = $state;
-		this.$window = $window;
-		this.$localStorage = $localStorage;
-		this.App = App;
-		this.ApiHelper = ApiHelper;
-		this.AuthService = AuthService;
 		this.GameRequestResource = GameRequestResource;
-		this.FileResource = FileResource;
 		this.IpdbResource = IpdbResource;
-		this.ModalService = ModalService;
-		this.GameResource = GameResource;
-
-		this.maxAspectRatioDifference = 0.2;
-		this.dropText = {
-			backglass: 'Click or drag and drop backglass image here',
-			logo: 'Click or drag and drop logo here'
-		};
-		this.submitting = false;
-
-		this.resetMedia();
 
 		if (this.AuthService.hasPermission('game_requests/list')) {
 			this.gameRequests = GameRequestResource.query();
 		}
-	}
-
-	$onInit() {
-		if (this.$localStorage.newGame) {
-			this.game  = this.$localStorage.newGame;
-			this.AuthService.collectUrlProps(this.game, true);
-
-		} else {
-			this.resetGame();
-		}
-	}
-
-	reset() {
-		this.resetGame();
-		this.resetMedia();
-	}
-
-	resetMedia() {
-		this.mediaFile = {
-			backglass: {
-				uploadText: this.dropText.backglass
-			},
-			logo: {
-				uploadText: this.dropText.logo
-			}
-		};
-		delete this.backglass;
 	}
 
 	resetGame() {
@@ -233,44 +187,6 @@ export default class GameAddAdminCtrl {
 		}, this.ApiHelper.handleErrors(this, () => this.submitting = false));
 	}
 
-	onBackglassUpload(status) {
-		const bg = status.storage;
-		console.info('GameAddAdminCtrl: Backglass uploaded, collecting URL props.', status);
-		this.AuthService.collectUrlProps(bg, true);
-		this.game._backglass = bg.id;
-		this.game.mediaFile.backglass = bg;
-
-		const ar = Math.round(bg.metadata.size.width / bg.metadata.size.height * 1000) / 1000;
-		const arDiff = Math.abs(ar / 1.25 - 1);
-
-		this.backglass = {
-			dimensions: bg.metadata.size.width + '×' + bg.metadata.size.height,
-			test: ar === 1.25 ? 'optimal' : (arDiff < this.maxAspectRatioDifference ? 'warning' : 'error'),
-			ar,
-			arDiff: Math.round(arDiff * 100)
-		};
-	}
-
-	onLogoUpload(status) {
-		const logo = status.storage;
-		this.AuthService.collectUrlProps(logo, true);
-		this.game._logo = logo.id;
-		this.game.mediaFile.logo = logo;
-	}
-
-	/**
-	 * Callback when media gets deleted before it gets re-uploaded.
-	 * @param key
-	 */
-	onMediaClear(key) {
-		this.game.mediaFile[key] = {
-			url: false,
-			variations: {
-				'medium-2x': { url: false }
-			}
-		};
-		this.$scope.$emit('imageUnloaded');
-	}
 
 	searchOnIpdb() {
 		this.$window.open(document.getElementById('ipdbLink').getAttribute('href'), '_blank');
