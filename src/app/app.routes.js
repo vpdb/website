@@ -24,7 +24,7 @@ import Error404Tpl from './common/errors/error.404.pug';
 import ConfigService from './common/config/config.service';
 
 import { GAME_LIST, GAME_DETAILS } from './games/game.states';
-import { GAME_ADMIN_ADD, GAME_ADMIN_EDIT } from './games/admin/game.admin.states';
+import {GAME_ADMIN_ADD, GAME_ADMIN_EDIT, GAME_ORIGINAL_ADD} from './games/admin/game.admin.states';
 import { RELEASE_LIST, RELEASE_DETAILS } from './releases/release.states';
 import { VPT_PREVIEW } from './releases/details/vpt/vpt.states';
 import { RELEASE_ADD, RELEASE_VERSION_ADD, RELEASE_EDIT } from './releases/admin/release.admin.states';
@@ -50,6 +50,7 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	// games (lazy loaded)
 	$stateProvider.state(GAME_LIST);
 	$stateProvider.state(GAME_DETAILS);
+	$stateProvider.state(GAME_ORIGINAL_ADD);
 	$stateProvider.state(GAME_ADMIN_ADD);
 	$stateProvider.state(GAME_ADMIN_EDIT);
 

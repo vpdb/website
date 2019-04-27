@@ -17,34 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-function loadModule($transition$) {
-	const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
-	return require.ensure([], () => {
-		// load whole module
-		const module = require('./game.admin.module');
-		$ocLazyLoad.load(module.GAMES_ADMIN_MODULE);
-	}, 'games.admin');
+import GameAddOriginalCtrl from './game.add.original.ctrl';
+
+/**
+ * Adds an original game as an author
+ */
+export default class GameAddOriginalComponent {
+	/**
+	 * @ngInject
+	 */
+	constructor() {
+		this.templateUrl = require('./game.add.original.pug');
+		this.controller = GameAddOriginalCtrl;
+		this.controllerAs = 'vm';
+	}
 }
-
-const GAME_ORIGINAL_ADD = {
-	name: 'addOriginalGame',
-	url: '/add-original-game',
-	component: 'gameAddOriginalComponent',
-	lazyLoad: loadModule
-};
-
-const GAME_ADMIN_ADD = {
-	name: 'addGame',
-	url: '/add-game',
-	component: 'gameAddAdminComponent',
-	lazyLoad: loadModule
-};
-
-const GAME_ADMIN_EDIT = {
-	name: 'editGame',
-	url: '/games/:id/edit',
-	component: 'gameEditAdminComponent',
-	lazyLoad: loadModule
-};
-
-export { GAME_ADMIN_ADD, GAME_ADMIN_EDIT, GAME_ORIGINAL_ADD };
