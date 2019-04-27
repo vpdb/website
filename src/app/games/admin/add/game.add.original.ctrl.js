@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import GameAddCtrl from './game.add.ctrl';
+import GameAddCtrl from './game.add.base.ctrl';
 
 export default class GameAddOriginalCtrl extends GameAddCtrl {
 
@@ -42,5 +42,19 @@ export default class GameAddOriginalCtrl extends GameAddCtrl {
 		super($scope, $window, $localStorage, $state, App, ApiHelper, AuthService, ModalService, TrackerService, GameResource, FileResource);
 
 		App.setTitle('Add Original Game');
+	}
+
+	$onInit() {
+		if (this.$localStorage.newGame && this.$localStorage.newGame.origin === 'originalGame') {
+			this.game  = this.$localStorage.newGame;
+			this.AuthService.collectUrlProps(this.game, true);
+
+		} else {
+			this.resetGame('originalGame');
+		}
+	}
+
+	submit() {
+		this.postData(true);
 	}
 }

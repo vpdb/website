@@ -17,10 +17,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { omit } from 'lodash';
-import GameAddCtrl from './game.add.ctrl';
+import GameAddBaseCtrl from './game.add.base.ctrl';
 
-export default class GameAddAdminCtrl extends GameAddCtrl {
+export default class GameAddAdminCtrl extends GameAddBaseCtrl {
 
 	/**
 	 * @param $scope
@@ -54,39 +53,14 @@ export default class GameAddAdminCtrl extends GameAddCtrl {
 		}
 	}
 
-	resetGame() {
-		// delete media if already uploaded
-		if (this.game && !this.game.submitted) {
-			if (this.game.mediaFile.backglass.id) {
-				this.FileResource.delete({ id: this.game.mediaFile.backglass.id});
-			}
-			if (this.game.mediaFile.logo.id) {
-				this.FileResource.delete({ id: this.game.mediaFile.logo.id});
-			}
-		}
+	$onInit() {
+		if (this.$localStorage.newGame) {
+			this.game  = this.$localStorage.newGame;
+			this.AuthService.collectUrlProps(this.game, true);
 
-		this.game = this.$localStorage.newGame = {
-			origin: 'recreation',
-			ipdbUrl: '',
-			links: [{ label: '', url: '' }],
-			mediaFile: {
-				backglass: {
-					url: false,
-					variations: {
-						'medium-2x': { url: false }
-					}
-				},
-				logo: {
-					url: false
-				}
-			},
-			data: {
-				fetched: false,
-				year: true,
-				idValidated: false
-			},
-			_game_request: null
-		};
+		} else {
+			this.resetGame('recreation');
+		}
 	}
 
 	fetchIpdb(ipdbId, done) {
@@ -136,22 +110,6 @@ export default class GameAddAdminCtrl extends GameAddCtrl {
 		}
 	}
 
-	check() {
-		if (!this.game.id) {
-			this.game.data.idValid = false;
-			this.game.data.idValidated = true;
-			return;
-		}
-
-		this.GameResource.head({ id: this.game.id }, () => {
-			this.game.data.idValid = false;
-			this.game.data.idValidated = true;
-		}, () => {
-			this.game.data.idValid = true;
-			this.game.data.idValidated = true;
-		});
-	}
-
 	submit() {
 		// if not yet refreshed, do that first.
 		const ipdbId = this.readIpdbId();
@@ -161,32 +119,6 @@ export default class GameAddAdminCtrl extends GameAddCtrl {
 			this.postData();
 		}
 	}
-
-	postData() {
-		this.submitting = true;
-		this.game.game_type =
-			this.game.origin === 'originalGame' ? 'og' : (
-				this.game.game_type ? this.game.game_type.toLowerCase() : 'na'
-			);
-
-		this.GameResource.save(omit(this.game, ['data', 'mediaFile']), game => {
-			const id = this.game.id;
-			this.submitting = false;
-			this.game.submitted = true;
-			this.reset();
-			this.ModalService.info({
-				icon: 'check-circle',
-				title: 'Game Created!',
-				subtitle: game.title,
-				message: 'The game has been successfully created.'
-			});
-
-			// go to game page
-			this.$state.go('gameDetails', { id });
-
-		}, this.ApiHelper.handleErrors(this, () => this.submitting = false));
-	}
-
 
 	searchOnIpdb() {
 		this.$window.open(document.getElementById('ipdbLink').getAttribute('href'), '_blank');
