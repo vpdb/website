@@ -1,15 +1,18 @@
 
 // title
 //-----------------------------------------------------------------
-mixin title(title)
+mixin title(title, example, searchIpdb)
 	h1 #{title}
 	hr
 	.form-group(ng-class="{ error: vm.errors.title }")
-		input#title.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.game.title", on-enter="vm.searchOnIpdb()")
+		if searchIpdb
+			input#title.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.game.title", on-enter="vm.searchOnIpdb()")
+		else
+			input#title.form-control.input-lg(type="text", placeholder="Title", ng-model="vm.game.title")
 		.alert.alert-danger(ng-show="vm.errors.title")
 			+icon('warning').shift-up.space-right
 			| {{ vm.errors.title }}
-		span.help-block No year, manufacturer or anything else, just the title. Example: <i>The Addams Family</i>.
+		span.help-block No year, manufacturer or anything else, just the title. Example: <i>#{example}</i>.
 
 //- form for original games
 //-----------------------------------------------------------------
@@ -19,6 +22,7 @@ mixin originalGameInfo()
 
 	.form-horizontal(ng-show="vm.game.origin == 'originalGame'")
 
+		//--- game id
 		.form-group(ng-class="{ error: vm.errors.id }")
 			label.col-sm-3.control-label(for="gameId2") Game ID
 			.col-sm-6
@@ -39,6 +43,7 @@ mixin originalGameInfo()
 					+icon('warning').shift-up.space-right
 					| {{ vm.errors.id }}
 
+		//--- author / year
 		.form-group
 			label.col-sm-3.control-label(for='author', ng-class="{ error: vm.errors.manufacturer }") Author
 			.col-sm-6
@@ -60,11 +65,13 @@ mixin originalGameInfo()
 					+icon('warning').shift-up.space-right
 					| {{ vm.errors.year }}
 
+		//--- description
 		.form-group
 			label.col-sm-3.control-label Description
 			.col-sm-9
 				editor.tabset--light(ng-model="vm.game.description", placeholder="Description of the original table", markdown-text="Markdown enabled.")
 
+		//--- instructions
 		.form-group
 			label.col-sm-3.control-label Instructions
 			.col-sm-9

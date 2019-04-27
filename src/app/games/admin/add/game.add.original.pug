@@ -5,26 +5,30 @@ include ./game.add.mixins.pug
 	.col-sm-9.col--main
 		h1.h--primary add original game
 		hr
-		p Note that a game is completely decoupled from its releases. Data appearing in here is common to all releases
-			| that are linked to that game, but kept as a separate and independent data set.
 
 		form(role="form")
 
-			+title('1. Enter Title')
+			+title('1. Enter Title', "Champion's League", false)
 
-		.clearfix
-		h1 2. Game Info
-		hr
+			.clearfix
+			h1 2. Game Info
+			hr
 
-		+originalGameInfo()
-		.clearfix
+			+originalGameInfo()
+			.clearfix
 
-		+mediaUpload('3. Upload Media')
+			+mediaUpload('3. Upload Media')
 
-		hr
-		button#game-reset-btn.btn.btn-default.btn-lg(ng-click="vm.reset()") Reset
-		button#game-submit-btn.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="vm.submitting") Add New Game
-		.clearfix
+			hr
+			button#game-reset-btn.btn.btn-default.btn-lg(ng-click="vm.reset('originalGame')") Reset
+			button#game-submit-btn.btn.btn-primary.btn-lg.pull-right(ng-click="vm.submit()", ng-disabled="vm.submitting") Add Game and Continue
+			.clearfix
 
 		p
 			br
+
+	.col-sm-3.col--menu
+		h1 &nbsp;
+		p A game is completely decoupled from its releases. So the first thing to do is to add infos about the
+			| game itself.
+		p Look at it as if you were creating your own IPDB entry. The table files are added in the next step.

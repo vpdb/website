@@ -5,7 +5,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="65">
+          <list size="68">
             <item index="0" class="java.lang.String" itemvalue="format-day-header" />
             <item index="1" class="java.lang.String" itemvalue="is-open" />
             <item index="2" class="java.lang.String" itemvalue="close-text" />
@@ -71,6 +71,9 @@
             <item index="62" class="java.lang.String" itemvalue="ngf-select-disabled" />
             <item index="63" class="java.lang.String" itemvalue="ngf-drop-disabled" />
             <item index="64" class="java.lang.String" itemvalue="ng-attr-placeholder" />
+            <item index="65" class="java.lang.String" itemvalue="ng-change" />
+            <item index="66" class="java.lang.String" itemvalue="placeholder" />
+            <item index="67" class="java.lang.String" itemvalue="on-enter" />
           </list>
         </value>
       </option>
