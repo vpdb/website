@@ -64,6 +64,9 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-cloak, ng-init="navCollapsed = tru
 						li(ng-if="vm.AuthService.hasPermission('releases/add')")
 							a#upload-release-btn(ng-click="vm.uploadRelease(); navCollapsed = true")
 								span Recreation
+						li(ng-if="vm.AuthService.hasPermission('releases/add')")
+							a#upload-original-release-btn(ui-sref="addOriginalGame", ng-click="navCollapsed = true")
+								span Original Game
 						li(ng-if="vm.AuthService.hasPermission('backglasses/add')")
 							a#upload-backglass-btn(ng-click="vm.uploadBackglass(); navCollapsed = true")
 								span Direct B2S
