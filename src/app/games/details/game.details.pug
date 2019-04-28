@@ -33,8 +33,16 @@ include ../../template/_mixins
 			h1.title-sub.h--small {{ vm.game.manufacturer }} &middot; {{ vm.game.year }}
 		hr
 
+		div(ng-if="vm.game.game_type === 'og'")
+			.markdown(markdown="vm.game.description", ng-show="vm.game.description")
+
+			h3.h--smaller.h--primary(ng-show="vm.game.instructions") Instructions
+			div.markdown(markdown="vm.game.instructions", ng-show="vm.game.instructions")
+
+
 		include game.details-02-release.pug
-		include game.details-03-roms.pug
+		div(ng-if="vm.game.game_type !== 'og'")
+			include game.details-03-roms.pug
 		include game.details-04-backglasses.pug
 		include game.details-05-media.pug
 
