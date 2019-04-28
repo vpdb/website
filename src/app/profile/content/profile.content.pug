@@ -1,5 +1,6 @@
 include ../../template/_mixins
 
+
 div(ng-if="vm.games && vm.games.length > 0")
 	h1 Games
 	hr
@@ -17,20 +18,21 @@ div(ng-if="vm.games && vm.games.length > 0")
 				td {{ game.created_at | timeAgo }}
 				td {{ game.counter.releases }}
 
-div(ng-if="vm.releases && vm.releases.length > 0")
-	h1 Releases
-	hr
-	table.table.table-striped.table--selectable
-		thead
-			tr
-				th Name
-				th When
-				th Status
-		tbody
-			tr(ng-repeat="release in vm.releases", ng-click="vm.gotoRelease(release)")
-				td
-					span {{ release.game.title }} ({{ release.game.manufacturer }} {{ release.game.year }})
-					b &nbsp;· {{ release.name }}
-				td {{ release.released_at | timeAgo }}
-				td {{ vm.getModerationStatus(release.moderation) }}
+h1 Releases
+hr
+table.table.table-striped.table--selectable(ng-if="vm.releases && vm.releases.length > 0")
+	thead
+		tr
+			th Name
+			th When
+			th Status
+	tbody
+		tr(ng-repeat="release in vm.releases", ng-click="vm.gotoRelease(release)")
+			td
+				span {{ release.game.title }} ({{ release.game.manufacturer }} {{ release.game.year }})
+				b &nbsp;· {{ release.name }}
+			td {{ release.released_at | timeAgo }}
+			td {{ vm.getModerationStatus(release.moderation) }}
 
+div(ng-if="!vm.releases || vm.releases.length === 0")
+	p: i You haven't uploaded any releases yet.
