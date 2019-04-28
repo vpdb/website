@@ -10,6 +10,9 @@ include ../template/_mixins
 		p: a(ui-sref="profile.settings", ng-class="{ 'active': vm.$state.current.name == 'profile.settings' }")
 			+icon('settings').shift-up.space-right
 			| Settings
+		p: a(ui-sref="profile.content", ng-class="{ 'active': vm.$state.current.name == 'profile.content' }")
+			+icon('database').shift-up.space-right
+			| Content
 		p: a(ui-sref="profile.downloads", ng-class="{ 'active': vm.$state.current.name == 'profile.downloads' }")
 			+icon('download').shift-up.space-right
 			| Download Options

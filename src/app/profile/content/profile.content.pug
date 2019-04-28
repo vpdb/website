@@ -1,0 +1,19 @@
+include ../../template/_mixins
+
+div(ng-if="vm.games && vm.games.length > 0")
+	h1 Games
+	hr
+	table.table.table-striped.table--selectable
+		thead
+			tr
+				th Game
+				th When
+				th Releases
+		tbody
+			tr(ng-repeat="game in vm.games", ng-click="vm.gotoGame(game)")
+				td
+					b {{ game.title }}
+					span &nbsp;({{ game.manufacturer }} {{ game.year }})
+				td {{ game.created_at | timeAgo }}
+				td {{ game.counter.releases }}
+
