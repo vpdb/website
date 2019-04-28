@@ -20,16 +20,36 @@
 export default class ProfileContentCtrl {
 
 	/**
+	 * @param $state
 	 * @param {GameResource} GameResource
+	 * @param {ReleaseResource} ReleaseResource
 	 * @ngInject
 	 */
-	constructor($state, GameResource) {
+	constructor($state, GameResource, ReleaseResource) {
 		this.$state = $state;
-		this.games = GameResource.query({ show_mine_only: 1, sort: 'created_at' });
+		this.games = GameResource.query({ show_mine_only: 1, sort: 'created_at', per_page: 100 });
+		this.releases = ReleaseResource.query({ show_mine_only: 1, sort: 'released_at', per_page: 100, fields: 'moderation' });
 	}
 
 	gotoGame(game) {
 		this.$state.go('gameDetails', { id: game.id });
+	}
+
+	gotoRelease(release) {
+		this.$state.go('releaseDetails', { id: release.game.id, releaseId: release.id });
+	}
+
+	getModerationStatus(moderation) {
+		if (moderation.auto_approved) {
+			return 'auto-approved';
+		}
+		if (moderation.is_approved) {
+			return 'approved';
+		}
+		if (moderation.is_refused) {
+			return 'refused';
+		}
+		return 'pending';
 	}
 }
 
