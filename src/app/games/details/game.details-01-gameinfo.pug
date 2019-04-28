@@ -38,20 +38,20 @@ hr
 
 //-- IPDB INFO
 //---------------------------------------------------------------------
-label.label--block(ng-show="vm.game.game_type") {{ vm.game.game_type | gametype }}
+label.label--block(ng-show="vm.game.game_type", ng-class="{ 'padder-bottom': vm.game.game_type === 'og' }") {{ vm.game.game_type | gametype }}
 label.label--block(ng-show="vm.game.mpu") {{ vm.game.mpu.long }}
 label(ng-show="vm.game.produced_units") {{ vm.game.produced_units | number }} units produced
-hr(ng-show="vm.game.game_type || vm.game.units")
+hr(ng-show="vm.game.game_type !== 'og' || vm.game.units")
 
-label.label-name.label--block(ng-show="vm.game.designers") Game Design:
-label.label-value(ng-show="vm.game.designers") {{ vm.game.designers.join(', ') }}
-hr(ng-show="vm.game.designers")
+label.label-name.label--block(ng-show="vm.game.designers && vm.game.designers.length") Game Design:
+label.label-value(ng-show="vm.game.designers&& vm.game.designers.length") {{ vm.game.designers.join(', ') }}
+hr(ng-show="vm.game.designers && vm.game.designers.length")
 
-label.label-name.label--block(ng-show="vm.game.artists") Art Design:
-label.label-value(ng-show="vm.game.artists")  {{ vm.game.artists.join(', ') }}
-hr(ng-show="vm.game.artists")
+label.label-name.label--block(ng-show="vm.game.artists && vm.game.artists.length") Art Design:
+label.label-value(ng-show="vm.game.artists && vm.game.artists.length")  {{ vm.game.artists.join(', ') }}
+hr(ng-show="vm.game.artists && vm.game.artists.length")
 
-.row: .col-sm-offset-1.col-sm-10
+.row(ng-show="vm.game.game_type !== 'og'"): .col-sm-offset-1.col-sm-10
 	label.label-name(ng-show="vm.game.ipdb")
 		a.a--lighter(href="http://www.ipdb.org/machine.cgi?id={{ vm.game.ipdb.number  }}", target="_blank")
 			span.space-right
