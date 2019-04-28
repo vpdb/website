@@ -30,7 +30,14 @@ import { VPT_PREVIEW } from './releases/details/vpt/vpt.states';
 import { RELEASE_ADD, RELEASE_VERSION_ADD, RELEASE_EDIT } from './releases/admin/release.admin.states';
 import { BACKGLASS_ADD } from './backglasses/admin/backglass.admin.states';
 import { AUTH_CALLBACK, CONFIRM_TOKEN } from './common/common.states';
-import { PROFILE_DOWNLOADS, PROFILE_NOTIFICATIONS, PROFILE_ROOT, PROFILE_SETTINGS, PROFILE_STATS } from './profile/profile.states';
+import {
+	PROFILE_CONTENT,
+	PROFILE_DOWNLOADS,
+	PROFILE_NOTIFICATIONS,
+	PROFILE_ROOT,
+	PROFILE_SETTINGS,
+	PROFILE_STATS
+} from './profile/profile.states';
 import { ADMIN_BUILDS, ADMIN_USERS, ADMIN_UPLOADS, ADMIN_TOKENS } from './admin/admin.states';
 import { CONTENT_ABOUT, CONTENT_FAQ, CONTENT_LEGAL, CONTENT_PRIVACY, CONTENT_RULES } from './content/content.states';
 
@@ -74,6 +81,7 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	// profile (lazy loaded)
 	$stateProvider.state(PROFILE_ROOT);
 	$stateProvider.state(PROFILE_SETTINGS);
+	$stateProvider.state(PROFILE_CONTENT);
 	$stateProvider.state(PROFILE_DOWNLOADS);
 	$stateProvider.state(PROFILE_NOTIFICATIONS);
 	$stateProvider.state(PROFILE_STATS);

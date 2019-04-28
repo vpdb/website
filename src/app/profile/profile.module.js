@@ -22,6 +22,7 @@ import 'ngclipboard';
 
 import ProfileComponent from './profile.component';
 import ProfileSettingsComponent from './settings/profile.settings.component';
+import ProfileContentComponent from './content/profile.content.component';
 import ProfileDownloadsComponent from './downloads/profile.downloads.component';
 import ProfileNotificationsComponent from './notifications/profile.notifications.component';
 import ProfileStatsComponent from './stats/profile.stats.component';
@@ -31,6 +32,7 @@ const PROFILE_MODULE = angular
 	.module('vpdb.profile', [ uiTooltip, 'ngclipboard' ])
 	.component('profileComponent', new ProfileComponent())
 	.component('profileSettingsComponent', new ProfileSettingsComponent())
+	.component('profileContentComponent', new ProfileContentComponent())
 	.component('profileDownloadsComponent', new ProfileDownloadsComponent())
 	.component('profileNotificationsComponent', new ProfileNotificationsComponent())
 	.component('profileStatsComponent', new ProfileStatsComponent())

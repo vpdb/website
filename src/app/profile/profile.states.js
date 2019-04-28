@@ -38,6 +38,12 @@ const PROFILE_SETTINGS = {
 	component: 'profileSettingsComponent',
 	lazyLoad: loadModule
 };
+const PROFILE_CONTENT = {
+	name: 'profile.content',
+	url: '/content',
+	component: 'profileContentComponent',
+	lazyLoad: loadModule
+};
 const PROFILE_DOWNLOADS = {
 	name: 'profile.downloads',
 	url: '/downloads',
@@ -57,4 +63,4 @@ const PROFILE_STATS = {
 	lazyLoad: loadModule
 };
 
-export { PROFILE_ROOT, PROFILE_SETTINGS, PROFILE_DOWNLOADS, PROFILE_NOTIFICATIONS, PROFILE_STATS };
+export { PROFILE_ROOT, PROFILE_SETTINGS, PROFILE_CONTENT, PROFILE_DOWNLOADS, PROFILE_NOTIFICATIONS, PROFILE_STATS };
