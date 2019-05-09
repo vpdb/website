@@ -26,12 +26,13 @@ export default class ReleaseDownloadModalCtrl {
 	 * @param $uibModalInstance
 	 * @param {App} App
 	 * @param {DownloadService} DownloadService
+	 * @param {ReleaseService} ReleaseService
 	 * @param {Flavors} Flavors
 	 * @param RomResource
 	 * @param params
 	 * @ngInject
 	 */
-	constructor($scope, $uibModalInstance, App, DownloadService, Flavors, RomResource, params) {
+	constructor($scope, $uibModalInstance, App, DownloadService, ReleaseService, Flavors, RomResource, params) {
 
 		this.$uibModalInstance = $uibModalInstance;
 		this.App = App;
@@ -46,6 +47,7 @@ export default class ReleaseDownloadModalCtrl {
 
 		this.gameMedia = this.game.media;
 		this.roms = this.RomResource.query({ id: this.game.id });
+		this.tableFiles = ReleaseService.getTableFiles(this.release);
 
 		this.downloadFiles = {};
 		this.downloadRequest = {
@@ -76,15 +78,9 @@ export default class ReleaseDownloadModalCtrl {
 			this.includeGameMedia = true;
 		}
 
-		const tableFiles = this.latestVersion.files.filter(this.tableFile);
-		if (tableFiles.length === 1) {
-			this.toggleFile(tableFiles[0]);
+		if (this.tableFiles.length === 1) {
+			this.toggleFile(this.tableFiles[0]);
 		}
-	}
-
-	// todo refactor (make it more useful)
-	tableFile(file) {
-		return file.file.mime_type && /^application\/x-visual-pinball-table/i.test(file.file.mime_type);
 	}
 
 	download() {
