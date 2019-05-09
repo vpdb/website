@@ -26,6 +26,7 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 	 * @param {AuthService} AuthService
 	 * @param {UploadHelper} UploadHelper
 	 * @param {ModalService} ModalService
+	 * @param {ReleaseService} ReleaseService
 	 * @param ReleaseResource
 	 * @param ReleaseModerationResource
 	 * @param FileBlockmatchResource
@@ -33,7 +34,7 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 	 * @param params
 	 * @ngInject
 	 */
-	constructor($uibModalInstance, App, ApiHelper, AuthService, UploadHelper, ModalService,
+	constructor($uibModalInstance, App, ApiHelper, AuthService, UploadHelper, ModalService, ReleaseService,
 				ReleaseResource, ReleaseModerationResource, FileBlockmatchResource,
 				ReleaseModerationCommentResource, params) {
 
@@ -50,13 +51,12 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 			this.release = response.data;
 			this.comments = ReleaseModerationCommentResource.query({ releaseId: this.release.id });
 			this.release.moderation.history = (this.release.moderation.history || []).map(UploadHelper.mapHistory);
-			this.release.versions.forEach(version => {
-				version.files.forEach(file => {
-					file.blockmatches = FileBlockmatchResource.get({ id: file.file.id }, b => {
-						if (b.matches.length > 0) {
-							this.files.push(file);
-						}
-					});
+			const tableFiles = ReleaseService.getTableFiles(this.release);
+			tableFiles.forEach(file => {
+				file.blockmatches = FileBlockmatchResource.get({id: file.file.id}, b => {
+					if (b.matches.length > 0) {
+						this.files.push(file);
+					}
 				});
 			});
 		});

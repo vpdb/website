@@ -148,6 +148,7 @@ export default class ReleaseDetailsCtrl {
 			};
 			this.release = release;
 			this.App.setTitle(title);
+			this.tableFiles = this.ReleaseService.getTableFiles(release);
 
 			// moderation toggle
 			if (this.$location.search()['show-moderation']) {
@@ -197,14 +198,12 @@ export default class ReleaseDetailsCtrl {
 			this.ldRelease.brand = release.authors.map(a => a.user.name).join(', ');
 
 			let playfieldImage;
-			release.versions.forEach(version => {
-				version.files.forEach(file => {
-					// prefer landscape shot
-					if (!playfieldImage || (file.playfield_image.file_type === 'playfield-ws' && playfieldImage.file_type !== 'playfield-ws')) {
-						playfieldImage = file.playfield_image;
-					}
-				});
-			});
+			for (const file of this.tableFiles) {
+				// prefer landscape shot
+				if (!playfieldImage || (file.playfield_image.file_type === 'playfield-ws' && playfieldImage.file_type !== 'playfield-ws')) {
+					playfieldImage = file.playfield_image;
+				}
+			}
 			if (playfieldImage) {
 				this.ldRelease.image = playfieldImage.variations['medium'].url;
 				meta.thumbnail = playfieldImage.variations['medium'].url;
