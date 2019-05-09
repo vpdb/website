@@ -20,8 +20,8 @@
 import {
 	AmbientLight,
 	DirectionalLight,
-	GridHelper, LoadingManager,
-	PerspectiveCamera,
+	GridHelper, Group, LoadingManager,
+	PerspectiveCamera, PointLightHelper,
 	Raycaster,
 	RGBAFormat,
 	Scene,
@@ -44,6 +44,7 @@ export class VptPreviewScene {
 
 		this.initScene();
 		this.playfieldScale = 0.5;
+		this.addHelpers = false;
 
 		const sliderOptions = {
 			step: 0.0002,
@@ -232,6 +233,8 @@ export class VptPreviewScene {
 	}
 
 	_onLoaded(gltf) {
+
+		const helpers = new Group();
 		const playfield = gltf.scene.children.find(node => node.name === 'playfield');
 		const lights = playfield ? playfield.children.find(c => c.name === 'lights') : null;
 		for (const group of playfield.children) {
@@ -241,10 +244,15 @@ export class VptPreviewScene {
 
 		this.bulbLights = lights ? lights.children : [];
 		this.bulbLightIntensities = this.bulbLights.map(bl => bl.intensity);
+
+		// scale scene
 		gltf.scene.scale.set(this.playfieldScale, this.playfieldScale, this.playfieldScale);
 
 		// "fix" overlapping faces (https://stackoverflow.com/questions/11165345/three-js-webgl-transparent-planes-hiding-other-planes-behind-them/13741468#13741468)
 		gltf.scene.traverse(object => {
+			if (object.isPointLight) {
+				helpers.add(new PointLightHelper(object, 10));
+			}
 			if (!object.isMesh) {
 				return;
 			}
@@ -258,9 +266,17 @@ export class VptPreviewScene {
 		if (this.gltfScene) {
 			this.scene.remove(this.gltfScene);
 		}
+		if (this.gltfHelpers) {
+			this.scene.remove(this.gltfHelpers);
+		}
 
 		this.gltfScene = gltf.scene;
 		this.scene.add(gltf.scene);
+		if (this.addHelpers) {
+			this.gltfHelpers = helpers;
+			this.scene.add(helpers);
+		}
+
 		this.resizeDisplayGl();
 	}
 
