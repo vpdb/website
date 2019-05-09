@@ -245,7 +245,7 @@ export default class ReleaseAddVersionCtrl extends ReleaseBaseCtrl {
 	static getCompatiblePlayfieldImages(release, file) {
 		const images = [];
 		release.versions.forEach(version => {
-			version.files.forEach(f => {
+			version.files.filter(f => f.file.mime_type.startsWith('application/x-visual-pinball-table')).forEach(f => {
 				if ((f.flavor.orientation === 'any' || f.flavor.orientation === file.flavor.orientation) && (f.flavor.lighting === 'any' || f.flavor.lighting === file.flavor.lighting)) {
 					images.push({ version: version, image: f.playfield_image });
 				}

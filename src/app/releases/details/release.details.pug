@@ -36,8 +36,8 @@ include ../../template/_mixins
 			+icon('download-circle').space-right.hidden-sm.hidden-md
 			| Download
 
-		.text-center(ng-if="vm.release.versions[0].files[0].file.variations.gltf")
-			button.btn.btn-primary.padder-top.padder-bottom.text-center(ui-sref="vptPreview({gameId: vm.game.id, releaseId: vm.release.id, version: vm.release.versions[0].version, fileId: vm.release.versions[0].files[0].file.id})", style="width: 65%")
+		.text-center(ng-if="vm.tableFiles[0].file.variations.gltf")
+			button.btn.btn-primary.padder-top.padder-bottom.text-center(ui-sref="vptPreview({gameId: vm.game.id, releaseId: vm.release.id, version: vm.release.versions[0].version, fileId: vm.tableFiles[0].file.id})", style="width: 65%")
 				+icon('cube').space-right.hidden-sm.hidden-md
 				| 3D View
 

@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import { orderBy, flatten } from 'lodash';
+import { orderBy, flatten, isEmpty } from 'lodash';
 
 /**
  * The game's details view.
@@ -74,11 +74,19 @@ export default class ReleaseService {
 		}
 	}
 
+	getTableFiles(release) {
+		const files = [];
+		for (const version of release.versions) {
+			files.push(...version.files.filter(f => f.file.mime_type.startsWith('application/x-visual-pinball-table')));
+		}
+		return files;
+	}
+
 	flavorGrid(release) {
 
 		const flavors = orderBy(flatten(release.versions.map(v => v.files)), 'released_at', true);
 		const flavorGrid = {};
-		flavors.filter(file => !!file.flavor).forEach(file => {
+		flavors.filter(file => !isEmpty(file.flavor)).forEach(file => {
 			const compat = file.compatibility.map(fc => fc.id);
 			compat.sort();
 			let flavor = '';
