@@ -11,7 +11,7 @@ include ../../template/_mixins
 		//- FILES
 		h3.hr--margin-smaller Choose your Flavors:
 		.row
-			.col-sm-3(ng-repeat="file in vm.latestVersion.files | filter:tableFile")
+			.col-sm-3(ng-repeat="file in vm.tableFiles")
 				.flavor-item(ng-class="{ active: vm.downloadFiles[file.file.id] }", ng-click="vm.toggleFile(file)")
 					img.img.img-responsive.img--rounded-more(img-src="{{ file.playfield_image.variations['square-2x'].url }}")
 					.text-center.padder-top
