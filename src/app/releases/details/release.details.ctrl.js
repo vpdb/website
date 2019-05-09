@@ -228,7 +228,10 @@ export default class ReleaseDetailsCtrl {
 				this.showDownloadAfterFetch = false;
 			}
 
-		}).catch(() => this.release = null);
+		}).catch(err => {
+			console.error(err);
+			this.release = null;
+		});
 	}
 
 	openLightbox(index) {
