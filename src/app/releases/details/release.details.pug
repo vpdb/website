@@ -152,7 +152,7 @@ include ../../template/_mixins
 		.title.padder-top
 			h1#title.title-main.h--primary(property="v:itemreviewed")
 				a.a--primary(ui-sref="gameDetails({id: vm.game.id})") {{ vm.game.title }}
-				| &nbsp;&middot; {{ vm.release.name }} {{ vm.latestVersion.version }}
+				| &nbsp;&middot; {{ vm.release.name }} &middot; <small>v</small>{{ vm.latestVersion.version }}
 			h1.title-sub
 				.badge.badge--tag.badge--small.shift-down(ng-repeat="tag in vm.release.tags", uib-tooltip="{{ tag.description }}", tooltip-append-to-body="true") {{ tag.name }}
 		hr
