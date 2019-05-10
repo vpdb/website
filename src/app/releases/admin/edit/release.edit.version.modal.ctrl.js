@@ -58,7 +58,7 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 		/** The object posted to the server. **/
 		this.version = pick(version, [ 'released_at', 'changes' ]);
 
-		this.meta.files = version.files.map(file => {
+		this.meta.files = version.tableFiles.map(file => {
 			file._randomId = file.file.id;
 			file.file._randomId = file.file.id;
 			const playfieldImageKey = this.getMediaKey(file.file, 'playfield_image');
@@ -75,7 +75,7 @@ export default class ReleaseEditVersionModalCtrl extends ReleaseBaseCtrl {
 			return Object.assign(this.createMeta(file.file, { _compatibility: file.compatibility.map(c => c.id) }));
 		});
 
-		version.files.forEach(releaseFile => {
+		version.tableFiles.forEach(releaseFile => {
 			const mediaFile = this.meta.mediaFiles[this.getMediaKey(releaseFile.file, 'playfield_image')];
 			this.updateRotation(releaseFile, mediaFile);
 			releaseFile._compatibility = releaseFile.compatibility.map(c => c.id);

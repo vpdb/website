@@ -179,7 +179,7 @@ include ../../../template/_mixins
 				tr.center-vertically(ng-repeat="version in vm.release.versions", ng-click="vm.editVersion(version)")
 					td {{ version.version }}
 					td: .multiline-wrapper: img.img--rounded.img--ar-square.img--xs.pull-right.space-left(
-						ng-repeat="file in version.files | filter:tableFile",
+						ng-repeat="file in version.tableFiles",
 						ng-src="{{ file.playfield_image.variations['square'].url }}"
 						uib-tooltip="{{ vm.Flavors.orientation.values[file.flavor.orientation].other }} / {{ vm.Flavors.lighting.values[file.flavor.lighting].name }} / {{ vm.flattenBuilds(file.compatibility) }}"
 						tooltip-append-to-body="true"

@@ -33,13 +33,14 @@ export default class ReleaseEditCtrl {
 	 * @param {AuthService} AuthService
 	 * @param {Flavors} Flavors
 	 * @param {TrackerService} TrackerService
+	 * @param {ReleaseService} ReleaseService
 	 * @param GameResource
 	 * @param ReleaseResource
 	 * @param TagResource
 	 * @ngInject
 	 */
 	constructor($state, $stateParams, $uibModal,
-				App, ApiHelper, AuthService, Flavors, TrackerService,
+				App, ApiHelper, AuthService, Flavors, TrackerService, ReleaseService,
 				GameResource, ReleaseResource, TagResource) {
 
 		App.theme('light');
@@ -63,6 +64,9 @@ export default class ReleaseEditCtrl {
 		GameResource.get({ id: this.gameId }, response => this.game = response.data);
 		ReleaseResource.get({ release: this.releaseId }, response => {
 			this.release = response.data;
+			for (const version of this.release.versions) {
+				version.tableFiles = version.files.filter(f => ReleaseService.isTableFile(f));
+			}
 			// retrieve available tags, then reset.
 			this.tags = TagResource.query(() => this.reset());
 			if (AuthService.isAuthenticated) {

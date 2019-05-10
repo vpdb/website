@@ -25,12 +25,12 @@
 		"port": 443
 	},
 	"raygun": {
-		"enabled": true,
+		"enabled": false,
 		"apiKey": "Q9/FOsioZStDU+9puDyj3g==",
 		"enableCrashReporting": true
 	},
 	"rollbar": {
-		"enabled": true,
+		"enabled": false,
 		"accessToken": "6c5229f3541d4d9585657a13716ec98c",
 		"environment": "production"
 	},

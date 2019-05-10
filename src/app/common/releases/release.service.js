@@ -27,7 +27,7 @@ import { orderBy, flatten, isEmpty } from 'lodash';
 export default class ReleaseService {
 
 	/**
-	 * @param {$log}
+	 * @param $log
 	 * @param {AuthService} AuthService
 	 * @param {Flavors} Flavors
 	 * @param {ModalService} ModalService
@@ -77,9 +77,13 @@ export default class ReleaseService {
 	getTableFiles(release) {
 		const files = [];
 		for (const version of release.versions) {
-			files.push(...version.files.filter(f => f.file.mime_type.startsWith('application/x-visual-pinball-table')));
+			files.push(...version.files.filter(f => this.isTableFile(f)));
 		}
 		return files;
+	}
+
+	isTableFile(file) {
+		return file.file && file.file.mime_type && file.file.mime_type.startsWith('application/x-visual-pinball-table');
 	}
 
 	flavorGrid(release) {
