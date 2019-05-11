@@ -53,17 +53,20 @@ include ../../../template/_mixins
 		hr
 		include release.add-01-upload.files.pug
 
-		h1 2. Define your Flavors
-		hr
-		include release.add-03-flavors.pug
+		div(ng-show="vm.meta.mode == 'newVersion' || (vm.meta.files | fileext:['vpt','vpx']).length > 0")
+			h1 2. Define your Flavors
+			hr
+			include release.add-03-flavors.pug
 
-		h1 3. Set Compatibility
-		hr
-		include release.add-05-compat.pug
+		div(ng-show="vm.meta.mode == 'newVersion' || (vm.meta.files | fileext:['vpt','vpx']).length > 0")
+			h1 3. Set Compatibility
+			hr
+			include release.add-05-compat.pug
 
-		h1 4. Upload Media
-		hr
-		include release.add-07-upload.media.pug
+		div(ng-show="vm.meta.mode == 'newVersion' || (vm.meta.files | fileext:['vpt','vpx']).length > 0")
+			h1 4. Upload Media
+			hr
+			include release.add-07-upload.media.pug
 
 		//------------------------- FINISH LINE -------------------------------
 		//---------------------------------------------------------------------
