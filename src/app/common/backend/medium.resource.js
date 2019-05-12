@@ -17,14 +17,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-export class VpResource {
+export class MediumResource {
 	/**
 	 * @param $resource
 	 * @param {ConfigService} ConfigService
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/v1/vp/:fileId'), {}, {
+		return $resource(ConfigService.apiUri('/v1/media/:id'), {}, {
 		});
 	}
 }

@@ -41,4 +41,5 @@ include ../../template/_mixins
 
 	.modal-footer
 		button.btn.btn-hollow.pull-left(ng-click="$dismiss()") Close
+		button.btn.btn-hollow.btn-danger.pull-left(ng-if="vm.AuthService.hasPermission('media/delete')", ng-click="vm.delete(vm.medium)") Delete
 		button.btn.btn-primary(ng-click="vm.download(vm.medium.file)") Download

@@ -370,7 +370,8 @@ export default class GameDetailsCtrl {
 				params: () => {
 					return {
 						game: this.game,
-						medium: medium
+						medium: medium,
+						onDelete: () => this.game.media.splice(this.game.media.indexOf(medium), 1),
 					};
 				}
 			}

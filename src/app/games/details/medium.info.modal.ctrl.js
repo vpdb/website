@@ -17,23 +17,37 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
+
 export default class MediumInfoModalCtrl {
 
 	/**
+	 * @param $uibModalInstance
 	 * @param $timeout
 	 * @param {App} App
+	 * @param {ApiHelper} ApiHelper
+	 * @param {AuthService} AuthService
 	 * @param {DownloadService} DownloadService
+	 * @param {ModalService} ModalService
 	 * @param {Lightbox} Lightbox
+	 * @param MediumResource
 	 * @param params
 	 * @ngInject
 	 */
-	constructor($timeout, App, DownloadService, Lightbox, params) {
+	constructor($uibModalInstance, $timeout, App, ApiHelper, AuthService, DownloadService, ModalService, Lightbox, MediumResource, params) {
 
+		this.$uibModalInstance = $uibModalInstance;
+
+		this.AuthService = AuthService;
+		this.ApiHelper = ApiHelper;
 		this.DownloadService = DownloadService;
+		this.ModalService = ModalService;
 		this.Lightbox = Lightbox;
+		this.MediumResource = MediumResource;
 
 		this.medium = params.medium;
 		this.game = params.game;
+		this.onDelete = params.onDelete;
 
 		this.shot = {
 			thumbUrl: App.img(this.medium.file, 'medium-2x'),
@@ -46,4 +60,19 @@ export default class MediumInfoModalCtrl {
 			this.medium.file.counter.downloads++;
 		});
 	}
+
+	delete(medium) {
+		const what = medium.category.replace('_', ' ');
+		return this.ModalService.question({
+			title: 'Delete medium',
+			message: 'You\'re about to delete this ' + what + '.',
+			question: 'You sure about that?'
+		}).result.then(() => {
+			this.MediumResource.delete({ id: medium.id }, () => {
+				this.onDelete();
+				this.$uibModalInstance.dismiss();
+			}, this.ApiHelper.handleErrorsInDialog('Error deleting ' + what + '.'));
+		}).catch(angular.noop);
+	}
+
 }

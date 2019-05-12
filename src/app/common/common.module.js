@@ -40,13 +40,13 @@ import { BuildResource } from './backend/build.resource';
 import { RolesResource } from './backend/roles.resource';
 import { BackglassModerationResource, BackglassResource } from './backend/backglass.resource';
 import { AuthRedirectResource, AuthResource, ProfileResource, TokenResource } from './backend/auth.resource';
+import { MediumResource } from './backend/medium.resource';
 import { FileBlockmatchResource, FileResource } from './backend/file.resource';
 import { UserConfirmationResource, UserResource, UserStarResource } from './backend/user.resource';
 import { RomResource } from './backend/rom.resource';
 import { IpdbResource } from './backend/ipdb.resource';
 import { TagResource } from './backend/tag.resource';
 import { CommentResource } from './backend/comment.resource';
-import { VpResource } from './backend/vp.resource';
 import ApiHelper from './backend/apihelper.service';
 import AuthCallbackCtrl from './auth/auth.callback.ctrl';
 import AuthService from './auth/auth.service';
@@ -137,6 +137,7 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.service('GameResource', GameResource)
 	.service('GameStarResource', GameStarResource)
 	.service('IpdbResource', IpdbResource)
+	.service('MediumResource', MediumResource)
 	.service('NetworkService', NetworkService)
 	.service('PlanResource', PlanResource)
 	.service('ProfileResource', ProfileResource)
@@ -155,7 +156,6 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.service('UserResource', UserResource)
 	.service('UserConfirmationResource', UserConfirmationResource)
 	.service('UserStarResource', UserStarResource)
-	.service('VpResource', VpResource)
 	.factory('HttpAuthInterceptor', httpAuthInterceptor)
 	.factory('HttpGlobalInterceptor', httpGlobalInterceptor)
 	.factory('$exceptionHandler', exceptionHandler)
