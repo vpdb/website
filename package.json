@@ -34,6 +34,7 @@
 		"test:compile": "tsc",
 		"test:protractor:local": "cross-env CONFIG=test protractor test/config/protractor.local.js",
 		"test:protractor:browserstack": "cross-env CONFIG=browserstack protractor test/config/protractor.browserstack.js",
+		"lh": "lighthousebot",
 		"postinstall": "npm run selenium:init"
 	},
 	"author": "freezy <freezy@vpdb.io>",
@@ -94,6 +95,7 @@
 		"jasmine-console-reporter": "3.1.0",
 		"less": "3.9.0",
 		"less-loader": "4.1.0",
+		"lighthousebot": "git+https://github.com/GoogleChromeLabs/lighthousebot.git",
 		"lodash-webpack-plugin": "0.11.5",
 		"ng-annotate-loader": "0.6.1",
 		"ng-annotate-patched": "git://github.com/nevcos/ng-annotate-patched.git#es6-class-support",
