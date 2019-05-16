@@ -1,0 +1,55 @@
+{
+	"name": "firebase",
+	"authHeader": "Authorization",
+	"apiUri": {
+		"protocol": "https",
+		"hostname": "api.vpdb.io",
+		"port": 443,
+		"pathname": ""
+	},
+	"storageUri": {
+		"protocol": "https",
+		"hostname": "storage.vpdb.io",
+		"port": 443,
+		"pathname": ""
+	},
+	"previewUri": {
+		"protocol": "https",
+		"hostname": "preview.vpdb.io",
+		"port": 443,
+		"pathname": ""
+	},
+	"webUri": {
+		"protocol": "https",
+		"hostname": "vpdb-lighthouse.firebaseapp.com",
+		"port": 443
+	},
+	"raygun": {
+		"enabled": false,
+		"apiKey": "Q9/FOsioZStDU+9puDyj3g==",
+		"enableCrashReporting": true
+	},
+	"rollbar": {
+		"enabled": false,
+		"accessToken": "6c5229f3541d4d9585657a13716ec98c",
+		"environment": "production"
+	},
+	"ga": {
+		"enabled": false,
+		"id": "UA-85212794-1"
+	},
+	"rum": {
+		"uptimia": null
+	},
+	"authProviders": {
+		"local": true,
+		"google": false,
+		"github": false,
+		"ips": []
+	},
+	"documentRevisions": {
+		"rules": 2,
+		"privacy": 1,
+		"legal": 1
+	}
+}
