@@ -30,7 +30,7 @@ include ../../template/_mixins
 			| {{ vm.topMessage }}
 
 		//- LOGIN
-		div(ng-hide="vm.registering")
+		div(ng-show="vm.mode === 'login'")
 			h3.h--shift-up(ng-hide="vm.LoginService.loginParams.localOnly") Or, with your account:
 			h3.h--shift-up(ng-show="vm.LoginService.loginParams.localOnly") Login with your account:
 			form.form-horizontal(role='form')
@@ -42,9 +42,10 @@ include ../../template/_mixins
 					label.col-sm-4.control-label Password
 					.col-sm-6
 						input#login-password.form-control(ng-model="vm.userPass.password", type="password", ng-keyup="$event.keyCode === 13 && vm.login()", autocomplete="current-password")
+						i.a.pull-right(ng-click="vm.swap('reset')") Forgot password?
 
 		//- REGISTER
-		div(ng-show="vm.registering")
+		div(ng-show="vm.mode === 'register'")
 			h3.h--shift-up(ng-hide="vm.LoginService.loginParams.localOnly") Or, register with your Email:
 			h3.h--shift-up(ng-show="vm.LoginService.loginParams.localOnly") Register with your Email:
 			form.form-horizontal(role="form")
@@ -60,6 +61,17 @@ include ../../template/_mixins
 					label.col-sm-4.control-label Password
 					.col-sm-6
 						input#register-password.form-control(ng-model="vm.userPass.password", type="password", autocomplete="new-password")
+
+		//- RESET
+		div(ng-show="vm.mode === 'reset'")
+			h3.h--shift-up(ng-hide="vm.LoginService.loginParams.localOnly") Oh. So you forgot your password.
+			h3.h--shift-up(ng-show="vm.LoginService.loginParams.localOnly") Duh. So you forgot your password.
+			p.padder-top.padder-bottom.text-center Let's fix that. Enter your email address and we'll send you a link where you can create a new one.
+			form.form-horizontal(role="form")
+				.form-group(ng-class="{ error: vm.errors.email }")
+					label.col-sm-4.control-label Email
+					.col-sm-6
+						input#reset-email.form-control(ng-model="vm.email", ng-required, autocomplete="email")
 
 		//- ERRORS
 		div.alert.alert-danger(ng-show="vm.errors.email")
@@ -82,17 +94,18 @@ include ../../template/_mixins
 
 	.modal-footer
 
-		.form-group(ng-hide="vm.registering")
+		.form-group(ng-show="vm.mode === 'login'")
 			.col-sm-4
 				input#rememberMe.checkbox--check(ng-model="vm.$localStorage.rememberMe", type="checkbox")
 				label.checkbox--standalone.nested(for="rememberMe")
 			label.col-sm-8.control-value(for="rememberMe") Remember Me
 
 			.clearfix
-		hr.hr--light.padder-top-4x(ng-hide="vm.registering")
+		hr.hr--light.padder-top-4x(ng-show="vm.mode === 'login'")
 		.clearfix
 
-		h3#login-toggle.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-click="vm.swap()") {{ vm.registering ? "Login" : "Register" }}
+		h3#login-toggle.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-hide="vm.mode === 'reset'", ng-click="vm.swap()") {{ vm.mode === 'login' ? 'Register' : 'Login' }}
 		button#dismiss-button.btn.btn-default(ng-click="$close()") Cancel
-		button#login-submit.btn.btn--secondary(ng-hide="vm.registering", ng-click="vm.login()") Login
-		button#register-submit.btn.btn--secondary(ng-show="vm.registering", ng-click="vm.register()") Register
+		button#login-submit.btn.btn--secondary(ng-show="vm.mode === 'login'", ng-click="vm.login()") Login
+		button#register-submit.btn.btn--secondary(ng-show="vm.mode === 'register'", ng-click="vm.register()") Register
+		button#reset-submit.btn.btn--secondary(ng-show="vm.mode === 'reset'", ng-click="vm.reset()") Reset

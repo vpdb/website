@@ -63,10 +63,11 @@ export class ProfileResource {
 	 * @ngInject
 	 */
 	constructor($resource, ConfigService) {
-		return $resource(ConfigService.apiUri('/v1/user/:action/:id'), {}, {
+		return $resource(ConfigService.apiUri('/v1/profile/:action/:id'), {}, {
 			patch: { method: 'PATCH' },
 			confirm: { method: 'GET', params: { action: 'confirm' }},
-			logs: { method: 'GET', params: { action: 'logs' }, isArray: true }
+			logs: { method: 'GET', params: { action: 'logs' }, isArray: true },
+			requestResetPassword: { method: 'POST', params: { action: 'request-password-reset' }},
 		});
 	}
 }
