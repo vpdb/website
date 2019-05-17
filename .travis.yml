@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "10"
+install:
+  - npm install
+before_script:
+  - npm install -g firebase-tools
+script:
+  - npm run build:firebase
+after_success:
+  - firebase deploy --token $FIREBASE_TOKEN --non-interactive
+  - npm run lh -- --perf=85 --pwa=100 --seo=100 --a11y=100 --bp=100 https://vpdb-lighthouse.firebaseapp.com
