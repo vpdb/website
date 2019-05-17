@@ -94,7 +94,7 @@
 		"jasmine": "3.4.0",
 		"jasmine-console-reporter": "3.1.0",
 		"less": "3.9.0",
-		"less-loader": "4.1.0",
+		"less-loader": "5.0.0",
 		"lighthousebot": "git+https://github.com/GoogleChromeLabs/lighthousebot.git",
 		"lodash-webpack-plugin": "0.11.5",
 		"ng-annotate-loader": "0.6.1",
