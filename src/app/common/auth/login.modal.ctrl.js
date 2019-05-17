@@ -37,12 +37,13 @@ export default class LoginModalCtrl {
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
 	 * @param AuthResource
+	 * @param ProfileResource
 	 * @param UserResource
 	 * @param {{ postLogin:{action:string, params:any}, headMessage:string, topMessage:string, message:string }} opts
 	 * @ngInject
 	 */
 	constructor($window, $uibModalInstance, $localStorage, Config, ConfigService, LoginService,
-				App, ApiHelper, AuthService, AuthResource, UserResource, opts) {
+				App, ApiHelper, AuthService, AuthResource, ProfileResource, UserResource, opts) {
 
 		opts = opts || {};
 		$localStorage.rememberMe = isUndefined($localStorage.rememberMe) ? true : $localStorage.rememberMe;
@@ -53,6 +54,7 @@ export default class LoginModalCtrl {
 		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
 		this.AuthResource = AuthResource;
+		this.ProfileResource = ProfileResource;
 		this.UserResource = UserResource;
 		this.$window = $window;
 		this.$uibModalInstance = $uibModalInstance;
@@ -62,7 +64,7 @@ export default class LoginModalCtrl {
 
 		/** @type {{ username:string, password:string}} */
 		this.userPass = {};
-		this.registering = false;
+		this.mode = 'login';
 		this.email = '';
 		this.message = opts.message || null;
 		this.error = null;
@@ -121,7 +123,23 @@ export default class LoginModalCtrl {
 			this.email = '';
 			this.message = 'Registration successful.';
 			this.message2 = 'You will get an email shortly.<br>Once you have confirmed it, you\'re good to go!';
-			this.registering = !this.registering;
+			this.mode = 'login';
+		}, this.ApiHelper.handleErrors(this));
+	}
+
+	/**
+	 * Requests a password reset.
+	 */
+	reset() {
+		this.ProfileResource.requestResetPassword({ email: this.email }, result => {
+			console.log(result);
+			this.errors = {};
+			this.error = null;
+			this.userPass = {};
+			this.email = '';
+			this.message = 'Alright!';
+			this.message2 = result.message;
+			this.mode = 'login';
 		}, this.ApiHelper.handleErrors(this));
 	}
 
@@ -133,10 +151,10 @@ export default class LoginModalCtrl {
 	}
 
 	/**
-	 * Toggles between register and login view.
+	 * Toggles between reset, register and login view.
 	 */
-	swap() {
-		this.registering = !this.registering;
+	swap(mode) {
+		this.mode = mode ? mode : this.mode === 'login' ? 'register' : 'login';
 		this.message = null;
 		this.message2 = null;
 		this.errors = {};
