@@ -17,19 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-import HomeTpl from './home/home.pug';
 import Error401Tpl from './common/errors/error.401.pug';
 import Error403Tpl from './common/errors/error.403.pug';
 import Error404Tpl from './common/errors/error.404.pug';
 import ConfigService from './common/config/config.service';
 
-import { GAME_LIST, GAME_DETAILS } from './games/game.states';
+import {GAME_DETAILS, GAME_LIST} from './games/game.states';
 import {GAME_ADMIN_ADD, GAME_ADMIN_EDIT, GAME_ORIGINAL_ADD} from './games/admin/game.admin.states';
-import { RELEASE_LIST, RELEASE_DETAILS } from './releases/release.states';
-import { VPT_PREVIEW } from './releases/details/vpt/vpt.states';
-import { RELEASE_ADD, RELEASE_VERSION_ADD, RELEASE_EDIT } from './releases/admin/release.admin.states';
-import { BACKGLASS_ADD } from './backglasses/admin/backglass.admin.states';
-import { AUTH_CALLBACK, CONFIRM_TOKEN, HOME, RESET_PASSWORD } from './common/common.states';
+import {RELEASE_DETAILS, RELEASE_LIST} from './releases/release.states';
+import {VPT_PREVIEW} from './releases/details/vpt/vpt.states';
+import {RELEASE_ADD, RELEASE_EDIT, RELEASE_VERSION_ADD} from './releases/admin/release.admin.states';
+import {BACKGLASS_ADD} from './backglasses/admin/backglass.admin.states';
+import {AUTH_CALLBACK, CONFIRM_TOKEN, HOME, RESET_PASSWORD} from './common/common.states';
 import {
 	PROFILE_CONTENT,
 	PROFILE_DOWNLOADS,
@@ -38,8 +37,8 @@ import {
 	PROFILE_SETTINGS,
 	PROFILE_STATS
 } from './profile/profile.states';
-import { ADMIN_BUILDS, ADMIN_USERS, ADMIN_UPLOADS, ADMIN_TOKENS } from './admin/admin.states';
-import { CONTENT_ABOUT, CONTENT_FAQ, CONTENT_LEGAL, CONTENT_PRIVACY, CONTENT_RULES } from './content/content.states';
+import {ADMIN_BUILDS, ADMIN_TOKENS, ADMIN_UPLOADS, ADMIN_USERS} from './admin/admin.states';
+import {CONTENT_ABOUT, CONTENT_FAQ, CONTENT_LEGAL, CONTENT_PRIVACY, CONTENT_RULES} from './content/content.states';
 
 /**
  * @param $urlRouterProvider
