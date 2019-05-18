@@ -68,6 +68,7 @@ export class ProfileResource {
 			confirm: { method: 'GET', params: { action: 'confirm' }},
 			logs: { method: 'GET', params: { action: 'logs' }, isArray: true },
 			requestResetPassword: { method: 'POST', params: { action: 'request-password-reset' }},
+			resetPassword: { method: 'POST', params: { action: 'password-reset' }},
 		});
 	}
 }

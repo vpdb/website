@@ -33,6 +33,7 @@ export default class LoginModalCtrl {
 	 * @param {Config} Config
 	 * @param {ConfigService} ConfigService
 	 * @param {LoginService} LoginService
+	 * @param {ModalService} ModalService
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
@@ -42,7 +43,7 @@ export default class LoginModalCtrl {
 	 * @param {{ postLogin:{action:string, params:any}, headMessage:string, topMessage:string, message:string }} opts
 	 * @ngInject
 	 */
-	constructor($window, $uibModalInstance, $localStorage, Config, ConfigService, LoginService,
+	constructor($window, $uibModalInstance, $localStorage, Config, ConfigService, LoginService, ModalService,
 				App, ApiHelper, AuthService, AuthResource, ProfileResource, UserResource, opts) {
 
 		opts = opts || {};
@@ -51,6 +52,7 @@ export default class LoginModalCtrl {
 		this.Config = Config;
 		this.ConfigService = ConfigService;
 		this.LoginService = LoginService;
+		this.ModalService = ModalService;
 		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
 		this.AuthResource = AuthResource;
@@ -138,6 +140,12 @@ export default class LoginModalCtrl {
 			this.email = '';
 			this.message = result.message;
 			this.mode = 'login';
+			this.$uibModalInstance.dismiss();
+			this.ModalService.info({
+				title: 'Password Reset',
+				subtitle: 'Success!',
+				message: result.message
+			});
 		}, this.ApiHelper.handleErrors(this, { hideGlobalValidationError: true }));
 	}
 

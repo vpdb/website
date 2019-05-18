@@ -19,16 +19,43 @@
 
 import AuthCallbackTpl from './auth/auth.callback.pug';
 import EmailConfirmationTpl from './auth/email.confirmation.pug';
+import ResetPasswordModalTpl from './auth/reset.password.modal.pug';
+import HomeTpl from '../home/home.pug';
+
+const HOME = {
+	name: 'home',
+	url: '/',
+	templateUrl: HomeTpl,
+	controller: 'HomeCtrl',
+	controllerAs: 'vm',
+};
 
 const AUTH_CALLBACK = {
 	name: 'authCallback',
 	url: '/auth/:strategy/callback',
-	templateUrl: AuthCallbackTpl
+	templateUrl: AuthCallbackTpl,
 };
+
 const CONFIRM_TOKEN = {
 	name: 'confirmToken',
 	url: '/confirm/:token',
-	templateUrl: EmailConfirmationTpl
+	templateUrl: EmailConfirmationTpl,
 };
 
-export { AUTH_CALLBACK, CONFIRM_TOKEN };
+const RESET_PASSWORD = {
+	name: 'resetPassword',
+	url: '/reset-password/:token',
+	templateUrl: HomeTpl,
+	controller: 'HomeCtrl',
+	controllerAs: 'vm',
+	params: {
+		modal: {
+			templateUrl: ResetPasswordModalTpl,
+			controller: 'ResetPasswordModalCtrl',
+			controllerAs: 'vm',
+			windowClass: 'theme-light',
+		}
+	}
+};
+
+export { HOME, AUTH_CALLBACK, CONFIRM_TOKEN, RESET_PASSWORD };

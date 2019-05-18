@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import angular from 'angular';
 import { isEqual } from 'lodash';
 
 /**
@@ -38,7 +39,8 @@ export default class HomeCtrl {
 	 * @param {TrackerService} TrackerService
 	 * @ngInject
 	 */
-	constructor($scope, App, AuthService, ApiHelper, LoginService, ReleaseService, GameResource, ReleaseResource, TrackerService) {
+	constructor($scope, $stateParams, $uibModal, ModalService, App, AuthService, ApiHelper, LoginService, ReleaseService, GameResource, ReleaseResource, TrackerService) {
+		console.log($stateParams);
 
 		App.theme('dark');
 		App.setTitle('VPDB - The Virtual Pinball Database');
@@ -48,6 +50,10 @@ export default class HomeCtrl {
 			keywords: 'virtual pinball, database, pinball, vpinball, visual pinball, directb2s, backglass, beautiful, fast, open source'
 		});
 		TrackerService.trackPage();
+
+		if ($stateParams.modal) {
+			$uibModal.open($stateParams.modal).result.catch(angular.noop);
+		}
 
 		// services
 		this.App = App;
