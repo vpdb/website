@@ -117,4 +117,28 @@ export default class UploadsReleaseModerateAdminModalCtrl {
 
 		}, this.ApiHelper.handleErrors(this));
 	}
+
+	delete() {
+		this.submitting = true;
+		this.ReleaseModerationResource.save({ releaseId: this.release.id }, { action: 'delete' }, () => {
+			this.submitting = false;
+			this.message = '';
+			this.$uibModalInstance.close();
+			this.App.showNotification('Release "' + this.release.name + '" successfully deleted.');
+			this.refresh();
+
+		}, this.ApiHelper.handleErrors(this));
+	}
+
+	undelete() {
+		this.submitting = true;
+		this.ReleaseModerationResource.save({ releaseId: this.release.id }, { action: 'undelete' }, () => {
+			this.submitting = false;
+			this.message = '';
+			this.$uibModalInstance.close();
+			this.App.showNotification('Release "' + this.release.name + '" restored.');
+			this.refresh();
+
+		}, this.ApiHelper.handleErrors(this));
+	}
 }

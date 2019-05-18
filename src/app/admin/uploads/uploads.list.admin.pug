@@ -25,6 +25,9 @@ include ../../template/_mixins
 					li: .radio--lg: label
 						input(type="radio", ng-model="filters.status", value="all", ng-change="vm.refresh()")
 						span All
+					li: .radio--lg: label
+						input(type="radio", ng-model="filters.status", value="deleted", ng-change="vm.refresh()")
+						span Deleted
 
 	.col-sm-9.col--main
 

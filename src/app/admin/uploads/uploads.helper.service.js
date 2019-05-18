@@ -55,6 +55,14 @@ export default class UploadHelper {
 				h.status = 'Set to Pending';
 				h.icon = 'thumbs-up-down';
 				break;
+			case 'deleted':
+				h.status = 'Deleted';
+				h.icon = 'trash';
+				break;
+			case 'undeleted':
+				h.status = 'Undeleted';
+				h.icon = 'trash';
+				break;
 		}
 		return h;
 	}

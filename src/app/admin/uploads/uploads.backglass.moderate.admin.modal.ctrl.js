@@ -75,4 +75,20 @@ export default class UploadsBackglassModerateAdminModalCtrl {
 			this.refresh();
 		}, this.ApiHelper.handleErrors(this));
 	}
+
+	delete() {
+		this.BackglassModerationResource.save({ id: this.backglass.id }, { action: 'delete' }, () => {
+			this.$uibModalInstance.close();
+			this.App.showNotification('Backglass successfully deleted.');
+			this.refresh();
+		}, this.ApiHelper.handleErrors(this));
+	}
+
+	undelete() {
+		this.BackglassModerationResource.save({ id: this.backglass.id }, { action: 'undelete' }, () => {
+			this.$uibModalInstance.close();
+			this.App.showNotification('Backglass successfully undeleted.');
+			this.refresh();
+		}, this.ApiHelper.handleErrors(this));
+	}
 }
