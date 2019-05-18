@@ -238,7 +238,9 @@ export default class ApiHelper {
 	 * variable is just set to the received error.
 	 *
 	 * @param {object} scope Controller instance to which the error values are applied to.
-	 * @param {{ fieldPrefix?:string }} [opt] config Options
+	 * @param {object} [opt] config options
+	 * @param {string} [opt.fieldPrefix]
+	 * @param {boolean} [opt.hideGlobalValidationError]
 	 * @param {function(scope:object, response:object)} [postFct] Executed if provided with given scope as argument, after the errors object has been set
 	 * @param {function(scope:object, response:object)} [preFct] Executed if provided with given scope as argument, before the errors object has been set.
 	 * @return {function(response:object)}
@@ -267,6 +269,7 @@ export default class ApiHelper {
 				this.logError('Session timed out', response);
 				return;
 			}
+
 			this.logError('Request error', response);
 			if (scope.submitting) {
 				scope.submitting = false;
@@ -287,8 +290,14 @@ export default class ApiHelper {
 			if (response.data.error) {
 				scope.error = response.data.error;
 			}
+			if (response.status === 429 && response.data.wait) {
+				scope.error = 'Whoa, easy tiger. Try again in ' + response.data.wait + ' seconds.';
+			}
 			if (postFct) {
 				postFct(scope, response);
+			}
+			if (response.status === 422 && opt.hideGlobalValidationError) {
+				delete scope.error;
 			}
 		};
 	}

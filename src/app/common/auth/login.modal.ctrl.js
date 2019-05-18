@@ -132,15 +132,13 @@ export default class LoginModalCtrl {
 	 */
 	reset() {
 		this.ProfileResource.requestResetPassword({ email: this.email }, result => {
-			console.log(result);
 			this.errors = {};
 			this.error = null;
 			this.userPass = {};
 			this.email = '';
-			this.message = 'Alright!';
-			this.message2 = result.message;
+			this.message = result.message;
 			this.mode = 'login';
-		}, this.ApiHelper.handleErrors(this));
+		}, this.ApiHelper.handleErrors(this, { hideGlobalValidationError: true }));
 	}
 
 	setRedirect() {
