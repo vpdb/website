@@ -29,7 +29,7 @@ import { RELEASE_LIST, RELEASE_DETAILS } from './releases/release.states';
 import { VPT_PREVIEW } from './releases/details/vpt/vpt.states';
 import { RELEASE_ADD, RELEASE_VERSION_ADD, RELEASE_EDIT } from './releases/admin/release.admin.states';
 import { BACKGLASS_ADD } from './backglasses/admin/backglass.admin.states';
-import { AUTH_CALLBACK, CONFIRM_TOKEN } from './common/common.states';
+import { AUTH_CALLBACK, CONFIRM_TOKEN, HOME, RESET_PASSWORD } from './common/common.states';
 import {
 	PROFILE_CONTENT,
 	PROFILE_DOWNLOADS,
@@ -52,7 +52,7 @@ import { CONTENT_ABOUT, CONTENT_FAQ, CONTENT_LEGAL, CONTENT_PRIVACY, CONTENT_RUL
 export default function routes($urlRouterProvider, $locationProvider, $stateProvider, $sceDelegateProvider, Config) {
 
 	// home
-	$stateProvider.state('home',              { url: '/', templateUrl: HomeTpl, controller: 'HomeCtrl', controllerAs: 'vm' });
+	$stateProvider.state(HOME);
 
 	// games (lazy loaded)
 	$stateProvider.state(GAME_LIST);
@@ -77,6 +77,7 @@ export default function routes($urlRouterProvider, $locationProvider, $stateProv
 	// auth
 	$stateProvider.state(AUTH_CALLBACK);
 	$stateProvider.state(CONFIRM_TOKEN);
+	$stateProvider.state(RESET_PASSWORD);
 
 	// profile (lazy loaded)
 	$stateProvider.state(PROFILE_ROOT);

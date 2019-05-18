@@ -70,6 +70,7 @@ import ModalMarkdownFiddle from './modal/modal.markdown.fiddle';
 import ModalFlashService from './modal/modal.flash.service';
 import NetworkService from './backend/network.service';
 import ReleaseService from './releases/release.service';
+import ResetPasswordModalCtrl from './auth/reset.password.modal.ctrl';
 import TrackerService from './util/tracker.service';
 import UserInfoModalCtrl from './user/user.info.modal.ctrl';
 import UserMergeModalCtrl from './user/user.merge.modal.ctrl';
@@ -119,6 +120,7 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.controller('AuthCallbackCtrl', AuthCallbackCtrl)
 	.controller('LoginModalCtrl', LoginModalCtrl)
 	.controller('EmailConfirmationCtrl', EmailConfirmationCtrl)
+	.controller('ResetPasswordModalCtrl', ResetPasswordModalCtrl)
 
 	// backend
 	.service('ApiHelper', ApiHelper)
