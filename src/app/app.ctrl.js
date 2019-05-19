@@ -19,6 +19,7 @@
 
 import GameSelectModalTpl from './common/games/game.select.modal.pug';
 import angular from 'angular';
+import apm from './common/apm';
 
 /**
  * The application controller manages parts of the page that is common to
@@ -38,11 +39,12 @@ export default class AppCtrl {
 	 * @param {Window} $window
 	 * @param {App} App
 	 * @param {AuthService} AuthService
+	 * @param {ApmService} ApmService
 	 * @param {Config} Config
 	 * @param {BuildConfig} BuildConfig
 	 * @ngInject
 	 */
-	constructor($rootScope, $state, $localStorage, $uibModal, $log, $window, $transitions, App, AuthService, Config, BuildConfig) {
+	constructor($rootScope, $state, $localStorage, $uibModal, $log, $window, $transitions, App, AuthService, ApmService, Config, BuildConfig) {
 		this.waitCoolDown = 500;
 
 		this.$rootScope = $rootScope;
@@ -63,7 +65,10 @@ export default class AppCtrl {
 		this.showLegalUpdated = currentDocumentRevisions.legal < Config.documentRevisions.legal;
 		$localStorage.documentRevisions = Config.documentRevisions;
 
-		// wait for page load to finish
+		// setup apm
+		ApmService.init();
+
+		// setup service worker installation
 		this.$rootScope.$on('loading:start', () => {
 			if (this.waitTimeout) {
 				clearTimeout(this.waitTimeout);

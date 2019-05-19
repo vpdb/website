@@ -42,6 +42,7 @@ export default class GameDetailsCtrl {
 	 * @param {DownloadService} DownloadService
 	 * @param {ModalService} ModalService
 	 * @param {TrackerService} TrackerService
+	 * @param {ApmService} ApmService
 	 * @param GameResource
 	 * @param ReleaseCommentResource
 	 * @param FileResource
@@ -51,7 +52,7 @@ export default class GameDetailsCtrl {
 	 * @ngInject
 	 */
 	constructor($stateParams, $uibModal, $localStorage,
-				App, ApiHelper, AuthService, Flavors, ConfigService, DownloadService, ModalService, TrackerService,
+				App, ApiHelper, AuthService, Flavors, ConfigService, DownloadService, ModalService, TrackerService, ApmService,
 				GameResource, ReleaseCommentResource, FileResource, RomResource, GameRatingResource, GameStarResource) {
 
 		App.theme('dark');
@@ -62,6 +63,7 @@ export default class GameDetailsCtrl {
 			'@context': 'http://schema.org/',
 			'@type': 'Product'
 		};
+		ApmService.addTags({ game_id: this.gameId });
 
 		this.$uibModal = $uibModal;
 		this.$localStorage = $localStorage;
@@ -74,7 +76,6 @@ export default class GameDetailsCtrl {
 		this.ModalService = ModalService;
 		this.TrackerService = TrackerService;
 		this.GameResource = GameResource;
-		this.ReleaseCommentResource = ReleaseCommentResource;
 		this.FileResource = FileResource;
 		this.RomResource = RomResource;
 		this.GameRatingResource = GameRatingResource;

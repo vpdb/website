@@ -18,7 +18,13 @@
  */
 
 import angular from 'angular';
+
+import { apm } from './app/common/apm';
 import { VPDB } from './app';
+
+require('./static/js/boomerang-1.0.0');
+// eslint-disable-next-line no-undef
+BOOMR.init();
 
 // eslint-disable-next-line
 const raygunConfig = WEBSITE_CONFIG.raygun;
@@ -36,6 +42,11 @@ if (raygunConfig && raygunConfig.enabled && window.rg4js) {
 
 // disable dynamic styles that screw up layout: https://github.com/videojs/video.js/pull/3093
 window.VIDEOJS_NO_DYNAMIC_STYLE = true;
+
+if (apm) {
+	// eslint-disable-next-line no-console
+	console.info('Elastic APM enabled.');
+}
 
 /**
  * This is the entry point of the app.

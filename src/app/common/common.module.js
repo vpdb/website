@@ -48,6 +48,7 @@ import { IpdbResource } from './backend/ipdb.resource';
 import { TagResource } from './backend/tag.resource';
 import { CommentResource } from './backend/comment.resource';
 import ApiHelper from './backend/apihelper.service';
+import ApmService from './util/apm.service';
 import AuthCallbackCtrl from './auth/auth.callback.ctrl';
 import AuthService from './auth/auth.service';
 import BootstrapPatcher from './util/bootstrap.patcher';
@@ -99,7 +100,6 @@ import sort from './util/sort.directive';
 import ratingFormatFilter from './games/rating.format.filter';
 import timeAgoFilter from './util/time-ago.filter';
 import userInfo from './user/user.info.directive';
-
 
 /**
  * These are global components that are or can be used on any page,
@@ -205,6 +205,7 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.service('BootstrapPatcher', BootstrapPatcher)
 	.service('ErrorReportingService', ErrorReportingService)
 	.service('TrackerService', TrackerService)
+	.service('ApmService', ApmService)
 	.directive('fallbackIcon', fallbackIcon)
 	.directive('filterArray', filterArray)
 	.directive('sort', sort)

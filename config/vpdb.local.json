@@ -38,7 +38,8 @@
 		"enabled": false
 	},
 	"rum": {
-		"uptimia": null
+		"uptimia": null,
+		"elastic": "https://apm.neh.ch"
 	},
 	"authProviders": {
 		"local": true,

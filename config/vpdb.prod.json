@@ -39,7 +39,8 @@
 		"id": "UA-85212794-1"
 	},
 	"rum": {
-		"uptimia": null
+		"uptimia": null,
+		"elastic": "https://apm.neh.ch"
 	},
 	"authProviders": {
 		"local": true,

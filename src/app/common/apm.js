@@ -17,27 +17,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-function loadModule($transition$) {
-	const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
-	return require.ensure([], () => {
-		// load whole module
-		const module = require('./game.module');
-		$ocLazyLoad.load(module.GAMES_MODULE);
-	}, 'games');
+import { init as initApm } from '@elastic/apm-rum';
+
+let apm = false;
+
+// eslint-disable-next-line
+const rumConfig = WEBSITE_CONFIG.rum;
+if (rumConfig && rumConfig.elastic) {
+	apm = initApm({
+		// eslint-disable-next-line
+		serviceName: WEBSITE_CONFIG.name,
+		// eslint-disable-next-line
+		serviceVersion: BUILD_CONFIG.revision.hash,
+		serverUrl: rumConfig.elastic,
+		distributedTracingOrigins: [
+			// eslint-disable-next-line
+			WEBSITE_CONFIG.apiUri.protocol + '://' + WEBSITE_CONFIG.apiUri.hostname + ':' + WEBSITE_CONFIG.apiUri.port,
+			// eslint-disable-next-line
+			WEBSITE_CONFIG.storageUri.protocol + '://' + WEBSITE_CONFIG.storageUri.hostname + ':' + WEBSITE_CONFIG.storageUri.port,
+		],
+	});
+	apm.setInitialPageLoadName('Init');
 }
 
-const GAME_LIST = {
-	name: 'games',
-	url: '/games',
-	component: 'gameListComponent',
-	lazyLoad: loadModule
-};
-
-const GAME_DETAILS = {
-	name: 'gameDetails',
-	url: '/games/:id',
-	component: 'gameDetailsComponent',
-	lazyLoad: loadModule
-};
-
-export { GAME_LIST, GAME_DETAILS };
+export default apm;
