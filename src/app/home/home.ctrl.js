@@ -29,6 +29,9 @@ export default class HomeCtrl {
 
 	/**
 	 * @param $scope
+	 * @param $stateParams
+	 * @param $uibModal
+	 * @param $scope
 	 * @param {App} App
 	 * @param {ApiHelper} ApiHelper
 	 * @param {AuthService} AuthService
@@ -40,7 +43,6 @@ export default class HomeCtrl {
 	 * @ngInject
 	 */
 	constructor($scope, $stateParams, $uibModal, ModalService, App, AuthService, ApiHelper, LoginService, ReleaseService, GameResource, ReleaseResource, TrackerService) {
-		console.log($stateParams);
 
 		App.theme('dark');
 		App.setTitle('VPDB - The Virtual Pinball Database');

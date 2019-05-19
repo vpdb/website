@@ -42,13 +42,17 @@ import {CONTENT_ABOUT, CONTENT_FAQ, CONTENT_LEGAL, CONTENT_PRIVACY, CONTENT_RULE
 
 /**
  * @param $urlRouterProvider
+ * @param $urlServiceProvider
  * @param $locationProvider
  * @param $stateProvider
  * @param $sceDelegateProvider
  * @param {Config} Config
  * @ngInject
  */
-export default function routes($urlRouterProvider, $locationProvider, $stateProvider, $sceDelegateProvider, Config) {
+export default function routes($urlRouterProvider, $urlServiceProvider, $locationProvider, $stateProvider, $sceDelegateProvider, Config) {
+
+	// allow trailing spaces
+	$urlServiceProvider.config.strictMode(false);
 
 	// home
 	$stateProvider.state(HOME);
