@@ -29,12 +29,13 @@ export default class App {
 	 * @param $uibModal
 	 * @param $localStorage
 	 * @param $injector
+	 * @param $transitions
 	 * @param {LoginService} LoginService
 	 * @param {ModalFlashService} ModalFlashService
 	 * @param ProfileResource
 	 * @ngInject
 	 */
-	constructor($rootScope, $window, $timeout, $uibModal, $localStorage, $injector, $log, LoginService, ModalFlashService, ProfileResource) {
+	constructor($rootScope, $window, $timeout, $uibModal, $localStorage, $injector, $log, $transitions, LoginService, ModalFlashService, ProfileResource) {
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.$timeout = $timeout;
@@ -60,10 +61,10 @@ export default class App {
 		});
 
 		// hide timeout notice when navigating
-		$rootScope.$on('$stateChangeStart', () => $rootScope.timeoutNoticeCollapsed = true);
+		$transitions.onStart({}, () => $rootScope.timeoutNoticeCollapsed = true);
 
 		// check for flash messages
-		$rootScope.$on('$stateChangeSuccess', () => ModalFlashService.process());
+		$transitions.onSuccess({}, () => ModalFlashService.process());
 
 		// download file on event
 		$rootScope.$on('downloadFile', (event, file) => $injector.get('DownloadService').downloadFile(file));

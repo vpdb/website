@@ -34,6 +34,7 @@ export default class AppCtrl {
 	 * @param $localStorage
 	 * @param $uibModal
 	 * @param $log
+	 * @param $transitions
 	 * @param {Window} $window
 	 * @param {App} App
 	 * @param {AuthService} AuthService
@@ -41,7 +42,7 @@ export default class AppCtrl {
 	 * @param {BuildConfig} BuildConfig
 	 * @ngInject
 	 */
-	constructor($rootScope, $state, $localStorage, $uibModal, $log, $window, App, AuthService, Config, BuildConfig) {
+	constructor($rootScope, $state, $localStorage, $uibModal, $log, $window, $transitions, App, AuthService, Config, BuildConfig) {
 		this.waitCoolDown = 500;
 
 		this.$rootScope = $rootScope;
@@ -53,7 +54,7 @@ export default class AppCtrl {
 		this.BuildConfig = BuildConfig;
 
 		// scroll top top when navigating
-		$rootScope.$on('$stateChangeSuccess', () => document.body.scrollTop = document.documentElement.scrollTop = 0);
+		$transitions.onSuccess({}, () => document.body.scrollTop = document.documentElement.scrollTop = 0);
 
 		// legal documents update
 		const currentDocumentRevisions = $localStorage.documentRevisions || Config.documentRevisions;
