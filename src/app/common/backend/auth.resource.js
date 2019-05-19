@@ -65,7 +65,7 @@ export class ProfileResource {
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/v1/profile/:action/:id'), {}, {
 			patch: { method: 'PATCH' },
-			confirm: { method: 'GET', params: { action: 'confirm' }},
+			confirm: { method: 'GET', noReport: [ 404 ], params: { action: 'confirm' }},
 			logs: { method: 'GET', params: { action: 'logs' }, isArray: true },
 			requestResetPassword: { method: 'POST', noReport: [ 400, 422, 429 ], params: { action: 'request-password-reset' } },
 			resetPassword: { method: 'POST', noReport: [ 429 ], params: { action: 'password-reset' }},
