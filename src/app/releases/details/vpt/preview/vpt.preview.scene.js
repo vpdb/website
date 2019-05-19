@@ -194,7 +194,9 @@ export class VptPreviewScene {
 	resizeDisplayGl() {
 		this._recalcAspectRatio();
 		this._updateCamera();
-		this.renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight, false);
+		if (this.renderer) {
+			this.renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight, false);
+		}
 	}
 
 	animate() {
