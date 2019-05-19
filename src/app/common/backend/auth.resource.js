@@ -25,7 +25,7 @@ export class AuthResource {
 	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/v1/authenticate/:strategy'), {}, {
-			authenticate: { method: 'POST', noError: [ 401, 'email_unconfirmed' ], interceptor: { response: res => res } },
+			authenticate: { method: 'POST', noError: [ 401, 429, 'email_unconfirmed' ], interceptor: { response: res => res } },
 			authenticateCallback: { method: 'GET' }
 		});
 	}
@@ -67,8 +67,8 @@ export class ProfileResource {
 			patch: { method: 'PATCH' },
 			confirm: { method: 'GET', params: { action: 'confirm' }},
 			logs: { method: 'GET', params: { action: 'logs' }, isArray: true },
-			requestResetPassword: { method: 'POST', params: { action: 'request-password-reset' }},
-			resetPassword: { method: 'POST', params: { action: 'password-reset' }},
+			requestResetPassword: { method: 'POST', noReport: [ 400, 422, 429 ], params: { action: 'request-password-reset' } },
+			resetPassword: { method: 'POST', noReport: [ 429 ], params: { action: 'password-reset' }},
 		});
 	}
 }

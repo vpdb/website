@@ -46,7 +46,7 @@ export default function($q, $window, $log, Config, NetworkService, ErrorReportin
 
 		responseError: function(response) {
 
-			// sometimes we expect non 2xx codes and we stil want to resolve.
+			// sometimes we expect non 2xx codes and we still want to resolve.
 			if (response.config.noError && (
 				response.config.noError.filter(isNumber).includes(response.status) || (
 					response.data &&
@@ -72,7 +72,15 @@ export default function($q, $window, $log, Config, NetworkService, ErrorReportin
 				}
 			};
 			const message = response.config.method + ' ' + response.config.url;
-			ErrorReportingService.reportError(message, data, ['api']);
+			// sometimes we just don't want to report errors
+			if (!response.config.noReport || !(
+				response.config.noReport.filter(isNumber).includes(response.status) || (
+					response.data &&
+					response.data.code &&
+					response.config.noReport.filter(isString).includes(response.data.code))
+			)) {
+				ErrorReportingService.reportError(message, data, ['api']);
+			}
 			NetworkService.onRequestFinished(response.config.url);
 			return $q.reject(response);
 		}
