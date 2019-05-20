@@ -108,11 +108,11 @@ class BackgroundImageDirective {
 	}
 
 	_loadImg(url, scope, element, attrs) {
-		this.NetworkService.onRequestStarted(url);
+		this.NetworkService.onRequestStarted({ url: url, method: 'GET'});
 		scope.img = { url: url, loading: true };
 		element.css('background-image', `url("${url}")`);
 		imagesLoaded(element, { background: true }, loaded => {
-			this.NetworkService.onRequestFinished(url);
+			this.NetworkService.onRequestFinished({ url: url, method: 'GET'});
 			scope.img.loading = false;
 			if (!loaded.hasAnyBroken) {
 				element.addClass('loaded');

@@ -39,6 +39,7 @@ export default class ApmService {
 		this.waitCoolDown = 500;
 		this.$rootScope = $rootScope;
 		this.$transitions = $transitions;
+		this._spans = {};
 	}
 
 	init() {
@@ -52,11 +53,13 @@ export default class ApmService {
 				this._transactionStart = window.performance.now();
 				this._transactionFinished = false;
 				const to = transition.to();
-				apm.startTransaction(to.url, 'page-load');
+				apm.startTransaction(to.url, 'page-navigation');
+				this.startSpan('__route',`Transition to ${to.name}`, 'route');
 			});
 
 			// trigger end (route)
 			this.$transitions.onSuccess({}, () => {
+				this.endSpan('__route');
 				this._clearTimeout();
 				this._waitForNextEvent();
 			});
@@ -84,6 +87,21 @@ export default class ApmService {
 		}
 	}
 
+	startSpan(id, name, type) {
+		const transaction = apm.getCurrentTransaction();
+		if (transaction) {
+			this._spans[id] = transaction.startSpan(name, type);
+		}
+	}
+
+	endSpan(id) {
+		if (this._spans[id]) {
+			this._spans[id].end();
+			console.log('[span] %sms %s', this._spans[id]._end - this._spans[id]._start, id);
+			delete this._spans[id];
+		}
+	}
+
 	_clearTimeout() {
 		if (this.waitTimeout) {
 			clearTimeout(this.waitTimeout);
@@ -98,12 +116,13 @@ export default class ApmService {
 	}
 
 	_onPageLoaded() {
-		console.log('Page finished loading in %sms (%sms ago).', this._transactionEnd - this._transactionStart, window.performance.now() - this._transactionEnd);
+		console.log('[transaction] Finished in %sms (%sms ago).', this._transactionEnd - this._transactionStart, window.performance.now() - this._transactionEnd);
 		const transaction = apm.getCurrentTransaction();
 		if (transaction) {
 			transaction.end();
 			transaction._end = this._transactionEnd;
 		}
 		this._transactionFinished = true;
+		this._spans = {};
 	}
 }

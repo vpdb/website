@@ -32,11 +32,11 @@ import {isNumber, isString} from 'lodash';
 export default function($q, $window, $log, Config, NetworkService, ErrorReportingService) {
 	return {
 		request: config => {
-			NetworkService.onRequestStarted(config.url);
+			NetworkService.onRequestStarted(config);
 			return config || $q.when(config);
 		},
 		response: response => {
-			NetworkService.onRequestFinished(response.config.url);
+			NetworkService.onRequestFinished(response.config);
 			return response || $q.when(response);
 		},
 		requestError: rejection => {

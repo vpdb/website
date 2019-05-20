@@ -28,22 +28,32 @@ export default class NetworkService {
 
 	/**
 	 * @param $rootScope
+	 * @param {ApmService} ApmService
 	 * @ngInject
 	 */
-	constructor($rootScope) {
+	constructor($rootScope, ApmService) {
 		this.$rootScope = $rootScope;
+		this.ApmService = ApmService;
 		this.loadingCount = 0;
 	}
 
-	onRequestStarted(url) {
+	onRequestStarted(config) {
+		const name = this._getName(config);
+		this.ApmService.startSpan(name, name, 'http');
 		if (this.loadingCount++ === 0) {
-			this.$rootScope.$broadcast('loading:start', url);
+			this.$rootScope.$broadcast('loading:start', config.url);
 		}
 	}
 
-	onRequestFinished(url) {
+	onRequestFinished(config) {
+		const name = this._getName(config);
+		this.ApmService.endSpan(name);
 		if (--this.loadingCount === 0) {
-			this.$rootScope.$broadcast('loading:finish', url);
+			this.$rootScope.$broadcast('loading:finish', config.url);
 		}
+	}
+
+	_getName(config) {
+		return `_${config.method} ${config.url}`;
 	}
 }
