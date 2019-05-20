@@ -48,27 +48,28 @@ html#app(lang="en", ng-class="{ 'hide-scrollbars' : hideScrollbars }")
 
 					BOOMR.init({
 						beacon_url: 'http://localhost/beacon/',
+						autorun: false,
 						History: {
 							auto: true
 						}
 					});
 
+					var start = 0;
 					BOOMR.subscribe('dom_loaded', function() {
-						console
-							.log('[BOOMR] dom_loaded: The DOMContentLoaded event is fired when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading');
+						console.log('[BOOMR] dom_loaded: The DOMContentLoaded event is fired when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading');
 					});
 
 					BOOMR.subscribe('page_ready', function() {
-						console
-							.log('[BOOMR] page_ready: By default this is fired when window.onload fires, but if you set autorun to false when calling BOOMR.init, then you must explicitly fire this event by calling BOOMR#event:page_ready');
+						console.log('[BOOMR] page_ready: By default this is fired when window.onload fires, but if you set autorun to false when calling BOOMR.init, then you must explicitly fire this event by calling BOOMR#event:page_ready');
 					});
 
 					BOOMR.subscribe('spa_init', function() {
+						start = Date.now();
 						console.log('[BOOMR] spa_init', 'Fired whenever a SPA plugin is about to track a new navigation.');
 					});
 
 					BOOMR.subscribe('spa_navigation', function() {
-						console.log('[BOOMR] spa_navigation: Fired whenever a SPA navigation is complete.');
+						console.log('[BOOMR] spa_navigation: Fired whenever a SPA navigation is complete (%sms)', Date.now() - start);
 					});
 
 					BOOMR.subscribe('beacon', function() {
@@ -76,7 +77,7 @@ html#app(lang="en", ng-class="{ 'hide-scrollbars' : hideScrollbars }")
 					});
 
 					BOOMR.subscribe('before_beacon', function() {
-						console.log('[BOOMR] before_beacon: Fired when a beacon is about to be sent.');
+						console.log('[BOOMR] before_beacon: Fired when a beacon is about to be sent(%sms)', Date.now() - start);
 					});
 				});
 
