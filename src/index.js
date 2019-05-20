@@ -22,10 +22,6 @@ import angular from 'angular';
 import { apm } from './app/common/apm';
 import { VPDB } from './app';
 
-require('./static/js/boomerang-1.0.0');
-// eslint-disable-next-line no-undef
-BOOMR.init();
-
 // eslint-disable-next-line
 const raygunConfig = WEBSITE_CONFIG.raygun;
 // eslint-disable-next-line
