@@ -1,7 +1,7 @@
 /* eslint-disable */
 const { resolve } = require('path');
 const { readFileSync } = require('fs');
-const UglifyJS = require('uglify-js');
+const Terser = require('terser');
 
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -44,7 +44,8 @@ module.exports  = function(options) {
 	];
 	return {
 		entry: {
-			app: './src/index.js'
+			app: './src/index.js',
+			boomerang: './lib/boomerang-1.0.0.js',
 		},
 		mode: isProd ? 'production' : 'development',
 		module: {
@@ -86,7 +87,12 @@ module.exports  = function(options) {
 				template: './src/index.pug',
 				inject: false,
 				// see https://github.com/filamentgroup/loadCSS
-				loadCss: UglifyJS.minify(readFileSync('./node_modules/fg-loadcss/src/cssrelpreload.js').toString()).code,
+				loadCss: Terser.minify(readFileSync('./node_modules/fg-loadcss/src/cssrelpreload.js').toString()).code,
+				chunks: {
+					boomerang: {
+						entry: 'boomerang.js',
+					},
+				},
 				config: options.websiteConfig,
 				revision: options.revision,
 				preConnect: preConnect,

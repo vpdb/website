@@ -87,35 +87,7 @@ const VPDB = angular.module('vpdb', [
 			controller: AppCtrl,
 			controllerAs: 'vm'
 		};
-	})
-	.run(['$rootScope', '$transitions', function($rootScope, $transitions) {
-		let hadRouteChange = false;
-
-		// The following listener is required if you're using ui-router
-		$transitions.onStart({}, () => hadRouteChange = true);
-
-		const hookAngularBoomerang = () => {
-			if (window.BOOMR && BOOMR.version) {
-				if (BOOMR.plugins && BOOMR.plugins.Angular) {
-					BOOMR.plugins.Angular.hook($rootScope, $transitions, hadRouteChange);
-				}
-				return true;
-			}
-		};
-
-		if (!hookAngularBoomerang()) {
-			if (document.addEventListener) {
-				document.addEventListener('onBoomerangLoaded', hookAngularBoomerang);
-			} else if (document.attachEvent) {
-				document.attachEvent('onpropertychange', function(e) {
-					e = e || window.event;
-					if (e && e.propertyName === 'onBoomerangLoaded') {
-						hookAngularBoomerang();
-					}
-				});
-			}
-		}
-	}]);
+	});
 
 export { VPDB };
 
