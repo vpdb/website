@@ -19,7 +19,6 @@
 
 import GameSelectModalTpl from './common/games/game.select.modal.pug';
 import angular from 'angular';
-import apm from './common/apm';
 
 /**
  * The application controller manages parts of the page that is common to

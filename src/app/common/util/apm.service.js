@@ -36,21 +36,38 @@ export default class ApmService {
 	 * @ngInject
 	 */
 	constructor($rootScope, $transitions) {
+		this.waitCoolDown = 500;
 		this.$rootScope = $rootScope;
 		this.$transitions = $transitions;
 	}
 
 	init() {
 		if (apm) {
+
+			this._transactionEnd = 0;
+			this._transactionFinished = false;
+
+			// trigger start
 			this.$transitions.onStart({}, transition => {
+				this._transactionStart = window.performance.now();
+				this._transactionFinished = false;
 				const to = transition.to();
 				apm.startTransaction(to.url, 'page-load');
 			});
+
+			// trigger end (route)
+			this.$transitions.onSuccess({}, () => {
+				this._clearTimeout();
+				this._waitForNextEvent();
+			});
+
+			// trigger end (network)
+			this.$rootScope.$on('loading:start', () => {
+				this._clearTimeout();
+			});
 			this.$rootScope.$on('loading:finish', () => {
-				const transaction = apm.getCurrentTransaction();
-				if (transaction) {
-					transaction.end();
-				}
+				this._clearTimeout();
+				this._waitForNextEvent();
 			});
 		}
 	}
@@ -65,5 +82,28 @@ export default class ApmService {
 		if (apm) {
 			apm.setUserContext({ id, username, email });
 		}
+	}
+
+	_clearTimeout() {
+		if (this.waitTimeout) {
+			clearTimeout(this.waitTimeout);
+		}
+	}
+
+	_waitForNextEvent() {
+		if (!this._transactionFinished) {
+			this._transactionEnd = window.performance.now();
+			this.waitTimeout = setTimeout(() => this._onPageLoaded(), this.waitCoolDown);
+		}
+	}
+
+	_onPageLoaded() {
+		console.log('Page finished loading in %sms (%sms ago).', this._transactionEnd - this._transactionStart, window.performance.now() - this._transactionEnd);
+		const transaction = apm.getCurrentTransaction();
+		if (transaction) {
+			transaction.end();
+			transaction._end = this._transactionEnd;
+		}
+		this._transactionFinished = true;
 	}
 }
