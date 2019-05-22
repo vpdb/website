@@ -97,7 +97,7 @@ npm_install_copy() {
 npm_build() {
 	echo Building...
 	cd ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
-	WEBSITE_CONFIG=$3 BUILD_CONFIG=$4 npm run build:$2
+	WEBSITE_CONFIG=$3 BUILD_CONFIG=$4 FIREBASE_CONFIG=$5 npm run build:$2
 	test $? -eq 0 || abort $1 "Failed to run npm install. Manually fix and relaunch deployment.".
 }
 
@@ -119,8 +119,8 @@ repo_cleanup() {
 post_scripts() {
 	echo Executing post scripts...
 	cd ${DEPLOY_ROOT}/${DEPLOY_ENV}/$1
-	WEBSITE_CONFIG=$2 BUILD_CONFIG=$3 node scripts/rollbar-deploy.js
-	WEBSITE_CONFIG=$2 BUILD_CONFIG=$3 node scripts/cloudflare-deploy.js
+	WEBSITE_CONFIG=$2 BUILD_CONFIG=$3 FIREBASE_CONFIG=$4 node scripts/rollbar-deploy.js
+	WEBSITE_CONFIG=$2 BUILD_CONFIG=$3 FIREBASE_CONFIG=$4 node scripts/cloudflare-deploy.js
 }
 
 repo_last_tag() {

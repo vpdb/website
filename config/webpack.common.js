@@ -120,7 +120,8 @@ module.exports  = function(options) {
 
 			new webpack.DefinePlugin({
 				WEBSITE_CONFIG: JSON.stringify(options.websiteConfig),
-				BUILD_CONFIG: JSON.stringify({ revision: options.revision, production: isProd, version: pkg.version })
+				BUILD_CONFIG: JSON.stringify({ revision: options.revision, production: isProd, version: pkg.version }),
+				FIREBASE_CONFIG: JSON.stringify(options.firebaseConfig),
 			}),
 		],
 		optimization: {

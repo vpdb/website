@@ -12,6 +12,9 @@ const websiteConfig = require(process.env.WEBSITE_CONFIG && fs.existsSync(proces
 const buildConfig = require(process.env.BUILD_CONFIG && fs.existsSync(process.env.BUILD_CONFIG)
 	? process.env.BUILD_CONFIG
 	: './config/build.prod.json');
+const firebaseConfig = require(process.env.FIREBASE_CONFIG && fs.existsSync(process.env.FIREBASE_CONFIG)
+	? process.env.FIREBASE_CONFIG
+	: './config/firebase.' + process.env.CONFIG + '.json');
 const outputPath = path.resolve(__dirname, 'dist');
 
 module.exports = require(config)({
@@ -23,6 +26,7 @@ module.exports = require(config)({
 	previewUrl: getUrl(websiteConfig.previewUri),
 	websiteConfig: websiteConfig,
 	buildConfig: buildConfig,
+	firebaseConfig: firebaseConfig,
 	revision: getRevision()
 });
 
