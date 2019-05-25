@@ -1,7 +1,7 @@
 /* eslint-disable */
 const { resolve } = require('path');
 const { readFileSync } = require('fs');
-const UglifyJS = require('uglify-js');
+const Terser = require('terser');
 
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -86,7 +86,7 @@ module.exports  = function(options) {
 				template: './src/index.pug',
 				inject: false,
 				// see https://github.com/filamentgroup/loadCSS
-				loadCss: UglifyJS.minify(readFileSync('./node_modules/fg-loadcss/src/cssrelpreload.js').toString()).code,
+				loadCss: Terser.minify(readFileSync('./node_modules/fg-loadcss/src/cssrelpreload.js').toString()).code,
 				config: options.websiteConfig,
 				revision: options.revision,
 				preConnect: preConnect,
