@@ -141,7 +141,7 @@
 		},
 		{
 			"path": "./dist/vendor.bundle-*.js",
-			"maxSize": "150 kB"
+			"maxSize": "175 kB"
 		},
 		{
 			"path": "./dist/vendors*.js",
