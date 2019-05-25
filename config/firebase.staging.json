@@ -1,0 +1,9 @@
+{
+	"apiKey": "AIzaSyDGF5buT0srPLoDPDdWURPip2JdZwp5onw",
+	"authDomain": "vpdb-website.firebaseapp.com",
+	"databaseURL": "https://vpdb-website.firebaseio.com",
+	"projectId": "vpdb-website",
+	"storageBucket": "vpdb-website.appspot.com",
+	"messagingSenderId": "686556798127",
+	"appId": "1:686556798127:web:c7d27cd947dc2db6"
+}
