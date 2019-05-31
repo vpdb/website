@@ -255,6 +255,20 @@ export class VptPreviewScene {
 			if (object.isPointLight) {
 				helpers.add(new PointLightHelper(object, 10));
 			}
+			if (object.name === 'playfieldLights') {
+				this.playfieldLights = {};
+				for (const pfLight of object.children) {
+					const m = pfLight.name.match(/l(\d+)/i);
+					if (m) {
+						const num = parseInt(m[1], 10);
+						if (!this.playfieldLights[num]) {
+							this.playfieldLights[num] = [ pfLight ];
+						} else {
+							this.playfieldLights[num].push(pfLight);
+						}
+					}
+				}
+			}
 			if (!object.isMesh) {
 				return;
 			}
