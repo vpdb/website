@@ -471,9 +471,16 @@ export class VptPreviewScene {
 		}
 		this.wpcSystem.executeCycle(TICKS_PER_CALL, TICKS_PER_STEP);
 		const emuState = this.wpcSystem.getUiState();
-		if (emuState.asic.wpc.lampState) {
+		if (this.playfieldLights && emuState.asic.wpc.lampState) {
 			const lampState = emuState.asic.wpc.lampState;
-			console.debug('Lamp state:', lampState);
+			for (let i = 0; i < lampState.length; i++) {
+				if (this.playfieldLights[i]) {
+					for (const playfieldLight of this.playfieldLights[i]) {
+						playfieldLight.material.emissive.set(0xffffff);
+						playfieldLight.material.emissiveIntensity = lampState[i] / 10;
+					}
+				}
+			}
 		}
 		this.intervalId = requestAnimationFrame(this._emuStep.bind(this));
 	}
