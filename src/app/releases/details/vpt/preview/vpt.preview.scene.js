@@ -32,8 +32,16 @@ import {
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import {DRACOLoader} from './lib/DRACOLoader';
+import * as WpcEmu from 'wpc-emu/lib/emulator';
+import {initialiseActions} from 'wpc-emu/client/scripts/lib/initialise';
+import * as mm from 'wpc-emu/client/scripts/db/mm';
 
 const showGridHelper = false;
+
+const TICKS = 2000000;
+const DESIRED_FPS = 58;
+const TICKS_PER_CALL = parseInt(TICKS / DESIRED_FPS, 10);
+const TICKS_PER_STEP = 16;
 
 export class VptPreviewScene {
 
@@ -43,6 +51,7 @@ export class VptPreviewScene {
 		DRACOLoader.getDecoderModule();
 
 		this.initScene();
+		this.initEmu();
 		this.playfieldScale = 0.5;
 		this.addHelpers = false;
 
@@ -412,4 +421,88 @@ export class VptPreviewScene {
 		return message.replace('$1', names[version]);
 	}
 
+	initEmu() {
+		const gameEntry = mm;
+		return this._initialiseEmu(gameEntry)
+			.then(() => {
+				this._resumeEmu();
+				return initialiseActions(gameEntry.initialise, this.wpcSystem);
+			})
+			.catch((error) => {
+				console.error('FAILED to load ROM:', error.message);
+			});
+	}
+
+	_initialiseEmu(gameEntry) {
+		return this._downloadFileFromUrlAsUInt8Array()
+			.then((u06Rom) => {
+				console.log('Successfully loaded ROM', u06Rom.length);
+				const romData = {
+					u06: u06Rom,
+				};
+				return initialiseEmulator(romData, gameEntry);
+			})
+			.then(_wpcSystem => {
+				console.log('Successfully initialized emulator');
+
+				this.wpcSystem = _wpcSystem;
+				this.wpcSystem.start();
+				console.log('Successfully started EMU v' + this.wpcSystem.version());
+			});
+	}
+
+	_downloadFileFromUrlAsUInt8Array() {
+		return fetch('http://localhost:8080/mm_109b.bin')
+			.then(response => {
+				if (response.status < 400) {
+					return response.arrayBuffer();
+
+				} else {
+					throw new Error('Error downloading ROM: ' + response.status);
+				}
+			})
+			.then(arrayBuffer => new Uint8Array(arrayBuffer));
+	}
+
+	//called at 60hz -> 16.6ms
+	_emuStep() {
+		if (!this.wpcSystem) {
+			return;
+		}
+		this.wpcSystem.executeCycle(TICKS_PER_CALL, TICKS_PER_STEP);
+		const emuState = this.wpcSystem.getUiState();
+		if (emuState.asic.wpc.lampState) {
+			const lampState = emuState.asic.wpc.lampState;
+			console.debug('Lamp state:', lampState);
+		}
+		this.intervalId = requestAnimationFrame(this._emuStep.bind(this));
+	}
+
+	_resumeEmu() {
+		if (this.intervalId) {
+			this._pauseEmu();
+		}
+		console.log('client start emu');
+		this.intervalId = requestAnimationFrame(this._emuStep.bind(this));
+	}
+
+	_pauseEmu() {
+		console.log('stop emu');
+		if (!this.intervalId) {
+			// allows step by step
+			this._emuStep();
+		}
+		cancelAnimationFrame(this.intervalId);
+		this.intervalId = false;
+	}
+}
+
+function initialiseEmulator(romData, gameEntry) {
+	const fileName = gameEntry.rom.u06;
+	const romObject = {
+		fileName,
+		skipWpcRomCheck: gameEntry.skipWpcRomCheck,
+		features: gameEntry.features,
+	};
+	return WpcEmu.initVMwithRom(romData, romObject);
 }
