@@ -34,7 +34,6 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import {DRACOLoader} from './lib/DRACOLoader';
 import * as WpcEmu from 'wpc-emu/lib/emulator';
 import {initialiseActions} from 'wpc-emu/client/scripts/lib/initialise';
-import * as mm from 'wpc-emu/client/scripts/db/mm';
 
 const showGridHelper = false;
 
@@ -51,7 +50,6 @@ export class VptPreviewScene {
 		DRACOLoader.getDecoderModule();
 
 		this.initScene();
-		this.initEmu();
 		this.playfieldScale = 0.5;
 		this.addHelpers = false;
 
@@ -269,7 +267,7 @@ export class VptPreviewScene {
 				for (const pfLight of object.children) {
 					const m = pfLight.name.match(/l(\d+)/i);
 					if (m) {
-						const num = parseInt(m[1], 10);
+						const num = this._keyToIndex(parseInt(m[1], 10));
 						if (!this.playfieldLights[num]) {
 							this.playfieldLights[num] = [ pfLight ];
 						} else {
@@ -421,9 +419,8 @@ export class VptPreviewScene {
 		return message.replace('$1', names[version]);
 	}
 
-	initEmu() {
-		const gameEntry = mm;
-		return this._initialiseEmu(gameEntry)
+	initEmu(gameEntry, romUrl) {
+		return this._initialiseEmu(gameEntry, romUrl)
 			.then(() => {
 				this._resumeEmu();
 				return initialiseActions(gameEntry.initialise, this.wpcSystem);
@@ -433,8 +430,8 @@ export class VptPreviewScene {
 			});
 	}
 
-	_initialiseEmu(gameEntry) {
-		return this._downloadFileFromUrlAsUInt8Array()
+	_initialiseEmu(gameEntry, romUrl) {
+		return this._downloadFileFromUrlAsUInt8Array(romUrl)
 			.then((u06Rom) => {
 				console.log('Successfully loaded ROM', u06Rom.length);
 				const romData = {
@@ -451,8 +448,8 @@ export class VptPreviewScene {
 			});
 	}
 
-	_downloadFileFromUrlAsUInt8Array() {
-		return fetch('http://localhost:8080/mm_109b.bin')
+	_downloadFileFromUrlAsUInt8Array(romUrl) {
+		return fetch(romUrl)
 			.then(response => {
 				if (response.status < 400) {
 					return response.arrayBuffer();
@@ -501,6 +498,17 @@ export class VptPreviewScene {
 		}
 		cancelAnimationFrame(this.intervalId);
 		this.intervalId = false;
+	}
+
+	/**
+	 * Converts a key to row/column. For example 11 (row 1, column 1) maps to 0
+	 *
+	 * @param keyValue Key value, from 11..88
+	 */
+	_keyToIndex(keyValue) {
+		const row = Math.floor(keyValue / 10) - 1;
+		const column = Math.floor(keyValue % 10) - 1;
+		return  8 * row  + column;
 	}
 }
 

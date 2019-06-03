@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+import * as mm from 'wpc-emu/client/scripts/db/mm';
+
 import {VptPreviewScene} from './vpt.preview.scene';
 
 export default class VptPreviewCtrl {
@@ -29,10 +31,11 @@ export default class VptPreviewCtrl {
 	 * @param {AuthService} AuthService
 	 * @param {ApiHelper} ApiHelper
 	 * @param {ReleaseResource} ReleaseResource
+	 * @param {RomResource} RomResource
 	 * @param {TrackerService} TrackerService
 	 * @ngInject
 	 */
-	constructor($scope, $stateParams, $uibModal, App, AuthService, ApiHelper, ReleaseResource, TrackerService) {
+	constructor($scope, $stateParams, $uibModal, App, AuthService, ApiHelper, ReleaseResource, RomResource, TrackerService) {
 
 		App.theme('dark');
 		App.setTitle('VPT Preview');
@@ -48,6 +51,7 @@ export default class VptPreviewCtrl {
 		this.releaseId = $stateParams.releaseId;
 		this.version = $stateParams.version;
 		this.fileId = $stateParams.fileId;
+		this.emuGame =
 
 		this.percentLoaded = 0;
 		this.isLoaded = false;
@@ -152,6 +156,28 @@ export default class VptPreviewCtrl {
 			this.release = null;
 		});
 
+		const gameEntry = this._getGameEntry();
+		if (gameEntry) {
+			RomResource.query({ id : this.gameId }, roms => {
+				const romBinary = gameEntry.rom.u06;
+				const romName = romBinary.substr(0, romBinary.lastIndexOf('.'));
+				const rom = roms.find(rom => rom.id === romName);
+				if (rom) {
+					const romFile = rom.rom_files.find(f => f.filename === romBinary);
+					if (romFile) {
+						const romUrl = rom.file.url + '/' + romBinary;
+						this.scene.initEmu(gameEntry, romUrl);
+					} else {
+						console.debug('No file "%s" in archive.', romBinary);
+					}
+				} else {
+					console.debug('No ROM "%s" found.', romName);
+				}
+			}, err => {
+				console.error('Error fetching ROMs for game "%s"', this.gameId, err);
+			});
+		}
+
 		this.render();
 	}
 
@@ -191,6 +217,13 @@ export default class VptPreviewCtrl {
 	render() {
 		//this.animationId = requestAnimationFrame(this.render.bind(this));
 		this.scene.render();
+	}
+
+	_getGameEntry() {
+		switch (this.gameId) {
+			case 'mm': return mm;
+		}
+		return undefined;
 	}
 
 	loadLocalGltf(files) {
