@@ -18,6 +18,7 @@
  */
 
 import * as mm from 'wpc-emu/client/scripts/db/mm';
+import * as tom from 'wpc-emu/client/scripts/db/tom';
 
 import {VptPreviewScene} from './vpt.preview.scene';
 
@@ -51,7 +52,6 @@ export default class VptPreviewCtrl {
 		this.releaseId = $stateParams.releaseId;
 		this.version = $stateParams.version;
 		this.fileId = $stateParams.fileId;
-		this.emuGame =
 
 		this.percentLoaded = 0;
 		this.isLoaded = false;
@@ -160,18 +160,12 @@ export default class VptPreviewCtrl {
 		if (gameEntry) {
 			RomResource.query({ id : this.gameId }, roms => {
 				const romBinary = gameEntry.rom.u06;
-				const romName = romBinary.substr(0, romBinary.lastIndexOf('.'));
-				const rom = roms.find(rom => rom.id === romName);
+				const rom = roms.find(rom => rom.rom_files.find(f => f.filename === romBinary));
 				if (rom) {
-					const romFile = rom.rom_files.find(f => f.filename === romBinary);
-					if (romFile) {
-						const romUrl = rom.file.url + '/' + romBinary;
-						this.scene.initEmu(gameEntry, romUrl);
-					} else {
-						console.debug('No file "%s" in archive.', romBinary);
-					}
+					const romUrl = rom.file.url + '/' + romBinary;
+					this.scene.initEmu(gameEntry, romUrl);
 				} else {
-					console.debug('No ROM "%s" found.', romName);
+					console.debug('No ROM with binary "%s" found.', romBinary);
 				}
 			}, err => {
 				console.error('Error fetching ROMs for game "%s"', this.gameId, err);
@@ -222,6 +216,7 @@ export default class VptPreviewCtrl {
 	_getGameEntry() {
 		switch (this.gameId) {
 			case 'mm': return mm;
+			case 'tom': return tom;
 		}
 		return undefined;
 	}
