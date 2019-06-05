@@ -109,6 +109,7 @@ export class VptPreviewScene {
 		});
 
 		this.renderer.setPixelRatio(window.devicePixelRatio);
+		this.renderer.setSize(this.canvas.offsetWidth / window.devicePixelRatio, this.canvas.offsetHeight / window.devicePixelRatio, false);
 		this.renderer.gammaFactor = 1.3;
 		this.renderer.gammaOutput = true;
 		this.renderer.domElement.addEventListener('mousedown', this.onClicked.bind(this), false);
@@ -116,7 +117,7 @@ export class VptPreviewScene {
 		this.scene = new Scene();
 		this.camera = new PerspectiveCamera(this.cameraDefaults.fov, this.aspectRatio, this.cameraDefaults.near, this.cameraDefaults.far);
 
-		this.controls = new OrbitControls(this.camera);
+		this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 		this.controls.target = this.cameraDefaults.posCameraTarget;
 		this.controls.enableDamping = true;
 		this.controls.dampingFactor = 0.1;
@@ -195,7 +196,7 @@ export class VptPreviewScene {
 		this._recalcAspectRatio();
 		this._updateCamera();
 		if (this.renderer) {
-			this.renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight, false);
+			this.renderer.setSize(this.canvas.offsetWidth / window.devicePixelRatio, this.canvas.offsetHeight / window.devicePixelRatio, false);
 		}
 	}
 
@@ -210,6 +211,7 @@ export class VptPreviewScene {
 	render() {
 		this.renderer.render(this.scene, this.camera);
 	}
+
 
 	onClicked(event) {
 		event.preventDefault();
