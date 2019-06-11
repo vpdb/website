@@ -1,6 +1,6 @@
 {
 	"name": "vpdb-website",
-	"version": "2.1.3-SNAPSHOT",
+	"version": "2.1.3",
 	"lockfileVersion": 1,
 	"requires": true,
 	"dependencies": {
@@ -5313,7 +5313,8 @@
 				"ansi-regex": {
 					"version": "2.1.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"aproba": {
 					"version": "1.2.0",
@@ -5728,7 +5729,8 @@
 				"safe-buffer": {
 					"version": "5.1.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"safer-buffer": {
 					"version": "2.1.2",
@@ -5784,6 +5786,7 @@
 					"version": "3.0.1",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"ansi-regex": "^2.0.0"
 					}
@@ -5827,12 +5830,14 @@
 				"wrappy": {
 					"version": "1.0.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"yallist": {
 					"version": "3.0.3",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				}
 			}
 		},
@@ -9779,6 +9784,12 @@
 			"integrity": "sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=",
 			"dev": true
 		},
+		"prettier": {
+			"version": "1.18.2",
+			"resolved": "https://registry.npmjs.org/prettier/-/prettier-1.18.2.tgz",
+			"integrity": "sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==",
+			"dev": true
+		},
 		"pretty-bytes": {
 			"version": "5.2.0",
 			"resolved": "https://registry.npmjs.org/pretty-bytes/-/pretty-bytes-5.2.0.tgz",
@@ -12919,9 +12930,9 @@
 			"dev": true
 		},
 		"v8-compile-cache": {
-			"version": "2.0.2",
-			"resolved": "https://registry.npmjs.org/v8-compile-cache/-/v8-compile-cache-2.0.2.tgz",
-			"integrity": "sha512-1wFuMUIM16MDJRCrpbpuEPTUGmM5QMUg0cr3KFwra2XgOgFcPGDQHDh3CszSCD2Zewc/dh/pamNEW8CbfDebUw==",
+			"version": "2.0.3",
+			"resolved": "https://registry.npmjs.org/v8-compile-cache/-/v8-compile-cache-2.0.3.tgz",
+			"integrity": "sha512-CNmdbwQMBjwr9Gsmohvm0pbL954tJrNzf6gWL3K+QMQf00PF7ERGrEiLgjuU3mKreLC2MeGhUsNV9ybTbLgd3w==",
 			"dev": true
 		},
 		"validate-npm-package-license": {
@@ -13245,9 +13256,9 @@
 			}
 		},
 		"webpack-cli": {
-			"version": "3.3.2",
-			"resolved": "https://registry.npmjs.org/webpack-cli/-/webpack-cli-3.3.2.tgz",
-			"integrity": "sha512-FLkobnaJJ+03j5eplxlI0TUxhGCOdfewspIGuvDVtpOlrAuKMFC57K42Ukxqs1tn8947/PM6tP95gQc0DCzRYA==",
+			"version": "3.3.4",
+			"resolved": "https://registry.npmjs.org/webpack-cli/-/webpack-cli-3.3.4.tgz",
+			"integrity": "sha512-ubJGQEKMtBSpT+LiL5hXvn2GIOWiRWItR1DGUqJRhwRBeGhpRXjvF5f0erqdRJLErkfqS5/Ldkkedh4AL5Q1ZQ==",
 			"dev": true,
 			"requires": {
 				"chalk": "^2.4.1",
@@ -13258,6 +13269,7 @@
 				"import-local": "^2.0.0",
 				"interpret": "^1.1.0",
 				"loader-utils": "^1.1.0",
+				"prettier": "^1.17.0",
 				"supports-color": "^5.5.0",
 				"v8-compile-cache": "^2.0.2",
 				"yargs": "^12.0.5"
