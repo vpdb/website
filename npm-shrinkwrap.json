@@ -1,6 +1,6 @@
 {
 	"name": "vpdb-website",
-	"version": "2.1.3-SNAPSHOT",
+	"version": "2.1.3",
 	"lockfileVersion": 1,
 	"requires": true,
 	"dependencies": {
@@ -3076,9 +3076,9 @@
 			"dev": true
 		},
 		"chrome-trace-event": {
-			"version": "1.0.0",
-			"resolved": "https://registry.npmjs.org/chrome-trace-event/-/chrome-trace-event-1.0.0.tgz",
-			"integrity": "sha512-xDbVgyfDTT2piup/h8dK/y4QZfJRSa73bw1WZ8b4XM1o7fsFubUVGYcE+1ANtOzJJELGpYoG2961z0Z6OAld9A==",
+			"version": "1.0.2",
+			"resolved": "https://registry.npmjs.org/chrome-trace-event/-/chrome-trace-event-1.0.2.tgz",
+			"integrity": "sha512-9e/zx1jw7B4CO+c/RXoCsfg/x1AfUBioy4owYH0bJprEYAx5hRFLRhWBqHAG57D0ZM4H7vxbP7bPe0VwhQRYDQ==",
 			"dev": true,
 			"requires": {
 				"tslib": "^1.9.0"
@@ -5313,7 +5313,8 @@
 				"ansi-regex": {
 					"version": "2.1.1",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"aproba": {
 					"version": "1.2.0",
@@ -5728,7 +5729,8 @@
 				"safe-buffer": {
 					"version": "5.1.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"safer-buffer": {
 					"version": "2.1.2",
@@ -5784,6 +5786,7 @@
 					"version": "3.0.1",
 					"bundled": true,
 					"dev": true,
+					"optional": true,
 					"requires": {
 						"ansi-regex": "^2.0.0"
 					}
@@ -5827,12 +5830,14 @@
 				"wrappy": {
 					"version": "1.0.2",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				},
 				"yallist": {
 					"version": "3.0.3",
 					"bundled": true,
-					"dev": true
+					"dev": true,
+					"optional": true
 				}
 			}
 		},
@@ -7061,12 +7066,6 @@
 			"version": "1.0.1",
 			"resolved": "https://registry.npmjs.org/indexes-of/-/indexes-of-1.0.1.tgz",
 			"integrity": "sha1-8w9xbI4r00bHtn0985FVZqfAVgc=",
-			"dev": true
-		},
-		"indexof": {
-			"version": "0.0.1",
-			"resolved": "https://registry.npmjs.org/indexof/-/indexof-0.0.1.tgz",
-			"integrity": "sha1-gtwzbSMrkGIXnQWrMpOmYFn9Q10=",
 			"dev": true
 		},
 		"individual": {
@@ -8580,9 +8579,9 @@
 			"dev": true
 		},
 		"node-libs-browser": {
-			"version": "2.2.0",
-			"resolved": "https://registry.npmjs.org/node-libs-browser/-/node-libs-browser-2.2.0.tgz",
-			"integrity": "sha512-5MQunG/oyOaBdttrL40dA7bUfPORLRWMUJLQtMg7nluxUvk5XwnLdL9twQHFAjRx/y7mIMkLKT9++qPbbk6BZA==",
+			"version": "2.2.1",
+			"resolved": "https://registry.npmjs.org/node-libs-browser/-/node-libs-browser-2.2.1.tgz",
+			"integrity": "sha512-h/zcD8H9kaDZ9ALUWwlBUDo6TKF8a7qBSCSEGfjTVIYeqsioSKaAX+BN7NgiMGp6iSIXZ3PxgCu8KS3b71YK5Q==",
 			"dev": true,
 			"requires": {
 				"assert": "^1.1.1",
@@ -8595,7 +8594,7 @@
 				"events": "^3.0.0",
 				"https-browserify": "^1.0.0",
 				"os-browserify": "^0.3.0",
-				"path-browserify": "0.0.0",
+				"path-browserify": "0.0.1",
 				"process": "^0.11.10",
 				"punycode": "^1.2.4",
 				"querystring-es3": "^0.2.0",
@@ -8607,7 +8606,7 @@
 				"tty-browserify": "0.0.0",
 				"url": "^0.11.0",
 				"util": "^0.11.0",
-				"vm-browserify": "0.0.4"
+				"vm-browserify": "^1.0.1"
 			},
 			"dependencies": {
 				"process": {
@@ -9255,9 +9254,9 @@
 			"dev": true
 		},
 		"path-browserify": {
-			"version": "0.0.0",
-			"resolved": "https://registry.npmjs.org/path-browserify/-/path-browserify-0.0.0.tgz",
-			"integrity": "sha1-oLhwcpquIUAFt9UDLsLLuw+0RRo=",
+			"version": "0.0.1",
+			"resolved": "https://registry.npmjs.org/path-browserify/-/path-browserify-0.0.1.tgz",
+			"integrity": "sha512-BapA40NHICOS+USX9SN4tyhq+A2RrN/Ws5F0Z5aMHDp98Fl86lX8Oti8B7uN93L4Ifv4fHOEA+pQw87gmMO/lQ==",
 			"dev": true
 		},
 		"path-dirname": {
@@ -12993,13 +12992,10 @@
 			}
 		},
 		"vm-browserify": {
-			"version": "0.0.4",
-			"resolved": "https://registry.npmjs.org/vm-browserify/-/vm-browserify-0.0.4.tgz",
-			"integrity": "sha1-XX6kW7755Kb/ZflUOOCofDV9WnM=",
-			"dev": true,
-			"requires": {
-				"indexof": "0.0.1"
-			}
+			"version": "1.1.0",
+			"resolved": "https://registry.npmjs.org/vm-browserify/-/vm-browserify-1.1.0.tgz",
+			"integrity": "sha512-iq+S7vZJE60yejDYM0ek6zg308+UZsdtPExWP9VZoCFCz1zkJoXFnAX7aZfd/ZwrkidzdUZL0C/ryW+JwAiIGw==",
+			"dev": true
 		},
 		"void-elements": {
 			"version": "2.0.1",
@@ -13047,9 +13043,9 @@
 			}
 		},
 		"webpack": {
-			"version": "4.32.2",
-			"resolved": "https://registry.npmjs.org/webpack/-/webpack-4.32.2.tgz",
-			"integrity": "sha512-F+H2Aa1TprTQrpodRAWUMJn7A8MgDx82yQiNvYMaj3d1nv3HetKU0oqEulL9huj8enirKi8KvEXQ3QtuHF89Zg==",
+			"version": "4.34.0",
+			"resolved": "https://registry.npmjs.org/webpack/-/webpack-4.34.0.tgz",
+			"integrity": "sha512-ry2IQy1wJjOefLe1uJLzn5tG/DdIKzQqNlIAd2L84kcaADqNvQDTBlo8UcCNyDaT5FiaB+16jhAkb63YeG3H8Q==",
 			"dev": true,
 			"requires": {
 				"@webassemblyjs/ast": "1.8.5",
