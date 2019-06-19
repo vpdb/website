@@ -64,7 +64,7 @@ export default class ErrorReportingService {
 	 */
 	reportError(error, data, tags) {
 		if (!this._isRollbarEnabled() && !this._isRaygunEnabled()) {
-			this.$log.debug('Reporting error: ', error, data);
+			this.$log.debug('Would report error: ', error, data);
 		}
 		if (this._isRollbarEnabled()) {
 			this.$window.Rollbar.error(error, data);
