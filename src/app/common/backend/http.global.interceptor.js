@@ -26,12 +26,16 @@ import {isNumber, isString} from 'lodash';
  * @param {Config} Config
  * @param {NetworkService} NetworkService
  * @param {ErrorReportingService} ErrorReportingService
+ * @param {BuildConfig} BuildConfig
  * @return {{response: response}}
  * @ngInject
  */
-export default function($q, $window, $log, Config, NetworkService, ErrorReportingService) {
+export default function($q, $window, $log, Config, NetworkService, ErrorReportingService, BuildConfig) {
 	return {
 		request: config => {
+			config.headers['X-App-Name'] = 'vpdb/website';
+			config.headers['X-App-Version'] = BuildConfig.version;
+			config.headers['X-App-Revision'] = BuildConfig.revision.hash.substr(0, 7);
 			NetworkService.onRequestStarted(config.url);
 			return config || $q.when(config);
 		},
