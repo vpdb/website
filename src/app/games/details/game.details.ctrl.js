@@ -82,7 +82,14 @@ export default class GameDetailsCtrl {
 
 		this.pageLoading = true;
 		this.newRoms = $localStorage.game_data && $localStorage.game_data[this.gameId] ? $localStorage.game_data[this.gameId].roms : [];
-		this.roms = RomResource.query({ id : this.gameId });
+		RomResource.query({ id : this.gameId, per_page: 100 }, roms => {
+			this.roms = roms.sort((a, b) => {
+				if (!a.rom_files[0] || !b.rom_files[0]) {
+					return 0;
+				}
+				return new Date(a.rom_files[0].modified_at).getTime() < new Date(b.rom_files[0].modified_at).getTime() ? 1 : -1;
+			});
+		});
 		this.romLanguages = [
 			{ value: 'en', label: 'English' },
 			{ value: 'es', label: 'Spanish' },
