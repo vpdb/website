@@ -176,7 +176,7 @@ export default class ReleaseDetailsCtrl {
 			}).filter(v => v), [ 'type' ], [ 'asc' ]);
 
 			// fetch comments
-			this.comments = this.ReleaseCommentResource.query({ releaseId: release.id });
+			this.comments = this.ReleaseCommentResource.query({ releaseId: release.id, per_page: 100 });
 			if (release.moderation) {
 				this.moderationComments = this.ReleaseModerationCommentResource.query({ releaseId: release.id });
 			}
