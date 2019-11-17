@@ -91,7 +91,9 @@ export default class LoginModalCtrl {
 	login() {
 
 		this.setRedirect();
+		this.loading = true;
 		this.AuthResource.authenticate(this.userPass, response => {
+			this.loading = false;
 			if (response.status >= 200 && response.status < 300) {
 				this.errors = {};
 				this.error = null;
@@ -107,6 +109,7 @@ export default class LoginModalCtrl {
 			}
 
 		}, this.ApiHelper.handleErrors(this, () => {
+			this.loading = false;
 			this.message2 = null;
 		}));
 	}

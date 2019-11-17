@@ -104,8 +104,8 @@ include ../../template/_mixins
 		hr.hr--light.padder-top-4x(ng-show="vm.mode === 'login'")
 		.clearfix
 
-		h3#login-toggle.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-hide="vm.mode === 'reset'", ng-click="vm.swap()") {{ vm.mode === 'login' ? 'Register' : 'Login' }}
-		button#dismiss-button.btn.btn-default(ng-click="$close()") Cancel
-		button#login-submit.btn.btn--secondary(ng-show="vm.mode === 'login'", ng-click="vm.login()") Login
-		button#register-submit.btn.btn--secondary(ng-show="vm.mode === 'register'", ng-click="vm.register()") Register
-		button#reset-submit.btn.btn--secondary(ng-show="vm.mode === 'reset'", ng-click="vm.reset()") Reset
+		h3#login-toggle.h--smaller.h--no-margin.a.a--lighter.pull-left(ng-hide="vm.mode === 'reset' || vm.loading", ng-click="vm.swap()") {{ vm.mode === 'login' ? 'Register' : 'Login' }}
+		button#dismiss-button.btn.btn-default(ng-click="$close()" ng-disabled="vm.loading") Cancel
+		button#login-submit.btn.btn--secondary(ng-show="vm.mode === 'login'", ng-click="vm.login()" ng-disabled="vm.loading") Login
+		button#register-submit.btn.btn--secondary(ng-show="vm.mode === 'register'", ng-click="vm.register()" ng-disabled="vm.loading") Register
+		button#reset-submit.btn.btn--secondary(ng-show="vm.mode === 'reset'", ng-click="vm.reset()" ng-disabled="vm.loading") Reset
