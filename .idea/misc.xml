@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="android" url="file://$PROJECT_DIR$/../PIXEL/ioio-android/pixel-touch-android" />
+    <file type="android" url="file://$PROJECT_DIR$/../PIXEL/ioio-simple-app" />
+    <file type="android" url="file://$PROJECT_DIR$/../PIXEL/pixel-art-android" />
+    <file type="android" url="file://$PROJECT_DIR$/../PIXEL/pixel-scrolling-text-android" />
+  </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../PIXEL/ioio-pc/pom.xml~" />
+        <option value="$PROJECT_DIR$/../PIXEL/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-games/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/ioio-android/pom.xml~" />
+        <option value="$PROJECT_DIR$/../PIXEL/ioio-android/pixel-touch-pc/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/ioio-android/pixel-touch-android/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-commons/pom.xml~" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-plugins/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-weather/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-touch-pc/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/ioio-simple-app/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-pc-twitter/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-art-android/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-art-android/pom.xml~" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-plugin-tests/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixelcade-frontend/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixelcade-installer/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixelcade-pipeserver/pom.xml" />
+        <option value="$PROJECT_DIR$/../PIXEL/pixel-scrolling-text-android/pom.xml" />
+      </list>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6">
     <output url="file://$PROJECT_DIR$/out" />

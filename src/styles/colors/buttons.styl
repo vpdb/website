@@ -44,7 +44,7 @@
 			border-color rgba(black, 0.3)
 			.svg-icon
 				fill $color-background
-			&:hover
+			&:hover:not([disabled])
 				color $color-background
 				background-color $color-primary-light
 			.badge
@@ -111,7 +111,7 @@
 			color #eee
 			background-color $color-primary-black
 			border-color rgba(black, 0.2)
-			&:hover
+			&:hover:not([disabled])
 				color #eee
 				background-color $color-primary-black-light
 			.svg-icon

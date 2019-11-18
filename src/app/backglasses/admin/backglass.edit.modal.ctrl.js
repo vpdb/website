@@ -46,6 +46,7 @@ export default class BackglassEditModalCtrl {
 		this.params = params;
 		this.backglass = params.backglass;
 		this.game = params.game;
+		this.gameTitle = params.game.title;
 		this.status = { loading: false, offline: false };
 
 		this.reset();
@@ -57,6 +58,8 @@ export default class BackglassEditModalCtrl {
 
 	gameSelected(item, model) {
 		this.updatedBackglass._game = model.id;
+		this.gameTitle = model.title;
+		this.editingGame = false;
 	}
 
 	reset() {
@@ -81,7 +84,9 @@ export default class BackglassEditModalCtrl {
 	}
 
 	submit() {
+		this.submitting = true;
 		this.BackglassResource.update({ id: this.backglass.id }, this.updatedBackglass, () => {
+			this.submitting = false;
 			this.backglass.description = this.updatedBackglass.description;
 			this.backglass.acknowledgements = this.updatedBackglass.acknowledgements;
 			this.App.showNotification('Successfully updated backlass.');

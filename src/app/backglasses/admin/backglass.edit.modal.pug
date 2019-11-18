@@ -5,44 +5,52 @@ include ../../template/_mixins
 
 		//-- GAME
 		//---------------------------------------------------------------------
-		h3.h--no-margin Select Game
-		p {{ vm.params.text }}
-		.form-group
-			input.form-control.input-lg(
-				type="text",
-				placeholder="Start typing...",
-				ng-model="query",
-				uib-typeahead="game as game.title for game in vm.findGame($viewValue)",
-				typeahead-on-select="vm.gameSelected($item, $model, $label)",
-				typeahead-loading="searching",
-				typeahead-template-url="gameListItem",
-				typeahead-min-length="3",
-				typeahead-wait-ms="250",
-				focus-on
-			)
-		div.alert.alert-warning(ng-show="vm.status.offline")
-			+icon('warning').space-right.shift-up
-			| You seem to be offline. Try again by typing.
+
+		div(ng-hide="vm.editingGame")
+			h3.h--no-margin.pull-left {{ vm.gameTitle }}
+			button.btn.btn-hollow.padder-top.pull-right(ng-click="vm.editingGame = true") Change Game
+			.clearfix
+			hr.hr--margin-small
+		div(ng-hide="!vm.editingGame")
+			h3.h--no-margin Change Game
+			p {{ vm.params.text }}
+			.form-group
+				input.form-control.input-lg(
+					type="text",
+					placeholder="Start typing...",
+					ng-model="query",
+					uib-typeahead="game as game.title for game in vm.findGame($viewValue)",
+					typeahead-on-select="vm.gameSelected($item, $model, $label)",
+					typeahead-loading="searching",
+					typeahead-template-url="gameListItem",
+					typeahead-min-length="3",
+					typeahead-wait-ms="250",
+					focus-on
+				)
+			div.alert.alert-warning(ng-show="vm.status.offline")
+				+icon('warning').space-right.shift-up
+				| You seem to be offline. Try again by typing.
 
 		//-- DESCRIPTION
 		//---------------------------------------------------------------------
 		h3.h--no-margin Description
-		editor.tabset--light(ng-model="vm.updatedBackglass.description", placeholder="Description of the backglass", markdown-text="Markdown enabled.")
+		editor.tabset--light.padder-bottom(ng-model="vm.updatedBackglass.description", placeholder="Description of the backglass", markdown-text="Markdown enabled.")
 
 		//-- ACKNOWLEDGEMENTS
 		//---------------------------------------------------------------------
 		h3.h--no-margin Acknowledgements
 		editor.tabset--light(ng-model="vm.updatedBackglass.acknowledgements", placeholder="E.g.: Thanks to @mom for supporting me!", markdown-text="Markdown enabled.")
 
-		button.btn.btn-primary.btn-red.shift-up-2x.pull-right(ng-click="vm.remove(backglass)", ng-show="vm.AuthService.hasPermission('backglasses/delete') || (vm.AuthService.isAuthor(backglass) && vm.AuthService.hasPermission('backglasses/delete-own'))")
+		.clearfix
+		button.btn.btn-primary.btn-red.padder-top.pull-right(ng-click="vm.remove(vm.backglass)", ng-show="vm.AuthService.hasPermission('backglasses/delete') || (vm.AuthService.isAuthor(vm.backglass) && vm.AuthService.hasPermission('backglasses/delete-own'))")
 			+icon('trash').space-right
 			| Delete
 		.clearfix
 
 	.modal-footer
-		button.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
-		button.btn.btn-default.pull-left(ng-click="vm.reset()") Reset
-		button.btn.btn-primary(ng-click="vm.submit()") Save
+		button.btn.btn-hollow.pull-left(ng-click="$dismiss()", ng-disabled="vm.submitting") Cancel
+		button.btn.btn-default.pull-left(ng-click="vm.reset()", ng-disabled="vm.submitting") Reset
+		button.btn.btn-primary(ng-click="vm.submit()", ng-disabled="vm.submitting") Save
 
 
 script#gameListItem(type="text/ng-template")

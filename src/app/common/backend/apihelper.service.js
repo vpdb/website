@@ -253,6 +253,9 @@ export default class ApiHelper {
 		}
 		opt = isObject(opt) ? opt : {};
 		return response => {
+			if (scope.submitting) {
+				scope.submitting = false;
+			}
 			if (!response.data) {
 				this.ModalService.error({
 					subtitle: 'Connection error',
@@ -271,9 +274,6 @@ export default class ApiHelper {
 			}
 
 			this.logError('Request error', response);
-			if (scope.submitting) {
-				scope.submitting = false;
-			}
 			scope.message = null;
 			scope.errors = { __count: 0 };
 			scope.error = null;

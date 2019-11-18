@@ -1,28 +1,28 @@
 {
 	"name": "production",
-	"authHeader": "Authorization",
+	"authHeader": "X-Authorization",
 	"apiUri": {
 		"protocol": "https",
-		"hostname": "api.vpdb.io",
+		"hostname": "api.staging.vpdb.io",
 		"port": 443,
 		"pathname": ""
 	},
 	"storageUri": {
 		"protocol": "https",
-		"hostname": "storage.vpdb.io",
+		"hostname": "storage.staging.vpdb.io",
 		"port": 443,
 		"pathname": ""
 	},
 	"previewUri": {
 		"protocol": "https",
-		"hostname": "preview.vpdb.io",
+		"hostname": "preview.staging.vpdb.io",
 		"port": 443,
 		"pathname": ""
 	},
 	"webUri": {
-		"protocol": "https",
-		"hostname": "vpdb.io",
-		"port": 443
+		"protocol": "http",
+		"hostname": "localhost",
+		"port": 3333
 	},
 	"raygun": {
 		"enabled": false,

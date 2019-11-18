@@ -46,7 +46,7 @@ export default class BackglassDetailsModalCtrl {
 		this.file = this.backglass.versions[0].file;
 		this.numDownloads = 0;
 		this.backglass.versions.forEach(version => {
-			this.numDownloads += version.file.counter.downloads;
+			this.numDownloads += version.counter.downloads;
 		});
 	}
 
@@ -64,6 +64,7 @@ export default class BackglassDetailsModalCtrl {
 			controller: 'BackglassEditModalCtrl',
 			controllerAs: 'vm',
 			size: 'md',
+			backdrop: 'static',
 			resolve: {
 				params: () => {
 					return {
