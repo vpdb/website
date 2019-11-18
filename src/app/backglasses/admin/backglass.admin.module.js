@@ -25,10 +25,12 @@ import FileUploadModule from '../../shared/file-upload/file.upload.module';
 import EditorModule from '../../shared/editor/editor.module';
 import BackglassAddComponent from './backglass.add.component';
 import BackglassEditModalCtrl from './backglass.edit.modal.ctrl';
+import BackglassVersionAddModalCtrl from './backglass.version.add.modal.ctrl';
 
 const BACKGLASS_ADMIN_MODULE = angular
 	.module('vpdb.backglasses.admin', [ uiDatepickerPopup, uiTimepicker, AuthorSelectModule.name, FileUploadModule.name, EditorModule.name ])
 	.component('backglassAddComponent', new BackglassAddComponent())
-	.controller('BackglassEditModalCtrl', BackglassEditModalCtrl);
+	.controller('BackglassEditModalCtrl', BackglassEditModalCtrl)
+	.controller('BackglassVersionAddModalCtrl', BackglassVersionAddModalCtrl);
 
 export { BACKGLASS_ADMIN_MODULE };

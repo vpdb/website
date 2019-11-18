@@ -1,0 +1,99 @@
+include ../../template/_mixins
+
+.theme-light
+	.modal-header
+		h1.h--small.h--no-margin Add DirectB2S Backglass Version
+
+	.modal-body
+
+		//----------------------------------------------------------------------
+		//- FILE ---------------------------------------------------------------
+		h4 Upload File
+		hr.hr--light
+		.panel.panel--dropzone(
+			file-upload="{ controller: vm, type: 'backglass', key: 'backglass', status: vm.meta.files, onSuccess: vm.onBackglassUpload, allowedExtensions: ['directb2s'], allowMultipleFiles: false }"
+			ngf-drag-over-class="'panel--dragging'",
+			ngf-select-disabled="vm.meta.files.backglass.uploading"
+			ngf-drop-disabled="vm.meta.files.backglass.uploading"
+			ng-class="{ error: vm.errors._file }"
+			ng-show="!vm.meta.files.backglass.variations['full']"
+		)
+			uib-progressbar.no-space-top.progress--fixed-absolute.progress-striped.active(
+				value="vm.meta.files.backglass.progress",
+				ng-show="vm.meta.files.backglass.uploading"
+			)
+			label.center-block.text-center: small: i Drop your .directb2s file in here.
+
+		.panel.panel--blank(
+			ng-show="vm.meta.files.backglass.variations['full']"
+			file-upload="{ controller: vm, type: 'backglass', key: 'backglass', status: vm.meta.files, onSuccess: vm.onBackglassUpload, allowedExtensions: ['directb2s'], allowMultipleFiles: false }"
+			ngf-drag-over-class="'panel--dragging'"
+			ngf-select-disabled="vm.meta.files.backglass.uploading"
+			ngf-drop-disabled="vm.meta.files.backglass.uploading"
+		)
+			.panel-body.a.a--darker
+				.img.img--ar-bg.loaded(img-bg="vm.meta.files.backglass.variations['full']")
+					.text-center.vertical-center--100
+						.span(ng-show="img.loading")
+							+icon('gear').svg-3x.svg-spin--slow
+							p Generating thumbnail...
+		.alert.alert-danger.padder-bottom(ng-show="vm.errors._file")
+			+icon('warning').shift-up.space-right
+			| {{ vm.errors._file }}
+
+		//----------------------------------------------------------------------
+		//- VERSION ------------------------------------------------------------
+		.form-group(ng-class="{ error: vm.errors.version }")
+			label.control-label(for="version") Version
+			.row
+				.col-sm-2: input#version.form-control(type="text", ng-model="vm.backglassVersion.version", placeholder="x.x")
+				.col.sm-10: i Don't prefix with <code>v</code>.
+			.alert.alert-danger.padder-top(ng-show="vm.errors.version")
+				+icon('warning').shift-up.space-right
+				| {{ vm.errors.version }}
+		.clearfix
+
+		//----------------------------------------------------------------------
+		//- RELEASE DATE -------------------------------------------------------
+		.form-group(ng-class="{ error: vm.errors.released_at }")
+			label.control-label Release Date
+			.row
+				.col-sm-3: .input-group
+					input.form-control.datepicker(
+						type="text",
+						ng-model="vm.backglassVersion.released_at",
+						ng-required="true",
+						uib-datepicker-popup="yyyy-MM-dd",
+						format-day-header="EE"
+						is-open="vm.calendarOpened",
+						close-text="Close",
+						show-weeks="false",
+						starting-day="1"
+					)
+					span.input-group-addon: +icon('calendar').a(ng-click="vm.openCalendar($event)")
+				.col-sm-3
+					div(uib-timepicker, ng-model="vm.backglassVersion.released_at", hour-step="1", minute-step="5", show-meridian="false")
+		.clearfix
+		div.alert.alert-danger.padder-top-2x.padder-bottom(ng-show="vm.errors.released_at")
+			+icon('warning').shift-up.space-right
+			| {{ vm.errors.released_at }}
+
+		//----------------------------------------------------------------------
+		//- RELEASE NOTES ------------------------------------------------------
+		.form-group
+			label.control-label(for="version") Release Notes
+			editor.tabset--light(ng-model="vm.backglassVersion.changes", placeholder="Release Notes", markdown-text="Markdown enabled. This will show up in the change log of the backglass.")
+
+
+	.modal-footer
+		button.btn.btn-hollow.pull-left(ng-click="$dismiss()", ng-disabled="vm.submitting") Cancel
+		button.btn.btn-default.pull-left(ng-click="vm.reset()", ng-disabled="vm.submitting") Reset
+		button.btn.btn-primary(ng-click="vm.submit()", ng-disabled="vm.submitting") Save
+
+
+script#gameListItem(type="text/ng-template")
+	div.media.media--game-item
+		.media-left
+			.img.img--ar-bg(img-bg="$parent.$parent.$parent.$parent.vm.App.img(match.model.backglass, 'small')")
+		.media-body
+			h3.h--no-margin.h--lighter {{ match.model.title }}

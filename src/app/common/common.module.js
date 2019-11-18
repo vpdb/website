@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
 import angular from 'angular';
 import uiTypeahead from 'angular-ui-bootstrap/src/typeahead';
 import {
@@ -35,18 +36,18 @@ import {
 	GameResource,
 	GameStarResource
 } from './backend/game.resource';
-import { PlanResource } from './backend/plan.resource';
-import { BuildResource } from './backend/build.resource';
-import { RolesResource } from './backend/roles.resource';
-import { BackglassModerationResource, BackglassResource } from './backend/backglass.resource';
-import { AuthRedirectResource, AuthResource, ProfileResource, TokenResource } from './backend/auth.resource';
-import { MediumResource } from './backend/medium.resource';
-import { FileBlockmatchResource, FileResource } from './backend/file.resource';
-import { UserConfirmationResource, UserResource, UserStarResource } from './backend/user.resource';
-import { RomResource } from './backend/rom.resource';
-import { IpdbResource } from './backend/ipdb.resource';
-import { TagResource } from './backend/tag.resource';
-import { CommentResource } from './backend/comment.resource';
+import {PlanResource} from './backend/plan.resource';
+import {BuildResource} from './backend/build.resource';
+import {RolesResource} from './backend/roles.resource';
+import {BackglassModerationResource, BackglassResource, BackglassVersionResource} from './backend/backglass.resource';
+import {AuthRedirectResource, AuthResource, ProfileResource, TokenResource} from './backend/auth.resource';
+import {MediumResource} from './backend/medium.resource';
+import {FileBlockmatchResource, FileResource} from './backend/file.resource';
+import {UserConfirmationResource, UserResource, UserStarResource} from './backend/user.resource';
+import {RomResource} from './backend/rom.resource';
+import {IpdbResource} from './backend/ipdb.resource';
+import {TagResource} from './backend/tag.resource';
+import {CommentResource} from './backend/comment.resource';
 import ApiHelper from './backend/apihelper.service';
 import AuthCallbackCtrl from './auth/auth.callback.ctrl';
 import AuthService from './auth/auth.service';
@@ -90,7 +91,7 @@ import hexFilter from './util/hex.filter';
 import httpAuthInterceptor from './backend/http.auth.interceptor';
 import httpGlobalInterceptor from './backend/http.global.interceptor';
 import httpInterceptorConfig from './backend/http.interceptor.config';
-import { BackgroundImageDirective } from './image/img-bg.directive';
+import {BackgroundImageDirective} from './image/img-bg.directive';
 import imgSrc from './image/img-src.directive';
 import jsonLd from './util/json-ld.directive';
 import onEnter from './util/on-enter.directive';
@@ -99,7 +100,6 @@ import sort from './util/sort.directive';
 import ratingFormatFilter from './games/rating.format.filter';
 import timeAgoFilter from './util/time-ago.filter';
 import userInfo from './user/user.info.directive';
-
 
 /**
  * These are global components that are or can be used on any page,
@@ -127,6 +127,7 @@ export default angular.module('vpdb.common', [ uiTypeahead ])
 	.service('AuthResource', AuthResource)
 	.service('AuthRedirectResource', AuthRedirectResource)
 	.service('BackglassResource', BackglassResource)
+	.service('BackglassVersionResource', BackglassVersionResource)
 	.service('BackglassModerationResource', BackglassModerationResource)
 	.service('BuildResource', BuildResource)
 	.service('CommentResource', CommentResource)

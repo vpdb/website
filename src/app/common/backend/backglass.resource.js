@@ -30,6 +30,18 @@ export class BackglassResource {
 	}
 }
 
+export class BackglassVersionResource {
+	/**
+	 * @param $resource
+	 * @param {ConfigService} ConfigService
+	 * @ngInject
+	 */
+	constructor($resource, ConfigService) {
+		return $resource(ConfigService.apiUri('/v1/backglasses/:id/versions'), {}, {
+		});
+	}
+}
+
 export class BackglassModerationResource {
 	/**
 	 * @param $resource
