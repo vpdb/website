@@ -19,6 +19,7 @@
 
 import angular from 'angular';
 import BackglassEditModalTpl from './admin/backglass.edit.modal.pug';
+import BackglassVersionAddModalTpl from './admin/backglass.version.add.modal.pug';
 
 /**
  * Shows backglass details in a modal dialog.
@@ -55,6 +56,29 @@ export default class BackglassDetailsModalCtrl {
 			file.counter.downloads++;
 			this.numDownloads++;
 		});
+	}
+
+	add(backglass) {
+		this.$uibModalInstance.close();
+		this.$uibModal.open({
+			templateUrl: BackglassVersionAddModalTpl,
+			controller: 'BackglassVersionAddModalCtrl',
+			controllerAs: 'vm',
+			size: 'md',
+			backdrop: 'static',
+			resolve: {
+				params: () => {
+					return {
+						backglass: backglass,
+						game: this.game,
+					};
+				}
+			}
+		}).result.then(result => {
+			if (!result) {
+				this.game.backglasses.splice(this.game.backglasses.findIndex(bg => bg.id === backglass.id), 1);
+			}
+		}).catch(angular.noop);
 	}
 
 	edit(backglass) {
