@@ -8,7 +8,7 @@ include ../../template/_mixins
 	//-====================================================================
 	.col-sm-4.col-md-3.col-sm-push-8.col-md-push-9.col--menu(ng-if="vm.release")
 
-		a.a--block.text-center(ui-sref="gameDetails({id: vm.game.id})")
+		a.a--block.text-center(ng-if="vm.game.logo", ui-sref="gameDetails({id: vm.game.id})")
 			img.img--logo(ng-src="{{ vm.App.img(vm.game.logo, 'medium') }}").padder-bottom
 
 		//-- PLAYFIELD SHOTS
