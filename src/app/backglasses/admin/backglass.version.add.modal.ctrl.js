@@ -102,11 +102,12 @@ export default class BackglassVersionAddModalCtrl {
 
 	submit() {
 		this.submitting = true;
-		this.BackglassVersionResource.save({ id: this.backglass.id }, this.backglassVersion, result => {
+		this.BackglassVersionResource.save({ id: this.backglass.id }, this.backglassVersion, addedBackglassVersion => {
 
-			console.log('posted', result);
+			this.backglass.versions.push(addedBackglassVersion);
 
 			// cleanup
+			this.backglassVersion.submitted = true;
 			this.submitting = false;
 			this.reset();
 
