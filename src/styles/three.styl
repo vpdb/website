@@ -106,31 +106,32 @@
 	background-color  $color-navbar
 	padding 15px
 
-.rzslider
-	width 90%
-	margin-left 15px
-	margin-top 20px
+#gl-container
+	.rzslider
+		width 90%
+		margin-left 15px
+		margin-top 20px
 
-	.rz-pointer
-		width 20px
-		height 20px
-		background-color $color-primary
-		top -9px
-		&:after
-			top 6px
-			left 6px
-			background transparent
-		&.rz-active:after
-			background transparent
-		&:hover:after
-			background transparent
+		.rz-pointer
+			width 20px
+			height 20px
+			background-color $color-primary
+			top -9px
+			&:after
+				top 6px
+				left 6px
+				background transparent
+			&.rz-active:after
+				background transparent
+			&:hover:after
+				background transparent
 
-		&:focus
-			outline none
+			&:focus
+				outline none
 
-	.rz-bar
-		background-color $color-darker
+		.rz-bar
+			background-color $color-darker
 
-	&[disabled] .rz-pointer
-		cursor default
-		background-color #403f3d
+		&[disabled] .rz-pointer
+			cursor default
+			background-color #403f3d
