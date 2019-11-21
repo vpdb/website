@@ -46,6 +46,7 @@ export default class BackglassVersionAddModalCtrl {
 		BootstrapPatcher.patchTimePicker();
 
 		this.params = params;
+		this.backglass = params.backglass;
 		this.game = params.game;
 		this.status = { loading: false, offline: false };
 
@@ -91,6 +92,12 @@ export default class BackglassVersionAddModalCtrl {
 		this.backglassVersion._file = bg.id;
 		this.meta.files.backglass = bg;
 		this.meta.files.backglass.storage = { id: bg.id }; // so file-upload deletes old file when new one gets dragged over
+	}
+
+	openCalendar($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		this.calendarOpened = true;
 	}
 
 	submit() {

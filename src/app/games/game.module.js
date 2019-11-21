@@ -17,18 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 import angular from 'angular';
-import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
-import uiCollapse from 'angular-ui-bootstrap/src/collapse';
-import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 import uiAccordion from 'angular-ui-bootstrap/src/accordion';
+import uiCollapse from 'angular-ui-bootstrap/src/collapse';
+import uiProgressbar from 'angular-ui-bootstrap/src/progressbar';
+import uiTooltip from 'angular-ui-bootstrap/src/tooltip';
 
 import FileUploadModule from '../shared/file-upload/file.upload.module';
 import MarkdownModule from '../shared/markdown/markdown.module';
 import RatingModule from '../shared/rating/rating.module';
 import BackglassModule from '../backglasses/backglass.module';
 import LightboxModule from '../shared/lightbox/lightbox.module';
-import { BACKGLASS_ADMIN_MODULE } from '../backglasses/admin/backglass.admin.module';
 
+import {BACKGLASS_ADMIN_MODULE} from '../backglasses/admin/backglass.admin.module';
 import GameListComponent from './list/game.list.component';
 import GameDetailsComponent from './details/game.details.component';
 import GameReleaseDetailsCtrl from './details/game.release.details.ctrl';
