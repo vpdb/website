@@ -110,7 +110,7 @@
 		"pug": "2.0.4",
 		"pug-html-loader": "1.1.5",
 		"pug-loader": "2.4.0",
-		"raw-loader": "2.0.0",
+		"raw-loader": "3.1.0",
 		"rollbar-sourcemap-webpack-plugin": "2.5.1",
 		"stream-to-array": "2.3.0",
 		"style-loader": "0.23.1",
