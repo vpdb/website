@@ -77,7 +77,7 @@ export default class ReleaseService {
 	getTableFiles(release) {
 		const files = [];
 		for (const version of release.versions) {
-			files.push(...version.files.filter(f => this.isTableFile(f)));
+			files.push(...version.files.filter(f => this.isTableFile(f)).map(f => { f.releaseVersion = version.version; return f; }));
 		}
 		return files;
 	}

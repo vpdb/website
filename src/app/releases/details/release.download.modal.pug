@@ -11,12 +11,16 @@ include ../../template/_mixins
 		//- FILES
 		h3.hr--margin-smaller Choose your Flavors:
 		.row
-			.col-sm-6(ng-repeat="file in vm.tableFiles")
+			.col-md-6(ng-repeat="file in vm.tableFiles")
 				.flavor-item.media.padder-top.padder-bottom(ng-class="{ active: vm.downloadFiles[file.file.id] }", ng-click="vm.toggleFile(file)")
-					.media-left
-						img.media-object.img.img-responsive.img--rounded-more(img-src="{{ file.playfield_image.variations['square-2x'].url }}")
-					.media-body
-						label.label--block
+					.ribbon v{{ file.releaseVersion }}
+					.media-left.media-top
+						img.img.img--xlg.img--rounded-more(img-src="{{ file.playfield_image.variations['square-2x'].url }}")
+					.media-body.media-top
+						p
+							strong {{ file.file.name }} <br>
+							i From {{ file.file.created_at | timeAgo }}
+						label.label--block(ng-if="file.flavor.orientation !== 'any' || file.flavor.lighting !== 'any'")
 							strong {{ vm.Flavors.orientation.values[file.flavor.orientation].name }},
 							| &nbsp;{{ vm.Flavors.lighting.values[file.flavor.lighting].name }}
 						label.label--block
