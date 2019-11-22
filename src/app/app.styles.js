@@ -52,6 +52,7 @@ import '../styles/apidoc.styl';        // 24
 import '../styles/notifications.styl'; // 25
 import '../styles/jumbotron.styl';     // 26
 import '../styles/draggable.styl';
+import '../styles/ribbon.styl';
 
 // Animations
 import '../styles/flipbox.styl';
