@@ -74,10 +74,6 @@ export default class BackglassDetailsModalCtrl {
 					};
 				}
 			}
-		}).result.then(result => {
-			if (!result) {
-				this.game.backglasses.splice(this.game.backglasses.findIndex(bg => bg.id === backglass.id), 1);
-			}
 		}).catch(angular.noop);
 	}
 

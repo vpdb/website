@@ -104,7 +104,7 @@ export default class BackglassVersionAddModalCtrl {
 		this.submitting = true;
 		this.BackglassVersionResource.save({ id: this.backglass.id }, this.backglassVersion, addedBackglassVersion => {
 
-			this.backglass.versions.push(addedBackglassVersion);
+			this.backglass.versions.unshift(addedBackglassVersion);
 
 			// cleanup
 			this.backglassVersion.submitted = true;
