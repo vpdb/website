@@ -56,13 +56,19 @@ include ../template/_mixins
 					+icon('angle-down').smaller.shift-down.pull-right
 
 				div.markdown.space-left-2x(markdown="version.changes")
+		div(ng-if="vm.canUpdate || vm.canDelete")
+			hr
+			button.btn.btn-default.pull-left.space-right(ng-click="vm.edit(vm.backglass)", ng-if="vm.canUpdate")
+				+icon('edit').space-right
+				| Edit
+			button.btn.btn-default.pull-left.space-right(ng-click="vm.add(vm.backglass)", ng-if="vm.canUpdate")
+				+icon('plus-circle').space-right
+				| Add
+			button.btn.btn-default.pull-left.space-right(ng-click="vm.delete(vm.backglass)", ng-if="vm.canDelete")
+				+icon('trash')
+				| Delete
+			.clearfix
 
 	.modal-footer
 		button.btn.btn-hollow.pull-left(ng-click="$dismiss()") Cancel
-		button.btn.btn-default.pull-left(ng-click="vm.edit(vm.backglass)", ng-if="vm.AuthService.hasPermission('backglasses/update') || (vm.AuthService.isAuthor(vm.backglass) && vm.AuthService.hasPermission('backglasses/update-own'))")
-			+icon('edit').space-right
-			| Edit
-		button.btn.btn-default.pull-left(ng-click="vm.add(vm.backglass)", ng-if="vm.AuthService.hasPermission('backglasses/update') || (vm.AuthService.isAuthor(vm.backglass) && vm.AuthService.hasPermission('backglasses/update-own'))")
-			+icon('plus-circle').space-right
-			| Add
 		button.btn.btn-primary(ng-click="vm.download(vm.file)") Download
