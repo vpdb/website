@@ -53,18 +53,18 @@ include ../../../template/_mixins
 		hr
 		include release.add-01-upload.files.pug
 
-		div(ng-show="vm.meta.mode == 'newVersion' || (vm.meta.files | fileext:['vpt','vpx']).length > 0")
+		div(ng-show="vm.hasFlavors && (vm.meta.mode == 'newVersion' || (vm.meta.files | fileext:['vpt','vpx']).length > 0)")
 			h1 2. Define your Flavors
 			hr
 			include release.add-03-flavors.pug
 
 		div(ng-show="vm.meta.mode == 'newVersion' || (vm.meta.files | fileext:['vpt','vpx']).length > 0")
-			h1 3. Set Compatibility
+			h1 {{ 3 - (vm.hasFlavors ? 0 : 1) }}. Set Compatibility
 			hr
 			include release.add-05-compat.pug
 
 		div(ng-show="vm.meta.mode == 'newVersion' || (vm.meta.files | fileext:['vpt','vpx']).length > 0")
-			h1 4. Upload Media
+			h1 {{ 4 - (vm.hasFlavors ? 0 : 1) }}. Upload Media
 			hr
 			include release.add-07-upload.media.pug
 

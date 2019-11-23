@@ -147,6 +147,7 @@ export default class ReleaseAddCtrl extends ReleaseBaseCtrl {
 		if (this.tags) {
 			this.availableTags = this.tags.slice();
 		}
+		this.hasFlavors = false;
 
 
 		// TODO remove files via API

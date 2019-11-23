@@ -2,7 +2,7 @@
 	+icon('info')
 	p A flavor defines attributes that are relevant to the table file, so users can find more easily what they're interested in. You can upload multiple flavors by adding several <code>.vpt</code> or <code>.vpx</code> files in step {{ step.files }}.
 ul#flavors.list--files
-	li.panel(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']", ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)].flavor }")
+	li.panel(ng-repeat="file in vm.meta.files | fileext:['vpt']", ng-class="{ error: vm.errors.versions[0].files[vm.meta.files.indexOf(file)].flavor }")
 		.col--list-files-left
 			+icon('{{ file.icon }}').svg-4x
 		.col--list-files-right

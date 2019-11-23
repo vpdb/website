@@ -132,6 +132,7 @@ export default class ReleaseBaseCtrl {
 		this.FileResource.delete({ id: file.storage.id }, () => {
 			this.meta.files.splice(this.meta.files.indexOf(file), 1);
 			this.releaseVersion.files.splice(this.releaseVersion.files.indexOf(this.releaseVersion.files.find(f => f.id === file.storage.id)), 1);
+			this.hasFlavors = this.meta.files.filter(f => f.mimeType === 'application/x-visual-pinball-table').length > 0;
 
 		}, this.ApiHelper.handleErrorsInDialog('Error removing file.'));
 	}
@@ -181,6 +182,7 @@ export default class ReleaseBaseCtrl {
 				tableFile.flavor.lighting = 'any';
 				tableFile.flavor.orientation = 'any';
 			}
+			this.hasFlavors = this.meta.files.filter(f => f.mimeType === 'application/x-visual-pinball-table').length > 0;
 
 			// get auth tokens for generated screenshot
 			if (status.storage.variations && status.storage.variations.screenshot) {

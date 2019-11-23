@@ -29,11 +29,12 @@ include ../../../template/_mixins
 		hr
 		include release.add-02-name.pug
 
-		h1 3. Define your Flavors
-		hr
-		include release.add-03-flavors.pug
+		div(ng-show="vm.hasFlavors")
+			h1 3. Define your Flavors
+			hr
+			include release.add-03-flavors.pug
 
-		h1 4. Describe your Release
+		h1 {{ 4 - (vm.hasFlavors ? 0 : 1) }}. Describe your Release
 		hr
 		.form-group
 			editor#description.tabset--light(ng-model="vm.release.description", placeholder="Description of the release", markdown-text="Markdown enabled. This will show up globally under your release.")
@@ -63,15 +64,15 @@ include ../../../template/_mixins
 		hr.hr--light.hr--margin-small
 		include release.add-04-links.pug
 
-		h1 5. Set Compatibility
+		h1 {{ 5 - (vm.hasFlavors ? 0 : 1) }}. Set Compatibility
 		hr
 		include release.add-05-compat.pug
 
-		h1 6. Give Credits
+		h1 {{ 6 - (vm.hasFlavors ? 0 : 1) }}. Give Credits
 		hr
 		include release.add-06-credits.pug
 
-		h1 7. Upload Media
+		h1 {{ 7 - (vm.hasFlavors ? 0 : 1) }}. Upload Media
 		hr
 		include release.add-07-upload.media.pug
 

@@ -98,7 +98,7 @@ span#media(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 
 	.text-center(ng-hide="vm.getReleaseFile(file).flavor.orientation")
 		+icon('warning').shift-up.space-right
-		i Pleased set the <b>orientation</b> of the file under 3. before uploading media.
+		i Please set the <b>orientation</b> of the file under 3. before uploading media.
 
 	.alert.alert-danger(ng-show="vm.errors.versions[0].files[vm.meta.files.indexOf(file)]._playfield_image")
 		+icon('warning').shift-up.space-right
@@ -106,4 +106,4 @@ span#media(ng-repeat="file in vm.meta.files | fileext:['vpt','vpx']")
 
 .text-center(ng-show="(vm.meta.files | fileext:['vpt','vpx']).length == 0")
 	+icon('warning').shift-up.space-right
-	i Define the flavor of your uploaded files under {{ vm.step.flavors }}. in order to upload media.
+	i Upload <code>.vpt</code>/<code>.vpx</code> files under {{ vm.step.files }}. before uploading media.
