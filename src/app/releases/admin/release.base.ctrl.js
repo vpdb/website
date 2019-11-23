@@ -176,6 +176,12 @@ export default class ReleaseBaseCtrl {
 			tableFile = this.releaseVersion.files.find(f => f._randomId === status.randomId);
 			tableFile._file = status.storage.id;
 
+			// set flavor if vpx
+			if (status.mimeType === 'application/x-visual-pinball-table-x') {
+				tableFile.flavor.lighting = 'any';
+				tableFile.flavor.orientation = 'any';
+			}
+
 			// get auth tokens for generated screenshot
 			if (status.storage.variations && status.storage.variations.screenshot) {
 				this.meta.mediaLinks['screenshot:' + status._randomId] = status.storage.variations.screenshot;
