@@ -16,16 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-// Firebase App (the core Firebase SDK) is always required and must be listed first
-import * as firebase from 'firebase/app';
-import 'firebase/performance';
-
 import angular from 'angular';
 import { VPDB } from './app';
-
-// eslint-disable-next-line
-firebase.initializeApp(FIREBASE_CONFIG);
-firebase.performance();
 
 // eslint-disable-next-line
 const raygunConfig = WEBSITE_CONFIG.raygun;
