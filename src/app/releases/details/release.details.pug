@@ -245,24 +245,7 @@ include ../../template/_mixins
 		//-- EXISTING COMMENTS
 		//---------------------------------------------------------------------
 		label(ng-show="!vm.comments || vm.comments.length == 0") No comments yet.
-		.media.media--no-margin.collapse-in-animation(ng-repeat="comment in vm.comments track by comment.id", ng-init="show=true")
-			.collapse-in-animation-inner
-				.media-left.avatar
-					img.img-avatar.pull-left(gravatar-src="comment.from.gravatar_id", gravatar-default="retro", fallback-icon="user")
-				.media-body.media--full-width
-					.panel.panel--inner
-						.panel-triangle
-						.panel-heading
-							label
-							strong {{ comment.from.name }}
-							| &nbsp;commented {{ comment.created_at | timeAgo }}
-							.pull-right(uib-dropdown, ng-if="vm.AuthService.hasPermission('releases/moderate')")
-								a(uib-dropdown-toggle): +icon('kebab-horizontal')
-								ul.comment-dropdown-menu(uib-dropdown-menu)
-									li
-										a(ng-click="vm.moveComment(comment.id, 'release_moderation', vm.release.id)") Move to moderation comments
-						.panel-body
-							div.markdown(markdown="comment.message")
+		release-comment(ng-repeat="comment in vm.commentsHead track by comment.id", comment="comment", release="vm.release")
 
 		//-- NEW COMMENT
 		//---------------------------------------------------------------------

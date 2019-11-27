@@ -1,0 +1,20 @@
+include ../../template/_mixins
+
+.media.media--no-margin.collapse-in-animation
+	.collapse-in-animation-inner
+		.media-left.avatar
+			img.img-avatar.pull-left(gravatar-src="vm.comment.from.gravatar_id", gravatar-default="retro", fallback-icon="user")
+		.media-body.media--full-width
+			.panel.panel--inner
+				.panel-triangle
+				.panel-heading
+					label
+					strong {{ vm.comment.from.name }}
+					| &nbsp;commented {{ vm.comment.created_at | timeAgo }}
+					.pull-right(uib-dropdown, ng-if="vm.AuthService.hasPermission('releases/moderate')")
+						a(uib-dropdown-toggle): +icon('kebab-horizontal')
+						ul.comment-dropdown-menu(uib-dropdown-menu)
+							li
+								a(ng-click="vm.moveComment(vm.comment.id, 'release_moderation', vm.release.id)") Move to moderation comments
+				.panel-body
+					div.markdown(markdown="vm.comment.message")

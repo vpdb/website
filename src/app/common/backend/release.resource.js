@@ -40,6 +40,7 @@ export class ReleaseCommentResource {
 	 */
 	constructor($resource, ConfigService) {
 		return $resource(ConfigService.apiUri('/v1/releases/:releaseId/comments'), {}, {
+			query: { method: 'GET', isArray:true, interceptor: { response: res => res } },
 		});
 	}
 }

@@ -90,6 +90,10 @@ export default class ReleaseDetailsCtrl {
 		this.newComment = 'default text';
 		this.zoneName = AuthService.hasPermission('releases/update') ? 'Admin' : 'Author';
 
+		this.commentsHead = [];
+		this.commentsBody = [];
+		this.commentsTail = [];
+
 		// seo structured data
 		this.ldRelease = {
 			'@context': 'http://schema.org/',
@@ -176,7 +180,22 @@ export default class ReleaseDetailsCtrl {
 			}).filter(v => v), [ 'type' ], [ 'asc' ]);
 
 			// fetch comments
-			this.comments = this.ReleaseCommentResource.query({ releaseId: release.id, per_page: 100 });
+			const headSize = 25;
+			const tailSize = 25;
+			this.ReleaseCommentResource.query({ releaseId: release.id, per_page: headSize }, res => {
+				console.log(res);
+				this.commentsHead = res.data;
+				const count = res.headers('x-list-count');
+				if (headSize > count) {
+					return;
+				} else if (headSize + tailSize > count) {
+
+				} else {
+
+				}
+				console.log(count);
+
+			});
 			if (release.moderation) {
 				this.moderationComments = this.ReleaseModerationCommentResource.query({ releaseId: release.id });
 			}
