@@ -11,10 +11,10 @@ include ../../template/_mixins
 					label
 					strong {{ vm.comment.from.name }}
 					| &nbsp;commented {{ vm.comment.created_at | timeAgo }}
-					.pull-right(uib-dropdown, ng-if="vm.AuthService.hasPermission('releases/moderate')")
+					.pull-right(uib-dropdown, ng-if="vm.menuMoveTo && vm.AuthService.hasPermission('releases/moderate')")
 						a(uib-dropdown-toggle): +icon('kebab-horizontal')
 						ul.comment-dropdown-menu(uib-dropdown-menu)
 							li
-								a(ng-click="vm.moveComment(vm.comment.id, 'release_moderation', vm.release.id)") Move to moderation comments
+								a(ng-click="vm.moveComment(vm.comment.id, vm.menuMoveTo, vm.release.id)") Move to moderation comments
 				.panel-body
 					div.markdown(markdown="vm.comment.message")

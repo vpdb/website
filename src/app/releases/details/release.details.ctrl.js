@@ -185,39 +185,7 @@ export default class ReleaseDetailsCtrl {
 			}).filter(v => v), [ 'type' ], [ 'asc' ]);
 
 			// fetch comments
-			this.ReleaseCommentResource.query({ releaseId: release.id, per_page: this.commentsPagesize }, res => {
-				this.numComments = res.headers('x-list-count');
-				this.fetchedCommentPages++;
-				this._addCommentsToHead(res.data);
-
-				const lastPage = Math.ceil(this.numComments / this.commentsPagesize);
-				if (this.numComments > this.commentsPagesize) {
-					this.ReleaseCommentResource.query({
-						releaseId: release.id,
-						per_page: this.commentsPagesize,
-						page: lastPage
-					}, res => this._addCommentsToTail(res.data, true));
-				}
-
-				const lastPageNumComments = this.numComments - (lastPage - 1) * this.commentsPagesize;
-				if (this.numComments > this.commentsPagesize + lastPageNumComments) {
-					this.ReleaseCommentResource.query({
-						releaseId: release.id,
-						per_page: this.commentsPagesize,
-						page: lastPage - 1
-					}, res => {
-						this._addCommentsToTail(res.data, false);
-						if (this.numComments > 2 * this.commentsPagesize + lastPageNumComments) {
-							this.ReleaseCommentResource.query({ releaseId: release.id, per_page: this.commentsPagesize, page: lastPage - 2 }, res => {
-								this._addCommentsToTail(res.data, false);
-							});
-						}
-					});
-				}
-			});
-			if (release.moderation) {
-				this.moderationComments = this.ReleaseModerationCommentResource.query({ releaseId: release.id });
-			}
+			this.loadComments();
 
 			// mod permissions
 			if (release.license === 'by-sa') {
@@ -281,39 +249,13 @@ export default class ReleaseDetailsCtrl {
 		});
 	}
 
-	_addCommentsToHead(comments) {
-		const trim = this._getCommentOverflow(comments.length);
-		const newComments = trim ? comments.slice(0, comments.length - trim) : comments;
-		this.commentsHead.push(...newComments);
-		this.hiddenComments = this.numComments - this.commentsHead.length - this.commentsTail.length;
-	}
-
-	_addCommentsToTail(comments, addToTail) {
-		const trim = this._getCommentOverflow(comments.length);
-		const newComments = trim ? comments.slice(trim) : comments;
-		if (addToTail) {
-			this.commentsTail.push(...newComments);
-		} else {
-			this.commentsTail.unshift(...newComments);
-		}
-		this.hiddenComments = this.numComments - this.commentsHead.length - this.commentsTail.length;
-	}
-
-	_getCommentOverflow(numComments) {
-		const numShownComments = this.commentsHead.length + this.commentsTail.length;
-		const numNewComments = numComments;
-		return numNewComments + numShownComments > this.numComments
-			? numNewComments + numShownComments - this.numComments
-			: 0;
-	}
-
 	openLightbox(index) {
 		this.Lightbox.openModal(this.shots, index);
 	}
 
 	addComment() {
 		this.ReleaseCommentResource.save({ releaseId: this.releaseId }, { message: this.newComment }, comment => {
-			this.comments.push(comment);
+			this.commentsTail.push(comment);
 			this.newComment = '';
 		}, this.ApiHelper.handleErrors(this));
 	}
@@ -380,11 +322,72 @@ export default class ReleaseDetailsCtrl {
 		}).catch(angular.noop);
 	}
 
-	moveComment(commentId, refName, refId) {
-		this.CommentResource.update({ id: commentId }, { _ref: { [refName]: refId }}, () => {
-			this.comments = this.ReleaseCommentResource.query({ releaseId: refId });
-			this.moderationComments = this.ReleaseModerationCommentResource.query({ releaseId: refId });
-		}, this.ApiHelper.handleErrors(this));
+	loadComments() {
+		this.commentsHead = [];
+		this.commentsTail = [];
+		this.hiddenComments = 0;
+		this.numComments = 0;
+		this.fetchedCommentPages = 0;
+
+		this.ReleaseCommentResource.query({ releaseId: this.release.id, per_page: this.commentsPagesize }, res => {
+			this.numComments = res.headers('x-list-count');
+			this.fetchedCommentPages++;
+			this._addCommentsToHead(res.data);
+
+			const lastPage = Math.ceil(this.numComments / this.commentsPagesize);
+			if (this.numComments > this.commentsPagesize) {
+				this.ReleaseCommentResource.query({
+					releaseId: this.release.id,
+					per_page: this.commentsPagesize,
+					page: lastPage
+				}, res => this._addCommentsToTail(res.data, true));
+			}
+
+			const lastPageNumComments = this.numComments - (lastPage - 1) * this.commentsPagesize;
+			if (this.numComments > this.commentsPagesize + lastPageNumComments) {
+				this.ReleaseCommentResource.query({
+					releaseId: this.release.id,
+					per_page: this.commentsPagesize,
+					page: lastPage - 1
+				}, res => {
+					this._addCommentsToTail(res.data, false);
+					if (this.numComments > 2 * this.commentsPagesize + lastPageNumComments) {
+						this.ReleaseCommentResource.query({ releaseId: this.release.id, per_page: this.commentsPagesize, page: lastPage - 2 }, res => {
+							this._addCommentsToTail(res.data, false);
+						});
+					}
+				});
+			}
+		});
+		if (this.release.moderation) {
+			this.moderationComments = this.ReleaseModerationCommentResource.query({ releaseId: this.release.id });
+		}
+	}
+
+	_addCommentsToHead(comments) {
+		const trim = this._getCommentOverflow(comments.length);
+		const newComments = trim ? comments.slice(0, comments.length - trim) : comments;
+		this.commentsHead.push(...newComments);
+		this.hiddenComments = this.numComments - this.commentsHead.length - this.commentsTail.length;
+	}
+
+	_addCommentsToTail(comments, addToTail) {
+		const trim = this._getCommentOverflow(comments.length);
+		const newComments = trim ? comments.slice(trim) : comments;
+		if (addToTail) {
+			this.commentsTail.push(...newComments);
+		} else {
+			this.commentsTail.unshift(...newComments);
+		}
+		this.hiddenComments = this.numComments - this.commentsHead.length - this.commentsTail.length;
+	}
+
+	_getCommentOverflow(numComments) {
+		const numShownComments = this.commentsHead.length + this.commentsTail.length;
+		const numNewComments = numComments;
+		return numNewComments + numShownComments > this.numComments
+			? numNewComments + numShownComments - this.numComments
+			: 0;
 	}
 
 	/**

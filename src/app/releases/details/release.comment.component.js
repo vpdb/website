@@ -33,6 +33,8 @@ export default class ReleaseCommentComponent {
 		this.bindings = {
 			comment: '<',
 			release: '<',
+			menuMoveTo: '@',
+			onMoved: '&',
 		};
 	}
 }
