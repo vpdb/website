@@ -90,9 +90,13 @@ export default class ReleaseDetailsCtrl {
 		this.newComment = 'default text';
 		this.zoneName = AuthService.hasPermission('releases/update') ? 'Admin' : 'Author';
 
+		this.headSize = 5;
+		this.tailSize = 5;
 		this.commentsHead = [];
 		this.commentsBody = [];
 		this.commentsTail = [];
+		this.hiddenComments = 0;
+		this.numComments = 0;
 
 		// seo structured data
 		this.ldRelease = {
@@ -180,21 +184,23 @@ export default class ReleaseDetailsCtrl {
 			}).filter(v => v), [ 'type' ], [ 'asc' ]);
 
 			// fetch comments
-			const headSize = 25;
-			const tailSize = 25;
-			this.ReleaseCommentResource.query({ releaseId: release.id, per_page: headSize }, res => {
-				console.log(res);
+			this.ReleaseCommentResource.query({ releaseId: release.id, per_page: this.headSize }, res => {
 				this.commentsHead = res.data;
-				const count = res.headers('x-list-count');
-				if (headSize > count) {
-					return;
-				} else if (headSize + tailSize > count) {
+				this.numComments = res.headers('x-list-count');
+				if (this.numComments > this.headSize) {
+					// we also need tail
+					const lastPage = Math.ceil(this.numComments / this.tailSize / 2);
+					this.ReleaseCommentResource.query({ releaseId: release.id, per_page: this.tailSize * 2, page: lastPage }, res => {
+						const numItems = res.data.length;
+						if (this.headSize + numItems > this.numComments) {
+							this.commentsTail = res.data.slice(this.headSize + numItems - this.numComments);
 
-				} else {
-
+						} else {
+							this.commentsTail = res.data.slice(-this.tailSize);
+							this.hiddenComments = this.numComments - this.headSize - this.tailSize;
+						}
+					});
 				}
-				console.log(count);
-
 			});
 			if (release.moderation) {
 				this.moderationComments = this.ReleaseModerationCommentResource.query({ releaseId: release.id });
@@ -249,6 +255,13 @@ export default class ReleaseDetailsCtrl {
 		}).catch(err => {
 			console.error(err);
 			this.release = null;
+		});
+	}
+
+	loadRemainingComments() {
+		this.ReleaseCommentResource.query({ releaseId: this.release.id, per_page: 200, page: 1 }, res => {
+			this.commentsBody = res.data.slice(this.headSize, -this.tailSize);
+			this.hiddenComments = 0;
 		});
 	}
 

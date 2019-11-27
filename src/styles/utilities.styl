@@ -158,9 +158,21 @@
 	font-size $font-size-normal
 	text-transform none
 
-// line-height hack (adds 1px padding before EVERY div - wtf?)
-//div
-	//-webkit-padding-before 1px
+.zigzag
+	background-image url('../static/images/disclosure-line.png')
+	background-repeat repeat-x
+	background-position 0 32px
+	background-size 32px
+	text-align center
+	margin 0 -30px
+	.panel
+		background-image url('../static/images/background.png')
+		border 2px solid rgba(255, 255, 255, 0.06);
+		padding 5px 15px
+		display inline-flex
+		flex-direction column
+		box-sizing border-box
+		text-align center
 
 // Style Guide
 // -------------------------

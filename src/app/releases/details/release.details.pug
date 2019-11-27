@@ -244,8 +244,14 @@ include ../../template/_mixins
 
 		//-- EXISTING COMMENTS
 		//---------------------------------------------------------------------
-		label(ng-show="!vm.comments || vm.comments.length == 0") No comments yet.
+		label(ng-show="!vm.numComments") No comments yet.
 		release-comment(ng-repeat="comment in vm.commentsHead track by comment.id", comment="comment", release="vm.release")
+		.zigzag(ng-show="vm.hiddenComments > 0")
+			.panel.panel--inner
+				| {{ vm.hiddenComments }} hidden comments
+				label.a(ng-click="vm.loadRemainingComments()") Load more...
+		release-comment(ng-repeat="comment in vm.commentsBody track by comment.id", comment="comment", release="vm.release")
+		release-comment(ng-repeat="comment in vm.commentsTail track by comment.id", comment="comment", release="vm.release")
 
 		//-- NEW COMMENT
 		//---------------------------------------------------------------------

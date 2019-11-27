@@ -3,19 +3,19 @@
 	"authHeader": "X-Authorization",
 	"apiUri": {
 		"protocol": "https",
-		"hostname": "api.staging.vpdb.io",
+		"hostname": "api.vpdb.io",
 		"port": 443,
 		"pathname": ""
 	},
 	"storageUri": {
 		"protocol": "https",
-		"hostname": "storage.staging.vpdb.io",
+		"hostname": "storage.vpdb.io",
 		"port": 443,
 		"pathname": ""
 	},
 	"previewUri": {
 		"protocol": "https",
-		"hostname": "preview.staging.vpdb.io",
+		"hostname": "preview.vpdb.io",
 		"port": 443,
 		"pathname": ""
 	},
