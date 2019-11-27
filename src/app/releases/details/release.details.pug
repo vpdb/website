@@ -107,26 +107,11 @@ include ../../template/_mixins
 
 			.padder-2x
 				label(ng-show="!vm.moderationComments || vm.moderationComments.length == 0") No comments yet.
-				.media.media--no-margin.collapse-in-animation(ng-repeat="comment in vm.moderationComments track by comment.id")
-					.collapse-in-animation-inner
-						.media-left.avatar
-							img.img-avatar.pull-left(gravatar-src="comment.from.gravatar_id", gravatar-default="retro", fallback-icon="user")
-						.media-body.media--full-width
-							.panel.panel--inner
-								.panel-triangle
-								.panel-heading
-									label
-									strong {{ comment.from.name }}
-									| &nbsp;commented {{ comment.created_at | timeAgo }}
-									.pull-right(uib-dropdown, ng-if="vm.AuthService.hasPermission('releases/moderate')")
-										a(uib-dropdown-toggle): +icon('kebab-horizontal')
-										ul.comment-dropdown-menu(uib-dropdown-menu)
-											li
-												a(ng-click="vm.moveComment(comment.id, 'release', vm.release.id)") Move to public comments
-
-								.panel-body
-									div.markdown(markdown="comment.message")
-
+				release-comment(ng-repeat="comment in vm.moderationComments track by comment.id",
+					comment="comment",
+					release="vm.release",
+					menu-move-to="release",
+					on-moved="vm.loadComments()")
 				editor(ng-model="vm.newModerationComment", user="vm.AuthService.user", placeholder="Comment about release moderation", markdown-text="Comments are parsed with Markdown.")
 
 				button.btn.btn-hollow.pull-right.padder-top(ng-click="vm.addModerationComment(vm.release.id)") Reply
@@ -245,12 +230,12 @@ include ../../template/_mixins
 		//-- EXISTING COMMENTS
 		//---------------------------------------------------------------------
 		label(ng-show="!vm.numComments") No comments yet.
-		release-comment(ng-repeat="comment in vm.commentsHead track by comment.id", comment="comment", release="vm.release")
+		release-comment(ng-repeat="comment in vm.commentsHead track by comment.id", comment="comment", release="vm.release", menu-move-to="release_moderation")
 		.zigzag(ng-show="vm.hiddenComments > 0")
 			.panel.panel--inner
 				| {{ vm.hiddenComments }} hidden comments
 				label.a(ng-click="vm.loadMoreComments()") Load more...
-		release-comment(ng-repeat="comment in vm.commentsTail track by comment.id", comment="comment", release="vm.release")
+		release-comment(ng-repeat="comment in vm.commentsTail track by comment.id", comment="comment", release="vm.release", menu-move-to="release_moderation")
 
 		//-- NEW COMMENT
 		//---------------------------------------------------------------------

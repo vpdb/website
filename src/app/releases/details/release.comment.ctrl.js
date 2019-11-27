@@ -22,9 +22,25 @@ export default class ReleaseCommentCtrl {
 	/**
 	 * Class constructor
 	 * @param {AuthService} AuthService
+	 * @param {ApiHelper} ApiHelper
+	 * @param {CommentResource} CommentResource
 	 * @ngInject
 	 */
-	constructor(AuthService) {
+	constructor(AuthService, ApiHelper, CommentResource) {
 		this.AuthService = AuthService;
+		this.ApiHelper = ApiHelper;
+		this.CommentResource = CommentResource;
+
+		// set in the dom via component
+		this.comment = null;
+		this.release = null;
+		this.menuMoveTo = '';
+		this.onMoved = () => {};
+	}
+
+	moveComment(commentId, refName, refId) {
+		this.CommentResource.update({ id: commentId }, { _ref: { [refName]: refId }}, () => {
+			this.onMoved();
+		}, this.ApiHelper.handleErrors(this));
 	}
 }
