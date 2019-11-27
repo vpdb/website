@@ -29,6 +29,7 @@ import LightboxModule from '../shared/lightbox/lightbox.module';
 
 import ReleaseListComponent from './list/release.list.component';
 import ReleaseDetailsComponent from './details/release.details.component';
+import ReleaseCommentComponent from './details/release.comment.component';
 import ReleaseDownloadModalCtrl from './details/release.download.modal.ctrl';
 import ReleaseFileValidationCtrl from './details/release.file.validation.ctrl';
 import validationStatus from './details/release.validation.status.filter';
@@ -47,6 +48,7 @@ const RELEASE_MODULE = angular
 	])
 	.component('releaseListComponent', new ReleaseListComponent())
 	.component('releaseDetailsComponent', new ReleaseDetailsComponent())
+	.component('releaseComment', new ReleaseCommentComponent())
 	.controller('ReleaseDownloadModalCtrl', ReleaseDownloadModalCtrl)
 	.controller('ReleaseFileValidationCtrl', ReleaseFileValidationCtrl)
 	.filter('validationStatus', validationStatus)
