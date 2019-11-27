@@ -33,6 +33,7 @@ export default class ReleaseDetailsCtrl {
 
 	/**
 	 * Class constructor
+	 * @param $scope
 	 * @param $stateParams
 	 * @param $location
 	 * @param $localStorage
@@ -54,7 +55,7 @@ export default class ReleaseDetailsCtrl {
 	 * @param ReleaseModerationCommentResource
 	 * @ngInject
 	 */
-	constructor($stateParams, $location, $localStorage, $log, $rootScope, $uibModal, Lightbox,
+	constructor($scope, $stateParams, $location, $localStorage, $log, $rootScope, $uibModal, Lightbox,
 				App, AuthService, ApiHelper, ReleaseService, TrackerService, BootstrapPatcher, CommentResource,
 				GameResource, ReleaseResource, ReleaseRatingResource, ReleaseCommentResource,
 				ReleaseModerationCommentResource) {
@@ -65,6 +66,7 @@ export default class ReleaseDetailsCtrl {
 		BootstrapPatcher.patchCarousel();
 
 		this.imgPinDestruct = imgPinDestruct;
+		this.$scope = $scope;
 		this.$log = $log;
 		this.$location = $location;
 		this.$localStorage = $localStorage;
@@ -90,13 +92,12 @@ export default class ReleaseDetailsCtrl {
 		this.newComment = 'default text';
 		this.zoneName = AuthService.hasPermission('releases/update') ? 'Admin' : 'Author';
 
-		this.headSize = 5;
-		this.tailSize = 5;
+		this.commentsPagesize = 15;
 		this.commentsHead = [];
-		this.commentsBody = [];
 		this.commentsTail = [];
 		this.hiddenComments = 0;
 		this.numComments = 0;
+		this.fetchedCommentPages = 0;
 
 		// seo structured data
 		this.ldRelease = {
@@ -184,20 +185,32 @@ export default class ReleaseDetailsCtrl {
 			}).filter(v => v), [ 'type' ], [ 'asc' ]);
 
 			// fetch comments
-			this.ReleaseCommentResource.query({ releaseId: release.id, per_page: this.headSize }, res => {
-				this.commentsHead = res.data;
+			this.ReleaseCommentResource.query({ releaseId: release.id, per_page: this.commentsPagesize }, res => {
 				this.numComments = res.headers('x-list-count');
-				if (this.numComments > this.headSize) {
-					// we also need tail
-					const lastPage = Math.ceil(this.numComments / this.tailSize / 2);
-					this.ReleaseCommentResource.query({ releaseId: release.id, per_page: this.tailSize * 2, page: lastPage }, res => {
-						const numItems = res.data.length;
-						if (this.headSize + numItems > this.numComments) {
-							this.commentsTail = res.data.slice(this.headSize + numItems - this.numComments);
+				this.fetchedCommentPages++;
+				this._addCommentsToHead(res.data);
 
-						} else {
-							this.commentsTail = res.data.slice(-this.tailSize);
-							this.hiddenComments = this.numComments - this.headSize - this.tailSize;
+				const lastPage = Math.ceil(this.numComments / this.commentsPagesize);
+				if (this.numComments > this.commentsPagesize) {
+					this.ReleaseCommentResource.query({
+						releaseId: release.id,
+						per_page: this.commentsPagesize,
+						page: lastPage
+					}, res => this._addCommentsToTail(res.data, true));
+				}
+
+				const lastPageNumComments = this.numComments - (lastPage - 1) * this.commentsPagesize;
+				if (this.numComments > this.commentsPagesize + lastPageNumComments) {
+					this.ReleaseCommentResource.query({
+						releaseId: release.id,
+						per_page: this.commentsPagesize,
+						page: lastPage - 1
+					}, res => {
+						this._addCommentsToTail(res.data, false);
+						if (this.numComments > 2 * this.commentsPagesize + lastPageNumComments) {
+							this.ReleaseCommentResource.query({ releaseId: release.id, per_page: this.commentsPagesize, page: lastPage - 2 }, res => {
+								this._addCommentsToTail(res.data, false);
+							});
 						}
 					});
 				}
@@ -258,11 +271,40 @@ export default class ReleaseDetailsCtrl {
 		});
 	}
 
-	loadRemainingComments() {
-		this.ReleaseCommentResource.query({ releaseId: this.release.id, per_page: 200, page: 1 }, res => {
-			this.commentsBody = res.data.slice(this.headSize, -this.tailSize);
-			this.hiddenComments = 0;
+	loadMoreComments() {
+		this.ReleaseCommentResource.query({
+			releaseId: this.release.id,
+			per_page: this.commentsPagesize,
+			page: ++this.fetchedCommentPages
+		}, res => {
+			this._addCommentsToHead(res.data);
 		});
+	}
+
+	_addCommentsToHead(comments) {
+		const trim = this._getCommentOverflow(comments.length);
+		const newComments = trim ? comments.slice(0, comments.length - trim) : comments;
+		this.commentsHead.push(...newComments);
+		this.hiddenComments = this.numComments - this.commentsHead.length - this.commentsTail.length;
+	}
+
+	_addCommentsToTail(comments, addToTail) {
+		const trim = this._getCommentOverflow(comments.length);
+		const newComments = trim ? comments.slice(trim) : comments;
+		if (addToTail) {
+			this.commentsTail.push(...newComments);
+		} else {
+			this.commentsTail.unshift(...newComments);
+		}
+		this.hiddenComments = this.numComments - this.commentsHead.length - this.commentsTail.length;
+	}
+
+	_getCommentOverflow(numComments) {
+		const numShownComments = this.commentsHead.length + this.commentsTail.length;
+		const numNewComments = numComments;
+		return numNewComments + numShownComments > this.numComments
+			? numNewComments + numShownComments - this.numComments
+			: 0;
 	}
 
 	openLightbox(index) {
