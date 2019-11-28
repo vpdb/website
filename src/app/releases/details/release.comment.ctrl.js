@@ -26,7 +26,7 @@ export default class ReleaseCommentCtrl {
 	 * @param {CommentResource} CommentResource
 	 * @ngInject
 	 */
-	constructor(AuthService, ApiHelper, CommentResource) {
+	constructor($scope, AuthService, ApiHelper, CommentResource) {
 		this.AuthService = AuthService;
 		this.ApiHelper = ApiHelper;
 		this.CommentResource = CommentResource;
@@ -37,9 +37,11 @@ export default class ReleaseCommentCtrl {
 		this.editing = false;
 		this.menuMoveTo = '';
 		this.onMoved = () => {};
+
+		$scope.$watch(() => this.AuthService.user, () => this._updateMenus());
 	}
 
-	$onInit() {
+	_updateMenus() {
 		const isOwner = this.AuthService.user && this.AuthService.user.id === this.comment.from.id;
 		this.hasMoveToMenu = this.menuMoveTo && this.AuthService.hasPermission('releases/moderate');
 		this.hasEditMenu = isOwner || this.AuthService.hasPermission('releases/moderate');

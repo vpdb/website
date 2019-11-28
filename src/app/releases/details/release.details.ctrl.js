@@ -240,11 +240,16 @@ export default class ReleaseDetailsCtrl {
 	}
 
 	loadMoreComments() {
+		if (this.commentsLoading) {
+			return;
+		}
+		this.commentsLoading = true;
 		this.ReleaseCommentResource.query({
 			releaseId: this.release.id,
 			per_page: this.commentsPagesize,
 			page: ++this.fetchedCommentPages
 		}, res => {
+			this.commentsLoading = false;
 			this._addCommentsToHead(res.data);
 		});
 	}
