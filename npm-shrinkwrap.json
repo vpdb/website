@@ -3910,9 +3910,9 @@
 			}
 		},
 		"es5-shim": {
-			"version": "4.5.10",
-			"resolved": "https://registry.npmjs.org/es5-shim/-/es5-shim-4.5.10.tgz",
-			"integrity": "sha512-vmryBdqKRO8Ei9LJ4yyEk/EOmAOGIagcHDYPpTAi6pot4IMHS1AC2q5cTKPmydpijg2iX8DVmCuqgrNxIWj8Yg=="
+			"version": "4.5.13",
+			"resolved": "https://registry.npmjs.org/es5-shim/-/es5-shim-4.5.13.tgz",
+			"integrity": "sha512-xi6hh6gsvDE0MaW4Vp1lgNEBpVcCXRWfPXj5egDvtgLz4L9MEvNwYEMdJH+JJinWkwa8c3c3o5HduV7dB/e1Hw=="
 		},
 		"es6-promise": {
 			"version": "4.2.8",
@@ -4610,14 +4610,6 @@
 			"dev": true,
 			"requires": {
 				"debug": "=3.1.0"
-			}
-		},
-		"for-each": {
-			"version": "0.3.2",
-			"resolved": "https://registry.npmjs.org/for-each/-/for-each-0.3.2.tgz",
-			"integrity": "sha1-LEBFC5NI6X8oEyJZO6lnBLmr1NQ=",
-			"requires": {
-				"is-function": "~1.0.0"
 			}
 		},
 		"for-in": {
@@ -8284,13 +8276,9 @@
 			}
 		},
 		"parse-headers": {
-			"version": "2.0.1",
-			"resolved": "https://registry.npmjs.org/parse-headers/-/parse-headers-2.0.1.tgz",
-			"integrity": "sha1-aug6eqJanZtwCswoaYzR8e1+lTY=",
-			"requires": {
-				"for-each": "^0.3.2",
-				"trim": "0.0.1"
-			}
+			"version": "2.0.3",
+			"resolved": "https://registry.npmjs.org/parse-headers/-/parse-headers-2.0.3.tgz",
+			"integrity": "sha512-QhhZ+DCCit2Coi2vmAKbq5RGTRcQUOE2+REgv8vdyu7MnYx2eZztegqtTx99TZ86GTIwqiy3+4nQTWZ2tgmdCA=="
 		},
 		"parse-json": {
 			"version": "4.0.0",
@@ -11593,11 +11581,6 @@
 			"resolved": "https://registry.npmjs.org/traverse/-/traverse-0.6.6.tgz",
 			"integrity": "sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc="
 		},
-		"trim": {
-			"version": "0.0.1",
-			"resolved": "https://registry.npmjs.org/trim/-/trim-0.0.1.tgz",
-			"integrity": "sha1-WFhUf2spB1fulczMZm+1AITEYN0="
-		},
 		"tryer": {
 			"version": "1.0.1",
 			"resolved": "https://registry.npmjs.org/tryer/-/tryer-1.0.1.tgz",
@@ -12050,9 +12033,9 @@
 			}
 		},
 		"video.js": {
-			"version": "6.9.0",
-			"resolved": "https://registry.npmjs.org/video.js/-/video.js-6.9.0.tgz",
-			"integrity": "sha512-54s7ZZKiY8dTMxBM6IkGMUeG0Yjq8RfyOn7bdU88nL6eWw1I+zLPY4fUVEFwGtxNAzZxGj7VVhVsCM/38QM9GA==",
+			"version": "6.13.0",
+			"resolved": "https://registry.npmjs.org/video.js/-/video.js-6.13.0.tgz",
+			"integrity": "sha512-36/JR/GhPQSZj0o+GNbhcEYv/b0SkV9SQsjlodAnzMQYN0TA7VhmqrKPYMCi1NGRYu7S9W3OaFCFoUxkYfSVlg==",
 			"requires": {
 				"babel-runtime": "^6.9.2",
 				"global": "4.3.2",
