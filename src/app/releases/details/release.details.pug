@@ -240,7 +240,7 @@ include ../../template/_mixins
 		.zigzag(ng-show="vm.hiddenComments > 0")
 			.panel.panel--inner
 				| {{ vm.hiddenComments }} hidden comments
-				label.a(ng-click="vm.loadMoreComments()") Load more...
+				label.a(ng-click="vm.loadMoreComments()") {{ vm.commentsLoading ? 'Loading...' : 'Load more...' }}
 		release-comment(ng-repeat="comment in vm.commentsTail track by comment.id",
 			comment="comment",
 			release="vm.release",
