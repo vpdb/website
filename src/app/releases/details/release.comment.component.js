@@ -34,6 +34,7 @@ export default class ReleaseCommentComponent {
 			comment: '<',
 			release: '<',
 			menuMoveTo: '@',
+			menuMoveText: '@',
 			onMoved: '&',
 		};
 	}

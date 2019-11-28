@@ -5,7 +5,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="72">
+          <list size="73">
             <item index="0" class="java.lang.String" itemvalue="format-day-header" />
             <item index="1" class="java.lang.String" itemvalue="is-open" />
             <item index="2" class="java.lang.String" itemvalue="close-text" />
@@ -78,6 +78,7 @@
             <item index="69" class="java.lang.String" itemvalue="release" />
             <item index="70" class="java.lang.String" itemvalue="menu-move-to" />
             <item index="71" class="java.lang.String" itemvalue="on-moved" />
+            <item index="72" class="java.lang.String" itemvalue="menu-move-text" />
           </list>
         </value>
       </option>
