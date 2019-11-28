@@ -1,7 +1,7 @@
 {
 	"name": "vpdb-website",
 	"repository": "vpdb/website",
-	"version": "2.1.7",
+	"version": "2.1.8-SNAPSHOT",
 	"description": "The web application of https://vpdb.io.",
 	"main": "index.js",
 	"scripts": {
