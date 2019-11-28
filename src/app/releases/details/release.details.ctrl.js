@@ -330,7 +330,7 @@ export default class ReleaseDetailsCtrl {
 		this.fetchedCommentPages = 0;
 
 		this.ReleaseCommentResource.query({ releaseId: this.release.id, per_page: this.commentsPagesize }, res => {
-			this.numComments = res.headers('x-list-count');
+			this.numComments = parseInt(res.headers('x-list-count'), 10);
 			this.fetchedCommentPages++;
 			this._addCommentsToHead(res.data);
 

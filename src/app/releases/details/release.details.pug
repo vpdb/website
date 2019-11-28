@@ -111,6 +111,7 @@ include ../../template/_mixins
 					comment="comment",
 					release="vm.release",
 					menu-move-to="release",
+					menu-move-text="Move to public comments",
 					on-moved="vm.loadComments()")
 				editor(ng-model="vm.newModerationComment", user="vm.AuthService.user", placeholder="Comment about release moderation", markdown-text="Comments are parsed with Markdown.")
 
@@ -230,12 +231,22 @@ include ../../template/_mixins
 		//-- EXISTING COMMENTS
 		//---------------------------------------------------------------------
 		label(ng-show="!vm.numComments") No comments yet.
-		release-comment(ng-repeat="comment in vm.commentsHead track by comment.id", comment="comment", release="vm.release", menu-move-to="release_moderation")
+		release-comment(ng-repeat="comment in vm.commentsHead track by comment.id",
+			comment="comment",
+			release="vm.release",
+			menu-move-to="release_moderation",
+			menu-move-text="Move to moderation comments",
+			on-moved="vm.loadComments()")
 		.zigzag(ng-show="vm.hiddenComments > 0")
 			.panel.panel--inner
 				| {{ vm.hiddenComments }} hidden comments
 				label.a(ng-click="vm.loadMoreComments()") Load more...
-		release-comment(ng-repeat="comment in vm.commentsTail track by comment.id", comment="comment", release="vm.release", menu-move-to="release_moderation")
+		release-comment(ng-repeat="comment in vm.commentsTail track by comment.id",
+			comment="comment",
+			release="vm.release",
+			menu-move-to="release_moderation",
+			menu-move-text="Move to moderation comments",
+			on-moved="vm.loadComments()")
 
 		//-- NEW COMMENT
 		//---------------------------------------------------------------------

@@ -1,6 +1,6 @@
 include ../../template/_mixins
 
-.media.media--no-margin.collapse-in-animation
+.media.media--no-margin(ng-show="!vm.editing")
 	.collapse-in-animation-inner
 		.media-left.avatar
 			img.img-avatar.pull-left(gravatar-src="vm.comment.from.gravatar_id", gravatar-default="retro", fallback-icon="user")
@@ -11,10 +11,24 @@ include ../../template/_mixins
 					label
 					strong {{ vm.comment.from.name }}
 					| &nbsp;commented {{ vm.comment.created_at | timeAgo }}
-					.pull-right(uib-dropdown, ng-if="vm.menuMoveTo && vm.AuthService.hasPermission('releases/moderate')")
+					.pull-right(uib-dropdown, ng-if="vm.showMenu")
 						a(uib-dropdown-toggle): +icon('kebab-horizontal')
 						ul.comment-dropdown-menu(uib-dropdown-menu)
-							li
-								a(ng-click="vm.moveComment(vm.comment.id, vm.menuMoveTo, vm.release.id)") Move to moderation comments
+							li(ng-if="vm.hasEditMenu"): a(ng-click="vm.edit()") Edit comment
+							li(ng-if="vm.hasMoveToMenu"): a(ng-click="vm.moveComment(vm.menuMoveTo, vm.release.id)") {{ vm.menuMoveText }}
 				.panel-body
 					div.markdown(markdown="vm.comment.message")
+div.cloak(ng-show="vm.editing")
+	editor(id="edit-comment-{{ vm.comment.id }}",
+		ng-model="vm.editedMessage",
+		user="vm.AuthService.user",
+		placeholder="Edit comment",
+		markdown-text="")
+	div.alert.alert-danger(ng-if="vm.errors.message")
+		p.shift-down-1px
+			+icon('warning').shift-up.space-right
+			| {{ vm.errors.message }}
+		.clearfix
+	button.btn.btn-hollow.pull-right.padder-top.padder-bottom(ng-click="vm.updateComment()", ng-disabled="!vm.editedMessage || vm.editedMessage.length === 0") Update Comment
+	button.btn.btn-hollow.pull-right.padder-top.padder-bottom.space-right(ng-click="vm.cancelEdit()") Cancel
+	.clearfix

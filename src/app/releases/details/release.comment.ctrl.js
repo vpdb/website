@@ -34,12 +34,38 @@ export default class ReleaseCommentCtrl {
 		// set in the dom via component
 		this.comment = null;
 		this.release = null;
+		this.editing = false;
 		this.menuMoveTo = '';
 		this.onMoved = () => {};
 	}
 
-	moveComment(commentId, refName, refId) {
-		this.CommentResource.update({ id: commentId }, { _ref: { [refName]: refId }}, () => {
+	$onInit() {
+		const isOwner = this.AuthService.user && this.AuthService.user.id === this.comment.from.id;
+		this.hasMoveToMenu = this.menuMoveTo && this.AuthService.hasPermission('releases/moderate');
+		this.hasEditMenu = isOwner || this.AuthService.hasPermission('releases/moderate');
+		this.showMenu = this.hasMoveToMenu || this.hasEditMenu;
+	}
+
+	edit() {
+		this.editedMessage = this.comment.message;
+		this.editing = true;
+	}
+
+	cancelEdit() {
+		this.editing = false;
+		delete this.errors;
+		delete this.error;
+	}
+
+	updateComment() {
+		this.CommentResource.update({ id: this.comment.id }, { message: this.editedMessage }, () => {
+			this.comment.message = this.editedMessage;
+			this.editing = false;
+		}, this.ApiHelper.handleErrors(this));
+	}
+
+	moveComment(refName, refId) {
+		this.CommentResource.update({ id: this.comment.id }, { _ref: { [refName]: refId }}, () => {
 			this.onMoved();
 		}, this.ApiHelper.handleErrors(this));
 	}
