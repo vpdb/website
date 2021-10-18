@@ -77,7 +77,7 @@
 		"@types/lodash": "4.14.149",
 		"@types/pngjs": "3.4.0",
 		"@types/stream-to-array": "2.3.0",
-		"autoprefixer": "9.7.2",
+		"autoprefixer": "9.8.8",
 		"axios": "0.19.0",
 		"babel-eslint": "10.0.3",
 		"babel-loader": "8.0.6",
