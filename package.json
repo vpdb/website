@@ -60,7 +60,7 @@
 		"ngclipboard": "2.0.0",
 		"ngstorage": "0.3.11",
 		"oclazyload": "1.1.0",
-		"parse-uri": "1.0.0",
+		"parse-uri": "1.0.11",
 		"showdown": "1.9.1",
 		"three": "0.105.2",
 		"timeago.js": "3.0.2",
